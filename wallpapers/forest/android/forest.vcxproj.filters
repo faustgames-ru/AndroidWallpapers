@@ -1,0 +1,94 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="res">
+      <UniqueIdentifier>69dda6c5-0535-4d7c-9df9-b6f8a1d6c87c</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\values">
+      <UniqueIdentifier>b77ac518-d2d2-4f61-babd-7e773c5d6c11</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src">
+      <UniqueIdentifier>{089543a2-b757-417d-9d6d-a67ad69891cb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com">
+      <UniqueIdentifier>{074950c3-a32f-473b-8155-c7f4242775cf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com\faustgames">
+      <UniqueIdentifier>{da4931e6-50ab-4704-a0ee-d314e96bb33f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\com\faustgames\forest">
+      <UniqueIdentifier>{e275c247-12e7-4fb5-a57f-2cbb973ef997}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jni">
+      <UniqueIdentifier>{26f67845-e322-483a-984c-c9867365a8a7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets">
+      <UniqueIdentifier>{f8e55862-e81e-410e-b9bd-99958ad77d7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\res">
+      <UniqueIdentifier>{5dd63863-9cfc-4002-86e0-b0c9e6ea7dbe}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml" />
+    <AndroidBuild Include="build.xml" />
+    <AndroidBuild Include="project.properties" />
+    <AndroidBuild Include="proguard.cfg" />
+    <AndroidBuild Include="res\values\strings.xml">
+      <Filter>res\values</Filter>
+    </AndroidBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <JCompile Include="src\com\faustgames\forest\forest.java">
+      <Filter>src\com\faustgames\forest</Filter>
+    </JCompile>
+    <JCompile Include="src\com\faustgames\forest\NativeInterface.java">
+      <Filter>src\com\faustgames\forest</Filter>
+    </JCompile>
+    <JCompile Include="src\com\faustgames\forest\GLEnginePendingOperationsController.java">
+      <Filter>src\com\faustgames\forest</Filter>
+    </JCompile>
+    <JCompile Include="src\com\faustgames\forest\GLWallpaperService.java">
+      <Filter>src\com\faustgames\forest</Filter>
+    </JCompile>
+    <JCompile Include="src\com\faustgames\forest\wpservice.java">
+      <Filter>src\com\faustgames\forest</Filter>
+    </JCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\main.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\nativeinterface.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\main.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\nativeinterface.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="assets\res\box.fbx">
+      <Filter>assets\res</Filter>
+    </None>
+    <None Include="assets\res\box.gpb">
+      <Filter>assets\res</Filter>
+    </None>
+    <None Include="assets\res\box.material">
+      <Filter>assets\res</Filter>
+    </None>
+    <None Include="assets\res\colored.frag">
+      <Filter>assets\res</Filter>
+    </None>
+    <None Include="assets\res\colored.vert">
+      <Filter>assets\res</Filter>
+    </None>
+    <None Include="assets\game.config">
+      <Filter>assets</Filter>
+    </None>
+  </ItemGroup>
+</Project>
