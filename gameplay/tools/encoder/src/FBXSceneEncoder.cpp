@@ -1302,8 +1302,9 @@ void FBXSceneEncoder::triangulateRecursive(FbxNode* fbxNode)
             type == FbxNodeAttribute::ePatch)
         {
             FbxGeometryConverter converter(fbxNode->GetFbxManager());
-            converter.TriangulateInPlace(fbxNode);
-        }
+            //converter.TriangulateInPlace(fbxNode);
+			converter.Triangulate(fbxNode->GetNodeAttribute(), true);
+		}
     }
 
     const int childCount = fbxNode->GetChildCount();

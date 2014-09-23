@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ImportGroup Label="PropertySheets" />
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <ExecutablePath>$(ExecutablePath)</ExecutablePath>
+    <IncludePath>$(SolutionDir)..\engine2\external-deps\bullet\src\;$(SolutionDir)..\engine2\external-deps\libpng\include\;$(SolutionDir)..\engine2\external-deps\lua\include\;$(SolutionDir)..\engine2\external-deps\oggvorbis\include\;$(SolutionDir)..\engine2\external-deps\openal\include\;$(SolutionDir)..\engine2\external-deps\zlib\include\;$(SolutionDir)..\engine2\external-deps\glew\include\;$(IncludePath)</IncludePath>
+    <ReferencePath>$(ReferencePath)</ReferencePath>
+    <LibraryPath>$(SolutionDir)engine2\external-deps\libpng\Android\obj\local\armeabi;$(SolutionDir)engine2\external-deps\zlib\lib\android\arm;$(SolutionDir)engine2\external-deps\lua\android\obj\local\armeabi;$(SolutionDir)engine2\external-deps\bullet\lib\android\arm;$(SolutionDir)engine2\external-deps\oggvorbis\android\obj\local\armeabi;$(SolutionDir)engine2\external-deps\openal\android\obj\local\armeabi;$(LibraryPath)</LibraryPath>
+    <LibraryWPath>$(LibraryWPath)</LibraryWPath>
+    <SourcePath>$(SourcePath)</SourcePath>
+    <ExcludePath />
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>$(SolutionDir)engine2\gameplay\src;$(SolutionDir)engine2\gameplay\src\lua;$(SolutionDir)engine2\external-deps\bullet\src;$(SolutionDir)engine2\external-deps\openal\include;$(SolutionDir)engine2\external-deps\oggvorbis\include;$(SolutionDir)engine2\external-deps\lua\include;$(SolutionDir)engine2\external-deps\libpng\include;$(SolutionDir)engine2\external-deps\zlib\include;$(SolutionDir)engine2\external-deps\glew\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup />
+</Project>
