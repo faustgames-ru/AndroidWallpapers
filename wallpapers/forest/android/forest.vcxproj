@@ -80,7 +80,7 @@
     </ClCompile>
     <Link>
       <AdditionalOptions>-lGLESv1_CM %(AdditionalOptions)</AdditionalOptions>
-      <AdditionalLibraryDirectories>c:\sources\github\AndroidWallpapers\wallpapers\forest\Tegra-Android\Debug\</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\Tegra-Android\Debug\</AdditionalLibraryDirectories>
       <AdditionalDependencies>gameplay;bullet;png;vorbis;ogg;lua;openal</AdditionalDependencies>
       <AndroidSystemLibs>android;m;log;dl;GLESv2;EGL;c;gcc;z</AndroidSystemLibs>
     </Link>
