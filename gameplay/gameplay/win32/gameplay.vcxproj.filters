@@ -13,6 +13,9 @@
     <Filter Include="src\lua">
       <UniqueIdentifier>{21cf31c6-9c10-44cb-a864-d46a0e7bfe5e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Algorithms">
+      <UniqueIdentifier>{101149b9-e3a7-4b7d-80ab-eafe53578680}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\res\logo_black.png">
@@ -1028,6 +1031,9 @@
     <ClCompile Include="..\src\VerticalLayout.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\algorithms\StdUtils.cpp">
+      <Filter>src\Algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\lua\lua_AbsoluteLayout.h">
@@ -1887,6 +1893,9 @@
     </ClInclude>
     <ClInclude Include="..\src\VerticalLayout.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\algorithms\StdUtils.h">
+      <Filter>src\Algorithms</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

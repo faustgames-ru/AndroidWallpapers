@@ -113,6 +113,7 @@
     <ClCompile Include="..\src\AIMessage.cpp" />
     <ClCompile Include="..\src\AIState.cpp" />
     <ClCompile Include="..\src\AIStateMachine.cpp" />
+    <ClCompile Include="..\src\algorithms\StdUtils.cpp" />
     <ClCompile Include="..\src\Animation.cpp" />
     <ClCompile Include="..\src\AnimationClip.cpp" />
     <ClCompile Include="..\src\AnimationController.cpp" />
@@ -398,6 +399,7 @@
     <ClInclude Include="..\src\AIMessage.h" />
     <ClInclude Include="..\src\AIState.h" />
     <ClInclude Include="..\src\AIStateMachine.h" />
+    <ClInclude Include="..\src\algorithms\StdUtils.h" />
     <ClInclude Include="..\src\Animation.h" />
     <ClInclude Include="..\src\AnimationClip.h" />
     <ClInclude Include="..\src\AnimationController.h" />
