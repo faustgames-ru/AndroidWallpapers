@@ -28,12 +28,21 @@
     <Filter Include="assets\res">
       <UniqueIdentifier>{5dd63863-9cfc-4002-86e0-b0c9e6ea7dbe}</UniqueIdentifier>
     </Filter>
+    <Filter Include="assets\res\common">
+      <UniqueIdentifier>{687e3236-b4ba-401f-8142-fc91488b255c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\res\png">
+      <UniqueIdentifier>{d70ca8b5-f6f0-4951-aa30-ac0a143a5ff7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\res\shaders">
+      <UniqueIdentifier>{aa90d11f-2063-4b71-908a-414b06a75083}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="assets\res\ui">
+      <UniqueIdentifier>{8a8850f9-3ae4-4445-810c-8dd7cd542b17}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <AndroidBuild Include="AndroidManifest.xml" />
-    <AndroidBuild Include="build.xml" />
-    <AndroidBuild Include="project.properties" />
-    <AndroidBuild Include="proguard.cfg" />
     <AndroidBuild Include="res\values\strings.xml">
       <Filter>res\values</Filter>
     </AndroidBuild>
@@ -72,23 +81,227 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="assets\res\box.fbx">
-      <Filter>assets\res</Filter>
-    </None>
-    <None Include="assets\res\box.gpb">
-      <Filter>assets\res</Filter>
-    </None>
-    <None Include="assets\res\box.material">
-      <Filter>assets\res</Filter>
-    </None>
-    <None Include="assets\res\colored.frag">
-      <Filter>assets\res</Filter>
-    </None>
-    <None Include="assets\res\colored.vert">
-      <Filter>assets\res</Filter>
-    </None>
-    <None Include="assets\game.config">
+    <None Include="..\assets\game.config">
       <Filter>assets</Filter>
+    </None>
+    <None Include="..\assets\res\common\boy.animation">
+      <Filter>assets\res\common</Filter>
+    </None>
+    <None Include="..\assets\res\common\chair.animation">
+      <Filter>assets\res\common</Filter>
+    </None>
+    <None Include="..\assets\res\common\gamepad.form">
+      <Filter>assets\res\common</Filter>
+    </None>
+    <None Include="..\assets\res\common\gamepad.theme">
+      <Filter>assets\res\common</Filter>
+    </None>
+    <None Include="..\assets\res\common\sample.gpb">
+      <Filter>assets\res\common</Filter>
+    </None>
+    <None Include="..\assets\res\common\sample.material">
+      <Filter>assets\res\common</Filter>
+    </None>
+    <None Include="..\assets\res\common\sample.physics">
+      <Filter>assets\res\common</Filter>
+    </None>
+    <None Include="..\assets\res\common\sample.scene">
+      <Filter>assets\res\common</Filter>
+    </None>
+    <None Include="..\assets\res\png\arial.ttf">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\backboard.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\basketball.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\basketballnet.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\book.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\bookshelf.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\boy.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\character.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\decals.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\door.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\doorframe.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\easel.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\floor.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\floortiles.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\gamepad.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\playtable.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\shadow.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\storageorganizer.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\tableleg1.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\tableleg2.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\tableleg3.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\tableleg4.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\tabletop.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\tiles.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\tilesn.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\toybox.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\walleast.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\wallnorth.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\walloverhang.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\wallsouth.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\wallwest.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\windowledge.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\wood.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\png\woodn.png">
+      <Filter>assets\res\png</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\colored.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\colored.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\colored-unlit.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\colored-unlit.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\font.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\font.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\form.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\form.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\lighting.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\lighting.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\lighting-directional.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\lighting-directional.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\lighting-point.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\lighting-point.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\lighting-spot.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\lighting-spot.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\skinning.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\skinning-none.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\sprite.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\sprite.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\terrain.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\terrain.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\textured.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\textured.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\textured-bumped.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\textured-bumped.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\textured-unlit.frag">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\shaders\textured-unlit.vert">
+      <Filter>assets\res\shaders</Filter>
+    </None>
+    <None Include="..\assets\res\ui\arial.gpb">
+      <Filter>assets\res\ui</Filter>
+    </None>
+    <None Include="..\assets\res\ui\default.theme">
+      <Filter>assets\res\ui</Filter>
+    </None>
+    <None Include="..\assets\res\ui\default-theme.png">
+      <Filter>assets\res\ui</Filter>
     </None>
   </ItemGroup>
 </Project>
