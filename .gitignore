@@ -1,6 +1,3 @@
-## android projects assets
-[Aa]ndroid/assets/
-
 #################
 ## Eclipse
 #################
@@ -217,3 +214,4 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
+wallpapers/forest/android/assets/
