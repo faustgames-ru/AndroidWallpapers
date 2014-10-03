@@ -1,0 +1,19 @@
+scene
+{
+    path = res/common/asteroidstest.gpb
+
+    node sphere
+    {
+        material = res/common/sample.material#boy
+        tags
+        {
+            dynamic
+        }
+    }
+
+    physics
+    {
+        // TODO: Fixme Gravity is set to 3x normal gravity to compenate for larger scale of scene. Bug
+        gravity = 0.0, -29.4, 0.0
+    }
+}

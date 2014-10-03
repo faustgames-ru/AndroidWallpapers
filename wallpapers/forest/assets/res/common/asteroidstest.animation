@@ -1,0 +1,10 @@
+animation animations
+{
+    frameCount = 60
+	clip idle
+    {
+        begin = 0
+        end = 60
+        repeatCount = INDEFINITE
+    }
+}

@@ -152,7 +152,7 @@
     </Link>
     <AntBuild>
       <AntBuildPath>$(ProjectDir)\</AntBuildPath>
-      <AssetsDirectories>$(ProjectDir)..\assets;%(AssetsDirectories)</AssetsDirectories>
+      <AssetsDirectories>$(ProjectDir)..\assets</AssetsDirectories>
     </AntBuild>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
