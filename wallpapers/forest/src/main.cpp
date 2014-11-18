@@ -19,6 +19,16 @@ AsteroidsTest game;
 #define BUTTON_1 0
 #define BUTTON_2 1
 
+static const unsigned int MOVE_FORWARD = 1;
+static const unsigned int MOVE_BACKWARD = 2;
+static const unsigned int MOVE_LEFT = 4;
+static const unsigned int MOVE_RIGHT = 8;
+static const unsigned int MOVE_UP = 16;
+static const unsigned int MOVE_DOWN = 32;
+
+static const float MOVE_SPEED = 15.0f;
+static const float UP_DOWN_SPEED = 10.0f;
+
 AsteroidsTest::AsteroidsTest()
     : _font(NULL), _scene(NULL), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _currentClip(NULL), _jumpClip(NULL), _kickClip(NULL), _rotateX(0), _materialParameterAlpha(NULL),
@@ -39,26 +49,28 @@ void AsteroidsTest::initialize()
     _font = Font::create("res/ui/arial.gpb");
 
     // Load scene.
-    _scene = Scene::load("res/common/asteroidstest.scene");
+    _scene = Scene::load("res/common/solarsystem.scene");
 
     // Update the aspect ratio for our scene's camera to match the current device resolution.
     _scene->getActiveCamera()->setAspectRatio(getAspectRatio());
+
+	Vector3 cameraPosition(5, 5, 1);
+	if (Camera* camera = _scene->getActiveCamera())
+	{
+		camera->getNode()->getTranslation(&cameraPosition);
+	}
+
+	_fpCamera.initialize();
+	_fpCamera.setPosition(cameraPosition);
+	_scene->addNode(_fpCamera.getRootNode());
+	_scene->setActiveCamera(_fpCamera.getCamera());
+
     
     // Initialize the physics character.
     //initializeCharacter();
 	//initializeChair();
-	initializeAsteroids();
-
-    // Create a collision object for the ceiling.
-    Node* ceiling = _scene->addNode("ceiling");
-    ceiling->setTranslationY(14.5f);
-    PhysicsRigidBody::Parameters rbParams;
-    rbParams.mass = 0.0f;
-    rbParams.friction = 0.5f;
-    rbParams.restitution = 0.75f;
-    rbParams.linearDamping = 0.025f;
-    rbParams.angularDamping = 0.16f;
-    ceiling->setCollisionObject(PhysicsCollisionObject::RIGID_BODY, PhysicsCollisionShape::box(Vector3(49.5f, 1.0f, 49.5f)), &rbParams);
+	//initializeAsteroids();
+	initializeSolarSystem();
 
     // Initialize scene.
 	_scene->visit(this, &AsteroidsTest::initializeScene);
@@ -69,9 +81,22 @@ void AsteroidsTest::initialize()
 bool AsteroidsTest::initializeScene(Node* node)
 {
     Model* model = node->getModel();
-    if (model && model->getMaterial())
+    if (model)
     {
-        initializeMaterial(_scene, node, model->getMaterial());
+		if (model->getMeshPartCount() > 1)
+		{
+			for (int i = 0; i < model->getMeshPartCount(); i++)
+			{
+				initializeMaterial(_scene, node, model->getMaterial(i));
+			}
+		}
+		else
+		{
+			if (model->getMaterial())
+			{
+				initializeMaterial(_scene, node, model->getMaterial());
+			}
+		}
     }
 
     return true;
@@ -88,6 +113,8 @@ void AsteroidsTest::initializeMaterial(Scene* scene, Node* node, Material* mater
         {
             material->getParameter("u_directionalLightColor[0]")->bindValue(lightNode->getLight(), &Light::getColor);
             material->getParameter("u_directionalLightDirection[0]")->bindValue(lightNode, &Node::getForwardVectorView);
+			material->getParameter("u_lightColor")->bindValue(lightNode->getLight(), &Light::getColor);
+			material->getParameter("u_lightDirection")->bindValue(lightNode, &Node::getForwardVectorView);
         }
     }
 }
@@ -101,6 +128,21 @@ void AsteroidsTest::initializeAsteroids()
 	if (animation)
 	{
 		animation->createClips("res/common/asteroidstest.animation");
+		AnimationClip* clip = animation->getClip("idle");
+		clip->setSpeed(1.0f);
+		clip->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
+		clip->play();
+	}
+}
+
+void AsteroidsTest::initializeSolarSystem()
+{
+	//gameplay - encoder.exe - tb solarsystem - g root animations solarsystem.fbx solarsystem.gpb
+	Node* node = _scene->findNode("solarsystem");
+	Animation* animation = node->getAnimation("animations");
+	if (animation)
+	{
+		animation->createClips("res/common/solarsystem.animation");
 		AnimationClip* clip = animation->getClip("idle");
 		clip->setSpeed(1.0f);
 		clip->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
@@ -165,7 +207,15 @@ void AsteroidsTest::play(const char* id, bool repeat, float speed)
 
 void AsteroidsTest::update(float elapsedTime)
 {
-
+	_scene->findNode("rootmercury")->rotateZ(0.001f * elapsedTime);
+	_scene->findNode("rootvenus")->rotateZ(0.0015f * elapsedTime);
+	_scene->findNode("rootearth")->rotateZ(0.0012f * elapsedTime);
+	_scene->findNode("rootmars")->rotateZ(0.0016f * elapsedTime);
+	_scene->findNode("rootjupiter")->rotateZ(0.0018f * elapsedTime);
+	_scene->findNode("rootsaturn")->rotateZ(0.002f * elapsedTime);
+	_scene->findNode("rooturanus")->rotateZ(0.003f * elapsedTime);
+	_scene->findNode("rootneptune")->rotateZ(0.0018f * elapsedTime);
+	_scene->findNode("rootpluto")->rotateZ(0.0019f * elapsedTime);
 }
 
 void AsteroidsTest::render(float elapsedTime)
@@ -189,4 +239,105 @@ void AsteroidsTest::render(float elapsedTime)
     sprintf(fps, "%d", getFrameRate());
     _font->drawText(fps, 5, 5, Vector4(1,1,0,1), 20);
     _font->finish();
+}
+
+void AsteroidsTest::touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contactIndex)
+{
+	switch (evt)
+	{
+	case Touch::TOUCH_PRESS:
+		if (x < 75 && y < 50)
+		{
+			// Toggle Vsync if the user touches the top left corner
+			setVsync(!isVsync());
+		}
+		_prevX = x;
+		_prevY = y;
+		break;
+	case Touch::TOUCH_RELEASE:
+		_prevX = 0;
+		_prevY = 0;
+		break;
+	case Touch::TOUCH_MOVE:
+	{
+							  int deltaX = x - _prevX;
+							  int deltaY = y - _prevY;
+							  _prevX = x;
+							  _prevY = y;
+							  float pitch = -MATH_DEG_TO_RAD(deltaY * 0.5f);
+							  float yaw = MATH_DEG_TO_RAD(deltaX * 0.5f);
+							  _fpCamera.rotate(yaw, pitch);
+							  break;
+	}
+	};
+}
+
+void AsteroidsTest::keyEvent(Keyboard::KeyEvent evt, int key)
+{
+	if (evt == Keyboard::KEY_PRESS)
+	{
+		switch (key)
+		{
+		case Keyboard::KEY_W:
+			_moveFlags |= MOVE_FORWARD;
+			break;
+		case Keyboard::KEY_S:
+			_moveFlags |= MOVE_BACKWARD;
+			break;
+		case Keyboard::KEY_A:
+			_moveFlags |= MOVE_LEFT;
+			break;
+		case Keyboard::KEY_D:
+			_moveFlags |= MOVE_RIGHT;
+			break;
+
+		case Keyboard::KEY_Q:
+			_moveFlags |= MOVE_DOWN;
+			break;
+		case Keyboard::KEY_E:
+			_moveFlags |= MOVE_UP;
+			break;
+		case Keyboard::KEY_PG_UP:
+			_fpCamera.rotate(0, MATH_PIOVER4);
+			break;
+		case Keyboard::KEY_PG_DOWN:
+			_fpCamera.rotate(0, -MATH_PIOVER4);
+			break;
+		}
+	}
+	else if (evt == Keyboard::KEY_RELEASE)
+	{
+		switch (key)
+		{
+		case Keyboard::KEY_W:
+			_moveFlags &= ~MOVE_FORWARD;
+			break;
+		case Keyboard::KEY_S:
+			_moveFlags &= ~MOVE_BACKWARD;
+			break;
+		case Keyboard::KEY_A:
+			_moveFlags &= ~MOVE_LEFT;
+			break;
+		case Keyboard::KEY_D:
+			_moveFlags &= ~MOVE_RIGHT;
+			break;
+		case Keyboard::KEY_Q:
+			_moveFlags &= ~MOVE_DOWN;
+			break;
+		case Keyboard::KEY_E:
+			_moveFlags &= ~MOVE_UP;
+			break;
+		}
+	}
+}
+
+bool AsteroidsTest::mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta)
+{
+	switch (evt)
+	{
+	case Mouse::MOUSE_WHEEL:
+		_fpCamera.moveForward(wheelDelta * MOVE_SPEED / 2.0f);
+		return true;
+	}
+	return false;
 }

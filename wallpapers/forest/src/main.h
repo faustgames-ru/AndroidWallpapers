@@ -2,6 +2,7 @@
 #define CHARACTERGAME_H_
 
 #include "gameplay.h"
+#include "TargetCamera.h"
 using namespace gameplay;
 
 /**
@@ -38,11 +39,16 @@ protected:
      */
     void render(float elapsedTime);
 
+	bool mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta);
+	void keyEvent(Keyboard::KeyEvent evt, int key);
+	void touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contactIndex);
+
 private:
     
     bool initializeScene(Node* node);
     void initializeMaterial(Scene* scene, Node* node, Material* material);
 	void initializeAsteroids();
+	void initializeSolarSystem();
     void drawSplash(void* param);
     bool drawScene(Node* node, bool transparent);
     void play(const char* id, bool repeat, float speed = 1.0f);
@@ -72,7 +78,11 @@ private:
     bool* _buttonPressed;
     Vector2 _currentDirection;
     Gamepad* _gamepad;
-
+	Camera* _camera;
+	TargetCamera _fpCamera;
+	unsigned int _moveFlags;
+	int _prevX;
+	int _prevY;
 };
 
 #endif 

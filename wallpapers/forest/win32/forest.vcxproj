@@ -344,10 +344,14 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\src\FirstPersonCamera.cpp" />
     <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\TargetCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\src\FirstPersonCamera.h" />
     <ClInclude Include="..\src\main.h" />
+    <ClInclude Include="..\src\TargetCamera.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

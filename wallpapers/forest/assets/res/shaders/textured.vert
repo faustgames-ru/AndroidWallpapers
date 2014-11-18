@@ -1,167 +1,92 @@
-#ifndef DIRECTIONAL_LIGHT_COUNT
-#define DIRECTIONAL_LIGHT_COUNT 0
-#endif
-#ifndef SPOT_LIGHT_COUNT
-#define SPOT_LIGHT_COUNT 0
-#endif
-#ifndef POINT_LIGHT_COUNT
-#define POINT_LIGHT_COUNT 0
-#endif
-#if (DIRECTIONAL_LIGHT_COUNT > 0) || (POINT_LIGHT_COUNT > 0) || (SPOT_LIGHT_COUNT > 0)
 #define LIGHTING
-#endif
 
-///////////////////////////////////////////////////////////
-// Atributes
-attribute vec4 a_position;
-
+// Attributes
+attribute vec4 a_position;									// Vertex position							(x, y, z, w)
+attribute vec3 a_normal;									// Vertex normal							(x, y, z)
+attribute vec2 a_texCoord;									// Vertex texture coordinate				(u, v)
 #if defined(SKINNING)
-attribute vec4 a_blendWeights;
-attribute vec4 a_blendIndices;
+attribute vec4 a_blendWeights;								// Vertex blend weight, up to 4				(0, 1, 2, 3) 
+attribute vec4 a_blendIndices;								// Vertex blend index int u_matrixPalette	(0, 1, 2, 3)
 #endif
 
-attribute vec2 a_texCoord;
-
-#if defined(LIGHTMAP)
-attribute vec2 a_texCoord1; 
-#endif
-
-#if defined(LIGHTING)
-attribute vec3 a_normal;
-
-#if defined(BUMPED)
-attribute vec3 a_tangent;
-attribute vec3 a_binormal;
-#endif
-
-#endif
-
-///////////////////////////////////////////////////////////
 // Uniforms
-uniform mat4 u_worldViewProjectionMatrix;
+uniform mat4 u_worldViewProjectionMatrix;					// Matrix to transform a position to clip space
+uniform mat4 u_inverseTransposeWorldViewMatrix;				// Matrix to transform a normal to view space
+#if defined(SPECULAR) || defined(SPOT_LIGHT) || defined(POINT_LIGHT)
+uniform mat4 u_worldViewMatrix;								// Matrix to tranform a position to view space
+#endif
 #if defined(SKINNING)
-uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];
+uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];		// Array of 4x3 matrices
 #endif
-
-#if defined(LIGHTING)
-uniform mat4 u_inverseTransposeWorldViewMatrix;
-
-#if defined(SPECULAR) || (POINT_LIGHT_COUNT > 0) || (SPOT_LIGHT_COUNT > 0)
-uniform mat4 u_worldViewMatrix;
-#endif
-
-#if defined(BUMPED) && (DIRECTIONAL_LIGHT_COUNT > 0)
-uniform vec3 u_directionalLightDirection[DIRECTIONAL_LIGHT_COUNT];
-#endif
-
-#if (POINT_LIGHT_COUNT > 0)
-uniform vec3 u_pointLightPosition[POINT_LIGHT_COUNT];
-#endif
-
-#if (SPOT_LIGHT_COUNT > 0) 
-uniform vec3 u_spotLightPosition[SPOT_LIGHT_COUNT];
-#if defined(BUMPED)
-uniform vec3 u_spotLightDirection[SPOT_LIGHT_COUNT];
-#endif
-#endif
-
 #if defined(SPECULAR)
-uniform vec3 u_cameraPosition;
+uniform vec3 u_cameraPosition;                 				// Position of the camera in view space
 #endif
-
-#endif
-
 #if defined(TEXTURE_REPEAT)
-uniform vec2 u_textureRepeat;
+uniform vec2 u_textureRepeat;								// Texture repeat for tiling
 #endif
-
 #if defined(TEXTURE_OFFSET)
-uniform vec2 u_textureOffset;
+uniform vec2 u_textureOffset;								// Texture offset
+#endif
+#if defined(POINT_LIGHT)
+uniform vec3 u_pointLightPosition;							// Position of light
+uniform float u_pointLightRangeInverse;						// Inverse of light range 
+#elif defined(SPOT_LIGHT)
+uniform vec3 u_spotLightPosition;							// Position of light
+uniform float u_spotLightRangeInverse;						// Inverse of light range
+uniform vec3 u_spotLightDirection;                          // Direction of a spot light source
+#else
 #endif
 
-///////////////////////////////////////////////////////////
 // Varyings
-varying vec2 v_texCoord;
-
-#if defined(LIGHTMAP)
-varying vec2 v_texCoord1;
-#endif
-
-#if defined(LIGHTING)
-
-#if !defined(BUMPED)
-varying vec3 v_normalVector;
-#endif
-
-#if defined(BUMPED) && (DIRECTIONAL_LIGHT_COUNT > 0)
-varying vec3 v_directionalLightDirection[DIRECTIONAL_LIGHT_COUNT];
-#endif
-
-#if (POINT_LIGHT_COUNT > 0)
-varying vec3 v_vertexToPointLightDirection[POINT_LIGHT_COUNT];
-#endif
-
-#if (SPOT_LIGHT_COUNT > 0)
-varying vec3 v_vertexToSpotLightDirection[SPOT_LIGHT_COUNT];
-#if defined(BUMPED)
-varying vec3 v_spotLightDirection[SPOT_LIGHT_COUNT];
-#endif
-#endif
-
+varying vec3 v_normalVector;								// Normal vector in view space
+varying vec2 v_texCoord;									// Texture coordinate
 #if defined(SPECULAR)
-varying vec3 v_cameraDirection;
+varying vec3 v_cameraDirection;								// Direction the camera is looking at in tangent space
+#endif
+#if defined(POINT_LIGHT)
+varying vec3 v_vertexToPointLightDirection;					// Direction of point light w.r.t current vertex in tangent space
+varying float v_pointLightAttenuation;						// Attenuation of point light
+#include "lighting-point.vert"
+#elif defined(SPOT_LIGHT)
+varying vec3 v_vertexToSpotLightDirection;					// Direction of the spot light w.r.t current vertex in tangent space
+varying float v_spotLightAttenuation;						// Attenuation of spot light
+
+// Lighting
+#include "lighting-spot.vert"
+#else
+#include "lighting-directional.vert"
 #endif
 
-#include "lighting.vert"
-
-#endif
-
+// Skinning
 #if defined(SKINNING)
 #include "skinning.vert"
 #else
 #include "skinning-none.vert" 
 #endif
 
+
 void main()
 {
+    // Get the position and normal
     vec4 position = getPosition();
+    vec3 normal = getNormal();
+
+    // Transform position to clip space.
     gl_Position = u_worldViewProjectionMatrix * position;
 
-    #if defined(LIGHTING)
-    vec3 normal = getNormal();
-    // Transform the normal, tangent and binormals to view space.
-    mat3 inverseTransposeWorldViewMatrix = mat3(u_inverseTransposeWorldViewMatrix[0].xyz, u_inverseTransposeWorldViewMatrix[1].xyz, u_inverseTransposeWorldViewMatrix[2].xyz);
-    vec3 normalVector = normalize(inverseTransposeWorldViewMatrix * normal);
-    
-    #if defined(BUMPED)
-    
-    vec3 tangent = getTangent();
-    vec3 binormal = getBinormal();
-    vec3 tangentVector  = normalize(inverseTransposeWorldViewMatrix * tangent);
-    vec3 binormalVector = normalize(inverseTransposeWorldViewMatrix * binormal);
-    mat3 tangentSpaceTransformMatrix = mat3(tangentVector.x, binormalVector.x, normalVector.x, tangentVector.y, binormalVector.y, normalVector.y, tangentVector.z, binormalVector.z, normalVector.z);
-    applyLight(position, tangentSpaceTransformMatrix);
-    
-    #else
-    
-    v_normalVector = normalVector;
+    // Transform normal to view space.
+	mat3 normalMatrix = mat3(u_inverseTransposeWorldViewMatrix[0].xyz, u_inverseTransposeWorldViewMatrix[1].xyz, u_inverseTransposeWorldViewMatrix[2].xyz);
+    v_normalVector = normalMatrix * normal;
+
+    // Apply light.
     applyLight(position);
-    
-    #endif
-    
-    #endif 
-    
+
+    // Texture transformation
     v_texCoord = a_texCoord;
-    
     #if defined(TEXTURE_REPEAT)
     v_texCoord *= u_textureRepeat;
     #endif
-    
     #if defined(TEXTURE_OFFSET)
     v_texCoord += u_textureOffset;
-    #endif
-    
-    #if defined(LIGHTMAP)
-    v_texCoord1 = a_texCoord1;
     #endif
 }

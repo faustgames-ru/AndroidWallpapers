@@ -70,7 +70,7 @@ material texturedTransparent
         {
             vertexShader = res/shaders/textured.vert
             fragmentShader = res/shaders/textured.frag
-            defines = DIRECTIONAL_LIGHT_COUNT 1
+            //defines = DIRECTIONAL_LIGHT_COUNT 1
 
             u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
             u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
@@ -91,6 +91,48 @@ material texturedTransparent
 	            blend = true
                 blendSrc = SRC_ALPHA
                 blendDst = ONE_MINUS_SRC_ALPHA
+            }
+        }
+    }
+}
+
+material texturedBumped
+{
+    technique
+    {
+        pass
+        {
+            // shaders
+            vertexShader = res/shaders/textured-bumped.vert
+            fragmentShader = res/shaders/textured-bumped.frag
+			//defines = DIRECTIONAL_LIGHT_COUNT 1
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            // samplers
+            sampler u_diffuseTexture
+            {
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+			
+			sampler u_normalmapTexture
+            {
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
             }
         }
     }
@@ -118,7 +160,7 @@ material colored
     }
 }
 
-material boy : texturedTransparent
+material skinedmesh : texturedTransparent
 {
     technique
     {
@@ -127,16 +169,38 @@ material boy : texturedTransparent
             defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
             u_matrixPalette = MATRIX_PALETTE
             u_modulateAlpha = 1.0
+        }
+    }
+}
 
+material skinedmeshbumped : texturedBumped
+{
+    technique
+    {
+        pass
+        {
+            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            u_matrixPalette = MATRIX_PALETTE
+            u_modulateAlpha = 1.0
+        }
+    }
+}
+
+material mtmercury : skinedmesh
+{
+    technique
+    {
+        pass
+        {
             sampler u_diffuseTexture
             {
-                path = @wood
+                path = @mercury 
             }
         }
     }
 }
 
-material boyshadow : texturedTransparent
+material mtvenus : skinedmesh
 {
     technique
     {
@@ -144,13 +208,13 @@ material boyshadow : texturedTransparent
         {
             sampler u_diffuseTexture
             {
-                path = @shadow
+                path = @venus 
             }
         }
     }
 }
 
-material floortiles : texturedUnlit
+material mtearth : skinedmeshbumped
 {
     technique
     {
@@ -158,13 +222,17 @@ material floortiles : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @floortiles
+                path = @earth
+            }
+			sampler u_normalmapTexture
+            {
+                path = @earthbump
             }
         }
     }
 }
 
-material floor : texturedUnlit
+material mtmars : skinedmesh
 {
     technique
     {
@@ -172,13 +240,13 @@ material floor : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @floor
+                path = @mars
             }
         }
     }
 }
 
-material wallwest : texturedUnlit
+material mtjupiter : skinedmesh
 {
     technique
     {
@@ -186,13 +254,13 @@ material wallwest : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @wallwest
+                path = @jupiter
             }
         }
     }
 }
 
-material walleast : texturedUnlit
+material mtsaturn : skinedmesh
 {
     technique
     {
@@ -200,13 +268,13 @@ material walleast : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @walleast
+                path = @saturn
             }
         }
     }
 }
 
-material wallnorth : texturedUnlit
+material mturanus : skinedmesh
 {
     technique
     {
@@ -214,13 +282,13 @@ material wallnorth : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @wallnorth
+                path = @uranus
             }
         }
     }
 }
 
-material wallsouth : texturedUnlit
+material mtneptune : skinedmesh
 {
     technique
     {
@@ -228,13 +296,13 @@ material wallsouth : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @wallsouth
+                path = @neptune
             }
         }
     }
 }
 
-material walloverhang : texturedUnlit
+material mtpluto : skinedmesh
 {
     technique
     {
@@ -242,13 +310,13 @@ material walloverhang : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @walloverhang
+                path = @pluto
             }
         }
     }
 }
 
-material toybox : texturedUnlit
+material mtsun : skinedmesh
 {
     technique
     {
@@ -256,53 +324,27 @@ material toybox : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @toybox
+                path = @sun
             }
         }
     }
 }
 
-material green : colored
+material mtsaturnring : skinedmesh
 {
     technique
     {
         pass
         {
-            u_diffuseColor = 0.65, 0.7, 0, 1
-        }
-    }
-}
-
-material lightblue : colored
-{
-    technique
-    {
-        pass
-        {
-            u_diffuseColor = 0.38, 0.72, 0.85, 1
-        }
-    }
-}
-
-material basketball : texturedSpecular
-{
-    technique
-    {
-        pass
-        {
-            u_specularExponent = 12
-
             sampler u_diffuseTexture
             {
-                path = @basketball
-                wrapS = REPEAT
-                wrapT = REPEAT
+                path = @saturnring
             }
         }
     }
 }
 
-material playtable : texturedUnlit
+material mturanusring : skinedmesh
 {
     technique
     {
@@ -310,203 +352,7 @@ material playtable : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @playtable
-            }
-        }
-    }
-}
-
-material easel : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @easel
-            }
-        }
-    }
-}
-
-material door : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @door
-            }
-        }
-    }
-}
-
-material basketballnet : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @basketballnet
-            }
-        }
-    }
-}
-
-material backboard : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @backboard
-            }
-        }
-    }
-}
-
-material doorframe : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @doorframe
-            }
-        }
-    }
-}
-
-material windowledge : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @windowledge
-            }
-        }
-    }
-}
-
-material bookshelf : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @bookshelf
-            }
-        }
-    }
-}
-
-material book : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @book
-            }
-        }
-    }
-}
-
-material tabletop : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @tabletop
-            }
-        }
-    }
-}
-
-material tableleg1 : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @tableleg1
-            }
-        }
-    }
-}
-
-material tableleg2 : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @tableleg2
-            }
-        }
-    }
-}
-
-material tableleg3 : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @tableleg3
-            }
-        }
-    }
-}
-
-material tableleg4 : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @tableleg4
-            }
-        }
-    }
-}
-
-material storageorganizer : texturedUnlit
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @storageorganizer
+                path = @uranusring
             }
         }
     }

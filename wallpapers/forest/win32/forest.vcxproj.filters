@@ -34,9 +34,21 @@
     <ClCompile Include="..\src\main.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\FirstPersonCamera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\TargetCamera.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\main.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\FirstPersonCamera.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TargetCamera.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

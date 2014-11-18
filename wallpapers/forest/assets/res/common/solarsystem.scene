@@ -1,10 +1,10 @@
 scene
 {
-    path = res/common/asteroidstest.gpb
+    path = res/common/solarsystem.gpb
 
-    node sphere
+    node solarsystem
     {
-        material = res/common/asteroidstest.material#boy
+        //material = res/common/solarsystem.material#spheresmall	
         tags
         {
             dynamic

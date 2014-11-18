@@ -130,7 +130,48 @@ material boy : texturedTransparent
 
             sampler u_diffuseTexture
             {
-                path = @wood
+                path = @wood 
+            }
+        }
+    }
+}
+
+material skinedmesh : texturedTransparent
+{
+    technique
+    {
+        pass
+        {
+            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            u_matrixPalette = MATRIX_PALETTE
+            u_modulateAlpha = 1.0
+        }
+    }
+}
+
+material spherebig : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @wood 
+            }
+        }
+    }
+}
+
+material spheresmall : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @basketball 
             }
         }
     }
