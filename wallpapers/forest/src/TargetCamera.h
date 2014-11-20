@@ -46,6 +46,13 @@ public:
      */
     Camera* getCamera();
 
+	/**
+	* Sets the rotation of the camera.
+	*
+	* @param rotation.
+	*/
+	void setRotation(const Matrix& rotation);
+
     /**
      * Sets the position of the camera.
      * 

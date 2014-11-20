@@ -4,8 +4,8 @@ material texturedUnlit
     {
         pass
         {
-            vertexShader = res/shaders/textured.vert
-            fragmentShader = res/shaders/textured.frag
+            vertexShader = res/shaders/textured-unlit.vert
+            fragmentShader = res/shaders/textured-unlit.frag
 
             u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
             
@@ -160,6 +160,109 @@ material colored
     }
 }
 
+material spaceskyboxBK : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxBK 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxDN : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxDN 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxFT : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxFT 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxLF : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxLF 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxRT : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxRT 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxUP : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxUP 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+
 material skinedmesh : texturedTransparent
 {
     technique
@@ -174,6 +277,19 @@ material skinedmesh : texturedTransparent
 }
 
 material skinedmeshbumped : texturedBumped
+{
+    technique
+    {
+        pass
+        {
+            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            u_matrixPalette = MATRIX_PALETTE
+            u_modulateAlpha = 1.0
+        }
+    }
+}
+
+material skinedmeshunlit : texturedUnlit
 {
     technique
     {
@@ -316,7 +432,7 @@ material mtpluto : skinedmesh
     }
 }
 
-material mtsun : skinedmesh
+material mtsun : skinedmeshunlit
 {
     technique
     {
