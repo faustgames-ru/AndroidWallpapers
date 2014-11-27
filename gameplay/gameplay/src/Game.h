@@ -129,7 +129,7 @@ public:
 	/**
      * restoreDeviceObjects.
      */
-    void restoreDeviceObjects();
+    virtual void restoreDeviceObjects();
 
     /**
      * Called to initialize the game, and begin running the game.

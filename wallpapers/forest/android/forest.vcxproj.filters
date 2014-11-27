@@ -71,12 +71,18 @@
     <ClCompile Include="..\src\nativeinterface.cpp">
       <Filter>jni</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\TargetCamera.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\main.h">
       <Filter>jni</Filter>
     </ClInclude>
     <ClInclude Include="..\src\nativeinterface.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\TargetCamera.h">
       <Filter>jni</Filter>
     </ClInclude>
   </ItemGroup>

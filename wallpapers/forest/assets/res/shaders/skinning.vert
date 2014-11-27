@@ -22,17 +22,19 @@ vec4 getPosition()
     int matrixIndex = int (a_blendIndices[0]) * 3;
     skinPosition(blendWeight, matrixIndex);
 
-    blendWeight = a_blendWeights[1];
-    matrixIndex = int(a_blendIndices[1]) * 3;
-    skinPosition(blendWeight, matrixIndex);
+	#if !defined(BATCHING)
+		blendWeight = a_blendWeights[1];
+		matrixIndex = int(a_blendIndices[1]) * 3;
+		skinPosition(blendWeight, matrixIndex);
 
-    blendWeight = a_blendWeights[2];
-    matrixIndex = int(a_blendIndices[2]) * 3;
-    skinPosition(blendWeight, matrixIndex);
+		blendWeight = a_blendWeights[2];
+		matrixIndex = int(a_blendIndices[2]) * 3;
+		skinPosition(blendWeight, matrixIndex);
 
-    blendWeight = a_blendWeights[3];
-    matrixIndex = int(a_blendIndices[3]) * 3;
-    skinPosition(blendWeight, matrixIndex);
+		blendWeight = a_blendWeights[3];
+		matrixIndex = int(a_blendIndices[3]) * 3;
+		skinPosition(blendWeight, matrixIndex);
+	#endif
 
     return _skinnedPosition;    
 }
@@ -57,17 +59,19 @@ vec3 getTangentSpaceVector(vec3 vector)
     int matrixIndex = int (a_blendIndices[0]) * 3;
     skinTangentSpaceVector(vector, blendWeight, matrixIndex);
 
-    blendWeight = a_blendWeights[1];
-    matrixIndex = int(a_blendIndices[1]) * 3;
-    skinTangentSpaceVector(vector, blendWeight, matrixIndex);
+	#if !defined(BATCHING)
+		blendWeight = a_blendWeights[1];
+		matrixIndex = int(a_blendIndices[1]) * 3;
+		skinTangentSpaceVector(vector, blendWeight, matrixIndex);
 
-    blendWeight = a_blendWeights[2];
-    matrixIndex = int(a_blendIndices[2]) * 3;
-    skinTangentSpaceVector(vector, blendWeight, matrixIndex);
+		blendWeight = a_blendWeights[2];
+		matrixIndex = int(a_blendIndices[2]) * 3;
+		skinTangentSpaceVector(vector, blendWeight, matrixIndex);
 
-    blendWeight = a_blendWeights[3];
-    matrixIndex = int(a_blendIndices[3]) * 3;
-    skinTangentSpaceVector(vector, blendWeight, matrixIndex);
+		blendWeight = a_blendWeights[3];
+		matrixIndex = int(a_blendIndices[3]) * 3;
+		skinTangentSpaceVector(vector, blendWeight, matrixIndex);
+	#endif
 
     return _skinnedNormal;
 }

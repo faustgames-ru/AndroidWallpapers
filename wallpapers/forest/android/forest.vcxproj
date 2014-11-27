@@ -26,6 +26,7 @@
   <ItemGroup>
     <ClCompile Include="..\src\main.cpp" />
     <ClCompile Include="..\src\nativeinterface.cpp" />
+    <ClCompile Include="..\src\TargetCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
     <JCompile Include="src\com\faustgames\forest\forest.java" />
@@ -37,6 +38,7 @@
   <ItemGroup>
     <ClInclude Include="..\src\main.h" />
     <ClInclude Include="..\src\nativeinterface.h" />
+    <ClInclude Include="..\src\TargetCamera.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\assets\game.config" />
@@ -158,9 +160,13 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
     <ClCompile>
       <PreprocessorDefinitions>DISABLE_IMPORTGL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\src;$(ProjectDir)..\..\..\gameplay\gameplay\src;$(ProjectDir)..\..\..\gameplay\external-deps\bullet\src\;$(ProjectDir)..\..\..\gameplay\external-deps\libpng\include\;$(ProjectDir)..\..\..\gameplay\external-deps\lua\include\;$(ProjectDir)..\..\..\gameplay\external-deps\oggvorbis\include\;$(ProjectDir)..\..\..\gameplay\external-deps\openal\include\;$(ProjectDir)..\..\..\gameplay\external-deps\zlib\include\;$(ProjectDir)..\..\..\gameplay\external-deps\glew\include\;$(IncludePath);native_app_glue;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalOptions>-lGLESv1_CM %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\Tegra-Android\Release\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gameplay;bullet;png;vorbis;ogg;lua;openal</AdditionalDependencies>
+      <AndroidSystemLibs>android;m;log;dl;GLESv2;EGL;c;gcc;z</AndroidSystemLibs>
     </Link>
     <AntBuild>
       <AntBuildPath>$(ProjectDir)\</AntBuildPath>

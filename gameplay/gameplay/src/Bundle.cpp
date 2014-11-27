@@ -1737,9 +1737,7 @@ Font* Bundle::loadFont(const char* id)
 
         // Create the texture for the font.
         Texture* texture = Texture::create(Texture::ALPHA, width, height, textureData, true);
-
-        // Free the texture data (no longer needed).
-        SAFE_DELETE_ARRAY(textureData);
+		// Don`t free the texture data (needs for restore).
 
         if (texture == NULL)
         {

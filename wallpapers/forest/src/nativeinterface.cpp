@@ -30,9 +30,10 @@ Java_com_faustgames_forest_NativeInterface_onSurfaceChanged(JNIEnv* env, jobject
     }
     else
     {
-        Game::getInstance()->restoreDeviceObjects();
+		Texture::restoreDeviceObjects();
 		Mesh::RestoreDeviceObjects();
 		Effect::RestoreDeviceObjects();
+		Game::getInstance()->restoreDeviceObjects();
     }	
 }
 

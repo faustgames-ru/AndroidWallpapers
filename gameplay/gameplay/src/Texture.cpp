@@ -51,7 +51,8 @@ static std::vector<Texture*> __textureCache;
 static TextureHandle __currentTextureId;
 
 Texture::Texture() : _handle(0), _format(UNKNOWN), _width(0), _height(0), _mipmapped(false), _cached(false), _compressed(false),
-    _wrapS(Texture::REPEAT), _wrapT(Texture::REPEAT), _minFilter(Texture::NEAREST_MIPMAP_LINEAR), _magFilter(Texture::LINEAR)
+_wrapS(Texture::REPEAT), _wrapT(Texture::REPEAT), _minFilter(Texture::NEAREST_MIPMAP_LINEAR), _magFilter(Texture::LINEAR), _PNGimage(NULL),
+_textureData(NULL), _generateMipmaps(false)
 {
 }
 
@@ -72,6 +73,8 @@ Texture::~Texture()
             __textureCache.erase(itr);
         }
     }
+	SAFE_RELEASE(_PNGimage);
+	SAFE_DELETE_ARRAY(_textureData);
 }
 
 Texture* Texture::create(const char* path, bool generateMipmaps)
@@ -87,6 +90,7 @@ Texture* Texture::create(const char* path, bool generateMipmaps)
         {
             // If 'generateMipmaps' is true, call Texture::generateMipamps() to force the
             // texture to generate its mipmap chain if it hasn't already done so.
+			t->_generateMipmaps = generateMipmaps;
             if (generateMipmaps)
             {
                 t->generateMipmaps();
@@ -151,49 +155,39 @@ Texture* Texture::create(Image* image, bool generateMipmaps)
     switch (image->getFormat())
     {
     case Image::RGB:
-        return create(Texture::RGB, image->getWidth(), image->getHeight(), image->getData(), generateMipmaps);
+        return create(Texture::RGB, image->getWidth(), image->getHeight(), image, generateMipmaps);
     case Image::RGBA:
-        return create(Texture::RGBA, image->getWidth(), image->getHeight(), image->getData(), generateMipmaps);
+        return create(Texture::RGBA, image->getWidth(), image->getHeight(), image, generateMipmaps);
     default:
         GP_ERROR("Unsupported image format (%d).", image->getFormat());
         return NULL;
     }
 }
 
-Texture* Texture::create(Format format, unsigned int width, unsigned int height, const unsigned char* data, bool generateMipmaps)
+Texture* Texture::create(Format format, unsigned int width, unsigned int height, Image* image, bool generateMipmaps)
 {
-    // Create and load the texture.
-    GLuint textureId;
-    GL_ASSERT( glGenTextures(1, &textureId) );
-    GL_ASSERT( glBindTexture(GL_TEXTURE_2D, textureId) );
-    GL_ASSERT( glPixelStorei(GL_UNPACK_ALIGNMENT, 1) );
-#ifndef OPENGL_ES
-    // glGenerateMipmap is new in OpenGL 3.0. For OpenGL 2.0 we must fallback to use glTexParameteri
-    // with GL_GENERATE_MIPMAP prior to actual texture creation (glTexImage2D)
-    if ( generateMipmaps && glGenerateMipmap == NULL )
-        GL_ASSERT( glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE) );
-#endif
-    GL_ASSERT( glTexImage2D(GL_TEXTURE_2D, 0, (GLenum)format, width, height, 0, (GLenum)format, GL_UNSIGNED_BYTE, data) );
-
-    // Set initial minification filter based on whether or not mipmaping was enabled.
-    Filter minFilter = generateMipmaps ? NEAREST_MIPMAP_LINEAR : LINEAR;
-    GL_ASSERT( glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, minFilter) );
-
     Texture* texture = new Texture();
-    texture->_handle = textureId;
     texture->_format = format;
     texture->_width = width;
     texture->_height = height;
-    texture->_minFilter = minFilter;
-    if (generateMipmaps)
-    {
-        texture->generateMipmaps();
-    }
-
-    // Restore the texture id
-    GL_ASSERT( glBindTexture(GL_TEXTURE_2D, __currentTextureId) );
+	texture->_PNGimage = image;
+	texture->_PNGimage->addRef();
+	texture->_generateMipmaps = generateMipmaps;
+	texture->restoreDeviceObject();
 
     return texture;
+}
+
+Texture* Texture::create(Format format, unsigned int width, unsigned int height, unsigned char* textureData, bool generateMipmaps)
+{
+	Texture* texture = new Texture();
+	texture->_format = format;
+	texture->_width = width;
+	texture->_height = height;
+	texture->_textureData = textureData;
+	texture->_generateMipmaps = generateMipmaps;
+	texture->restoreDeviceObject();
+	return texture;
 }
 
 Texture* Texture::create(TextureHandle handle, int width, int height, Format format)
@@ -207,6 +201,48 @@ Texture* Texture::create(TextureHandle handle, int width, int height, Format for
     texture->_height = height;
 
     return texture;
+}
+
+void Texture::restoreDeviceObjects()
+{
+	for (int i = 0; i < __textureCache.size(); ++i) 
+	{
+		__textureCache[i]->restoreDeviceObject();
+	}
+}
+
+void Texture::restoreDeviceObject()
+{
+	_mipmapped = false;
+	if (_handle)
+	{
+		GL_ASSERT(glDeleteTextures(1, &_handle));
+		_handle = 0;
+	}
+	GL_ASSERT(glGenTextures(1, &_handle));
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, _handle));
+	GL_ASSERT(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+#ifndef OPENGL_ES
+	// glGenerateMipmap is new in OpenGL 3.0. For OpenGL 2.0 we must fallback to use glTexParameteri
+	// with GL_GENERATE_MIPMAP prior to actual texture creation (glTexImage2D)
+	if (_generateMipmaps && glGenerateMipmap == NULL)
+		GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
+#endif
+	if (_PNGimage != NULL)
+		GL_ASSERT(glTexImage2D(GL_TEXTURE_2D, 0, (GLenum)_format, _width, _height, 0, (GLenum)_format, GL_UNSIGNED_BYTE, _PNGimage->getData()));
+	else if (_textureData != NULL)
+		GL_ASSERT(glTexImage2D(GL_TEXTURE_2D, 0, (GLenum)_format, _width, _height, 0, (GLenum)_format, GL_UNSIGNED_BYTE, _textureData));
+
+	// Set initial minification filter based on whether or not mipmaping was enabled.
+	_minFilter = _generateMipmaps ? NEAREST_MIPMAP_LINEAR : LINEAR;
+	GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, _minFilter));
+	if (_generateMipmaps)
+	{
+		generateMipmaps();
+	}
+
+	// Restore the texture id
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, __currentTextureId));
 }
 
 // Computes the size of a PVRTC data chunk for a mipmap level of the given size.

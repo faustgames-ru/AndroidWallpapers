@@ -269,7 +269,7 @@ material skinedmesh : texturedTransparent
     {
         pass
         {
-            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
             u_matrixPalette = MATRIX_PALETTE
             u_modulateAlpha = 1.0
         }
@@ -282,7 +282,7 @@ material skinedmeshbumped : texturedBumped
     {
         pass
         {
-            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
             u_matrixPalette = MATRIX_PALETTE
             u_modulateAlpha = 1.0
         }
@@ -295,7 +295,7 @@ material skinedmeshunlit : texturedUnlit
     {
         pass
         {
-            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
             u_matrixPalette = MATRIX_PALETTE
             u_modulateAlpha = 1.0
         }
@@ -343,6 +343,26 @@ material mtearth : skinedmeshbumped
 			sampler u_normalmapTexture
             {
                 path = @earthbump
+            }
+        }
+    }
+}
+
+material earthcloudmap : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+			u_modulateAlpha = 0.5
+            sampler u_diffuseTexture
+            {
+                path = @earthcloudmap
+            }
+			renderState
+            {
+                blendSrc = one
+                blendDst = one
             }
         }
     }

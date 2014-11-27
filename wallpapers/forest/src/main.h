@@ -17,6 +17,8 @@ public:
      */
 	AsteroidsTest();
 
+	virtual void restoreDeviceObjects();
+
 protected:
 
     /**

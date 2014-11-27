@@ -37,13 +37,22 @@ AsteroidsTest::AsteroidsTest()
     _buttonPressed = new bool[2];
 }
 
+void AsteroidsTest::restoreDeviceObjects()
+{
+	Game::restoreDeviceObjects();
+	if (isInitialized())
+	{
+		_scene->visit(this, &AsteroidsTest::initializeScene);
+	}
+}
+
 void AsteroidsTest::initialize()
 {
     // Enable multi-touch (only affects devices that support multi-touch).
     setMultiTouch(true);
 
     // Display the gameplay splash screen for at least 1 second.
-	//displayScreen(this, &AsteroidsTest::drawSplash, NULL, 1000L);
+	//displayScreen(this, &AsteroidsTest::drawSplash, NULL, 1000L); 
 
     // Load the font.
     _font = Font::create("res/ui/arial.gpb");
@@ -72,7 +81,7 @@ void AsteroidsTest::initialize()
 	_scene->findNode("earth")->addChild(Node::create("earthcamerahelper"));
 	_fpCamera.setTargetNode(_scene->findNode("earthcamerahelper"));
 	_scene->setActiveCamera(_fpCamera.getCamera());
-	_scene->setAmbientColor(0.25f, 0.25f, 0.25f);
+	_scene->setAmbientColor(0.1f, 0.1f, 0.1f);
     
     // Initialize the physics character.
     //initializeCharacter();
@@ -241,13 +250,13 @@ void AsteroidsTest::render(float elapsedTime)
 	_scene->visit(this, &AsteroidsTest::drawScene, true);
 
     // Draw physics debug
-    if (_physicsDebug)
-        getPhysicsController()->drawDebug(_scene->getActiveCamera()->getViewProjectionMatrix());
+    //if (_physicsDebug)
+    //    getPhysicsController()->drawDebug(_scene->getActiveCamera()->getViewProjectionMatrix());*/
 
-    //_gamepad->draw();
+    /*_gamepad->draw();
 
     // Draw FPS
-    /*_font->start();
+    _font->start();
     char fps[32];
     sprintf(fps, "%d", getFrameRate());
     _font->drawText(fps, 5, 5, Vector4(1,1,0,1), 20);

@@ -171,13 +171,14 @@ public:
      * @param format Format of the texture data.
      * @param width Width of the texture data.
      * @param height Height of the texture data.
-     * @param data Raw texture data (expected to be tightly packed).
+     * @param image PNG image (expected to be tightly packed).
      * @param generateMipmaps True to generate a full mipmap chain, false otherwise.
      *
      * @return The new texture.
      * @script{create}
      */
-    static Texture* create(Format format, unsigned int width, unsigned int height, const unsigned char* data, bool generateMipmaps = false);
+	static Texture* create(Format format, unsigned int width, unsigned int height, Image* image, bool generateMipmaps = false);
+	static Texture* create(Format format, unsigned int width, unsigned int height, unsigned char* textureData, bool generateMipmaps = false);
 
     /**
      * Creates a texture object to wrap the specified pre-created native texture handle.
@@ -198,6 +199,16 @@ public:
      * @script{create}
      */
     static Texture* create(TextureHandle handle, int width, int height, Format format = UNKNOWN);
+
+	/**
+	* restore textures data after context has been lost
+	*/
+	static void restoreDeviceObjects();
+
+	/**
+	* restore texture data after context has been lost
+	*/
+	void restoreDeviceObject();
 
     /**
      * Returns the path that the texture was originally loaded from (if applicable).
@@ -295,6 +306,9 @@ private:
     Wrap _wrapT;
     Filter _minFilter;
     Filter _magFilter;
+	Image* _PNGimage;
+	unsigned char* _textureData;
+	bool _generateMipmaps;
 };
 
 }
