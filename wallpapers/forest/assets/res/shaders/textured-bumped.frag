@@ -8,6 +8,9 @@ precision highp float;
 // Uniforms
 uniform sampler2D u_diffuseTexture;        		// Diffuse map texture
 uniform sampler2D u_normalmapTexture;       	// Normalmap texture
+#if defined(DARKSIDEDIFFUSETEXTURE)
+uniform sampler2D u_darkSideDiffuseTexture;     // Dark side Diffuse map texture
+#endif
 uniform vec3 u_ambientColor;                    // Ambient color
 uniform vec3 u_lightColor;                      // Light color
 uniform vec3 u_lightDirection;					// Light direction
@@ -38,7 +41,7 @@ varying float v_spotLightAttenuation;			// Attenuation of spot light.
 #else
 varying vec3 v_lightDirection;					// Direction of light in tangent space.
 #endif
-#if defined(SPECULAR)
+#if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 varying vec3 v_cameraDirection;                 // Camera direction
 #endif
 
@@ -57,6 +60,9 @@ void main()
 {
     // Fetch diffuse color from texture.
     _baseColor = texture2D(u_diffuseTexture, v_texCoord);
+	#if defined(DARKSIDEDIFFUSETEXTURE)
+	_baseDarkSideColor = texture2D(u_darkSideDiffuseTexture, v_texCoord);
+	#endif
 
     // Light the pixel
     gl_FragColor.a = _baseColor.a;
@@ -72,5 +78,11 @@ void main()
     #endif
     #if defined(MODULATE_ALPHA)
     gl_FragColor.a *= u_modulateAlpha;
+    #endif
+	#if defined(SOFT_TRANSPARENT_EDGES)
+	vec3 cameraDirection = normalize(v_cameraDirection);
+	vec3 normalVector = normalize(v_normalVector);
+	float ddot = abs(dot(normalVector, cameraDirection));
+    gl_FragColor.a *= min(ddot * ddot * ddot, 1.0);
     #endif
 }

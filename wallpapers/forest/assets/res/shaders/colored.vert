@@ -1,4 +1,4 @@
-#define LIGHTING
+//#define LIGHTING
 
 // Attributes
 attribute vec4 a_position;									// Vertex Position							(x, y, z, w)
@@ -19,7 +19,7 @@ uniform mat4 u_worldViewMatrix;								// Matrix to tranform a position to view 
 #if defined(SKINNING)
 uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];		// Array of 4x3 matrices
 #endif
-#if defined(SPECULAR)
+#if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 uniform vec3 u_cameraPosition;                 				// Position of the camera in view space.
 #endif
 #if defined(POINT_LIGHT)
@@ -33,22 +33,24 @@ uniform float u_spotLightRangeInverse;						// Inverse of light range.
 
 // Varyings
 varying vec3 v_normalVector;								// Normal vector in view space.
-#if defined(SPECULAR)
+#if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 varying vec3 v_cameraDirection;								// Direction the camera is looking at in tangent space.
 #endif
 
 // Lighting
-#if defined(POINT_LIGHT)
-varying vec3 v_vertexToPointLightDirection;					// Direction of point light w.r.t current vertex in tangent space.
-varying float v_pointLightAttenuation;						// Attenuation of point light.
-#include "lighting-point.vert"
-#elif defined(SPOT_LIGHT)
-varying vec3 v_vertexToSpotLightDirection;					// Direction of the spot light w.r.t current vertex in tangent space.
-varying float v_spotLightAttenuation;						// Attenuation of spot light.
-#include "lighting-spot.vert"
-#else
-uniform vec3 u_lightDirection;								// Direction of light
-#include "lighting-directional.vert"
+#if defined(LIGHTING) || defined(SOFT_TRANSPARENT_EDGES)
+	#if defined(POINT_LIGHT)
+	varying vec3 v_vertexToPointLightDirection;					// Direction of point light w.r.t current vertex in tangent space.
+	varying float v_pointLightAttenuation;						// Attenuation of point light.
+	#include "lighting-point.vert"
+	#elif defined(SPOT_LIGHT)
+	varying vec3 v_vertexToSpotLightDirection;					// Direction of the spot light w.r.t current vertex in tangent space.
+	varying float v_spotLightAttenuation;						// Attenuation of spot light.
+	#include "lighting-spot.vert"
+	#else
+	uniform vec3 u_lightDirection;								// Direction of light
+	#include "lighting-directional.vert"
+	#endif
 #endif
 
 // Skinning
@@ -73,7 +75,9 @@ void main()
     v_normalVector = inverseTransposeWorldViewMatrix * normal;
 
     // Apply light.
-    applyLight(position);
+	#if defined(LIGHTING) || defined(SOFT_TRANSPARENT_EDGES)
+		applyLight(position);
+	#endif	
     
     // Pass the vertex color to fragment shader
     #if defined(VERTEX_COLOR)

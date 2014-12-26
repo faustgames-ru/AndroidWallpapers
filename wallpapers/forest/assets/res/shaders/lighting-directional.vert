@@ -5,7 +5,7 @@ void applyLight(mat3 tangentSpaceTransformMatrix)
     // Transform light direction to tangent space
     v_lightDirection = tangentSpaceTransformMatrix * u_lightDirection;
     
-    #if defined(SPECULAR)
+    #if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 
     // Compute the camera direction for specular lighting
 	vec4 positionWorldViewSpace = u_worldViewMatrix * a_position;
@@ -19,7 +19,7 @@ void applyLight(mat3 tangentSpaceTransformMatrix)
 void applyLight(vec4 position)
 {
     
-    #if defined(SPECULAR)
+    #if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 
     // Compute the camera direction for specular lighting
 	vec4 positionWorldViewSpace = u_worldViewMatrix * position;

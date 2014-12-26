@@ -1,4 +1,4 @@
-#define LIGHTING
+//#define LIGHTING
 #ifdef OPENGL_ES
 precision highp float;
 #endif
@@ -38,37 +38,53 @@ varying float v_spotLightAttenuation;			// Attenuation of spot light
 #else
 varying vec3 v_lightDirection;					// Direction of light in tangent space
 #endif
-#if defined(SPECULAR)
+#if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 varying vec3 v_cameraDirection;                 // Camera direction
 #endif
 
 // Lighting
-#include "lighting.frag"
-#if defined(POINT_LIGHT)
-#include "lighting-point.frag"
-#elif defined(SPOT_LIGHT)
-#include "lighting-spot.frag"
-#else
-#include "lighting-directional.frag"
+#if defined(LIGHTING)
+	#include "lighting.frag"
+	#if defined(POINT_LIGHT)
+	#include "lighting-point.frag"
+	#elif defined(SPOT_LIGHT)
+	#include "lighting-spot.frag"
+	#else
+	#include "lighting-directional.frag"
+	#endif
 #endif
 
 void main()
 {
     // Set base diffuse color
-    #if defined(VERTEX_COLOR)
-	_baseColor.rgb = v_color;
+	#if defined(LIGHTING)
+		#if defined(VERTEX_COLOR)
+			_baseColor.rgb = v_color;
+		#else
+			_baseColor = u_diffuseColor;
+		#endif
+		gl_FragColor.a = _baseColor.a;	
+		// Light the pixel
+		gl_FragColor.rgb = getLitPixel();
 	#else
-	_baseColor = u_diffuseColor;
+		#if defined(VERTEX_COLOR)
+			gl_FragColor.rgb = v_color;
+			gl_FragColor.a = 1.0;
+		#else
+			gl_FragColor = u_diffuseColor;
+		#endif
 	#endif
 
-    // Light the pixel
-    gl_FragColor.a = _baseColor.a;
-    gl_FragColor.rgb = getLitPixel();
-    
 	#if defined(MODULATE_COLOR)
     gl_FragColor *= u_modulateColor;
     #endif
 	#if defined(MODULATE_ALPHA)
     gl_FragColor.a *= u_modulateAlpha;
+    #endif
+	#if defined(SOFT_TRANSPARENT_EDGES)
+	vec3 cameraDirection = normalize(v_cameraDirection);
+	vec3 normalVector = normalize(v_normalVector);
+	float ddot = 1.0 - (abs(dot(normalVector, cameraDirection) - 0.5) * 2.0);
+	gl_FragColor.a *= min(ddot * ddot * ddot * ddot, 1.0);
     #endif
 }

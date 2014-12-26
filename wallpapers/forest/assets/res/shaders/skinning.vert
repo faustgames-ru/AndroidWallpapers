@@ -1,5 +1,5 @@
 vec4 _skinnedPosition;
-#if defined(LIGHTING)
+#if defined(LIGHTING) || defined(SOFT_TRANSPARENT_EDGES)
 vec3 _skinnedNormal;
 #endif
 
@@ -39,7 +39,7 @@ vec4 getPosition()
     return _skinnedPosition;    
 }
 
-#if defined(LIGHTING)
+#if defined(LIGHTING) || defined(SOFT_TRANSPARENT_EDGES)
 
 void skinTangentSpaceVector(vec3 vector, float blendWeight, int matrixIndex)
 {

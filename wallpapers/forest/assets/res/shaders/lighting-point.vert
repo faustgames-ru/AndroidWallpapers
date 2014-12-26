@@ -16,7 +16,7 @@ void applyLight(mat3 tangentSpaceTransformMatrix)
     // Output light direction.
     v_vertexToPointLightDirection =  vertexToPointLightDirection;
     
-    #if defined (SPECULAR)
+    #if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
  
     // Compute camera direction and transform it to tangent space.
     v_cameraDirection = tangentSpaceTransformMatrix * (u_cameraPosition - positionWorldViewSpace.xyz);
@@ -40,7 +40,7 @@ void applyLight(vec4 position)
     // Output light direction.
     //v_vertexToPointLightDirection = lightDirection;
    
-    #if defined (SPECULAR)  
+    #if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 
 	v_cameraDirection = u_cameraPosition - positionWorldViewSpace.xyz;
 	

@@ -1,6 +1,9 @@
 vec4 _baseColor;
 vec3 _ambientColor;
 vec3 _diffuseColor;
+#if defined(DARKSIDEDIFFUSETEXTURE)
+vec4 _baseDarkSideColor;
+#endif
 
 #if defined(SPECULAR)
 
@@ -15,7 +18,12 @@ vec3 computeLighting(vec3 normalVector, vec3 lightDirection, float attenuation, 
     float ddot = dot(normalVector, lightDirection);
     float diffuseIntensity = attenuation * ddot;
     diffuseIntensity = max(0.0, diffuseIntensity);
-    _diffuseColor = u_lightColor * _baseColor.rgb * diffuseIntensity;
+	#if defined(DARKSIDEDIFFUSETEXTURE)
+		float darkSideDiffuseIntensity = abs(min(0.0, attenuation * ddot));
+		_diffuseColor = u_lightColor * (_baseColor.rgb * diffuseIntensity + _baseDarkSideColor.rgb * darkSideDiffuseIntensity);
+	#else
+		_diffuseColor = u_lightColor * _baseColor.rgb * diffuseIntensity;
+	#endif
 
     // Specular
     vec3 halfVector = normalize(lightDirection + cameraDirection);
@@ -37,7 +45,13 @@ vec3 computeLighting(vec3 normalVector, vec3 lightDirection, float attenuation)
 	float ddot = dot(normalVector, lightDirection);
     float diffuseIntensity = attenuation * ddot;
     diffuseIntensity = max(0.0, diffuseIntensity);
-    _diffuseColor = u_lightColor * _baseColor.rgb * diffuseIntensity;
+    //_diffuseColor = u_lightColor * _baseColor.rgb * diffuseIntensity;
+	#if defined(DARKSIDEDIFFUSETEXTURE)
+		float darkSideDiffuseIntensity = abs(min(0.0, attenuation * ddot));
+		_diffuseColor = u_lightColor * (_baseColor.rgb * diffuseIntensity + _baseDarkSideColor.rgb * darkSideDiffuseIntensity);
+	#else
+		_diffuseColor = u_lightColor * _baseColor.rgb * diffuseIntensity;
+	#endif
 	
 	return _ambientColor + _diffuseColor;
 }

@@ -15,14 +15,14 @@ attribute vec4 a_blendIndices;								// Vertex blend index int u_matrixPalette	
 // Uniforms
 uniform mat4 u_worldViewProjectionMatrix;					// Matrix to transform a position to clip space
 uniform mat4 u_inverseTransposeWorldViewMatrix;				// Matrix to transform a normal to view space
-#if defined(SPECULAR) || defined(SPOT_LIGHT) || defined(POINT_LIGHT)
+#if defined(SPECULAR) || defined(SPOT_LIGHT) || defined(POINT_LIGHT) || defined(SOFT_TRANSPARENT_EDGES)
 uniform mat4 u_worldViewMatrix;								// Matrix to tranform a position to view space
 uniform mat4 u_worldMatrix;								    // Matrix to tranform a position to world space
 #endif
 #if defined(SKINNING)
 uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];		// Array of 4x3 matrices
 #endif
-#if defined(SPECULAR)
+#if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 uniform vec3 u_cameraPosition;                 				// Position of the camera in view space
 #endif
 #if defined(TEXTURE_REPEAT)
@@ -45,7 +45,7 @@ uniform vec3 u_lightDirection;								// Direction of light
 // Varyings
 varying vec3 v_normalVector;								// Normal vector in view space
 varying vec2 v_texCoord;									// Texture Coordinate
-#if defined(SPECULAR)
+#if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 varying vec3 v_cameraDirection;								// Direction the camera is looking at in tangent space
 #endif
 

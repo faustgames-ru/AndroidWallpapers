@@ -133,6 +133,7 @@ void AsteroidsTest::initializeMaterial(Scene* scene, Node* node, Material* mater
 			material->getParameter("u_lightColor")->bindValue(lightNode->getLight(), &Light::getColor);
 			material->getParameter("u_lightDirection")->bindValue(lightNode, &Node::getForwardVectorView);
 			material->getParameter("u_modulateColor")->setVector4(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
+			material->getParameter("u_diffuseColor")->setVector4(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 			material->getParameter("u_modulateAlpha")->setFloat(1.0f);
         }
     }
@@ -155,8 +156,8 @@ void AsteroidsTest::initializeAsteroids()
 }
 
 void AsteroidsTest::initializeSolarSystem()
-{
-	//gameplay - encoder.exe - tb solarsystem - g root animations solarsystem.fbx solarsystem.gpb
+{	
+	//gameplay-encoder.exe -tb solarsystem -g root animations solarsystem.fbx solarsystem.gpb
 	Node* node = _scene->findNode("solarsystem");
 	Animation* animation = node->getAnimation("animations");
 	if (animation)

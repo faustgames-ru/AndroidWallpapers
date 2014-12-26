@@ -3,7 +3,7 @@ vec4 getPosition()
     return a_position;    
 }
 
-#if defined(LIGHTING)
+#if defined(LIGHTING) || defined(SOFT_TRANSPARENT_EDGES)
 
 vec3 getNormal()
 {

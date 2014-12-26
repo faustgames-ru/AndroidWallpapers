@@ -630,7 +630,7 @@
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidTargetAPI>android-19</AndroidTargetAPI>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">
     <ConfigurationType>StaticLibrary</ConfigurationType>
@@ -655,6 +655,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
     <ClCompile>
       <PreprocessorDefinitions>DISABLE_IMPORTGL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\external-deps\bullet\src\;$(ProjectDir)..\..\external-deps\libpng\include\;$(ProjectDir)..\..\external-deps\lua\include\;$(ProjectDir)..\..\external-deps\oggvorbis\include\;$(ProjectDir)..\..\external-deps\openal\include\;$(ProjectDir)..\..\external-deps\zlib\include\;$(ProjectDir)..\..\external-deps\glew\include\;..\src;native_app_glue;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <AdditionalOptions>-lGLESv1_CM %(AdditionalOptions)</AdditionalOptions>
