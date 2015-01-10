@@ -47,7 +47,7 @@ vec3 computeLighting(vec3 normalVector, vec3 lightDirection, float attenuation)
     diffuseIntensity = max(0.0, diffuseIntensity);
     //_diffuseColor = u_lightColor * _baseColor.rgb * diffuseIntensity;
 	#if defined(DARKSIDEDIFFUSETEXTURE)
-		float darkSideDiffuseIntensity = abs(min(0.0, attenuation * ddot));
+		float darkSideDiffuseIntensity = min(1.0, 2.0 * abs(min(0.0, attenuation * ddot)));
 		_diffuseColor = u_lightColor * (_baseColor.rgb * diffuseIntensity + _baseDarkSideColor.rgb * darkSideDiffuseIntensity);
 	#else
 		_diffuseColor = u_lightColor * _baseColor.rgb * diffuseIntensity;

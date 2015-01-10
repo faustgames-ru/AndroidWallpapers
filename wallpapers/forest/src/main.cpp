@@ -227,7 +227,8 @@ void AsteroidsTest::play(const char* id, bool repeat, float speed)
 
 void AsteroidsTest::update(float elapsedTime)
 {
-	float slowFactor = 0.4f;
+	float slowFactor = 0.1f;
+	_scene->findNode("sunroot")->rotateZ(0.01f * elapsedTime * slowFactor);
 	_scene->findNode("rootmercury")->rotateZ(0.001f * elapsedTime * slowFactor);
 	_scene->findNode("rootvenus")->rotateZ(0.0015f * elapsedTime * slowFactor);
 	_scene->findNode("rootearth")->rotateZ(0.0012f * elapsedTime * slowFactor);

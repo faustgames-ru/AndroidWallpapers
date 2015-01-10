@@ -519,8 +519,8 @@ material mtsun : skinedmeshunlit
 			
 			defines = SKINNING;BATCHING;SOFT_TRANSPARENT_EDGES;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;MODULATE_COLOR;DIRECTIONAL_LIGHT_COUNT 1
 			u_modulateAlpha = 1.0
-			//u_modulateColor = 1.5, 1.4, 1.4, 1.4
-			u_modulateColor = 1.0, 1.0, 1.0, 1.0
+			u_modulateColor = 2.2, 2.2, 1.6, 1.8
+			//u_modulateColor = 1.0, 1.0, 1.0, 1.0
             sampler u_diffuseTexture
             {
                 path = @sun
