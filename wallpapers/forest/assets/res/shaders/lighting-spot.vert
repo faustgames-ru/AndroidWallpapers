@@ -2,7 +2,6 @@
 
 void applyLight(mat3 tangentSpaceTransformMatrix)
 {
-    //vec4 positionWorldSpace = u_worldMatrix * a_position;
 	vec4 positionWorldViewSpace = u_worldViewMatrix * a_position;
 
     // Transform spot light direction to tangent space.

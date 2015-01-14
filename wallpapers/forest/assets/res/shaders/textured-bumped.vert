@@ -17,7 +17,6 @@ uniform mat4 u_worldViewProjectionMatrix;					// Matrix to transform a position 
 uniform mat4 u_inverseTransposeWorldViewMatrix;				// Matrix to transform a normal to view space
 #if defined(SPECULAR) || defined(SPOT_LIGHT) || defined(POINT_LIGHT) || defined(SOFT_TRANSPARENT_EDGES)
 uniform mat4 u_worldViewMatrix;								// Matrix to tranform a position to view space
-uniform mat4 u_worldMatrix;								    // Matrix to tranform a position to world space
 #endif
 #if defined(SKINNING)
 uniform vec4 u_matrixPalette[SKINNING_JOINT_COUNT * 3];		// Array of 4x3 matrices

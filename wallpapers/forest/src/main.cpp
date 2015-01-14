@@ -128,6 +128,7 @@ void AsteroidsTest::initializeMaterial(Scene* scene, Node* node, Material* mater
         Node* lightNode = scene->findNode("sun");
         if (lightNode)
         {
+			lightNode->setLight(Light::createPoint(Vector3::one(), 100.0f));
             material->getParameter("u_directionalLightColor[0]")->bindValue(lightNode->getLight(), &Light::getColor);
             material->getParameter("u_directionalLightDirection[0]")->bindValue(lightNode, &Node::getForwardVectorView);
 			material->getParameter("u_lightColor")->bindValue(lightNode->getLight(), &Light::getColor);
@@ -135,6 +136,8 @@ void AsteroidsTest::initializeMaterial(Scene* scene, Node* node, Material* mater
 			material->getParameter("u_modulateColor")->setVector4(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 			material->getParameter("u_diffuseColor")->setVector4(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
 			material->getParameter("u_modulateAlpha")->setFloat(1.0f);
+			material->getParameter("u_pointLightPosition")->setVector3(Vector3(0.0f, 0.0f, 0.0f));
+			material->getParameter("u_pointLightRangeInverse")->setFloat(lightNode->getLight()->getRangeInverse());
         }
     }
 }

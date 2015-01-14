@@ -43,6 +43,8 @@ varying vec2 v_texCoord;									// Texture coordinate
 #if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 varying vec3 v_cameraDirection;								// Direction the camera is looking at in tangent space
 #endif
+
+// Lighting
 #if defined(POINT_LIGHT)
 varying vec3 v_vertexToPointLightDirection;					// Direction of point light w.r.t current vertex in tangent space
 varying float v_pointLightAttenuation;						// Attenuation of point light
@@ -50,8 +52,6 @@ varying float v_pointLightAttenuation;						// Attenuation of point light
 #elif defined(SPOT_LIGHT)
 varying vec3 v_vertexToSpotLightDirection;					// Direction of the spot light w.r.t current vertex in tangent space
 varying float v_spotLightAttenuation;						// Attenuation of spot light
-
-// Lighting
 #include "lighting-spot.vert"
 #else
 #include "lighting-directional.vert"
