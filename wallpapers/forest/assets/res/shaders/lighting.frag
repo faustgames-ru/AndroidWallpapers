@@ -27,7 +27,7 @@ vec3 computeLighting(vec3 normalVector, vec3 lightDirection, float attenuation, 
 
     // Specular
     vec3 halfVector = normalize(lightDirection + cameraDirection);
-    float specularIntensity = attenuation * max(0.0, pow(dot(normalVector, halfVector), u_specularExponent));
+    float specularIntensity = attenuation * max(0.0, pow(dot(normalize(v_normalViewVector), halfVector), u_specularExponent));
     specularIntensity = max(0.0, specularIntensity);
     _specularColor = u_lightColor * _baseColor.rgb * specularIntensity;
 	

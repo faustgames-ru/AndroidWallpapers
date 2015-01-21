@@ -32,9 +32,10 @@ uniform float u_spotLightRangeInverse;						// Inverse of light range.
 #endif
 
 // Varyings
-varying vec3 v_normalVector;								// Normal vector in view space.
+varying vec3 v_normalVector;								// Normal vector.
 #if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 varying vec3 v_cameraDirection;								// Direction the camera is looking at in tangent space.
+varying vec3 v_normalViewVector;							// Normal vector in view space.
 #endif
 
 // Lighting
@@ -70,10 +71,14 @@ void main()
     // Transform position to clip space.
     gl_Position = u_worldViewProjectionMatrix * position;
 
-    // Transform normal to view space.
-    mat3 inverseTransposeWorldViewMatrix = mat3(u_inverseTransposeWorldViewMatrix[0].xyz, u_inverseTransposeWorldViewMatrix[1].xyz, u_inverseTransposeWorldViewMatrix[2].xyz);
-    v_normalVector = inverseTransposeWorldViewMatrix * normal;
-
+    v_normalVector = normal;
+	
+	#if defined(SOFT_TRANSPARENT_EDGES)
+		// Transform normal to view space.
+		mat3 inverseTransposeWorldViewMatrix = mat3(u_inverseTransposeWorldViewMatrix[0].xyz, u_inverseTransposeWorldViewMatrix[1].xyz, u_inverseTransposeWorldViewMatrix[2].xyz);
+		v_normalViewVector = inverseTransposeWorldViewMatrix * normal;
+	#endif	
+    
     // Apply light.
 	#if defined(LIGHTING) || defined(SOFT_TRANSPARENT_EDGES)
 		applyLight(position);

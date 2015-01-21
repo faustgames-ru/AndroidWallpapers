@@ -70,9 +70,10 @@ material texturedTransparent
         {
             vertexShader = res/shaders/textured.vert
             fragmentShader = res/shaders/textured.frag
-			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			
 			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
-			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX			
+            u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+            u_worldViewMatrix = WORLD_VIEW_MATRIX
             
             sampler u_diffuseTexture
             {
@@ -269,7 +270,8 @@ material skinedmesh : texturedTransparent
     {
         pass
         {
-            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT;DIRECTIONAL_LIGHT_COUNT 1
+			//;DIRECTIONAL_LIGHT_COUNT 1
+            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
             u_matrixPalette = MATRIX_PALETTE
             u_modulateAlpha = 1.0
         }
@@ -349,8 +351,8 @@ material mtearth : skinedmeshbumped
     {
         pass
         {
-			defines = DARKSIDEDIFFUSETEXTURE;SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT;DIRECTIONAL_LIGHT_COUNT 1
-			
+			defines = DARKSIDEDIFFUSETEXTURE;SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
+			//;DIRECTIONAL_LIGHT_COUNT 1
             sampler u_diffuseTexture
             {
                 path = @earth
@@ -381,7 +383,8 @@ material earthcloudmap : skinedmesh
 			u_worldViewMatrix = WORLD_VIEW_MATRIX
             u_cameraPosition = CAMERA_VIEW_POSITION
 			
-			defines = SKINNING;BATCHING;SOFT_TRANSPARENT_EDGES;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;MODULATE_COLOR;POINT_LIGHT;DIRECTIONAL_LIGHT_COUNT 1
+			defines = SKINNING;BATCHING;SOFT_TRANSPARENT_EDGES;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;MODULATE_COLOR;POINT_LIGHT
+			//;DIRECTIONAL_LIGHT_COUNT 1
 			u_modulateAlpha = 1.0
 			u_modulateColor = 0.5, 0.5, 0.7, 0.5
             sampler u_diffuseTexture
@@ -407,7 +410,7 @@ material earthatmo : skinedmeshcolored
 			u_worldViewMatrix = WORLD_VIEW_MATRIX
             u_cameraPosition = CAMERA_VIEW_POSITION
 			
-			defines = SKINNING;BATCHING;SOFT_TRANSPARENT_EDGES;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;MODULATE_COLOR;POINT_LIGHT;DIRECTIONAL_LIGHT_COUNT 1
+			defines = SKINNING;BATCHING;SOFT_TRANSPARENT_EDGES;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;MODULATE_COLOR;POINT_LIGHT
 			u_modulateAlpha = 1.0
 			u_modulateColor = 0.3, 0.75, 0.9, 1.0
 			

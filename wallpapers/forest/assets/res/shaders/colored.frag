@@ -40,6 +40,7 @@ varying vec3 v_lightDirection;					// Direction of light in tangent space
 #endif
 #if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 varying vec3 v_cameraDirection;                 // Camera direction
+varying vec3 v_normalViewVector;				// Normal vector in view space
 #endif
 
 // Lighting
@@ -83,7 +84,7 @@ void main()
     #endif
 	#if defined(SOFT_TRANSPARENT_EDGES)
 	vec3 cameraDirection = normalize(v_cameraDirection);
-	vec3 normalVector = normalize(v_normalVector);
+	vec3 normalVector = normalize(v_normalViewVector);
 	float ddot = 1.0 - (abs(dot(normalVector, cameraDirection) - 0.5) * 2.0);
 	gl_FragColor.a *= min(ddot * ddot * ddot * ddot, 1.0);
     #endif

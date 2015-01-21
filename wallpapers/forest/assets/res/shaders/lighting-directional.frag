@@ -8,7 +8,7 @@ vec3 getLitPixel()
     
     #if defined(SPECULAR)
     
-    vec3 cameraDirection = normalize(v_cameraDirection);
+    vec3 cameraDirection = v_cameraDirection;
     return computeLighting(normalVector, -lightDirection, 1.0, cameraDirection);
     
     #else
@@ -28,7 +28,7 @@ vec3 getLitPixel()
 
     #if defined(SPECULAR)
     
-    vec3 cameraDirection = normalize(v_cameraDirection);
+    vec3 cameraDirection = v_cameraDirection;
     return computeLighting(normalVector, -lightDirection, 1.0, cameraDirection);
     
     #else

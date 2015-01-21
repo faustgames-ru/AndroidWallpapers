@@ -63,15 +63,21 @@ void AsteroidsTest::initialize()
     // Update the aspect ratio for our scene's camera to match the current device resolution.
     _scene->getActiveCamera()->setAspectRatio(getAspectRatio());
 
-	Vector3 cameraPosition(0.0f, 0.35f, 0.0f);
 	/*if (Camera* camera = _scene->getActiveCamera())
 	{
-		camera->getNode()->getTranslation(&cameraPosition);
+	camera->getNode()->getTranslation(&cameraPosition);
 	}*/
 
+	//static camera
+	/*Vector3 cameraPosition(5.0f, 1.0f, 0.0f);
 	_fpCamera.initialize(0.01f, 50.0f);
 	_fpCamera.setPosition(cameraPosition);
-	//_scene->addNode(_fpCamera.getRootNode());
+	_scene->addNode(_fpCamera.getRootNode());*/
+
+	//earth orbit camera
+	Vector3 cameraPosition(0.0f, 0.35f, 0.0f);
+	_fpCamera.initialize(0.01f, 50.0f);
+	_fpCamera.setPosition(cameraPosition);
 	Matrix rot; 
 	Matrix::createLookAt(0.0f, 0.0f, 0.0f,   
 						 0.0f, 1.0f, 0.0f,   
@@ -80,6 +86,8 @@ void AsteroidsTest::initialize()
 	_fpCamera.rotate(MATH_PI, 0.0f);
 	_scene->findNode("earth")->addChild(Node::create("earthcamerahelper"));
 	_fpCamera.setTargetNode(_scene->findNode("earthcamerahelper"));
+	
+	//setup camera
 	_scene->setActiveCamera(_fpCamera.getCamera());
 	_scene->setAmbientColor(0.1f, 0.1f, 0.1f);
     
@@ -128,9 +136,9 @@ void AsteroidsTest::initializeMaterial(Scene* scene, Node* node, Material* mater
         Node* lightNode = scene->findNode("sun");
         if (lightNode)
         {
-			lightNode->setLight(Light::createPoint(Vector3::one(), 100.0f));
-            material->getParameter("u_directionalLightColor[0]")->bindValue(lightNode->getLight(), &Light::getColor);
-            material->getParameter("u_directionalLightDirection[0]")->bindValue(lightNode, &Node::getForwardVectorView);
+			lightNode->setLight(Light::createPoint(Vector3(0.7f, 0.75f, 0.65f), 15.0f));
+            //material->getParameter("u_directionalLightColor[0]")->bindValue(lightNode->getLight(), &Light::getColor);
+            //material->getParameter("u_directionalLightDirection[0]")->bindValue(lightNode, &Node::getForwardVectorView);
 			material->getParameter("u_lightColor")->bindValue(lightNode->getLight(), &Light::getColor);
 			material->getParameter("u_lightDirection")->bindValue(lightNode, &Node::getForwardVectorView);
 			material->getParameter("u_modulateColor")->setVector4(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
@@ -236,7 +244,8 @@ void AsteroidsTest::update(float elapsedTime)
 	_scene->findNode("rootvenus")->rotateZ(0.0015f * elapsedTime * slowFactor);
 	_scene->findNode("rootearth")->rotateZ(0.0012f * elapsedTime * slowFactor);
 	_scene->findNode("earth")->rotateZ(0.001f * elapsedTime * slowFactor);
-	_scene->findNode("earthcamerahelper")->rotateZ(0.0006f * elapsedTime * slowFactor);
+	Node* earthcamerahelper = _scene->findNode("earthcamerahelper");
+	if (earthcamerahelper) earthcamerahelper->rotateZ(0.0006f * elapsedTime * slowFactor);
 	_scene->findNode("rootmars")->rotateZ(0.0016f * elapsedTime * slowFactor);
 	_scene->findNode("rootjupiter")->rotateZ(0.0018f * elapsedTime * slowFactor);
 	_scene->findNode("rootsaturn")->rotateZ(0.002f * elapsedTime * slowFactor);

@@ -1,8 +1,8 @@
 #if defined(BUMPED)
 
-void applyLight(mat3 tangentSpaceTransformMatrix)
+void applyLight(mat3 tangentSpaceTransformMatrix, vec4 position)
 {
-	vec4 positionWorldViewSpace = u_worldViewMatrix * a_position;
+	vec4 positionWorldViewSpace = u_worldViewMatrix * position;
 
     // Transform spot light direction to tangent space.
     v_spotLightDirection = tangentSpaceTransformMatrix * u_spotLightDirection;

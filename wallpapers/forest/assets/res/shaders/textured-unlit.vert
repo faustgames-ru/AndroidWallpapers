@@ -38,7 +38,7 @@ varying vec2 v_texCoord1;                                   // Second tex coord 
 #endif
 #if defined(SOFT_TRANSPARENT_EDGES)
 varying vec3 v_cameraDirection;								// Direction the camera is looking at in tangent space
-varying vec3 v_normalVector;								// Normal vector in view space
+varying vec3 v_normalViewVector;								// Normal vector in view space
 #endif
 
 // Skinning 
@@ -69,11 +69,11 @@ void main()
     v_texCoord0 += u_textureOffset;
     #endif
 	#if defined(SOFT_TRANSPARENT_EDGES)
-	vec4 positionWorldViewSpace = u_worldViewMatrix * position;
-	v_cameraDirection = u_cameraPosition - positionWorldViewSpace.xyz;
-	// Transform normal to view space.
-	mat3 normalMatrix = mat3(u_inverseTransposeWorldViewMatrix[0].xyz, u_inverseTransposeWorldViewMatrix[1].xyz, u_inverseTransposeWorldViewMatrix[2].xyz);
-	vec3 normal = getNormal();
-    v_normalVector = normalMatrix * normal;
+		vec4 positionWorldViewSpace = u_worldViewMatrix * position;
+		v_cameraDirection = u_cameraPosition - positionWorldViewSpace.xyz;
+		// Transform normal to view space.
+		mat3 normalMatrix = mat3(u_inverseTransposeWorldViewMatrix[0].xyz, u_inverseTransposeWorldViewMatrix[1].xyz, u_inverseTransposeWorldViewMatrix[2].xyz);
+		vec3 normal = getNormal();
+		v_normalViewVector = normalMatrix * normal;
 	#endif
 }

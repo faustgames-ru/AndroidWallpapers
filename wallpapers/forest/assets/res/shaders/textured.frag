@@ -23,7 +23,7 @@ uniform float u_modulateAlpha;              	// Modulation alpha
 #endif
 
 // Varyings
-varying vec3 v_normalVector;                    // Normal vector in view space
+varying vec3 v_normalVector;                    // Normal vector
 varying vec2 v_texCoord;                        // Texture coordinate
 #if defined(POINT_LIGHT)
 varying vec3 v_vertexToPointLightDirection;		// Light direction w.r.t current vertex in tangent space.
@@ -37,6 +37,7 @@ varying vec3 v_lightDirection;					// Direction of light in tangent space.
 #endif
 #if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
 varying vec3 v_cameraDirection;                 // Camera direction
+varying vec3 v_normalViewVector;				// Normal vector in view space
 #endif
 
 // Lighting 
@@ -77,9 +78,9 @@ void main()
     gl_FragColor.a *= u_modulateAlpha;
     #endif
 	#if defined(SOFT_TRANSPARENT_EDGES)
-	vec3 cameraDirection = normalize(v_cameraDirection);
-	vec3 normalVector = normalize(v_normalVector);
-	float ddot = abs(dot(normalVector, cameraDirection));
-    gl_FragColor.a *= min(12.0 * ddot * ddot * ddot, 1.0);
+		vec3 cameraDirection = normalize(v_cameraDirection);
+		vec3 normalVector = normalize(v_normalViewVector);
+		float ddot = abs(dot(normalVector, cameraDirection));
+		gl_FragColor.a *= min(12.0 * ddot * ddot * ddot, 1.0);
     #endif
 }
