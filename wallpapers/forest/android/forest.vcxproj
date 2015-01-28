@@ -33,7 +33,7 @@
     <JCompile Include="src\com\faustgames\forest\GLEnginePendingOperationsController.java" />
     <JCompile Include="src\com\faustgames\forest\GLWallpaperService.java" />
     <JCompile Include="src\com\faustgames\forest\NativeInterface.java" />
-    <JCompile Include="src\com\faustgames\forest\wpservice.java" />
+    <JCompile Include="src\com\faustgames\forest\WPService.java" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\main.h" />
@@ -127,8 +127,12 @@
     <AndroidNativeAPI>UseMin</AndroidNativeAPI>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
-    <AndroidTargetAPI>android-19</AndroidTargetAPI>
-    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidNativeAPI>UseMin</AndroidNativeAPI>
+    <AndroidArch>armv7-a</AndroidArch>
+    <AndroidMaxAPI>
+    </AndroidMaxAPI>
+    <AndroidStripLibrary>true</AndroidStripLibrary>
   </PropertyGroup>
   <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">
     <AndroidTargetAPI>android-15</AndroidTargetAPI>
@@ -173,6 +177,10 @@
     </Link>
     <AntBuild>
       <AntBuildPath>$(ProjectDir)\</AntBuildPath>
+      <SecurePropertiesLocation>D:\projects\android\ks\secure_properties.xml</SecurePropertiesLocation>
+      <AntBuildType>Release</AntBuildType>
+      <Debuggable>false</Debuggable>
+      <EnableProGuard>false</EnableProGuard>
     </AntBuild>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">

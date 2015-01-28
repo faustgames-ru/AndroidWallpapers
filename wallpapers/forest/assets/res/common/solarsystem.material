@@ -412,7 +412,7 @@ material earthatmo : skinedmeshcolored
 			
 			defines = SKINNING;BATCHING;SOFT_TRANSPARENT_EDGES;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;MODULATE_COLOR;POINT_LIGHT
 			u_modulateAlpha = 1.0
-			u_modulateColor = 0.3, 0.75, 0.9, 1.0
+			u_modulateColor = 0.1, 0.42, 0.5, 1.0
 			
 			renderState
             {

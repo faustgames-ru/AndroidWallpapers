@@ -29,6 +29,8 @@ static const unsigned int MOVE_DOWN = 32;
 static const float MOVE_SPEED = 15.0f;
 static const float UP_DOWN_SPEED = 10.0f;
 
+static const bool EMPTY = false;
+
 AsteroidsTest::AsteroidsTest()
     : _font(NULL), _scene(NULL), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _currentClip(NULL), _jumpClip(NULL), _kickClip(NULL), _rotateX(0), _materialParameterAlpha(NULL),
@@ -39,68 +41,78 @@ AsteroidsTest::AsteroidsTest()
 
 void AsteroidsTest::restoreDeviceObjects()
 {
-	Game::restoreDeviceObjects();
-	if (isInitialized())
+	if (!EMPTY)
 	{
-		_scene->visit(this, &AsteroidsTest::initializeScene);
+		Game::restoreDeviceObjects();
+		if (isInitialized())
+		{
+			_scene->visit(this, &AsteroidsTest::initializeScene);
+		}
 	}
 }
 
 void AsteroidsTest::initialize()
 {
-    // Enable multi-touch (only affects devices that support multi-touch).
-    setMultiTouch(true);
-
-    // Display the gameplay splash screen for at least 1 second.
-	//displayScreen(this, &AsteroidsTest::drawSplash, NULL, 1000L); 
-
-    // Load the font.
-    _font = Font::create("res/ui/arial.gpb");
-
-    // Load scene.
-    _scene = Scene::load("res/common/solarsystem.scene");
-
-    // Update the aspect ratio for our scene's camera to match the current device resolution.
-    _scene->getActiveCamera()->setAspectRatio(getAspectRatio());
-
-	/*if (Camera* camera = _scene->getActiveCamera())
+	if (!EMPTY)
 	{
-	camera->getNode()->getTranslation(&cameraPosition);
-	}*/
+		// Enable multi-touch (only affects devices that support multi-touch).
+		setMultiTouch(true);
 
-	//static camera
-	/*Vector3 cameraPosition(5.0f, 1.0f, 0.0f);
-	_fpCamera.initialize(0.01f, 50.0f);
-	_fpCamera.setPosition(cameraPosition);
-	_scene->addNode(_fpCamera.getRootNode());*/
+		// Display the gameplay splash screen for at least 1 second.
+		//displayScreen(this, &AsteroidsTest::drawSplash, NULL, 1000L); 
 
-	//earth orbit camera
-	Vector3 cameraPosition(0.0f, 0.35f, 0.0f);
-	_fpCamera.initialize(0.01f, 50.0f);
-	_fpCamera.setPosition(cameraPosition);
-	Matrix rot; 
-	Matrix::createLookAt(0.0f, 0.0f, 0.0f,   
-						 0.0f, 1.0f, 0.0f,   
-						 0.0f, 0.0f, 1.0f, &rot);
-	_fpCamera.setRotation(rot);
-	_fpCamera.rotate(MATH_PI, 0.0f);
-	_scene->findNode("earth")->addChild(Node::create("earthcamerahelper"));
-	_fpCamera.setTargetNode(_scene->findNode("earthcamerahelper"));
-	
-	//setup camera
-	_scene->setActiveCamera(_fpCamera.getCamera());
-	_scene->setAmbientColor(0.1f, 0.1f, 0.1f);
-    
-    // Initialize the physics character.
-    //initializeCharacter();
-	//initializeChair();
-	//initializeAsteroids();
-	initializeSolarSystem();
+		// Load the font.
+		_font = Font::create("res/ui/arial.gpb");
 
-    // Initialize scene.
-	_scene->visit(this, &AsteroidsTest::initializeScene);
+		// Load scene.
+		_scene = Scene::load("res/common/solarsystem.scene");
 
-    _gamepad = getGamepad(0);
+		// Update the aspect ratio for our scene's camera to match the current device resolution.
+		_scene->getActiveCamera()->setAspectRatio(getAspectRatio());
+
+		/*if (Camera* camera = _scene->getActiveCamera())
+		{
+		camera->getNode()->getTranslation(&cameraPosition);
+		}*/
+
+		//static camera
+		/*Vector3 cameraPosition(5.0f, 1.0f, 0.0f);
+		_fpCamera.initialize(0.01f, 50.0f);
+		_fpCamera.setPosition(cameraPosition);
+		_scene->addNode(_fpCamera.getRootNode());*/
+
+		//earth orbit camera
+		Vector3 cameraPosition(0.0f, 0.4f, 0.0f);
+		_fpCamera.initialize(0.01f, 50.0f);
+		_fpCamera.setPosition(cameraPosition);
+		Matrix rot;
+		Matrix::createLookAt(0.0f, 0.0f, 0.0f,
+			0.0f, 1.0f, 0.0f,
+			0.0f, 0.0f, 1.0f, &rot);
+		_fpCamera.setRotation(rot);
+		_fpCamera.rotate(MATH_PI, 0.0f);
+		_scene->findNode("earth")->addChild(Node::create("earthcamerahelper"));
+		_fpCamera.setTargetNode(_scene->findNode("earthcamerahelper"));
+
+		//setup camera
+		_scene->setActiveCamera(_fpCamera.getCamera());
+		_scene->setAmbientColor(0.1f, 0.1f, 0.1f);
+
+		// Initialize the physics character.
+		//initializeCharacter();
+		//initializeChair();
+		//initializeAsteroids();
+		initializeSolarSystem();
+
+		// Initialize scene.
+		_scene->visit(this, &AsteroidsTest::initializeScene);
+
+		_gamepad = getGamepad(0);
+	}
+	else
+	{
+		Game::restoreDeviceObjects();
+	}
 }
 
 bool AsteroidsTest::initializeScene(Node* node)
@@ -238,43 +250,49 @@ void AsteroidsTest::play(const char* id, bool repeat, float speed)
 
 void AsteroidsTest::update(float elapsedTime)
 {
-	float slowFactor = 0.1f;
-	_scene->findNode("sunroot")->rotateZ(0.01f * elapsedTime * slowFactor);
-	_scene->findNode("rootmercury")->rotateZ(0.001f * elapsedTime * slowFactor);
-	_scene->findNode("rootvenus")->rotateZ(0.0015f * elapsedTime * slowFactor);
-	_scene->findNode("rootearth")->rotateZ(0.0012f * elapsedTime * slowFactor);
-	_scene->findNode("earth")->rotateZ(0.001f * elapsedTime * slowFactor);
-	Node* earthcamerahelper = _scene->findNode("earthcamerahelper");
-	if (earthcamerahelper) earthcamerahelper->rotateZ(0.0006f * elapsedTime * slowFactor);
-	_scene->findNode("rootmars")->rotateZ(0.0016f * elapsedTime * slowFactor);
-	_scene->findNode("rootjupiter")->rotateZ(0.0018f * elapsedTime * slowFactor);
-	_scene->findNode("rootsaturn")->rotateZ(0.002f * elapsedTime * slowFactor);
-	_scene->findNode("rooturanus")->rotateZ(0.003f * elapsedTime * slowFactor);
-	_scene->findNode("rootneptune")->rotateZ(0.0018f * elapsedTime * slowFactor);
-	_scene->findNode("rootpluto")->rotateZ(0.0019f * elapsedTime * slowFactor);
+	if (!EMPTY)
+	{
+		float slowFactor = 0.1f;
+		_scene->findNode("sunroot")->rotateZ(0.01f * elapsedTime * slowFactor);
+		_scene->findNode("rootmercury")->rotateZ(0.001f * elapsedTime * slowFactor);
+		_scene->findNode("rootvenus")->rotateZ(0.0015f * elapsedTime * slowFactor);
+		_scene->findNode("rootearth")->rotateZ(0.0012f * elapsedTime * slowFactor);
+		_scene->findNode("earth")->rotateZ(0.001f * elapsedTime * slowFactor);
+		Node* earthcamerahelper = _scene->findNode("earthcamerahelper");
+		if (earthcamerahelper) earthcamerahelper->rotateZ(0.0006f * elapsedTime * slowFactor);
+		_scene->findNode("rootmars")->rotateZ(0.0016f * elapsedTime * slowFactor);
+		_scene->findNode("rootjupiter")->rotateZ(0.0018f * elapsedTime * slowFactor);
+		_scene->findNode("rootsaturn")->rotateZ(0.002f * elapsedTime * slowFactor);
+		_scene->findNode("rooturanus")->rotateZ(0.003f * elapsedTime * slowFactor);
+		_scene->findNode("rootneptune")->rotateZ(0.0018f * elapsedTime * slowFactor);
+		_scene->findNode("rootpluto")->rotateZ(0.0019f * elapsedTime * slowFactor);
+	}
 }
 
 void AsteroidsTest::render(float elapsedTime)
 {
-    // Clear the color and depth buffers.
-    clear(CLEAR_COLOR_DEPTH, Vector4(0.41f, 0.48f, 0.54f, 1.0f), 1.0f, 0);
+    // Clear the color and depth buffers.	
+	clear(CLEAR_COLOR_DEPTH, Vector4(0.41f, 0.48f, 0.54f, 1.0f), 1.0f, 0);
+	
+	if (!EMPTY)
+	{
+		// Draw our scene, with separate passes for opaque and transparent objects.
+		_scene->visit(this, &AsteroidsTest::drawScene, false);
+		_scene->visit(this, &AsteroidsTest::drawScene, true);
 
-    // Draw our scene, with separate passes for opaque and transparent objects.
-	_scene->visit(this, &AsteroidsTest::drawScene, false);
-	_scene->visit(this, &AsteroidsTest::drawScene, true);
+		// Draw physics debug
+		//if (_physicsDebug)
+		//    getPhysicsController()->drawDebug(_scene->getActiveCamera()->getViewProjectionMatrix());*/
 
-    // Draw physics debug
-    //if (_physicsDebug)
-    //    getPhysicsController()->drawDebug(_scene->getActiveCamera()->getViewProjectionMatrix());*/
+		/*_gamepad->draw();
 
-    /*_gamepad->draw();
-
-    // Draw FPS
-    _font->start();
-    char fps[32];
-    sprintf(fps, "%d", getFrameRate());
-    _font->drawText(fps, 5, 5, Vector4(1,1,0,1), 20);
-    _font->finish();*/
+		// Draw FPS
+		_font->start();
+		char fps[32];
+		sprintf(fps, "%d", getFrameRate());
+		_font->drawText(fps, 5, 5, Vector4(1,1,0,1), 20);
+		_font->finish();*/
+	}
 }
 
 void AsteroidsTest::touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contactIndex)

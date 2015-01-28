@@ -54,7 +54,7 @@ public class WPService extends GLWallpaperService
     public void onCreate()
     {
         super.onCreate();
-		_ni.initAssetManager(getResources().getAssets());
+		_ni.initAssetManager(getResources().getAssets());		
     }
 
     @Override

@@ -85,7 +85,7 @@ void main()
 	#if defined(SOFT_TRANSPARENT_EDGES)
 	vec3 cameraDirection = normalize(v_cameraDirection);
 	vec3 normalVector = normalize(v_normalViewVector);
-	float ddot = 1.0 - (abs(dot(normalVector, cameraDirection) - 0.5) * 2.0);
-	gl_FragColor.a *= min(ddot * ddot * ddot * ddot, 1.0);
+	float ddot = 1.0 - (abs(dot(normalVector, cameraDirection) - 0.45) * 2.0);
+	gl_FragColor.a *= min(ddot * ddot * ddot * ddot * ddot * ddot, 1.0);
     #endif
 }

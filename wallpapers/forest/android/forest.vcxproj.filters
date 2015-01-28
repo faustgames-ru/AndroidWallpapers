@@ -60,7 +60,7 @@
     <JCompile Include="src\com\faustgames\forest\GLWallpaperService.java">
       <Filter>src\com\faustgames\forest</Filter>
     </JCompile>
-    <JCompile Include="src\com\faustgames\forest\wpservice.java">
+    <JCompile Include="src\com\faustgames\forest\WPService.java">
       <Filter>src\com\faustgames\forest</Filter>
     </JCompile>
   </ItemGroup>
