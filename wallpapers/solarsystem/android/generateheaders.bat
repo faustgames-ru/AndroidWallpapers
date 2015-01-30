@@ -1,0 +1,1 @@
+javah.exe -classpath "d:\projects\android\repository\AndroidWallpapers\wallpapers\solarsystem\android\Tegra-Android\Release\bin\classes" -bootclasspath "d:\NVPACK\android-sdk-windows\platforms\android-19\android.jar" -jni com.faustgames.solarsystem.NativeInterface

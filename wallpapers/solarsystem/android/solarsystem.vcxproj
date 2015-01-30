@@ -1,0 +1,201 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="NsightTegraProject">
+    <NsightTegraProjectRevisionNumber>9</NsightTegraProjectRevisionNumber>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Tegra-Android">
+      <Configuration>Debug</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Tegra-Android">
+      <Configuration>Release</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Profile|Tegra-Android">
+      <Configuration>Profile</Configuration>
+      <Platform>Tegra-Android</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidBuild Include="AndroidManifest.xml">
+      <SubType>Designer</SubType>
+    </AndroidBuild>
+    <AndroidBuild Include="res\values\strings.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\src\main.cpp" />
+    <ClCompile Include="..\src\nativeinterface.cpp" />
+    <ClCompile Include="..\src\TargetCamera.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <JCompile Include="src\com\faustgames\solarsystem\solarsystem.java" />
+    <JCompile Include="src\com\faustgames\solarsystem\GLEnginePendingOperationsController.java" />
+    <JCompile Include="src\com\faustgames\solarsystem\GLWallpaperService.java" />
+    <JCompile Include="src\com\faustgames\solarsystem\NativeInterface.java" />
+    <JCompile Include="src\com\faustgames\solarsystem\WPService.java" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\src\main.h" />
+    <ClInclude Include="..\src\nativeinterface.h" />
+    <ClInclude Include="..\src\TargetCamera.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\assets\game.config" />
+    <None Include="..\assets\res\common\boy.animation" />
+    <None Include="..\assets\res\common\chair.animation" />
+    <None Include="..\assets\res\common\gamepad.form" />
+    <None Include="..\assets\res\common\gamepad.theme" />
+    <None Include="..\assets\res\common\sample.gpb" />
+    <None Include="..\assets\res\common\sample.material" />
+    <None Include="..\assets\res\common\sample.physics" />
+    <None Include="..\assets\res\common\sample.scene" />
+    <None Include="..\assets\res\png\arial.ttf" />
+    <None Include="..\assets\res\png\backboard.png" />
+    <None Include="..\assets\res\png\basketball.png" />
+    <None Include="..\assets\res\png\basketballnet.png" />
+    <None Include="..\assets\res\png\book.png" />
+    <None Include="..\assets\res\png\bookshelf.png" />
+    <None Include="..\assets\res\png\boy.png" />
+    <None Include="..\assets\res\png\character.png" />
+    <None Include="..\assets\res\png\decals.png" />
+    <None Include="..\assets\res\png\door.png" />
+    <None Include="..\assets\res\png\doorframe.png" />
+    <None Include="..\assets\res\png\easel.png" />
+    <None Include="..\assets\res\png\floor.png" />
+    <None Include="..\assets\res\png\floortiles.png" />
+    <None Include="..\assets\res\png\gamepad.png" />
+    <None Include="..\assets\res\png\playtable.png" />
+    <None Include="..\assets\res\png\shadow.png" />
+    <None Include="..\assets\res\png\storageorganizer.png" />
+    <None Include="..\assets\res\png\tableleg1.png" />
+    <None Include="..\assets\res\png\tableleg2.png" />
+    <None Include="..\assets\res\png\tableleg3.png" />
+    <None Include="..\assets\res\png\tableleg4.png" />
+    <None Include="..\assets\res\png\tabletop.png" />
+    <None Include="..\assets\res\png\tiles.png" />
+    <None Include="..\assets\res\png\tilesn.png" />
+    <None Include="..\assets\res\png\toybox.png" />
+    <None Include="..\assets\res\png\walleast.png" />
+    <None Include="..\assets\res\png\wallnorth.png" />
+    <None Include="..\assets\res\png\walloverhang.png" />
+    <None Include="..\assets\res\png\wallsouth.png" />
+    <None Include="..\assets\res\png\wallwest.png" />
+    <None Include="..\assets\res\png\windowledge.png" />
+    <None Include="..\assets\res\png\wood.png" />
+    <None Include="..\assets\res\png\woodn.png" />
+    <None Include="..\assets\res\shaders\colored-unlit.frag" />
+    <None Include="..\assets\res\shaders\colored-unlit.vert" />
+    <None Include="..\assets\res\shaders\colored.frag" />
+    <None Include="..\assets\res\shaders\colored.vert" />
+    <None Include="..\assets\res\shaders\font.frag" />
+    <None Include="..\assets\res\shaders\font.vert" />
+    <None Include="..\assets\res\shaders\form.frag" />
+    <None Include="..\assets\res\shaders\form.vert" />
+    <None Include="..\assets\res\shaders\lighting-directional.frag" />
+    <None Include="..\assets\res\shaders\lighting-directional.vert" />
+    <None Include="..\assets\res\shaders\lighting-point.frag" />
+    <None Include="..\assets\res\shaders\lighting-point.vert" />
+    <None Include="..\assets\res\shaders\lighting-spot.frag" />
+    <None Include="..\assets\res\shaders\lighting-spot.vert" />
+    <None Include="..\assets\res\shaders\lighting.frag" />
+    <None Include="..\assets\res\shaders\lighting.vert" />
+    <None Include="..\assets\res\shaders\skinning-none.vert" />
+    <None Include="..\assets\res\shaders\skinning.vert" />
+    <None Include="..\assets\res\shaders\sprite.frag" />
+    <None Include="..\assets\res\shaders\sprite.vert" />
+    <None Include="..\assets\res\shaders\terrain.frag" />
+    <None Include="..\assets\res\shaders\terrain.vert" />
+    <None Include="..\assets\res\shaders\textured-bumped.frag" />
+    <None Include="..\assets\res\shaders\textured-bumped.vert" />
+    <None Include="..\assets\res\shaders\textured-unlit.frag" />
+    <None Include="..\assets\res\shaders\textured-unlit.vert" />
+    <None Include="..\assets\res\shaders\textured.frag" />
+    <None Include="..\assets\res\shaders\textured.vert" />
+    <None Include="..\assets\res\ui\arial.gpb" />
+    <None Include="..\assets\res\ui\default-theme.png" />
+    <None Include="..\assets\res\ui\default.theme" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{12293468-BFA3-41C3-997F-5141A9FB0F54}</ProjectGuid>
+    <RootNamespace>solarsystem</RootNamespace>
+    <ProjectName>solarsystem</ProjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidStlType>gnustl_static</AndroidStlType>
+    <AndroidNativeAPI>UseMin</AndroidNativeAPI>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidNativeAPI>UseMin</AndroidNativeAPI>
+    <AndroidArch>armv7-a</AndroidArch>
+    <AndroidMaxAPI>
+    </AndroidMaxAPI>
+    <AndroidStripLibrary>true</AndroidStripLibrary>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">
+    <AndroidTargetAPI>android-15</AndroidTargetAPI>
+    <AndroidNativeAPI>UseTarget</AndroidNativeAPI>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Tegra-Android'">
+    <ClCompile>
+      <PreprocessorDefinitions>DISABLE_IMPORTGL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\src;$(ProjectDir)..\..\..\gameplay\gameplay\src;$(ProjectDir)..\..\..\gameplay\external-deps\bullet\src\;$(ProjectDir)..\..\..\gameplay\external-deps\libpng\include\;$(ProjectDir)..\..\..\gameplay\external-deps\lua\include\;$(ProjectDir)..\..\..\gameplay\external-deps\oggvorbis\include\;$(ProjectDir)..\..\..\gameplay\external-deps\openal\include\;$(ProjectDir)..\..\..\gameplay\external-deps\zlib\include\;$(ProjectDir)..\..\..\gameplay\external-deps\glew\include\;$(IncludePath);native_app_glue;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <GccExceptionHandling>false</GccExceptionHandling>
+      <CLanguageStandard>
+      </CLanguageStandard>
+      <CppLanguageStandard>
+      </CppLanguageStandard>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lGLESv1_CM %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\Tegra-Android\Debug\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gameplay;bullet;png;vorbis;ogg;lua;openal</AdditionalDependencies>
+      <AndroidSystemLibs>android;m;log;dl;GLESv2;EGL;c;gcc;z</AndroidSystemLibs>
+    </Link>
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\</AntBuildPath>
+      <AssetsDirectories>$(ProjectDir)..\assets</AssetsDirectories>
+    </AntBuild>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Tegra-Android'">
+    <ClCompile>
+      <PreprocessorDefinitions>DISABLE_IMPORTGL</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\src;$(ProjectDir)..\..\..\gameplay\gameplay\src;$(ProjectDir)..\..\..\gameplay\external-deps\bullet\src\;$(ProjectDir)..\..\..\gameplay\external-deps\libpng\include\;$(ProjectDir)..\..\..\gameplay\external-deps\lua\include\;$(ProjectDir)..\..\..\gameplay\external-deps\oggvorbis\include\;$(ProjectDir)..\..\..\gameplay\external-deps\openal\include\;$(ProjectDir)..\..\..\gameplay\external-deps\zlib\include\;$(ProjectDir)..\..\..\gameplay\external-deps\glew\include\;$(IncludePath);native_app_glue;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lGLESv1_CM %(AdditionalOptions)</AdditionalOptions>
+      <AdditionalLibraryDirectories>$(ProjectDir)..\Tegra-Android\Release\</AdditionalLibraryDirectories>
+      <AdditionalDependencies>gameplay;bullet;png;vorbis;ogg;lua;openal</AdditionalDependencies>
+      <AndroidSystemLibs>android;m;log;dl;GLESv2;EGL;c;gcc;z</AndroidSystemLibs>
+    </Link>
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\</AntBuildPath>
+      <SecurePropertiesLocation>D:\projects\android\ks\secure_properties.xml</SecurePropertiesLocation>
+      <AntBuildType>Release</AntBuildType>
+      <Debuggable>false</Debuggable>
+      <EnableProGuard>false</EnableProGuard>
+    </AntBuild>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Profile|Tegra-Android'">
+    <ClCompile>
+      <PreprocessorDefinitions>DISABLE_IMPORTGL</PreprocessorDefinitions>
+    </ClCompile>
+    <Link>
+      <AdditionalOptions>-lGLESv1_CM %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <AntBuild>
+      <AntBuildPath>$(ProjectDir)\</AntBuildPath>
+    </AntBuild>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
