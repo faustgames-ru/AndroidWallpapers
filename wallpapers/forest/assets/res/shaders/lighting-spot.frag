@@ -3,6 +3,11 @@ float lerpstep( float lower, float upper, float s)
     return clamp( ( s - lower ) / ( upper - lower ), 0.0, 1.0 );
 }
 
+vec3 getLightDirection()
+{
+	return normalize(v_vertexToSpotLightDirection);
+}
+
 #if defined(BUMPED)
 
 vec3 getLitPixel()
@@ -10,7 +15,7 @@ vec3 getLitPixel()
     // Fetch normals from the normal map.
     vec3 normalVector = normalize(texture2D(u_normalmapTexture, v_texCoord).rgb * 2.0 - 1.0);
     vec3 spotLightDirection = normalize(v_spotLightDirection);
-    vec3 vertexToSpotLightDirection = normalize(v_vertexToSpotLightDirection);
+    vec3 vertexToSpotLightDirection = getLightDirection();
     
     // "-lightDirection" because light direction points in opposite direction to to spot direction.
     float spotCurrentAngleCos = dot(spotLightDirection, -vertexToSpotLightDirection);
@@ -38,7 +43,7 @@ vec3 getLitPixel()
     // Normalize the vectors.
     vec3 normalVector = normalize(v_normalVector);
     vec3 spotLightDirection = normalize(u_spotLightDirection); 
-    vec3 vertexToSpotLightDirection = normalize(v_vertexToSpotLightDirection);
+    vec3 vertexToSpotLightDirection = getLightDirection();
 
     // "-lightDirection" is used because light direction points in opposite direction to spot direction.
     float spotCurrentAngleCos = dot(spotLightDirection, -vertexToSpotLightDirection);

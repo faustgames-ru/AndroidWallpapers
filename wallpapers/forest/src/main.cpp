@@ -82,7 +82,7 @@ void AsteroidsTest::initialize()
 		_scene->addNode(_fpCamera.getRootNode());*/
 
 		//earth orbit camera
-		Vector3 cameraPosition(0.0f, 0.4f, 0.0f);
+		Vector3 cameraPosition(0.0f, 0.37f, 0.0f);
 		_fpCamera.initialize(0.01f, 50.0f);
 		_fpCamera.setPosition(cameraPosition);
 		Matrix rot;

@@ -43,8 +43,13 @@ varying vec3 v_cameraDirection;                 // Camera direction
 varying vec3 v_normalViewVector;				// Normal vector in view space
 #endif
 
+// Soft transparent edges
+#if defined(SOFT_TRANSPARENT_EDGES)
+	#include "SoftTransparentEdges.frag"
+#endif
+
 // Lighting
-#if defined(LIGHTING)
+#if defined(LIGHTING) || defined(SOFT_TRANSPARENT_EDGES_WITH_LIGHT)
 	#include "lighting.frag"
 	#if defined(POINT_LIGHT)
 	#include "lighting-point.frag"
@@ -77,15 +82,12 @@ void main()
 	#endif
 
 	#if defined(MODULATE_COLOR)
-    gl_FragColor *= u_modulateColor;
+		gl_FragColor *= u_modulateColor;
     #endif
 	#if defined(MODULATE_ALPHA)
-    gl_FragColor.a *= u_modulateAlpha;
+		gl_FragColor.a *= u_modulateAlpha;
     #endif
 	#if defined(SOFT_TRANSPARENT_EDGES)
-	vec3 cameraDirection = normalize(v_cameraDirection);
-	vec3 normalVector = normalize(v_normalViewVector);
-	float ddot = 1.0 - (abs(dot(normalVector, cameraDirection) - 0.45) * 2.0);
-	gl_FragColor.a *= min(ddot * ddot * ddot * ddot * ddot * ddot, 1.0);
+		gl_FragColor.a *= GetSoftEdgeTransparency(getLightDirection());
     #endif
 }
