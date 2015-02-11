@@ -74,6 +74,9 @@
     <ClCompile Include="..\src\TargetCamera.cpp">
       <Filter>jni</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\StarsParticles.cpp">
+      <Filter>jni</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\main.h">
@@ -83,6 +86,9 @@
       <Filter>jni</Filter>
     </ClInclude>
     <ClInclude Include="..\src\TargetCamera.h">
+      <Filter>jni</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\StarsParticles.h">
       <Filter>jni</Filter>
     </ClInclude>
   </ItemGroup>

@@ -5,6 +5,9 @@
     </Filter>
     <Filter Include="src">
     </Filter>
+    <Filter Include="src\ParticleEmitters">
+      <UniqueIdentifier>{9502e563-92e7-48b9-85de-6968de67684a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="bar-descriptor.xml" />
@@ -40,6 +43,9 @@
     <ClCompile Include="..\src\TargetCamera.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\src\StarsParticles.cpp">
+      <Filter>src\ParticleEmitters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\src\main.h">
@@ -50,6 +56,9 @@
     </ClInclude>
     <ClInclude Include="..\src\TargetCamera.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="..\src\StarsParticles.h">
+      <Filter>src\ParticleEmitters</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -56,7 +56,7 @@ IndexBufferHandle MeshPart::crateDeviceObject(Mesh::IndexFormat indexFormat, uns
     default:
         GP_ERROR("Unsupported index format (%d).", indexFormat);
         glDeleteBuffers(1, &vbo);
-        return 0;
+        return NULL;
     }
 
     GL_ASSERT( glBufferData(GL_ELEMENT_ARRAY_BUFFER, indexSize * indexCount, NULL, dynamic ? GL_DYNAMIC_DRAW : GL_STATIC_DRAW) );

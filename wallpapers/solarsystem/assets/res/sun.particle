@@ -1,0 +1,39 @@
+particle fire
+{
+    sprite
+    {
+		path = res/fire.png
+        width = 256
+        height = 256
+	    blending = ADDITIVE
+        animated = false
+		looped = false
+        frameCount = 3
+	    frameRandomOffset = 3
+        frameDuration = 1.0
+    }
+
+    particleCountMax = 5000
+    emissionRate = 50
+    ellipsoid = true
+    sizeStartMin = 0.15
+    sizeStartMax = 0.2
+    sizeEndMin = 0.05
+    sizeEndMax = 0.1
+    energyMin = 1750
+    energyMax = 2000
+    colorStart = 1, 0.2, 0, 1
+    colorStartVar = 0.25, 0, 0, 0
+    colorEnd = 0, 0, 0, 0
+    position = 0, 0, 0
+    positionVar = 0.1, 0.1, 0.1
+    velocity = 0.0, 0.0, 0.0
+    velocityVar = 0.0, 0.0, 0.0
+    acceleration = 0.0, 0.0, 0.0
+    accelerationVar = 0.0, 0.0, 0.0
+    rotationPerParticleSpeedMin = -1.5
+    rotationPerParticleSpeedMax = 1.5
+    orbitPosition = true
+    orbitVelocity = true
+    orbitAcceleration = false
+}

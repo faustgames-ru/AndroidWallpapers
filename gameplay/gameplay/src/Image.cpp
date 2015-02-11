@@ -19,7 +19,7 @@ Image* Image::create(const char* path)
     GP_ASSERT(path);
 
     // Open the file.
-    std::auto_ptr<Stream> stream(FileSystem::open(path));
+    std::unique_ptr<Stream> stream(FileSystem::open(path));
     if (stream.get() == NULL || !stream->canRead())
     {
         GP_ERROR("Failed to open image file '%s'.", path);
@@ -33,7 +33,7 @@ Image* Image::create(const char* path)
         GP_ERROR("Failed to load file '%s'; not a valid PNG.", path);
         return NULL;
     }
-	
+
     // Initialize png read struct (last three parameters use stderr+longjump if NULL).
     png_structp png = png_create_read_struct(PNG_LIBPNG_VER_STRING, NULL, NULL, NULL);
     if (png == NULL)
@@ -50,7 +50,7 @@ Image* Image::create(const char* path)
         png_destroy_read_struct(&png, NULL, NULL);
         return NULL;
     }
-	
+
     // Set up error handling (required without using custom error handlers above).
     if (setjmp(png_jmpbuf(png)))
     {
@@ -58,7 +58,7 @@ Image* Image::create(const char* path)
         png_destroy_read_struct(&png, &info, NULL);
         return NULL;
     }
-	
+
     // Initialize file io.
     png_set_read_fn(png, stream.get(), readStream);
 
@@ -66,7 +66,7 @@ Image* Image::create(const char* path)
     png_set_sig_bytes(png, 8);
 
     // Read the entire image into memory.
-    png_read_png(png, info, PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_PACKING | PNG_TRANSFORM_EXPAND, NULL);
+    png_read_png(png, info, PNG_TRANSFORM_STRIP_16 | PNG_TRANSFORM_PACKING | PNG_TRANSFORM_EXPAND | PNG_TRANSFORM_GRAY_TO_RGB, NULL);
 
     Image* image = new Image();
     image->_width = png_get_image_width(png, info);
@@ -105,37 +105,36 @@ Image* Image::create(const char* path)
     png_destroy_read_struct(&png, &info, NULL);
 
     return image;
-	return NULL;
 }
 
 Image* Image::create(unsigned int width, unsigned int height, Image::Format format, unsigned char* data)
 {
-	GP_ASSERT(width > 0 && height > 0);
-	GP_ASSERT(format >= RGB && format <= RGBA);
+    GP_ASSERT(width > 0 && height > 0);
+    GP_ASSERT(format >= RGB && format <= RGBA);
 
-	unsigned int pixelSize = 0;
-	switch(format)
-	{
-	case Image::RGB:
-		pixelSize = 3;
-		break;
-	case Image::RGBA:
-		pixelSize = 4;
-		break;
-	}
+    unsigned int pixelSize = 0;
+    switch(format)
+    {
+    case Image::RGB:
+        pixelSize = 3;
+        break;
+    case Image::RGBA:
+        pixelSize = 4;
+        break;
+    }
 
-	Image* image = new Image();
+    Image* image = new Image();
 
-	unsigned int dataSize = width * height * pixelSize;
+    unsigned int dataSize = width * height * pixelSize;
 
-	image->_width = width;
-	image->_height = height;
-	image->_format = format;
-	image->_data = new unsigned char[dataSize];
-	if (data)
-		memcpy(image->_data, data, dataSize);
+    image->_width = width;
+    image->_height = height;
+    image->_format = format;
+    image->_data = new unsigned char[dataSize];
+    if (data)
+        memcpy(image->_data, data, dataSize);
 
-	return image;
+    return image;
 }
 
 Image::Image() : _data(NULL), _format(RGB), _width(0), _height(0)

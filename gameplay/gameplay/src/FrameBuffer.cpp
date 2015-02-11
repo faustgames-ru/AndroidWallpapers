@@ -52,7 +52,6 @@ void FrameBuffer::initialize()
     // On many platforms this will simply be the zero (0) handle, but this is not always the case.
     GLint fbo;
     glGetIntegerv(GL_FRAMEBUFFER_BINDING, &fbo);
-	SAFE_RELEASE(_defaultFrameBuffer);
     _defaultFrameBuffer = new FrameBuffer(FRAMEBUFFER_ID_DEFAULT, 0, 0, (FrameBufferHandle)fbo);
     _currentFrameBuffer = _defaultFrameBuffer;
 
@@ -156,12 +155,27 @@ unsigned int FrameBuffer::getMaxRenderTargets()
 
 void FrameBuffer::setRenderTarget(RenderTarget* target, unsigned int index)
 {
-    GP_ASSERT(index < _maxRenderTargets);
-    GP_ASSERT(_renderTargets);
+    GP_ASSERT(!target || (target->getTexture() && target->getTexture()->getType() == Texture::TEXTURE_2D));
 
     // No change
     if (_renderTargets[index] == target)
         return;
+
+    setRenderTarget(target, index, GL_TEXTURE_2D);
+}
+
+void FrameBuffer::setRenderTarget(RenderTarget* target, Texture::CubeFace face, unsigned int index)
+{
+    GP_ASSERT(face >= Texture::POSITIVE_X && face <= Texture::NEGATIVE_Z);
+    GP_ASSERT(!target || (target->getTexture() && target->getTexture()->getType() == Texture::TEXTURE_CUBE));
+
+    setRenderTarget(target, index, GL_TEXTURE_CUBE_MAP_POSITIVE_X + face);
+}
+
+void FrameBuffer::setRenderTarget(RenderTarget* target, unsigned int index, GLenum textureTarget)
+{
+    GP_ASSERT(index < _maxRenderTargets);
+    GP_ASSERT(_renderTargets);
 
     // Release our reference to the current RenderTarget at this index.
     if (_renderTargets[index])
@@ -174,8 +188,6 @@ void FrameBuffer::setRenderTarget(RenderTarget* target, unsigned int index)
 
     if (target)
     {
-        GP_ASSERT( _renderTargets[index]->getTexture() );
-
         ++_renderTargetCount;
 
         // This FrameBuffer now references the RenderTarget.
@@ -184,7 +196,7 @@ void FrameBuffer::setRenderTarget(RenderTarget* target, unsigned int index)
         // Now set this target as the color attachment corresponding to index.
         GL_ASSERT( glBindFramebuffer(GL_FRAMEBUFFER, _handle) );
         GLenum attachment = GL_COLOR_ATTACHMENT0 + index;
-        GL_ASSERT( glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, GL_TEXTURE_2D, _renderTargets[index]->getTexture()->getHandle(), 0) );
+        GL_ASSERT( glFramebufferTexture2D(GL_FRAMEBUFFER, attachment, textureTarget, _renderTargets[index]->getTexture()->getHandle(), 0) );
         GLenum fboStatus = glCheckFramebufferStatus(GL_FRAMEBUFFER);
         if (fboStatus != GL_FRAMEBUFFER_COMPLETE)
         {
@@ -272,22 +284,23 @@ FrameBuffer* FrameBuffer::bind()
 
 void FrameBuffer::getScreenshot(Image* image)
 {
-	GP_ASSERT(image);
-	GP_ASSERT(image->getFormat() == Image::RGBA);
+    GP_ASSERT( image );
 
-	unsigned int width = _currentFrameBuffer->getWidth();
-	unsigned int height = _currentFrameBuffer->getHeight();
+    unsigned int width = _currentFrameBuffer->getWidth();
+    unsigned int height = _currentFrameBuffer->getHeight();
 
-	if (image->getWidth() == width && image->getHeight() == height)
-		GL_ASSERT( glReadPixels(0, 0, width, height, GL_RGBA, GL_UNSIGNED_BYTE, image->getData()) );
+	if (image->getWidth() == width && image->getHeight() == height) {
+		GLenum format = image->getFormat() == Image::RGB ? GL_RGB : GL_RGBA;
+        GL_ASSERT( glReadPixels(0, 0, width, height, format, GL_UNSIGNED_BYTE, image->getData()) );
+	}
 }
 
-Image* FrameBuffer::createScreenshot()
+Image* FrameBuffer::createScreenshot(Image::Format format)
 {
-	Image* screenshot = Image::create(_currentFrameBuffer->getWidth(), _currentFrameBuffer->getHeight(), Image::RGBA, NULL);
-	getScreenshot(screenshot);
+    Image* screenshot = Image::create(_currentFrameBuffer->getWidth(), _currentFrameBuffer->getHeight(), format, NULL);
+    getScreenshot(screenshot);
 
-	return screenshot;
+    return screenshot;
 }
 
 FrameBuffer* FrameBuffer::bindDefault()

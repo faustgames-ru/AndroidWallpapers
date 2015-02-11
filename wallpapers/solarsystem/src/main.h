@@ -85,6 +85,8 @@ private:
 	unsigned int _moveFlags;
 	int _prevX;
 	int _prevY;
+	Node* _particleEmitterSunNode;
+	Node* _particleEmitterStarsNode;
 };
 
 #endif 

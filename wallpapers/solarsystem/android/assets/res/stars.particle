@@ -1,0 +1,39 @@
+particle fire
+{
+    sprite
+    {
+		path = res/star.png
+        width = 256
+        height = 256
+	    blending = ADDITIVE
+        animated = false
+		looped = false
+        frameCount = 3
+	    frameRandomOffset = 3
+        frameDuration = 1.0
+    }
+
+    particleCountMax = 5000
+    emissionRate = 50
+    ellipsoid = true
+    sizeStartMin = 0.35
+    sizeStartMax = 0.5
+    sizeEndMin = 0.05
+    sizeEndMax = 0.1
+    energyMin = 1750
+    energyMax = 2000
+    colorStart = 0.8, 0.8, 1.0, 1.0
+    colorStartVar = 0.2, 0.2, 0, 0
+    colorEnd = 0, 0, 0, 0
+    position = 0, 0, 0
+    positionVar = 7.0, 0.0, 0.0
+    velocity = 0.0, 0.0, 0.0
+    velocityVar = 0.0, 0.0, 0.0
+    acceleration = 0.0, 0.0, 0.0
+    accelerationVar = 0.0, 0.0, 0.0
+    rotationPerParticleSpeedMin = -1.5
+    rotationPerParticleSpeedMax = 1.5
+    orbitPosition = true
+    orbitVelocity = true
+    orbitAcceleration = false
+}

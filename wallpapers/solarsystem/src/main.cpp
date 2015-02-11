@@ -1,4 +1,5 @@
 #include "main.h"
+#include "StarsParticles.h"
 
 // Declare our game instance
 AsteroidsTest game;
@@ -34,7 +35,7 @@ static const bool EMPTY = false;
 AsteroidsTest::AsteroidsTest()
     : _font(NULL), _scene(NULL), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _currentClip(NULL), _jumpClip(NULL), _kickClip(NULL), _rotateX(0), _materialParameterAlpha(NULL),
-      _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL)
+	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL)
 {
     _buttonPressed = new bool[2];
 }
@@ -98,6 +99,25 @@ void AsteroidsTest::initialize()
 		_scene->setActiveCamera(_fpCamera.getCamera());
 		_scene->setAmbientColor(0.1f, 0.1f, 0.1f);
 
+		//init sun particles
+		_particleEmitterSunNode = _scene->addNode("Sun Particle Emitter");
+		_particleEmitterSunNode->setTranslation(0.0f, 0.0f, 0.0f);
+		ParticleEmitter* emitter = ParticleEmitter::create("res/sun.particle");		
+		_particleEmitterSunNode->setDrawable(emitter);
+		emitter->emitOnce(5);
+		emitter->start();
+
+		//init stars particles
+		
+		_particleEmitterStarsNode = _scene->addNode("Stars Particle Emitter");
+		_particleEmitterStarsNode->setTranslation(0.0f, 0.0f, 0.0f);
+		emitter = StarsParticles::create("res/stars.particle", StarsParticles::Constructor);
+		_particleEmitterStarsNode->setDrawable(emitter);
+		emitter->emitOnce(1);
+		emitter->start();
+
+
+
 		// Initialize the physics character.
 		//initializeCharacter();
 		//initializeChair();
@@ -117,7 +137,7 @@ void AsteroidsTest::initialize()
 
 bool AsteroidsTest::initializeScene(Node* node)
 {
-    Model* model = node->getModel();
+	Model* model = dynamic_cast<Model*>(node->getDrawable());
     if (model)
     {
 		if (model->getMeshPartCount() > 1)
@@ -212,9 +232,8 @@ void AsteroidsTest::drawSplash(void* param)
 
 bool AsteroidsTest::drawScene(Node* node, bool transparent)
 {
-    if (node->getModel() && (transparent == node->hasTag("transparent")))
-        node->getModel()->draw(_wireframe);
-
+	if (node->getDrawable() && (transparent == node->hasTag("transparent")))
+		node->getDrawable()->draw(_wireframe);
     return true;
 }
 
@@ -266,6 +285,13 @@ void AsteroidsTest::update(float elapsedTime)
 		_scene->findNode("rooturanus")->rotateZ(0.003f * elapsedTime * slowFactor);
 		_scene->findNode("rootneptune")->rotateZ(0.0018f * elapsedTime * slowFactor);
 		_scene->findNode("rootpluto")->rotateZ(0.0019f * elapsedTime * slowFactor);
+
+		ParticleEmitter* emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterSunNode->getDrawable());
+		if (emitter)
+			emitter->update(elapsedTime);
+		emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterStarsNode->getDrawable());
+		if (emitter)
+			emitter->update(elapsedTime);
 	}
 }
 
