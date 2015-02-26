@@ -46,10 +46,15 @@ RenderState::~RenderState()
 
 void RenderState::initialize()
 {
-    if (StateBlock::_defaultState == NULL)
-    {
-        StateBlock::_defaultState = StateBlock::create();
-    }
+	#ifdef __ANDROID__
+		SAFE_DELETE(StateBlock::_defaultState);
+		StateBlock::_defaultState = StateBlock::create();
+	#else
+		if (StateBlock::_defaultState == NULL)
+		{
+			StateBlock::_defaultState = StateBlock::create();
+		}
+	#endif
 }
 
 void RenderState::finalize()

@@ -180,8 +180,8 @@ extern int strcmpnocase(const char* s1, const char* s2);
 
 // Audio (OpenAL)
 #ifdef __ANDROID__
-    #include <AL\al.h>
-    #include <AL\alc.h>
+    #include <al.h>
+    #include <alc.h>
 #elif WIN32
     #define AL_LIBTYPE_STATIC
     #include <al.h>

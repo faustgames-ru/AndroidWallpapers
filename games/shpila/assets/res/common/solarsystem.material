@@ -1,0 +1,581 @@
+material texturedUnlit
+{
+    technique
+    {
+        pass
+        {
+            vertexShader = res/shaders/textured-unlit.vert
+            fragmentShader = res/shaders/textured-unlit.frag
+
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            
+            sampler u_diffuseTexture
+            {
+                mipmap = true
+                wrapS = CLAMP
+                wrapT = CLAMP
+                minFilter = LINEAR_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+}
+
+material texturedSpecular
+{
+    technique
+    {
+        pass
+        {
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			defines = SPECULAR;DIRECTIONAL_LIGHT_COUNT 1
+
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+            u_worldViewMatrix = WORLD_VIEW_MATRIX
+            u_cameraPosition = CAMERA_VIEW_POSITION
+            u_ambientColor = SCENE_AMBIENT_COLOR
+            u_specularExponent = 50
+
+            sampler u_diffuseTexture
+            {
+                mipmap = true
+                wrapS = CLAMP
+                wrapT = CLAMP
+                minFilter = LINEAR_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+}
+
+material texturedTransparent
+{
+    technique
+    {
+        pass
+        {
+            vertexShader = res/shaders/textured.vert
+            fragmentShader = res/shaders/textured.frag
+			
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+            u_worldViewMatrix = WORLD_VIEW_MATRIX
+            
+            sampler u_diffuseTexture
+            {
+                mipmap = true
+                wrapS = CLAMP
+                wrapT = CLAMP
+                minFilter = LINEAR_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+	            blend = true
+                blendSrc = SRC_ALPHA
+                blendDst = ONE_MINUS_SRC_ALPHA
+            }
+        }
+    }
+}
+
+material texturedBumped
+{
+    technique
+    {
+        pass
+        {
+            // shaders
+            vertexShader = res/shaders/textured-bumped.vert
+            fragmentShader = res/shaders/textured-bumped.frag
+			
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+
+            // samplers
+            sampler u_diffuseTexture
+            {
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+			
+			sampler u_normalmapTexture
+            {
+                mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+            }
+
+            // render state
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+}
+
+material colored
+{
+    technique
+    {
+        pass
+        {
+            vertexShader = res/shaders/colored.vert
+            fragmentShader = res/shaders/colored.frag
+            defines = DIRECTIONAL_LIGHT_COUNT 1
+
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+            
+            renderState
+            {
+                cullFace = true
+                depthTest = true
+            }
+        }
+    }
+}
+
+material spaceskyboxBK : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxBK 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxDN : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxDN 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxFT : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxFT 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxLF : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxLF 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxRT : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxRT 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+material spaceskyboxUP : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @spaceskyboxUP 
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}
+
+material skinedmesh : texturedTransparent
+{
+    technique
+    {
+        pass
+        {
+			//;DIRECTIONAL_LIGHT_COUNT 1
+            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
+            u_matrixPalette = MATRIX_PALETTE
+            u_modulateAlpha = 1.0
+        }
+    }
+}
+
+material skinedmeshcolored : colored
+{
+    technique
+    {
+        pass
+        {
+            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            u_matrixPalette = MATRIX_PALETTE
+            u_modulateAlpha = 1.0
+        }
+    }
+}
+
+material skinedmeshbumped : texturedBumped
+{
+    technique
+    {
+        pass
+        {
+            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            u_matrixPalette = MATRIX_PALETTE
+            u_modulateAlpha = 1.0
+        }
+    }
+}
+
+material skinedmeshunlit : texturedUnlit
+{
+    technique
+    {
+        pass
+        {
+            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            u_matrixPalette = MATRIX_PALETTE
+            u_modulateAlpha = 1.0
+        }
+    }
+}
+
+material mtmercury : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @mercury 
+            }
+        }
+    }
+}
+
+material mtvenus : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @venus 
+            }
+        }
+    }
+}
+
+material mtearth : skinedmeshbumped
+{
+    technique
+    {
+        pass
+        {
+			defines = DARKSIDEDIFFUSETEXTURE;SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
+			//;DIRECTIONAL_LIGHT_COUNT 1
+            sampler u_diffuseTexture
+            {
+                path = @earth
+            }
+			sampler u_normalmapTexture
+            {
+                path = @earthbump
+            }
+			sampler u_darkSideDiffuseTexture
+            {
+				mipmap = true
+                wrapS = REPEAT
+                wrapT = REPEAT
+                minFilter = NEAREST_MIPMAP_LINEAR
+                magFilter = LINEAR
+                path = @earthlights
+            }
+        }
+    }
+}
+
+material earthcloudmap : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+            u_cameraPosition = CAMERA_VIEW_POSITION
+			
+			defines = SKINNING;BATCHING;SOFT_TRANSPARENT_EDGES;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;MODULATE_COLOR;POINT_LIGHT
+			//;DIRECTIONAL_LIGHT_COUNT 1
+			u_modulateAlpha = 1.0
+			u_modulateColor = 0.5, 0.5, 0.7, 0.5
+            sampler u_diffuseTexture
+            {
+                path = @earthcloudmap
+            }
+			renderState
+            {
+                blendSrc = SRC_ALPHA
+                blendDst = ONE
+				depthWrite = false
+            }
+        }
+    }
+}
+
+material earthatmo : skinedmeshcolored
+{
+    technique
+    {
+        pass
+        {
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+            u_cameraPosition = CAMERA_VIEW_POSITION
+			
+			defines = SKINNING;BATCHING;SOFT_TRANSPARENT_EDGES;SOFT_TRANSPARENT_EDGES_WITH_LIGHT;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;MODULATE_COLOR;POINT_LIGHT
+			u_modulateAlpha = 1.0
+			u_modulateColor = 0.1, 0.42, 0.5, 1.0
+			
+			renderState
+            {
+				blend = true
+                blendSrc = SRC_ALPHA
+                blendDst = ONE
+				cullFace = true
+				cullFaceSide = BACK
+            }
+        }
+    }
+}
+
+material mtmars : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @mars
+            }
+        }
+    }
+}
+
+material mtjupiter : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @jupiter
+            }
+        }
+    }
+}
+
+material mtsaturn : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @saturn
+            }
+        }
+    }
+}
+
+material mturanus : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @uranus
+            }
+        }
+    }
+}
+
+material mtneptune : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @neptune
+            }
+        }
+    }
+}
+
+material mtpluto : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @pluto
+            }
+        }
+    }
+}
+
+material mtsun : skinedmeshunlit
+{
+    technique
+    {
+        pass
+        {
+			u_worldViewMatrix = WORLD_VIEW_MATRIX
+            u_cameraPosition = CAMERA_VIEW_POSITION
+			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+			
+			defines = SKINNING;BATCHING;SOFT_TRANSPARENT_EDGES;SOFT_TRANSPARENT_EDGES_FILL;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;MODULATE_COLOR;POINT_LIGHT
+			u_modulateAlpha = 1.0
+			u_modulateColor = 1.2, 1.2, 0.6, 1.0
+			//u_modulateColor = 1.0, 1.0, 1.0, 1.0
+            sampler u_diffuseTexture
+            {
+                path = @sun
+            }
+			renderState
+            {
+				blend = true
+                blendSrc = SRC_ALPHA
+                blendDst = ONE
+            }
+        }
+    }
+}
+
+material mtsaturnring : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @saturnring
+            }
+        }
+    }
+}
+
+material mturanusring : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @uranusring
+            }
+        }
+    }
+}
+
+material mtZealot : skinedmesh
+{
+    technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @zealotD 
+            }
+        }
+    }
+}
