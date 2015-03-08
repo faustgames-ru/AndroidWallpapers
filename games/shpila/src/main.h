@@ -1,8 +1,11 @@
-#ifndef CHARACTERGAME_H_
-#define CHARACTERGAME_H_
+#ifndef SHPILA_H_
+#define SHPILA_H_
 
 #include "gameplay.h"
 #include "TargetCamera.h"
+#include "GameObjectManager.h"
+#include "BaseWarrior.h"
+#include "Player.h"
 using namespace gameplay;
 
 /**
@@ -47,17 +50,19 @@ protected:
 
 private:
     
-    bool initializeScene(Node* node);
+	bool initializeNodeMaterials(Node* node);
     void initializeMaterial(Scene* scene, Node* node, Material* material);
 	void initializeAsteroids();
 	void initializeSolarSystem();
 	void loadCharacters();
+	void initPlayers();
+	void updatePlayers(float time);
     void drawSplash(void* param);
     bool drawScene(Node* node, bool transparent);
     void play(const char* id, bool repeat, float speed = 1.0f);
 
     Font* _font;
-    Scene* _scene;
+	AutoRef<Scene> _scene;
     PhysicsCharacter* _character;
     Node* _characterNode;
     Node* _characterMeshNode;
@@ -88,6 +93,9 @@ private:
 	int _prevY;
 	Node* _particleEmitterSunNode;
 	Node* _particleEmitterStarsNode;
+
+	GameObjectManager _manager;
+	AutoRef<Scene> _store;
 };
 
-#endif 
+#endif //SHPILA_H_

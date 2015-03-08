@@ -33,9 +33,10 @@ static const float UP_DOWN_SPEED = 10.0f;
 static const bool EMPTY = false;
 
 Shpila::Shpila()
-    : _font(NULL), _scene(NULL), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
+    : _font(NULL), _scene(), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _currentClip(NULL), _jumpClip(NULL), _kickClip(NULL), _rotateX(0), _materialParameterAlpha(NULL),
-	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL)
+	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
+	  _manager()
 {
     _buttonPressed = new bool[2];
 }
@@ -47,7 +48,7 @@ void Shpila::restoreDeviceObjects()
 		Game::restoreDeviceObjects();
 		if (isInitialized())
 		{
-			_scene->visit(this, &Shpila::initializeScene);
+			_scene->visit(this, &Shpila::initializeNodeMaterials);
 		}
 	}
 }
@@ -97,7 +98,7 @@ void Shpila::initialize()
 
 		//setup camera
 		_scene->setActiveCamera(_fpCamera.getCamera());
-		_scene->setAmbientColor(0.1f, 0.1f, 0.1f);
+		_scene->setAmbientColor(0.25f, 0.25f, 0.25f);
 
 		//init sun particles
 		/*_particleEmitterSunNode = _scene->addNode("Sun Particle Emitter");
@@ -116,18 +117,12 @@ void Shpila::initialize()
 		emitter->emitOnce(1);
 		emitter->start();
 
-
-
-		// Initialize the physics character.
-		//initializeCharacter();
-		//initializeChair();
-		//initializeAsteroids();
-		//initializeSolarSystem();
-
+		_manager.setScene(_scene);
 		loadCharacters();
+		initPlayers();
 
 		// Initialize scene.
-		_scene->visit(this, &Shpila::initializeScene);
+		_scene->visit(this, &Shpila::initializeNodeMaterials);
 
 		_gamepad = getGamepad(0);
 	}
@@ -137,41 +132,14 @@ void Shpila::initialize()
 	}
 }
 
-bool Shpila::initializeScene(Node* node)
+bool Shpila::initializeNodeMaterials(Node* node)
 {
-	Model* model = dynamic_cast<Model*>(node->getDrawable());
-    if (model)
-    {
-		for (int i = 0; i < model->getMeshPartCount(); i++)
-		{
-			initializeMaterial(_scene, node, model->getMaterial(i));
-		}
-    }
-
-    return true;
+    return _manager.initializeNodeMaterials(node);
 }
 
 void Shpila::initializeMaterial(Scene* scene, Node* node, Material* material)
 {
-    // Bind light shader parameters to dynamic objects only
-    if (node->hasTag("dynamic"))
-    {
-        material->getParameter("u_ambientColor")->bindValue(scene, &Scene::getAmbientColor);
-        Node* lightNode = scene->findNode("sun");
-        if (lightNode)
-        {
-			lightNode->setLight(Light::createPoint(Vector3(0.7f, 0.75f, 0.65f), 15.0f));
-            //material->getParameter("u_directionalLightColor[0]")->bindValue(lightNode->getLight(), &Light::getColor);
-            //material->getParameter("u_directionalLightDirection[0]")->bindValue(lightNode, &Node::getForwardVectorView);
-			material->getParameter("u_lightColor")->bindValue(lightNode->getLight(), &Light::getColor);
-			material->getParameter("u_lightDirection")->bindValue(lightNode, &Node::getForwardVectorView);
-			material->getParameter("u_modulateColor")->setVector4(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-			material->getParameter("u_diffuseColor")->setVector4(Vector4(1.0f, 1.0f, 1.0f, 1.0f));
-			material->getParameter("u_modulateAlpha")->setFloat(1.0f);
-			material->getParameter("u_pointLightPosition")->setVector3(Vector3(0.0f, 0.0f, 0.0f));
-			material->getParameter("u_pointLightRangeInverse")->setFloat(lightNode->getLight()->getRangeInverse());
-        }
-    }
+	_manager.initializeMaterial(scene, node, material);
 }
 
 void Shpila::initializeAsteroids()
@@ -207,25 +175,55 @@ void Shpila::initializeSolarSystem()
 
 void Shpila::loadCharacters()
 {
-	Scene* scene = Scene::load("res/common/Zelot_all.scene");
+	/*Scene* scene = Scene::load("res/common/Zelot_all.scene");
 	Node* node = scene->findNode("zealot")->clone();
 	_scene->addNode(node);
 	node->setScale(0.01f, 0.01f, 0.01f);
 	node->setTag("dynamic");
+	node->getAgent();
 	Animation* animation = node->getAnimation("animations");	
 	if (animation)
 	{
 		animation->createClips("res/common/Zelot_all.animation");
 		AnimationClip* clip = animation->getClip("run");
-		clip->setSpeed(0.4f);
+		clip->setSpeed(1.0f);
 		clip->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
 		clip->play();
+	}*/
+	Scene* scene = Scene::load("res/common/Zelot_all.scene");
+	Node* node = scene->findNode("zealot")->clone();
+	float scale = 0.003f;
+	node->setScale(scale, scale, scale);
+	node->setTag("dynamic");
+	Animation* animation = node->getAnimation("animations");
+	if (animation)
+	{
+		animation->createClips("res/common/Zelot_all.animation");
+	}
+	_manager.addUnit("zealot", node, BaseWarrior::constructor);
+	_store->addNode(node);
+	//SAFE_RELEASE(scene);
+	_manager.addUnit("tower", NULL, HiddenObject::constructor);
+	
+}
+
+void Shpila::initPlayers()
+{
+	_manager.Players.push_back(new Player(_manager, 1, Vector3(10.0f, 0.0f, 0.0f)));
+	_manager.Players.push_back(new Player(_manager, 2, Vector3(-10.0f, 0.0f, 0.0f)));
+}
+
+void Shpila::updatePlayers(float time)
+{
+	for (std::vector<Player*>::iterator it = _manager.Players.begin(); it != _manager.Players.end(); ++it)
+	{
+		(*it)->update(time);
 	}
 }
 
 void Shpila::finalize()
 {
-    SAFE_RELEASE(_scene);
+	SAFE_RELEASE(_scene);
     SAFE_RELEASE(_font);
     SAFE_DELETE_ARRAY(_buttonPressed);
 }
@@ -281,27 +279,56 @@ void Shpila::update(float elapsedTime)
 {
 	if (!EMPTY)
 	{
-		/*float slowFactor = 0.1f;
-		_scene->findNode("sunroot")->rotateZ(0.01f * elapsedTime * slowFactor);
-		_scene->findNode("rootmercury")->rotateZ(0.001f * elapsedTime * slowFactor);
-		_scene->findNode("rootvenus")->rotateZ(0.0015f * elapsedTime * slowFactor);
-		_scene->findNode("rootearth")->rotateZ(0.0012f * elapsedTime * slowFactor);
-		_scene->findNode("earth")->rotateZ(0.001f * elapsedTime * slowFactor);
-		Node* earthcamerahelper = _scene->findNode("earthcamerahelper");
-		if (earthcamerahelper) earthcamerahelper->rotateZ(0.0006f * elapsedTime * slowFactor);
-		_scene->findNode("rootmars")->rotateZ(0.0016f * elapsedTime * slowFactor);
-		_scene->findNode("rootjupiter")->rotateZ(0.0018f * elapsedTime * slowFactor);
-		_scene->findNode("rootsaturn")->rotateZ(0.002f * elapsedTime * slowFactor);
-		_scene->findNode("rooturanus")->rotateZ(0.003f * elapsedTime * slowFactor);
-		_scene->findNode("rootneptune")->rotateZ(0.0018f * elapsedTime * slowFactor);
-		_scene->findNode("rootpluto")->rotateZ(0.0019f * elapsedTime * slowFactor);*/
+		_manager.update(elapsedTime);
+		updatePlayers(elapsedTime);
 
 		/*ParticleEmitter* emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterSunNode->getDrawable());
 		if (emitter)
-			emitter->update(elapsedTime);*/
+			emitter->update(elapsedTime);
 		ParticleEmitter* emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterStarsNode->getDrawable());
 		if (emitter)
-			emitter->update(elapsedTime);
+			emitter->update(elapsedTime);*/
+		Vector2 move;
+		if (_moveFlags != 0)
+		{
+			// Forward motion
+			if (_moveFlags & MOVE_FORWARD)
+			{
+				move.y = 1;
+			}
+			else if (_moveFlags & MOVE_BACKWARD)
+			{
+				move.y = -1;
+			}
+			// Strafing
+			if (_moveFlags & MOVE_LEFT)
+			{
+				move.x = 1;
+			}
+			else if (_moveFlags & MOVE_RIGHT)
+			{
+				move.x = -1;
+			}
+			move.normalize();
+
+			// Up and down
+			if (_moveFlags & MOVE_UP)
+			{
+				_fpCamera.moveUp(elapsedTime * UP_DOWN_SPEED);
+			}
+			else if (_moveFlags & MOVE_DOWN)
+			{
+				_fpCamera.moveDown(elapsedTime * UP_DOWN_SPEED);
+			}
+
+			if (!move.isZero())
+			{
+				_fpCamera.moveForward(elapsedTime * move.y / 100.0f);
+				_fpCamera.moveLeft(elapsedTime * move.x / 100.0f);
+			}
+
+		}
+
 	}
 }
 
@@ -426,8 +453,22 @@ bool Shpila::mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta)
 	switch (evt)
 	{
 	case Mouse::MOUSE_WHEEL:
-		_fpCamera.moveForward(wheelDelta * MOVE_SPEED / 2.0f);
+		_fpCamera.moveForward(wheelDelta * MOVE_SPEED / 10.0f);
 		return true;
 	}
 	return false;
 }
+
+/*
+#ifndef BASEGAMEOBJECT_H_
+#define BASEGAMEOBJECT_H_
+
+#include "gameplay.h"
+using namespace gameplay;
+
+
+
+#endif
+
+
+*/

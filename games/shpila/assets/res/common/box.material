@@ -330,19 +330,3 @@ material skinedmeshunlit : texturedUnlit
         }
     }
 }
-
-
-
-material mtZealot : skinedmesh
-{
-    technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @zealotD 
-            }
-        }
-    }
-}

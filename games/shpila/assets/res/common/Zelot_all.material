@@ -201,44 +201,19 @@ material skinedmeshbumped : texturedBumped
     }
 }
 
-material mtZealot : skinedmesh
+material mtZealot : skinedmeshbumped
 {
     technique
     {
         pass
-        {
+        {			
             sampler u_diffuseTexture
             {
                 path = @zealotD 
             }
-        }
-    }
-}
-
-material mtZealot1 : skinedmeshbumped
-{
-    technique
-    {
-        pass
-        {
-			defines = DARKSIDEDIFFUSETEXTURE;SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
-			//;DIRECTIONAL_LIGHT_COUNT 1
-            sampler u_diffuseTexture
-            {
-                path = @earth
-            }
 			sampler u_normalmapTexture
             {
-                path = @earthbump
-            }
-			sampler u_darkSideDiffuseTexture
-            {
-				mipmap = true
-                wrapS = REPEAT
-                wrapT = REPEAT
-                minFilter = NEAREST_MIPMAP_LINEAR
-                magFilter = LINEAR
-                path = @earthlights
+                path = @zealotN
             }
         }
     }

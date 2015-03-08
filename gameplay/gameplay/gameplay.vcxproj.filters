@@ -929,6 +929,9 @@
     <ClCompile Include="src\PlatformAndroid.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\algorithms\Links.cpp">
+      <Filter>src\Algorithms</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbsoluteLayout.h">
@@ -1683,6 +1686,9 @@
     </ClInclude>
     <ClInclude Include="src\TileSet.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\algorithms\Links.h">
+      <Filter>src\Algorithms</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

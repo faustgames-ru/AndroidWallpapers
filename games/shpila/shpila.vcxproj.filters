@@ -8,6 +8,9 @@
     <Filter Include="src\ParticleEmitters">
       <UniqueIdentifier>{9502e563-92e7-48b9-85de-6968de67684a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Units">
+      <UniqueIdentifier>{b86a7fae-1583-4db9-9e5b-4b1f81a7ac26}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="bar-descriptor.xml" />
@@ -46,6 +49,21 @@
     <ClCompile Include="src\StarsParticles.cpp">
       <Filter>src\ParticleEmitters</Filter>
     </ClCompile>
+    <ClCompile Include="src\BaseGameObject.cpp">
+      <Filter>src\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="src\GameObjectManager.cpp">
+      <Filter>src\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="src\BaseWarrior.cpp">
+      <Filter>src\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
+      <Filter>src\Units</Filter>
+    </ClCompile>
+    <ClCompile Include="src\HiddenObject.cpp">
+      <Filter>src\Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -59,6 +77,21 @@
     </ClInclude>
     <ClInclude Include="src\StarsParticles.h">
       <Filter>src\ParticleEmitters</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseGameObject.h">
+      <Filter>src\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameObjectManager.h">
+      <Filter>src\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseWarrior.h">
+      <Filter>src\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Player.h">
+      <Filter>src\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="src\HiddenObject.h">
+      <Filter>src\Units</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

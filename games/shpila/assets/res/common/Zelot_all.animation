@@ -11,7 +11,7 @@ animation animations
 	clip death
     {
         begin = 26
-        end = 65
+        end = 63
         repeatCount = 1
     }
 	
@@ -19,6 +19,13 @@ animation animations
     {
         begin = 66
         end = 82
+        repeatCount = INDEFINITE
+    }
+	
+	clip dead
+    {
+        begin = 63
+        end = 63
         repeatCount = INDEFINITE
     }
 }

@@ -5,7 +5,7 @@ void applyLight(mat3 tangentSpaceTransformMatrix, vec4 position)
     vec4 positionWorldViewSpace = u_worldViewMatrix * a_position;
     
     // Compute the light direction with light position and the vertex position.
-    vec3 lightDirection = -(u_pointLightPosition - positionWorldViewSpace.xyz);
+    vec3 lightDirection = (u_pointLightPosition - positionWorldViewSpace.xyz);
     
     // Transform current light direction to tangent space.
     vec3 vertexToPointLightDirection = tangentSpaceTransformMatrix * lightDirection;
@@ -14,7 +14,7 @@ void applyLight(mat3 tangentSpaceTransformMatrix, vec4 position)
     v_pointLightAttenuation = clamp(1.0 - dot(lightDirection * u_pointLightRangeInverse, lightDirection * u_pointLightRangeInverse), 0.0, 1.0);
 
     // Output light direction.
-    v_vertexToPointLightDirection =  vertexToPointLightDirection;
+    v_vertexToPointLightDirection = vertexToPointLightDirection;
     
     #if defined(SPECULAR) || defined(SOFT_TRANSPARENT_EDGES)
  

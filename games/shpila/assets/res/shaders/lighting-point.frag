@@ -18,7 +18,7 @@ vec3 getLitPixel()
 		vec3 cameraDirection = v_cameraDirection;
 		return computeLighting(normalVector, vertexToPointLightDirection, pointLightAttenuation, cameraDirection);    
     #else    
-		return computeLighting(normalVector, vertexToPointLightDirection, pointLightAttenuation);    
+		return computeLighting(normalVector, vertexToPointLightDirection, pointLightAttenuation);
     #endif
 }
 
