@@ -1,9 +1,9 @@
 #ifndef HIDDENOBJECT_H_
 #define HIDDENOBJECT_H_
 
-#include "gameplay.h"
-#include "BaseGameObject.h"
 using namespace gameplay;
+
+class BaseGameObject;
 
 class HiddenObject : public BaseGameObject
 {

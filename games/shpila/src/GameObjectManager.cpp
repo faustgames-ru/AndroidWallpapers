@@ -1,15 +1,22 @@
-#include "GameObjectManager.h"
+#include "Headers.h"
 
 GameObjectManager::GameObjectManager()
 : Players()
 , _scene()
 , _units()
 , _objects()
+, _all()
+, _pd(NULL)
 {}
 
 void GameObjectManager::setScene(Scene* scene)
 {
 	_scene = scene;
+}
+
+Scene* GameObjectManager::scene()
+{
+	return _scene;
 }
 
 bool GameObjectManager::initializeNodeMaterials(Node* node)
@@ -19,20 +26,20 @@ bool GameObjectManager::initializeNodeMaterials(Node* node)
 	{
 		for (int i = 0; i < (int)model->getMeshPartCount(); i++)
 		{
-			initializeMaterial(_scene, node, model->getMaterial(i));
+			initializeMaterial(node, model->getMaterial(i));
 		}
 	}
 
 	return true;
 }
 
-void GameObjectManager::initializeMaterial(Scene* scene, Node* node, Material* material)
+void GameObjectManager::initializeMaterial(Node* node, Material* material)
 {
 	// Bind light shader parameters to dynamic objects only
 	if (node->hasTag("dynamic"))
 	{
-		material->getParameter("u_ambientColor")->bindValue(scene, &Scene::getAmbientColor);
-		Node* lightNode = scene->findNode("sun");
+		material->getParameter("u_ambientColor")->bindValue((Scene*)_scene, &Scene::getAmbientColor);
+		Node* lightNode = _scene->findNode("sun");
 		if (lightNode)
 		{
 			lightNode->setLight(Light::createPoint(Vector3(0.7f, 0.75f, 0.65f), 1000.0f));
@@ -49,7 +56,7 @@ void GameObjectManager::initializeMaterial(Scene* scene, Node* node, Material* m
 	}
 }
 
-void GameObjectManager::update(float time)
+void GameObjectManager::update(const float currentTime, const float elapsedTime)
 {
 	Itr<BaseGameObject> it = _objects.GetFirst();
 	while (it)
@@ -60,7 +67,7 @@ void GameObjectManager::update(float time)
 	it = _objects.GetFirst();
 	while (it)
 	{
-		it->update(time);
+		it->update(elapsedTime);
 		++it;
 	}
 }
@@ -76,17 +83,36 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 positi
 
 	GameUnit& unit = _units[name];
 	BaseGameObject* object = unit._constructor();
-	object->PlayerID = playerID;
-	_objects.Add(object);
-	if (unit._node)
-	{
-		Node* node = unit._node->clone();
-		object->setNode(node);
-		node->setTranslation(position);
-		_scene->addNode(node);
-		initializeNodeMaterials(node);
-	}
+	object->init(*this, unit._node, playerID, position);
 	return object;
+}
+
+void GameObjectManager::registerMovementController(UnitMovementBase* controller)
+{
+	controller->init(*_pd);
+	_all.push_back(controller);
+}
+
+void GameObjectManager::registerObject(BaseGameObject* object)
+{
+	_objects.Add(object);
+}
+
+void GameObjectManager::registerSceneNode(Node* node)
+{
+	_scene->addNode(node);
+	initializeNodeMaterials(node);
+}
+
+void GameObjectManager::open(void)
+{
+	const Vec3 center;
+	const float div = 20.0f;
+	const Vec3 divisions(div, 1.0f, div);
+	const float diameter = 80.0f;
+	const Vec3 dimensions(diameter, diameter, diameter);
+	typedef LQProximityDatabase<AbstractVehicle*> LQPDAV;
+	_pd = new LQPDAV(center, dimensions, divisions);
 }
 
 void GameObjectManager::interaction(BaseGameObject* object)

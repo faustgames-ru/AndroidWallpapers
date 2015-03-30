@@ -1,11 +1,7 @@
 #ifndef SHPILA_H_
 #define SHPILA_H_
 
-#include "gameplay.h"
-#include "TargetCamera.h"
-#include "GameObjectManager.h"
-#include "BaseWarrior.h"
-#include "Player.h"
+#include "Headers.h"
 using namespace gameplay;
 
 /**
@@ -59,7 +55,13 @@ private:
 	void updatePlayers(float time);
     void drawSplash(void* param);
     bool drawScene(Node* node, bool transparent);
-    void play(const char* id, bool repeat, float speed = 1.0f);
+    
+
+	static void Player1_Auto_Click(Game* game);
+	static void Player2_Auto_Click(Game* game);
+	static void Player1_New_Click(Game* game);
+	static void Player2_New_Click(Game* game);
+	
 
     Font* _font;
 	AutoRef<Scene> _scene;
@@ -93,6 +95,8 @@ private:
 	int _prevY;
 	Node* _particleEmitterSunNode;
 	Node* _particleEmitterStarsNode;
+	GameHUD _hud;
+	double _totalTime;
 
 	GameObjectManager _manager;
 	AutoRef<Scene> _store;

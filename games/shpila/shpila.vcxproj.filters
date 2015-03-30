@@ -64,6 +64,12 @@
     <ClCompile Include="src\HiddenObject.cpp">
       <Filter>src\Units</Filter>
     </ClCompile>
+    <ClCompile Include="src\GameHUD.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitMovement.cpp">
+      <Filter>src\Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -92,6 +98,15 @@
     </ClInclude>
     <ClInclude Include="src\HiddenObject.h">
       <Filter>src\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="src\GameHUD.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitMovement.h">
+      <Filter>src\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Headers.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -1,4 +1,4 @@
-#include "BaseGameObject.h"
+#include "Headers.h"
 
 BaseGameObject::BaseGameObject()
 : PlayerID(0)
@@ -10,6 +10,7 @@ BaseGameObject::BaseGameObject()
 , DamageTime(0.0f)
 , _node()
 , _damageTimer(0.0f)
+, _movementController()
 {}
 
 void BaseGameObject::interaction(BaseGameObject* object)
@@ -32,10 +33,40 @@ Node* BaseGameObject::node()
 	return _node;
 }
 
+UnitMovementBase& BaseGameObject::MovementController()
+{
+	return _movementController;
+}
+
+void BaseGameObject::init(GameObjectManager& manager, Node* node, int playerID, Vector3 position)
+{
+	PlayerID = playerID;
+	manager.registerObject(this);
+	manager.registerMovementController(&_movementController);
+	if (node)
+	{
+		Node* n = node->clone();
+		setNode(n);
+		setPosition(position);
+		manager.registerSceneNode(n);
+		//Vector3 forvard = _node->getForwardVectorWorld().normalize();
+		//_movementController.setForward(forvard.x, forvard.y, forvard.z);
+	}
+}
+
 const Vector3 BaseGameObject::position()
 {
 	GP_ASSERT(_node);
 	return _node->getTranslation();
+}
+
+void BaseGameObject::setPosition(const Vector3 pos)
+{
+	if (_node)
+	{
+		_node->setTranslation(pos);
+	}
+	_movementController.setPosition(OpenSteer::Vec3(pos.x, pos.y, pos.z));
 }
 
 float BaseGameObject::getInteractionDistance(BaseGameObject* object)

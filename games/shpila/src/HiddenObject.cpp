@@ -1,5 +1,5 @@
 
-#include "HiddenObject.h"
+#include "Headers.h"
 
 HiddenObject::HiddenObject()
 : BaseGameObject()

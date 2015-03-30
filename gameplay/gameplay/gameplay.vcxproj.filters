@@ -16,6 +16,9 @@
     <Filter Include="src\Algorithms">
       <UniqueIdentifier>{101149b9-e3a7-4b7d-80ab-eafe53578680}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\UnitManagement">
+      <UniqueIdentifier>{7a6e0b15-b828-42c2-b884-68be7592e9a4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\logo_black.png">
@@ -932,6 +935,24 @@
     <ClCompile Include="src\algorithms\Links.cpp">
       <Filter>src\Algorithms</Filter>
     </ClCompile>
+    <ClCompile Include="src\UnitManagement\lq.c">
+      <Filter>src\UnitManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitManagement\Pathway.cpp">
+      <Filter>src\UnitManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitManagement\PlugIn.cpp">
+      <Filter>src\UnitManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitManagement\SimpleVehicle.cpp">
+      <Filter>src\UnitManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitManagement\Vec3.cpp">
+      <Filter>src\UnitManagement</Filter>
+    </ClCompile>
+    <ClCompile Include="src\UnitManagement\OpenSteer.cpp">
+      <Filter>src\UnitManagement</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbsoluteLayout.h">
@@ -1689,6 +1710,42 @@
     </ClInclude>
     <ClInclude Include="src\algorithms\Links.h">
       <Filter>src\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\AbstractVehicle.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\LocalSpace.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\lq.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\Obstacle.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\Pathway.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\PlugIn.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\Proximity.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\SimpleVehicle.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\SteerLibrary.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\Utilities.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\Vec3.h">
+      <Filter>src\UnitManagement</Filter>
+    </ClInclude>
+    <ClInclude Include="src\UnitManagement\OpenSteer.h">
+      <Filter>src\UnitManagement</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

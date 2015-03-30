@@ -1,12 +1,11 @@
 #ifndef BASEWARRIOR_H_
 #define BASEWARRIOR_H_
 
-#include "gameplay.h"
-#include "BaseGameObject.h"
-#include "algorithms\Links.h"
-#include "algorithms\Utils.h"
+#include "Headers.h"
 
 using namespace gameplay;
+
+class BaseGameObject;
 
 class BaseWarrior : public BaseGameObject
 {

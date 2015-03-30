@@ -1,10 +1,6 @@
 #ifndef GAMEOBJECTMANAGER_H_
 #define GAMEOBJECTMANAGER_H_
 
-#include "gameplay.h"
-#include "Player.h"
-#include "BaseGameObject.h"
-#include "algorithms\Links.h"
 using namespace gameplay;
 
 typedef BaseGameObject* (*GameObjectConstructorProc) ();
@@ -23,24 +19,43 @@ struct GameUnit
 	{}
 };
 
-class GameObjectManager
+class GameObjectManager : public PlugIn
 {
 public:
 	std::vector<Player*> Players;
 
 	GameObjectManager();
 	void setScene(Scene* scene);
+	Scene* scene();
 	bool initializeNodeMaterials(Node* node);
-	void initializeMaterial(Scene* scene, Node* node, Material* material);
-	void update(float time);
-	void addUnit(const char* name, Node* node, GameObjectConstructorProc constructor);
+	void initializeMaterial(Node* node, Material* material);
+	void addUnit(const char* filename, const char* name, GameObjectConstructorProc constructor);
 	BaseGameObject* createObject(const char* name, Vector3 position, int playerID);
+	void registerMovementController(UnitMovementBase* controller);
+	void registerObject(BaseGameObject* object);
+	void registerSceneNode(Node* node);
+
+	const char* name(void) { return "dzhezuka"; }
+	float selectionOrderSortKey(void) { return 0.01f; }
+	void open(void);
+	virtual void redraw(const float currentTime, const float elapsedTime){}
+	void update(const float currentTime, const float elapsedTime);
+	void close(void)
+	{
+		// clear the group of all vehicles
+		_all.clear();
+	}
+	void reset(void){}
+	void handleFunctionKeys(int keyNumber){}
+	const AVGroup& allVehicles(void) { return (const AVGroup&)_all; }
 private:
 	void interaction(BaseGameObject* object);
 	AutoRef<Scene> _scene;
 	std::map<std::string, GameUnit> _units;
 	COwnerList<BaseGameObject> _objects;
-
+	// a group (STL vector) of all vehicles in the PlugIn
+	std::vector<UnitMovementBase*> _all;
+	ProximityDatabase* _pd;
 };
 
 

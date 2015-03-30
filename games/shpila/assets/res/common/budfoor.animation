@@ -1,0 +1,31 @@
+animation animations
+{
+    frameCount = 236
+	clip attack
+    {
+        begin = 136
+        end = 166
+        repeatCount = INDEFINITE
+    }
+	
+	clip death
+    {
+        begin = 70
+        end = 105
+        repeatCount = 1
+    }
+	
+	clip run
+    {
+        begin = 0
+        end = 20
+        repeatCount = INDEFINITE
+    }
+	
+	clip dead
+    {
+        begin = 103
+        end = 103
+        repeatCount = INDEFINITE
+    }
+}

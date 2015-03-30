@@ -1,4 +1,4 @@
-#include "BaseWarrior.h"
+#include "Headers.h"
 
 const unsigned long DEFAULT_BLENDING_TIME = 150;
 
@@ -27,6 +27,11 @@ void BaseWarrior::interaction(BaseGameObject* object)
 	{
 		if (Target->Health <= 0.0f)
 			Target = NULL;
+	}
+	if ((Health > 0.0f) && (object->Health > 0.0f) && (position().distanceSquared(object->position()) < (GeometryRadius * GeometryRadius)))
+	{
+		Vector3 offset = (position() - object->position()) * 0.5f;
+		_node->setTranslation(_node->getTranslation() + offset);
 	}
 	float distanceToTarget = Target != NULL ? Target->position().distanceSquared(position()) : FLT_MAX;
 	if ((distanceToTarget > (ActionRadius * ActionRadius)) && (object->PlayerID != PlayerID)
@@ -59,34 +64,24 @@ void BaseWarrior::update(float time)
 
 		if (Target != NULL)
 		{
-			const float ROTATION_FACTOR = 0.002f;
-			const float MOVE_FACTOR = 0.002f;
+			Vector3 tPos = Target->position();
+			_movementController._target = OpenSteer::Vec3(tPos.x, tPos.y, tPos.z);
 
-			Vector3 targetDir = Vector3(Target->position() - position()).normalize();
+			OpenSteer::Vec3 forward = _movementController.forward();
 			Vector3 objectDir = _node->getForwardVectorWorld().normalize();
-			float targetAngle = Vector3::angle(objectDir, targetDir);
-
-			//if (targetAngle > 0.05f)
-			{
-				float rotationAngle = (targetAngle > (time * ROTATION_FACTOR)) ? time * ROTATION_FACTOR : targetAngle;
-				Vector3 rightVector = _node->getRightVectorWorld().normalize();
-				rotationAngle = copysignf(1.0f, Vector3::dot(rightVector, targetDir)) * rotationAngle;
-				Vector3 vAxis;
-				float currentAngle = _node->getRotation(&vAxis) + rotationAngle;
-				while (currentAngle > 2.0f * MATH_PI) currentAngle -= 2.0f * MATH_PI;
-				while (currentAngle < 0.0f) currentAngle += 2.0f * MATH_PI;
-				_node->setRotation(Vector3::unitY(), currentAngle);
-			}
+			Matrix rot;
+			Matrix::createLookAt(0.0f, 0.0f, 0.0f, forward.x, forward.y, -forward.z, 0.0f, 1.0f, 0.0f, &rot);
+			_node->setRotation(rot);
+			objectDir = _node->getForwardVectorWorld().normalize();
 
 			float radius = ((ActionRadius + Target->GeometryRadius) * (ActionRadius + Target->GeometryRadius));
 			float distance = Target->position().distanceSquared(position());
 			if (radius < distance)
 			{
-				//if (targetAngle < 0.05f)
-				{
-					switchToAnimation(_clipRun, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
-					_node->setTranslation(_node->getTranslation() + targetDir * MOVE_FACTOR * time);
-				}
+				switchToAnimation(_clipRun, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
+				_movementController.update(0.0f, time * 0.001f);
+				OpenSteer::Vec3 pos = _movementController.position();
+				_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
 			}
 			else
 			{
@@ -98,9 +93,31 @@ void BaseWarrior::update(float time)
 					_damageTimer = 0.0f;
 				}
 			}
+			
+			
 		}
 	}
 }
+
+//const float ROTATION_FACTOR = 0.002f;
+//const float MOVE_FACTOR = 0.0005f;
+
+//Vector3 targetDir = Vector3(Target->position() - position()).normalize();
+//Vector3 objectDir = _node->getForwardVectorWorld().normalize();
+//float targetAngle = Vector3::angle(objectDir, targetDir);
+
+//float rotationAngle = (targetAngle > (time * ROTATION_FACTOR)) ? time * ROTATION_FACTOR : targetAngle;
+//Vector3 rightVector = _node->getRightVectorWorld().normalize();
+//rotationAngle = copysignf(1.0f, Vector3::dot(rightVector, targetDir)) * rotationAngle;
+//Vector3 vAxis;
+//float currentAngle = _node->getRotation(&vAxis) + rotationAngle;
+//while (currentAngle > 2.0f * MATH_PI) currentAngle -= 2.0f * MATH_PI;
+//while (currentAngle < 0.0f) currentAngle += 2.0f * MATH_PI;
+//_node->setRotation(Vector3::unitY(), currentAngle);
+//_movementController.setForward(OpenSteer::Vec3(-objectDir.x, -objectDir.y, -objectDir.z));
+
+//_node->setTranslation(_node->getTranslation() + targetDir * MOVE_FACTOR * time);
+//_movementController.applySteeringForce(OpenSteer::Vec3(targetDir.x, targetDir.y, targetDir.z) * MOVE_FACTOR, time * 0.001f);
 
 void BaseWarrior::updateAnimationState()
 {

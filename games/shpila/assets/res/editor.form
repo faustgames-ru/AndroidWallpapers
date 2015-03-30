@@ -5,12 +5,13 @@ form sceneSettings
     autoHeight = true
     consumeInputEvents = false
 
-    container basicSettings
+    container Player1
     {
         style = sceneProps
-        alignment = ALIGN_TOP_RIGHT
+        alignment = ALIGN_BOTTOM_LEFT
         width = 210
-        autoHeight = true
+		height = 150
+        autoHeight = false
         scroll = SCROLL_VERTICAL
         scrollBarsAutoHide = false
 
@@ -21,154 +22,63 @@ form sceneSettings
            autoWidth = true
            height = 700
            layout = LAYOUT_VERTICAL
-           label titleLight
-           {
-               style = title
-               size = 150, 50
-               text = Scene Light
-           }
 
-           slider lvx
-           {
-               style = noBorder
-               size = 150, 30
-               orientation = HORIZONTAL
-               min = -1
-               max = 1
-               value = 1
-               textAlignment = ALIGN_TOP_LEFT
-               valueTextVisible = true
-               valueTextAlignment = ALIGN_TOP_RIGHT
-               valueTextPrecision = 2
-           }
-
-           slider lvy : lvx
-           {
-           }
-           slider lvz : lvx
-           {
-           }
-
-           label titleClearColor : titleLight
-           {
-               text = Clear Color
-           }
-
-           slider ccRed
-           {
-               style = noBorder
-               size = 150, 30
-               orientation = HORIZONTAL
-               min = 0
-               max = 1
-               value = 0
-               text = Red
-               textAlignment = ALIGN_TOP_LEFT
-               valueTextVisible = true
-               valueTextAlignment = ALIGN_TOP_RIGHT
-               valueTextPrecision = 2            
-               consumeInputEvents = true
-           }
-
-           slider ccGreen : ccRed
-           {
-               text = Green
-           }
-           slider ccBlue : ccRed
-           {
-               text = Blue
-           }
-
-           label titleGrid : titleLight
-           {
-               text = Grid Settings
-           }
-
-           checkbox gridCheckBox
-           {
-               textAlignment = ALIGN_HCENTER 
-               style = noBorder
-               size = 150, 10
-               height = 30
-               orientation = HORIZONTAL
-               text = Draw Grid
-               value = true
-           }
-
-           container sep
-           {
-               size = 150,20
-           }
-
-           label titleCamera : titleLight
-           {
-               text = Camera Gimbel
-           }
-
-           checkbox cameraGimbelCheckBox
-           {
-               style = noBorder
-               size = 150, 10
-               orientation = HORIZONTAL
-               text = Locked 
-               value = true
-           }
-
-           container sep
-           {
-               size = 150,15
-           }
-
-           checkbox cameraInvertY
-           {
-               style = noBorder
-               size = 150, 10
-               orientation = HORIZONTAL
-               text = Invert Y 
-               value = false
-           }
-
-           container sep
-           {
-               size = 150,15
-           }
-
-           checkbox cameraFPS
-           {
-               style = noBorder
-               size = 150, 10
-               orientation = HORIZONTAL
-               text = FPS Camera
-               value = false
-           }
-
-           container sep
-           {
-               size = 150,20
-           }
-
-           label titleAnimations : titleLight
-           {
-               text = Animations
-           }
-
-           button playAll
+           button Player1_Auto
            {
               consumeInputEvents = true
               style = buttonStyle
               width = 140
               height = 40
               x = 100
-              text = Play all
+              text = Play auto
            }
-           button playSelected
+           button Player1_New
            {
               consumeInputEvents = true
               style = buttonStyle
               width = 140
               height = 40
               x = 200
-              text = Play selected
+              text = New warrior
+           }
+        }
+	}
+	
+	container Player2
+    {
+        style = sceneProps
+        alignment = ALIGN_BOTTOM_RIGHT
+        width = 210
+		height = 150
+        autoHeight = false
+        scroll = SCROLL_VERTICAL
+        scrollBarsAutoHide = false
+
+        consumeInputEvents = false
+        container widgets 
+        {
+           alignment = ALIGN_TOP_LEFT
+           autoWidth = true
+           height = 700
+           layout = LAYOUT_VERTICAL
+
+           button Player2_Auto
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 100
+              text = Play auto
+           }
+           button Player2_New
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 200
+              text = New warrior
            }
         }
 	 }

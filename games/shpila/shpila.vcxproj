@@ -348,10 +348,12 @@
     <ClCompile Include="src\BaseGameObject.cpp" />
     <ClCompile Include="src\BaseWarrior.cpp" />
     <ClCompile Include="src\FirstPersonCamera.cpp" />
+    <ClCompile Include="src\GameHUD.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\HiddenObject.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\UnitMovement.cpp" />
     <ClCompile Include="src\StarsParticles.cpp" />
     <ClCompile Include="src\TargetCamera.cpp" />
   </ItemGroup>
@@ -359,12 +361,15 @@
     <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\BaseWarrior.h" />
     <ClInclude Include="src\FirstPersonCamera.h" />
+    <ClInclude Include="src\GameHUD.h" />
     <ClInclude Include="src\GameObjectManager.h" />
+    <ClInclude Include="src\Headers.h" />
     <ClInclude Include="src\HiddenObject.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\StarsParticles.h" />
     <ClInclude Include="src\TargetCamera.h" />
+    <ClInclude Include="src\UnitMovement.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

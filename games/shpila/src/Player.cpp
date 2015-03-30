@@ -1,8 +1,10 @@
-#include "Player.h"
+#include "Headers.h"
+
 Player::Player(GameObjectManager& manager, int id, Vector3 position)
 : Manager(manager)
 , Nexus()
 , EnemyNexus()
+, AutoPlay(false)
 , ID(id)
 , _spawnTimer(0.0f)
 , _position(position)
@@ -20,7 +22,7 @@ void Player::update(float time)
 		Nexus->Position = _position;
 		Nexus->SearchRadius = 3.0f;
 		Nexus->ActionRadius = 1.5;
-		Nexus->GeometryRadius = 0.3f;
+		Nexus->GeometryRadius = 0.5f;
 		Nexus->Damage = 50.0f;
 		Nexus->DamageTime = 1000.0f;
 	}
@@ -38,20 +40,28 @@ void Player::update(float time)
 	}
 	//spawn warriors
 	_spawnTimer += time;
-	if (_spawnTimer >= 3000.0f)
+	if (AutoPlay)
 	{
-		if (_warriorsSpawnedCount < 10)
+		if (_spawnTimer >= 3000.0f)
 		{
-			BaseWarrior* zealot = (BaseWarrior*)Manager.createObject("zealot", _position + Vector3(rnd(-1.0f, 1.0f), 0.0f, rnd(-1.0f, 1.0f)), ID);
-			zealot->SearchRadius = 10.0f;
-			zealot->ActionRadius = 1.2f;
-			zealot->GeometryRadius = 0.3f;
-			zealot->EnemyNexus = EnemyNexus;
-			zealot->Damage = 35;
-			zealot->DamageTime = 1000.0f;
-			zealot->node()->setRotation(Vector3::unitY(), MATH_PI * 0.5f);
-			_spawnTimer = 0.0f;
-			_warriorsSpawnedCount++;
+			//if (_warriorsSpawnedCount < 100)
+			{
+				CreateWarrior("zealot");
+				_spawnTimer = 0.0f;
+			}
 		}
 	}
+}
+
+void Player::CreateWarrior(const char* name)
+{
+	BaseWarrior* zealot = (BaseWarrior*)Manager.createObject(name, _position + Vector3(rnd(-1.0f, 1.0f), 0.0f, rnd(-3.0f, 3.0f)), ID);
+	zealot->SearchRadius = 10.0f;
+	zealot->ActionRadius = 1.2f;
+	zealot->GeometryRadius = 0.5f;
+	zealot->EnemyNexus = EnemyNexus;
+	zealot->Damage = 35;
+	zealot->DamageTime = 1000.0f;
+	//zealot->node()->setRotation(Vector3::unitY(), MATH_PI);// * 0.5f
+	_warriorsSpawnedCount++;
 }

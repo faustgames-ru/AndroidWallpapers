@@ -1,5 +1,4 @@
 #include "main.h"
-#include "StarsParticles.h"
 
 // Declare our game instance
 Shpila game;
@@ -36,7 +35,7 @@ Shpila::Shpila()
     : _font(NULL), _scene(), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _currentClip(NULL), _jumpClip(NULL), _kickClip(NULL), _rotateX(0), _materialParameterAlpha(NULL),
 	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
-	  _manager()
+	  _hud(), _totalTime(0.0), _manager(), _store()
 {
     _buttonPressed = new bool[2];
 }
@@ -66,56 +65,32 @@ void Shpila::initialize()
 		// Load the font.
 		_font = Font::create("res/ui/arial.gpb");
 
+		_hud.initialize(this, _scene);
+		_hud.bind("Player1_Auto", Control::Listener::CLICK, Player1_Auto_Click);
+		_hud.bind("Player2_Auto", Control::Listener::CLICK, Player2_Auto_Click);
+		_hud.bind("Player1_New", Control::Listener::CLICK, Player1_New_Click);
+		_hud.bind("Player2_New", Control::Listener::CLICK, Player2_New_Click);
+
 		// Load scene.
 		_scene = Scene::load("res/common/box.scene");
 
 		// Update the aspect ratio for our scene's camera to match the current device resolution.
 		_scene->getActiveCamera()->setAspectRatio(getAspectRatio());
 
-		/*if (Camera* camera = _scene->getActiveCamera())
-		{
-		camera->getNode()->getTranslation(&cameraPosition);
-		}*/
-
 		//static camera
-		Vector3 cameraPosition(0.0f, 1.0f, 5.0f);
-		_fpCamera.initialize(0.01f, 50.0f);
-		_fpCamera.setPosition(cameraPosition);
-		_scene->addNode(_fpCamera.getRootNode());
-
-		//earth orbit camera
-		/*Vector3 cameraPosition(0.0f, 0.37f, 0.0f);
+		Vector3 cameraPosition(0.0f, 5.0f, -8.0f);
 		_fpCamera.initialize(0.01f, 50.0f);
 		_fpCamera.setPosition(cameraPosition);
 		Matrix rot;
 		Matrix::createLookAt(0.0f, 0.0f, 0.0f,
-			0.0f, 1.0f, 0.0f,
-			0.0f, 0.0f, 1.0f, &rot);
+			0.0f, -0.5f, 1.0f,
+			0.0f, 1.0f, 0.5f, &rot);
 		_fpCamera.setRotation(rot);
-		_fpCamera.rotate(MATH_PI, 0.0f);
-		_scene->findNode("earth")->addChild(Node::create("earthcamerahelper"));
-		_fpCamera.setTargetNode(_scene->findNode("earthcamerahelper"));*/
+		_scene->addNode(_fpCamera.getRootNode());
 
 		//setup camera
 		_scene->setActiveCamera(_fpCamera.getCamera());
 		_scene->setAmbientColor(0.25f, 0.25f, 0.25f);
-
-		//init sun particles
-		/*_particleEmitterSunNode = _scene->addNode("Sun Particle Emitter");
-		_particleEmitterSunNode->setTranslation(0.0f, 0.0f, 0.0f);
-		ParticleEmitter* emitter = ParticleEmitter::create("res/sun.particle");		
-		_particleEmitterSunNode->setDrawable(emitter);
-		emitter->emitOnce(5);
-		emitter->start();*/
-
-		//init stars particles
-		
-		_particleEmitterStarsNode = _scene->addNode("Stars Particle Emitter");
-		_particleEmitterStarsNode->setTranslation(0.0f, 0.0f, 0.0f);
-		ParticleEmitter* emitter = StarsParticles::create("res/stars.particle", StarsParticles::Constructor);
-		_particleEmitterStarsNode->setDrawable(emitter);
-		emitter->emitOnce(1);
-		emitter->start();
 
 		_manager.setScene(_scene);
 		loadCharacters();
@@ -125,6 +100,8 @@ void Shpila::initialize()
 		_scene->visit(this, &Shpila::initializeNodeMaterials);
 
 		_gamepad = getGamepad(0);
+
+		OpenSteer::OpenSteerManager::initialize();
 	}
 	else
 	{
@@ -139,7 +116,7 @@ bool Shpila::initializeNodeMaterials(Node* node)
 
 void Shpila::initializeMaterial(Scene* scene, Node* node, Material* material)
 {
-	_manager.initializeMaterial(scene, node, material);
+	_manager.initializeMaterial(node, material);
 }
 
 void Shpila::initializeAsteroids()
@@ -175,21 +152,6 @@ void Shpila::initializeSolarSystem()
 
 void Shpila::loadCharacters()
 {
-	/*Scene* scene = Scene::load("res/common/Zelot_all.scene");
-	Node* node = scene->findNode("zealot")->clone();
-	_scene->addNode(node);
-	node->setScale(0.01f, 0.01f, 0.01f);
-	node->setTag("dynamic");
-	node->getAgent();
-	Animation* animation = node->getAnimation("animations");	
-	if (animation)
-	{
-		animation->createClips("res/common/Zelot_all.animation");
-		AnimationClip* clip = animation->getClip("run");
-		clip->setSpeed(1.0f);
-		clip->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
-		clip->play();
-	}*/
 	Scene* scene = Scene::load("res/common/Zelot_all.scene");
 	Node* node = scene->findNode("zealot")->clone();
 	float scale = 0.003f;
@@ -203,7 +165,22 @@ void Shpila::loadCharacters()
 	_manager.addUnit("zealot", node, BaseWarrior::constructor);
 	_store->addNode(node);
 	//SAFE_RELEASE(scene);
+	//
 	_manager.addUnit("tower", NULL, HiddenObject::constructor);
+	//
+	scene = Scene::load("res/common/budfoor.scene");
+	Node* weapon = scene->findNode("obj_weapon");
+	node = scene->getFirstNode()->clone();//findNode("budfoor")
+	scale = 0.003f;
+	node->setScale(scale, scale, scale);
+	node->setTag("dynamic");
+	animation = node->getAnimation("animations");
+	if (animation)
+	{
+		animation->createClips("res/common/budfoor.animation");
+	}
+	_manager.addUnit("budfoor", node, BaseWarrior::constructor);
+	_store->addNode(node);
 	
 }
 
@@ -223,6 +200,7 @@ void Shpila::updatePlayers(float time)
 
 void Shpila::finalize()
 {
+	_hud.finalize(this);
 	SAFE_RELEASE(_scene);
     SAFE_RELEASE(_font);
     SAFE_DELETE_ARRAY(_buttonPressed);
@@ -245,41 +223,38 @@ bool Shpila::drawScene(Node* node, bool transparent)
     return true;
 }
 
-void Shpila::play(const char* id, bool repeat, float speed)
+void Shpila::Player1_Auto_Click(Game* game)
 {
-    AnimationClip* clip = _animation->getClip(id);
+	Shpila* shpila = (Shpila*)game;
+	shpila->_manager.Players[0]->AutoPlay = !shpila->_manager.Players[0]->AutoPlay;
+}
 
-    // Set clip properties
-    clip->setSpeed(speed);
-    clip->setRepeatCount(repeat ? AnimationClip::REPEAT_INDEFINITE : 1);
+void Shpila::Player2_Auto_Click(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_manager.Players[1]->AutoPlay = !shpila->_manager.Players[1]->AutoPlay;
+}
 
-    // Is the clip already playing?
-    if (clip == _currentClip && clip->isPlaying())
-        return;
+void Shpila::Player1_New_Click(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	std::string names[] = { "zealot", "budfoor" };
+	shpila->_manager.Players[0]->CreateWarrior(names[(int)min(1.0f, rnd(0.0f, 2.0f))].c_str());
+}
 
-    if (_jumpClip->isPlaying() || _kickClip->isPlaying())
-    {
-        _currentClip = clip;
-        return;
-    }
-
-    // If a current clip is playing, crossfade into the new one
-    if (_currentClip && _currentClip->isPlaying())
-    {
-        _currentClip->crossFade(clip, 150);
-    }
-    else
-    {
-        clip->play();
-    }
-    _currentClip = clip;
+void Shpila::Player2_New_Click(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	std::string names[] = { "zealot", "budfoor" };
+	shpila->_manager.Players[1]->CreateWarrior(names[(int)min(1.0f, rnd(0.0f, 2.0f))].c_str());
 }
 
 void Shpila::update(float elapsedTime)
 {
+	_totalTime += elapsedTime;
 	if (!EMPTY)
 	{
-		_manager.update(elapsedTime);
+		OpenSteer::OpenSteerManager::update(_totalTime, elapsedTime);
 		updatePlayers(elapsedTime);
 
 		/*ParticleEmitter* emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterSunNode->getDrawable());
@@ -343,6 +318,7 @@ void Shpila::render(float elapsedTime)
 		_scene->visit(this, &Shpila::drawScene, false);
 		_scene->visit(this, &Shpila::drawScene, true);
 
+		_hud.render(this, elapsedTime);
 		// Draw physics debug
 		//if (_physicsDebug)
 		//    getPhysicsController()->drawDebug(_scene->getActiveCamera()->getViewProjectionMatrix());*/
