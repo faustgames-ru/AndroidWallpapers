@@ -35,7 +35,7 @@ Shpila::Shpila()
     : _font(NULL), _scene(), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _currentClip(NULL), _jumpClip(NULL), _kickClip(NULL), _rotateX(0), _materialParameterAlpha(NULL),
 	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
-	  _hud(), _totalTime(0.0), _manager(), _store()
+	  _hud(), _totalTime(0.0), _manager()
 {
     _buttonPressed = new bool[2];
 }
@@ -152,7 +152,12 @@ void Shpila::initializeSolarSystem()
 
 void Shpila::loadCharacters()
 {
-	Scene* scene = Scene::load("res/common/Zelot_all.scene");
+	_manager.addUnit("res/common/Zelot_all.scene", "zealot", BaseWarrior::constructor);
+	_manager.addUnit(NULL, "tower", HiddenObject::constructor);
+	_manager.addUnit("res/common/budfoor.scene", "budfoor", BaseWarrior::constructor);
+
+	_manager.initUnits();
+	/*Scene* scene = Scene::load("res/common/Zelot_all.scene");
 	Node* node = scene->findNode("zealot")->clone();
 	float scale = 0.003f;
 	node->setScale(scale, scale, scale);
@@ -180,7 +185,7 @@ void Shpila::loadCharacters()
 		animation->createClips("res/common/budfoor.animation");
 	}
 	_manager.addUnit("budfoor", node, BaseWarrior::constructor);
-	_store->addNode(node);
+	_store->addNode(node);*/
 	
 }
 

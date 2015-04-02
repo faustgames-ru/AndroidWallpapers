@@ -501,8 +501,11 @@ void MaterialParameter::bind(Effect* effect)
         effect->setValue(_uniform, _value.samplerArrayValue, _count);
         break;
     case MaterialParameter::METHOD:
-        if (_value.method)
-            _value.method->setValue(effect);
+		if (_value.method && _value.method->_parameter)
+		{
+			_value.method->_parameter->_uniform = _uniform;
+			_value.method->setValue(effect);
+		}
         break;
     default:
         {

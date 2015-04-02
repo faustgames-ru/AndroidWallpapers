@@ -17,6 +17,13 @@ const Vector3 HiddenObject::position()
 	return Position;
 }
 
+void HiddenObject::init(GameObjectManager& manager, Node* node, int playerID, Vector3 position)
+{
+	_manager = &manager;
+	PlayerID = playerID;
+	manager.registerObject(this);
+}
+
 void HiddenObject::interaction(BaseGameObject* object)
 {
 	if (Damage > 0.0f)

@@ -1,4 +1,5 @@
 #include "Headers.h"
+#include "algorithms\StdUtils.h"
 
 const unsigned long DEFAULT_BLENDING_TIME = 150;
 
@@ -8,13 +9,13 @@ BaseWarrior::BaseWarrior()
 , EnemyNexus()
 , _initialized(false)
 , _dead(false)
-, _animation()
-, _clipCurrent()
-, _clipRun()
-, _clipAttack()
-, _clipDeath()
-, _clipDead()
+, _unitAnimation()
 {}
+
+BaseWarrior::~BaseWarrior()
+{
+	DeleteVectorPointers(_unitAnimation);
+}
 
 BaseGameObject* BaseWarrior::constructor()
 {
@@ -45,8 +46,8 @@ void BaseWarrior::update(float time)
 {
 	if (_dead)
 	{
-		if (!_clipDeath->isPlaying())
-			switchToAnimation(_clipDead, AnimationClip::REPEAT_INDEFINITE, 0);
+		if (!(*_unitAnimation[0]->_clips)[UnitAnimation::Death]->isPlaying())
+			switchToAnimation(UnitAnimation::Dead, AnimationClip::REPEAT_INDEFINITE, 0);
 		return;
 	}
 
@@ -54,8 +55,9 @@ void BaseWarrior::update(float time)
 	updateAnimationState();
 	if (Health <= 0.0f)
 	{	
-		switchToAnimation(_clipDeath, 1.0f, DEFAULT_BLENDING_TIME);
+		switchToAnimation(UnitAnimation::Death, 1.0f, DEFAULT_BLENDING_TIME);
 		_dead = true;
+		_manager->unregisterMovementController(&_movementController);
 	}
 	else
 	{
@@ -67,25 +69,26 @@ void BaseWarrior::update(float time)
 			Vector3 tPos = Target->position();
 			_movementController._target = OpenSteer::Vec3(tPos.x, tPos.y, tPos.z);
 
+			_movementController.update(0.0f, time * 0.001f);
+
 			OpenSteer::Vec3 forward = _movementController.forward();
-			Vector3 objectDir = _node->getForwardVectorWorld().normalize();
 			Matrix rot;
 			Matrix::createLookAt(0.0f, 0.0f, 0.0f, forward.x, forward.y, -forward.z, 0.0f, 1.0f, 0.0f, &rot);
 			_node->setRotation(rot);
-			objectDir = _node->getForwardVectorWorld().normalize();
+			OpenSteer::Vec3 pos = _movementController.position();
+			_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
 
 			float radius = ((ActionRadius + Target->GeometryRadius) * (ActionRadius + Target->GeometryRadius));
 			float distance = Target->position().distanceSquared(position());
 			if (radius < distance)
 			{
-				switchToAnimation(_clipRun, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
-				_movementController.update(0.0f, time * 0.001f);
-				OpenSteer::Vec3 pos = _movementController.position();
-				_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
+				switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
+				_movementController._applyBreakingForces = false;
 			}
 			else
 			{
-				switchToAnimation(_clipAttack, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
+				_movementController._applyBreakingForces = true;
+				switchToAnimation(UnitAnimation::Attack, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
 				_damageTimer += time;
 				if ((_damageTimer > DamageTime) && (Target != NULL))
 				{
@@ -124,25 +127,40 @@ void BaseWarrior::updateAnimationState()
 	//initialization
 	if (!_initialized)
 	{
-		_animation = _node->getAnimation("animations"); GP_ASSERT(_animation);
-		_clipRun = _animation->getClip("run"); GP_ASSERT(_clipRun);
-		_clipAttack = _animation->getClip("attack"); GP_ASSERT(_clipAttack);
-		_clipDeath = _animation->getClip("death"); GP_ASSERT(_clipDeath);
-		_clipDead = _animation->getClip("dead"); GP_ASSERT(_clipDead);
+		_unitAnimation.clear();
+		Node* node = _node->getFirstChild();
+		while (node)
+		{
+			Animation* anim = node->getAnimation("animations");
+			if (anim)
+			{
+				UnitAnimation::ActionsMap* am = new UnitAnimation::ActionsMap();
+				(*am)[UnitAnimation::Run] = anim->getClip("run");
+				(*am)[UnitAnimation::Attack] = anim->getClip("attack");
+				(*am)[UnitAnimation::Death] = anim->getClip("death");
+				(*am)[UnitAnimation::Dead] = anim->getClip("dead");
+				_unitAnimation.push_back(new UnitAnimation(am));
+			}
+			node = node->getNextSibling();
+		}
 		_initialized = true;
 	}
 }
 
-void BaseWarrior::switchToAnimation(AnimationClip* clip, float repeatCount, unsigned long blendingTime)
+void BaseWarrior::switchToAnimation(UnitAnimation::Actions action, float repeatCount, unsigned long blendingTime)
 {
-	if ((_clipCurrent != clip) || (_clipCurrent == NULL) || (!_clipCurrent->isPlaying()))
+	for (std::vector<UnitAnimation*>::iterator it = _unitAnimation.begin(); it != _unitAnimation.end(); it++)
 	{
-		clip->setSpeed(1.0f);
-		clip->setRepeatCount(repeatCount);
-		if (_clipCurrent && (blendingTime > 0))
-			_clipCurrent->crossFade(clip, blendingTime);
-		else
-			clip->play();
-		_clipCurrent = clip;
+		AnimationClip* clip = (*(*it)->_clips)[action];
+		if (((*it)->_clipCurrent != clip) || ((*it)->_clipCurrent == NULL) || (!(*it)->_clipCurrent->isPlaying()))
+		{
+			clip->setSpeed(1.0f);
+			clip->setRepeatCount(repeatCount);
+			if ((*it)->_clipCurrent && (blendingTime > 0))
+				(*it)->_clipCurrent->crossFade(clip, blendingTime);
+			else
+				clip->play();
+			(*it)->_clipCurrent = clip;
+		}
 	}
 }

@@ -8,6 +8,7 @@ BaseGameObject::BaseGameObject()
 , Health(100.0f)
 , Damage(0.0f)
 , DamageTime(0.0f)
+, _manager(NULL)
 , _node()
 , _damageTimer(0.0f)
 , _movementController()
@@ -40,6 +41,7 @@ UnitMovementBase& BaseGameObject::MovementController()
 
 void BaseGameObject::init(GameObjectManager& manager, Node* node, int playerID, Vector3 position)
 {
+	_manager = &manager;
 	PlayerID = playerID;
 	manager.registerObject(this);
 	manager.registerMovementController(&_movementController);
@@ -49,8 +51,6 @@ void BaseGameObject::init(GameObjectManager& manager, Node* node, int playerID, 
 		setNode(n);
 		setPosition(position);
 		manager.registerSceneNode(n);
-		//Vector3 forvard = _node->getForwardVectorWorld().normalize();
-		//_movementController.setForward(forvard.x, forvard.y, forvard.z);
 	}
 }
 

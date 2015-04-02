@@ -21,7 +21,7 @@ void Player::update(float time)
 		Nexus = (HiddenObject*)Manager.createObject("tower", _position, ID);
 		Nexus->Position = _position;
 		Nexus->SearchRadius = 3.0f;
-		Nexus->ActionRadius = 1.5;
+		Nexus->ActionRadius = 0.7f;
 		Nexus->GeometryRadius = 0.5f;
 		Nexus->Damage = 50.0f;
 		Nexus->DamageTime = 1000.0f;
@@ -57,11 +57,10 @@ void Player::CreateWarrior(const char* name)
 {
 	BaseWarrior* zealot = (BaseWarrior*)Manager.createObject(name, _position + Vector3(rnd(-1.0f, 1.0f), 0.0f, rnd(-3.0f, 3.0f)), ID);
 	zealot->SearchRadius = 10.0f;
-	zealot->ActionRadius = 1.2f;
+	zealot->ActionRadius = 0.7f;
 	zealot->GeometryRadius = 0.5f;
 	zealot->EnemyNexus = EnemyNexus;
 	zealot->Damage = 35;
 	zealot->DamageTime = 1000.0f;
-	//zealot->node()->setRotation(Vector3::unitY(), MATH_PI);// * 0.5f
 	_warriorsSpawnedCount++;
 }

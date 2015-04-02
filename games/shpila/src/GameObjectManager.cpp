@@ -7,6 +7,7 @@ GameObjectManager::GameObjectManager()
 , _objects()
 , _all()
 , _pd(NULL)
+, _store(Scene::create("store"))
 {}
 
 void GameObjectManager::setScene(Scene* scene)
@@ -72,9 +73,54 @@ void GameObjectManager::update(const float currentTime, const float elapsedTime)
 	}
 }
 
-void GameObjectManager::addUnit(const char* name, Node* node, GameObjectConstructorProc constructor)
+void GameObjectManager::addUnit(const char* filename, const char* name, GameObjectConstructorProc constructor)
 {
-	_units[name] = GameUnit(node, constructor);
+	float scale = 0.003f;
+
+	if (filename != NULL)
+	{
+		Scene* scene = Scene::load(filename);
+		Node* root = Node::create("root");
+		root->setTag("dynamic");
+		Node* child = scene->getFirstNode();
+		while (child != NULL)
+		{
+			Node* childClone = child->clone();
+			childClone->setScale(scale, scale, scale);
+			childClone->setTag("dynamic");
+			root->addChild(childClone);
+			child = child->getNextSibling();
+		}
+		Node* node = root->getFirstChild();
+		while (node)
+		{
+			Animation* animation = node->getAnimation("animations");
+			if (animation)
+			{
+				std::string scenePath = filename;
+				int pos = scenePath.find_last_of('.');
+				if (pos > 2)
+				{
+					std::string animationPath = scenePath.substr(0, pos);
+					animationPath.append(".animation");
+					animation->createClips(animationPath.c_str());
+				}
+			}
+			node = node->getNextSibling();
+		}
+		_store->addNode(root);
+		SAFE_RELEASE(scene);
+		_units[name] = GameUnit(root, constructor);
+	}
+	else
+	{
+		_units[name] = GameUnit(NULL, constructor);
+	}
+}
+
+void GameObjectManager::initUnits()
+{
+	_store->visit(this, &GameObjectManager::initializeNodeMaterials);
 }
 
 BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 position, int playerID)
@@ -91,6 +137,12 @@ void GameObjectManager::registerMovementController(UnitMovementBase* controller)
 {
 	controller->init(*_pd);
 	_all.push_back(controller);
+}
+
+void GameObjectManager::unregisterMovementController(UnitMovementBase* controller)
+{
+	SAFE_DELETE(controller->proximityToken);
+	_all.erase(std::find(_all.begin(), _all.end(), controller));
 }
 
 void GameObjectManager::registerObject(BaseGameObject* object)

@@ -21,6 +21,7 @@ public:
 	// constructor
 	UnitMovementBase()
 		: _target(0.0f, 0.0f, 0.0f)
+		, _applyBreakingForces(false)
 		, proximityToken(NULL)
 	{
 	}
@@ -37,7 +38,7 @@ public:
 	virtual ~UnitMovementBase()
 	{
 		// delete this boid's token in the proximity database
-		delete proximityToken;
+		SAFE_DELETE(proximityToken);
 	}
 
 	// reset all instance state
@@ -50,8 +51,8 @@ public:
 		setRadius(0.5); // width = 0.7, add 0.3 margin, take half
 
 		setSpeed(0);             // speed along Forward direction.
-		setMaxForce(10.0);        // steering force is clipped to this magnitude
-		setMaxSpeed(2.5);        // velocity is clipped to this magnitude
+		setMaxForce(30.0);        // steering force is clipped to this magnitude
+		setMaxSpeed(2.0);        // velocity is clipped to this magnitude
 
 		// notify proximity database that our position has changed
 		proximityToken->updateForNewPosition(position());
@@ -61,8 +62,10 @@ public:
 	void update(const float currentTime, const float elapsedTime)
 	{
 		// apply steering force to our momentum
-		applySteeringForce(determineCombinedSteering(elapsedTime),
-			elapsedTime);
+		if (_applyBreakingForces)
+			applyBrakingForce(0.8f, elapsedTime);
+		else
+			applySteeringForce(determineCombinedSteering(elapsedTime), elapsedTime);
 
 		// notify proximity database that our position has changed
 		proximityToken->updateForNewPosition(position());
@@ -82,27 +85,27 @@ public:
 		{
 			// otherwise consider avoiding collisions with others
 			Vec3 collisionAvoidance;
-			const float caLeadTime = 3;
+			const float caLeadTime = 3.0f;
+			float distToTarget = Vec3(position() - _target).length() - 0.01f;
 
 			// find all neighbors within maxRadius using proximity database
 			// (radius is largest distance between vehicles traveling head-on
 			// where a collision is possible within caLeadTime seconds.)
-			const float maxRadius = caLeadTime * maxSpeed() * 2;
+			const float maxRadius = min((maxSpeed() * caLeadTime * 2.0f), distToTarget);
 			neighbors.clear();
 			proximityToken->findNeighbors(position(), maxRadius, neighbors);
 
-			if (leakThrough < frandom01())
-				collisionAvoidance =
-				steerToAvoidNeighbors(caLeadTime, neighbors) * 10;
+			//if (leakThrough < frandom01())
+			collisionAvoidance = steerToAvoidNeighbors(caLeadTime, neighbors) * 10.0f;
 
 			// if collision avoidance is needed, do it
 			if (collisionAvoidance != Vec3::zero)
 			{
-				steeringForce += collisionAvoidance;
+				steeringForce += collisionAvoidance; 
 			}
 			else
 			{
-				steeringForce += steerForSeek(_target) * 5.0;
+				steeringForce += steerForSeek(_target) * 10.0f;
 			}
 		}
 
@@ -114,7 +117,7 @@ public:
 	void newPD(ProximityDatabase& pd)
 	{
 		// delete this boid's token in the old proximity database
-		delete proximityToken;
+		SAFE_DELETE(proximityToken);
 
 		// allocate a token for this boid in the proximity database
 		proximityToken = pd.allocateToken(this);
@@ -128,6 +131,8 @@ public:
 	static AVGroup neighbors;
 
 	Vec3 _target;
+
+	bool _applyBreakingForces;
 
 	// path to be followed by this pedestrian
 	// XXX Ideally this should be a generic Pathway, but we use the

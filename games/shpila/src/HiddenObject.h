@@ -13,6 +13,7 @@ public:
 	static BaseGameObject* constructor();
 	HiddenObject();
 	virtual const Vector3 position();
+	virtual void init(GameObjectManager& manager, Node* node, int playerID, Vector3 position);
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
 };

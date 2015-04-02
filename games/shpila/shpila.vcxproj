@@ -99,6 +99,7 @@
     <ExecutablePath>$(ExecutablePath)</ExecutablePath>
     <CustomBuildBeforeTargets>
     </CustomBuildBeforeTargets>
+    <SourcePath>$(VC_SourcePath);$(ProjectDir)../../gameplay/gameplay/src</SourcePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>

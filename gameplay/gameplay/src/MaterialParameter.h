@@ -369,6 +369,7 @@ private:
     class MethodBinding : public Ref
     {
         friend class RenderState;
+		friend class MaterialParameter;
 
     public:
 

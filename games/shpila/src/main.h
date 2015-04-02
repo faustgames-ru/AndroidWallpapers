@@ -99,7 +99,6 @@ private:
 	double _totalTime;
 
 	GameObjectManager _manager;
-	AutoRef<Scene> _store;
 };
 
 #endif //SHPILA_H_

@@ -27,6 +27,7 @@ public:
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
 protected:
+	GameObjectManager* _manager;
 	AutoRef<Node> _node;
 	float getInteractionDistance(BaseGameObject* object);
 	float _damageTimer;

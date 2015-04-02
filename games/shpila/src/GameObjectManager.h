@@ -30,8 +30,10 @@ public:
 	bool initializeNodeMaterials(Node* node);
 	void initializeMaterial(Node* node, Material* material);
 	void addUnit(const char* filename, const char* name, GameObjectConstructorProc constructor);
+	void initUnits();
 	BaseGameObject* createObject(const char* name, Vector3 position, int playerID);
 	void registerMovementController(UnitMovementBase* controller);
+	void unregisterMovementController(UnitMovementBase* controller);
 	void registerObject(BaseGameObject* object);
 	void registerSceneNode(Node* node);
 
@@ -56,6 +58,7 @@ private:
 	// a group (STL vector) of all vehicles in the PlugIn
 	std::vector<UnitMovementBase*> _all;
 	ProximityDatabase* _pd;
+	AutoRef<Scene> _store;
 };
 
 
