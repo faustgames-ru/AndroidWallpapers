@@ -152,41 +152,11 @@ void Shpila::initializeSolarSystem()
 
 void Shpila::loadCharacters()
 {
-	_manager.addUnit("res/common/Zelot_all.scene", "zealot", BaseWarrior::constructor);
+	_manager.addUnit("res/common/irbaga.scene", "irbaga", BaseWarrior::constructor);
 	_manager.addUnit(NULL, "tower", HiddenObject::constructor);
-	_manager.addUnit("res/common/budfoor.scene", "budfoor", BaseWarrior::constructor);
-
+	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor);
+	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
 	_manager.initUnits();
-	/*Scene* scene = Scene::load("res/common/Zelot_all.scene");
-	Node* node = scene->findNode("zealot")->clone();
-	float scale = 0.003f;
-	node->setScale(scale, scale, scale);
-	node->setTag("dynamic");
-	Animation* animation = node->getAnimation("animations");
-	if (animation)
-	{
-		animation->createClips("res/common/Zelot_all.animation");
-	}
-	_manager.addUnit("zealot", node, BaseWarrior::constructor);
-	_store->addNode(node);
-	//SAFE_RELEASE(scene);
-	//
-	_manager.addUnit("tower", NULL, HiddenObject::constructor);
-	//
-	scene = Scene::load("res/common/budfoor.scene");
-	Node* weapon = scene->findNode("obj_weapon");
-	node = scene->getFirstNode()->clone();//findNode("budfoor")
-	scale = 0.003f;
-	node->setScale(scale, scale, scale);
-	node->setTag("dynamic");
-	animation = node->getAnimation("animations");
-	if (animation)
-	{
-		animation->createClips("res/common/budfoor.animation");
-	}
-	_manager.addUnit("budfoor", node, BaseWarrior::constructor);
-	_store->addNode(node);*/
-	
 }
 
 void Shpila::initPlayers()
@@ -243,15 +213,17 @@ void Shpila::Player2_Auto_Click(Game* game)
 void Shpila::Player1_New_Click(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	std::string names[] = { "zealot", "budfoor" };
-	shpila->_manager.Players[0]->CreateWarrior(names[(int)min(1.0f, rnd(0.0f, 2.0f))].c_str());
+	std::string names[] = { "irbaga", "budfoor", "barar" };
+	shpila->_manager.Players[0]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
+	//shpila->_manager.Players[0]->CreateWarrior(names[2].c_str());
 }
 
 void Shpila::Player2_New_Click(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	std::string names[] = { "zealot", "budfoor" };
-	shpila->_manager.Players[1]->CreateWarrior(names[(int)min(1.0f, rnd(0.0f, 2.0f))].c_str());
+	std::string names[] = { "irbaga", "budfoor", "barar" };
+	shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
+	//shpila->_manager.Players[1]->CreateWarrior(names[2].c_str());
 }
 
 void Shpila::update(float elapsedTime)
@@ -283,11 +255,11 @@ void Shpila::update(float elapsedTime)
 			// Strafing
 			if (_moveFlags & MOVE_LEFT)
 			{
-				move.x = 1;
+				move.x = -1;
 			}
 			else if (_moveFlags & MOVE_RIGHT)
 			{
-				move.x = -1;
+				move.x = 1;
 			}
 			move.normalize();
 

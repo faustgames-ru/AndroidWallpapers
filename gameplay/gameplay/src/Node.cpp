@@ -926,15 +926,22 @@ const BoundingSphere& Node::getBoundingSphere() const
 Node* Node::clone() const
 {
     NodeCloneContext context;
-    return cloneRecursive(context);
+	Node* node = cloneRecursive(context);
+	cloneRecursiveInfo(node, context);
+	return node;
 }
 
 Node* Node::cloneSingleNode(NodeCloneContext &context) const
 {
     Node* copy = Node::create(getId());
     context.registerClonedNode(this, copy);
-    cloneInto(copy, context);
+    //cloneInto(copy, context);
     return copy;
+}
+
+void Node::cloneSingleNodeInfo(Node* copy, NodeCloneContext &context) const
+{
+	cloneInto(copy, context);
 }
 
 Node* Node::cloneRecursive(NodeCloneContext &context) const
@@ -952,6 +959,19 @@ Node* Node::cloneRecursive(NodeCloneContext &context) const
     }
 
     return copy;
+}
+
+void Node::cloneRecursiveInfo(Node* copy, NodeCloneContext &context) const
+{
+	cloneSingleNodeInfo(copy, context);
+	GP_ASSERT(copy);
+
+	Node* childCopy = copy->getFirstChild();
+	for (Node* child = getFirstChild(); child != NULL; child = child->getNextSibling())
+	{
+		child->cloneRecursiveInfo(childCopy, context);
+		childCopy = childCopy->getNextSibling();
+	}
 }
 
 void Node::cloneInto(Node* node, NodeCloneContext& context) const

@@ -78,6 +78,7 @@ MeshSkin* MeshSkin::clone(NodeCloneContext &context) const
         else
         {
             skin->_rootNode = _rootNode->cloneRecursive(context);
+			_rootNode->cloneRecursiveInfo(skin->_rootNode, context);
         }
         
         Node* node = NULL;
@@ -95,15 +96,17 @@ MeshSkin* MeshSkin::clone(NodeCloneContext &context) const
         {
             Joint* oldJoint = getJoint(i);
             GP_ASSERT(oldJoint);
+			Joint* newJoint = static_cast<Joint*>(skin->_rootNode->findNode(oldJoint->getId()));
+			if (!newJoint)
+				newJoint = static_cast<Joint*>(context.findClonedNode(oldJoint));
             
-            Joint* newJoint = static_cast<Joint*>(skin->_rootNode->findNode(oldJoint->getId()));
             if (!newJoint)
             {
                 if (strcmp(skin->_rootJoint->getId(), oldJoint->getId()) == 0)
                     newJoint = static_cast<Joint*>(skin->_rootJoint);
             }
             GP_ASSERT(newJoint);
-            skin->setJoint(newJoint, i);
+			skin->setJoint(newJoint, i);
         }
     }
     return skin;

@@ -346,8 +346,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\barar.cpp" />
     <ClCompile Include="src\BaseGameObject.cpp" />
     <ClCompile Include="src\BaseWarrior.cpp" />
+    <ClCompile Include="src\budfoor.cpp" />
     <ClCompile Include="src\FirstPersonCamera.cpp" />
     <ClCompile Include="src\GameHUD.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
@@ -359,8 +361,10 @@
     <ClCompile Include="src\TargetCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\barar.h" />
     <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\BaseWarrior.h" />
+    <ClInclude Include="src\budfoor.h" />
     <ClInclude Include="src\FirstPersonCamera.h" />
     <ClInclude Include="src\GameHUD.h" />
     <ClInclude Include="src\GameObjectManager.h" />

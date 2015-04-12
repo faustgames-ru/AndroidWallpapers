@@ -1,0 +1,13 @@
+#include "Headers.h"
+
+BaseGameObject* BararWarrior::constructor()
+{
+	return new BararWarrior();
+}
+
+void BararWarrior::init(GameObjectManager& manager, Node* node, int playerID, Vector3 position)
+{
+	float scale = 1.5f;
+	BaseWarrior::init(manager, node, playerID, position);
+	_node->setScale(scale, scale, scale);
+}

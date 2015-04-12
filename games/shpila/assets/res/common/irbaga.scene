@@ -1,8 +1,8 @@
 scene
 {
-    path = res/common/solarsystem.gpb
+    path = res/common/irbaga.gpb
 
-    node solarsystem
+    node irbaga
     {
         tags
         {

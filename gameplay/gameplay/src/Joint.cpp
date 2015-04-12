@@ -26,7 +26,7 @@ Node* Joint::cloneSingleNode(NodeCloneContext &context) const
     GP_ASSERT(copy);
     context.registerClonedNode(this, copy);
     copy->_bindPose = _bindPose;
-    Node::cloneInto(copy, context);
+    //Node::cloneInto(copy, context);
     return copy;
 }
 

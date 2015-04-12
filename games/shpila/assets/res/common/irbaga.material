@@ -201,7 +201,7 @@ material skinedmeshbumped : texturedBumped
     }
 }
 
-material mtBudfoor : skinedmeshbumped
+material mtIrbaga : skinedmeshbumped
 {
     technique
     {
@@ -209,29 +209,11 @@ material mtBudfoor : skinedmeshbumped
         {			
             sampler u_diffuseTexture
             {
-                path = @budfoorD
+                path = @zealotD 
             }
 			sampler u_normalmapTexture
             {
-                path = @budfoorN
-            }
-        }
-    }
-}
-
-material mtWeapon : texturedBumped
-{
-    technique
-    {
-        pass
-        {			
-            sampler u_diffuseTexture
-            {
-                path = @budfoorD
-            }
-			sampler u_normalmapTexture
-            {
-                path = @budfoorN
+                path = @zealotN
             }
         }
     }

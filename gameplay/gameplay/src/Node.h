@@ -620,13 +620,22 @@ protected:
     virtual ~Node();
 
     /**
-     * Clones a single node and its data but not its children.
+     * Clones a single node but not its children.
      *
      * @param context The clone context.
      *
      * @return Pointer to the newly created node.
      */
     virtual Node* cloneSingleNode(NodeCloneContext &context) const;
+
+	/**
+	* Clones a single node data but not data of its children.
+	*
+	* @param node The node to copy the data to.
+	*
+	* @param context The clone context.
+	*/
+	virtual void cloneSingleNodeInfo(Node* copy, NodeCloneContext &context) const;
 
     /**
      * Recursively clones this node and its children.
@@ -636,6 +645,15 @@ protected:
      * @return The newly created node.
      */
     Node* cloneRecursive(NodeCloneContext &context) const;
+
+	/**
+	* Recursively clones data of this node and data of its children.
+	*
+	* @param node The node to copy the data to.
+	*
+	* @param context The clone context.
+	*/
+	void cloneRecursiveInfo(Node* copy, NodeCloneContext &context) const;
 
     /**
      * Copies the data from this node into the given node.

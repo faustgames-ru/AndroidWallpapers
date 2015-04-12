@@ -11,6 +11,8 @@
 #include "UnitMovement.h"
 #include "BaseGameObject.h"
 #include "BaseWarrior.h"
+#include "budfoor.h"
+#include "barar.h"
 #include "HiddenObject.h"
 #include "GameObjectManager.h"
 #include "BaseWarrior.h"

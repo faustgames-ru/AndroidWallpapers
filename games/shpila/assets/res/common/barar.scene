@@ -1,8 +1,8 @@
 scene
 {
-    path = res/common/Zelot_all.gpb
+    path = res/common/barar.gpb
 
-    node zealot
+    node barar
     {
         tags
         {

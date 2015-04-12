@@ -18,6 +18,8 @@ public:
 
 	virtual void restoreDeviceObjects();
 
+	bool initializeNodeMaterials(Node* node);
+
 protected:
 
     /**
@@ -43,10 +45,8 @@ protected:
 	bool mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta);
 	void keyEvent(Keyboard::KeyEvent evt, int key);
 	void touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contactIndex);
-
 private:
     
-	bool initializeNodeMaterials(Node* node);
     void initializeMaterial(Scene* scene, Node* node, Material* material);
 	void initializeAsteroids();
 	void initializeSolarSystem();

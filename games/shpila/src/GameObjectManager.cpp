@@ -29,8 +29,7 @@ bool GameObjectManager::initializeNodeMaterials(Node* node)
 		{
 			initializeMaterial(node, model->getMaterial(i));
 		}
-	}
-
+	}	
 	return true;
 }
 
@@ -75,7 +74,7 @@ void GameObjectManager::update(const float currentTime, const float elapsedTime)
 
 void GameObjectManager::addUnit(const char* filename, const char* name, GameObjectConstructorProc constructor)
 {
-	float scale = 0.003f;
+	float scale = 0.007f;
 
 	if (filename != NULL)
 	{
@@ -83,14 +82,17 @@ void GameObjectManager::addUnit(const char* filename, const char* name, GameObje
 		Node* root = Node::create("root");
 		root->setTag("dynamic");
 		Node* child = scene->getFirstNode();
+		Node* childNext;
 		while (child != NULL)
 		{
-			Node* childClone = child->clone();
-			childClone->setScale(scale, scale, scale);
-			childClone->setTag("dynamic");
-			root->addChild(childClone);
-			child = child->getNextSibling();
+			childNext = child->getNextSibling();
+			root->addChild(child);
+			child = childNext;
 		}
+		scene->addNode(root);
+
+		root = root->clone();
+		root->setScale(scale, scale, scale);//!!
 		Node* node = root->getFirstChild();
 		while (node)
 		{
