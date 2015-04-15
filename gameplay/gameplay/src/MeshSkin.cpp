@@ -105,8 +105,11 @@ MeshSkin* MeshSkin::clone(NodeCloneContext &context) const
                 if (strcmp(skin->_rootJoint->getId(), oldJoint->getId()) == 0)
                     newJoint = static_cast<Joint*>(skin->_rootJoint);
             }
-            GP_ASSERT(newJoint);
-			skin->setJoint(newJoint, i);
+            //GP_ASSERT(newJoint);
+			if (newJoint)
+			{
+				skin->setJoint(newJoint, i);
+			}
         }
     }
     return skin;

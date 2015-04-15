@@ -24,6 +24,15 @@ class Joint : public Node
 
 public:
 
+	/**
+	* Creates a new joint with the given id.
+	*
+	* @param id ID string.
+	*
+	* @return Newly created joint.
+	*/
+	static Joint* create(const char* id);
+
     /**
      * @see Node::getType()
      */
@@ -52,15 +61,6 @@ protected:
      * Destructor.
      */
     virtual ~Joint();
-
-    /**
-     * Creates a new joint with the given id.
-     * 
-     * @param id ID string.
-     * 
-     * @return Newly created joint.
-     */
-    static Joint* create(const char* id);
 
     /**
      * Clones a single node and its data but not its children.

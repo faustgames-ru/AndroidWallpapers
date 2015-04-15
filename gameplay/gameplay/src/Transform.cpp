@@ -45,6 +45,14 @@ Transform::Transform(const Transform& copy)
     set(copy);
 }
 
+Transform::Transform(const Matrix& matrix)
+{
+	GP_REGISTER_SCRIPT_EVENTS();
+
+	_targetType = AnimationTarget::TRANSFORM;
+	set(matrix);
+}
+
 Transform::~Transform()
 {
     SAFE_DELETE(_listeners);
@@ -465,6 +473,17 @@ void Transform::set(const Transform& transform)
     _rotation.set(transform._rotation);
     _translation.set(transform._translation);
     dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
+}
+
+void Transform::set(const Matrix& matrix)
+{
+	Vector3 scale, translation;
+	Quaternion rotation;
+	matrix.decompose(&scale, &rotation, &translation);
+	_scale.set(scale);
+	_rotation.set(rotation);
+	_translation.set(translation);
+	dirty(DIRTY_TRANSLATION | DIRTY_ROTATION | DIRTY_SCALE);
 }
 
 void Transform::setIdentity()

@@ -33,6 +33,18 @@ bool GameObjectManager::initializeNodeMaterials(Node* node)
 	return true;
 }
 
+float CHARACTER_SCALE = 0.007f;
+
+bool GameObjectManager::initializeCharacterNodeScale(Node* node)
+{
+	Joint* joint = dynamic_cast<Joint*>(node);
+	if (joint)
+	{
+		joint->setScale(CHARACTER_SCALE, CHARACTER_SCALE, CHARACTER_SCALE);
+	}
+	return true;
+}
+
 void GameObjectManager::initializeMaterial(Node* node, Material* material)
 {
 	// Bind light shader parameters to dynamic objects only
@@ -74,8 +86,6 @@ void GameObjectManager::update(const float currentTime, const float elapsedTime)
 
 void GameObjectManager::addUnit(const char* filename, const char* name, GameObjectConstructorProc constructor)
 {
-	float scale = 0.007f;
-
 	if (filename != NULL)
 	{
 		Scene* scene = Scene::load(filename);
@@ -89,10 +99,10 @@ void GameObjectManager::addUnit(const char* filename, const char* name, GameObje
 			root->addChild(child);
 			child = childNext;
 		}
+		root->setScale(CHARACTER_SCALE, CHARACTER_SCALE, CHARACTER_SCALE);
 		scene->addNode(root);
 
 		root = root->clone();
-		root->setScale(scale, scale, scale);//!!
 		Node* node = root->getFirstChild();
 		while (node)
 		{
@@ -123,6 +133,7 @@ void GameObjectManager::addUnit(const char* filename, const char* name, GameObje
 void GameObjectManager::initUnits()
 {
 	_store->visit(this, &GameObjectManager::initializeNodeMaterials);
+	//_store->visit(this, &GameObjectManager::initializeCharacterNodeScale);	
 }
 
 BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 position, int playerID)

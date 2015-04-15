@@ -19,6 +19,15 @@ scene
 			transparent
         }
     }
+	
+	node star
+    {
+        tags
+        {
+            dynamic
+			transparent
+        }
+    }
 
     physics
     {

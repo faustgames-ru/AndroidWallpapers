@@ -28,6 +28,7 @@ public:
 	void setScene(Scene* scene);
 	Scene* scene();
 	bool initializeNodeMaterials(Node* node);
+	bool initializeCharacterNodeScale(Node* node);
 	void initializeMaterial(Node* node, Material* material);
 	void addUnit(const char* filename, const char* name, GameObjectConstructorProc constructor);
 	void initUnits();

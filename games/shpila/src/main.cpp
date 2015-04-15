@@ -79,7 +79,7 @@ void Shpila::initialize()
 
 		//static camera
 		Vector3 cameraPosition(0.0f, 5.0f, -8.0f);
-		_fpCamera.initialize(0.01f, 50.0f);
+		_fpCamera.initialize(0.01f, 1000.0f);
 		_fpCamera.setPosition(cameraPosition);
 		Matrix rot;
 		Matrix::createLookAt(0.0f, 0.0f, 0.0f,
@@ -214,16 +214,16 @@ void Shpila::Player1_New_Click(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
 	std::string names[] = { "irbaga", "budfoor", "barar" };
-	shpila->_manager.Players[0]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
-	//shpila->_manager.Players[0]->CreateWarrior(names[2].c_str());
+	//shpila->_manager.Players[0]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
+	shpila->_manager.Players[0]->CreateWarrior(names[0].c_str());
 }
 
 void Shpila::Player2_New_Click(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
 	std::string names[] = { "irbaga", "budfoor", "barar" };
-	shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
-	//shpila->_manager.Players[1]->CreateWarrior(names[2].c_str());
+	//shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
+	shpila->_manager.Players[1]->CreateWarrior(names[2].c_str());
 }
 
 void Shpila::update(float elapsedTime)
