@@ -132,6 +132,8 @@ void BaseWarrior::updateAnimationState()
 		while (node)
 		{
 			Animation* anim = node->getAnimation("animations");
+			if (!anim)
+				anim = node->getAnimation(NULL);
 			if (anim)
 			{
 				UnitAnimation::ActionsMap* am = new UnitAnimation::ActionsMap();

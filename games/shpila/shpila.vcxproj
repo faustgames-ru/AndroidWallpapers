@@ -354,6 +354,7 @@
     <ClCompile Include="src\GameHUD.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
     <ClCompile Include="src\HiddenObject.cpp" />
+    <ClCompile Include="src\irbaga.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\UnitMovement.cpp" />
@@ -370,6 +371,7 @@
     <ClInclude Include="src\GameObjectManager.h" />
     <ClInclude Include="src\Headers.h" />
     <ClInclude Include="src\HiddenObject.h" />
+    <ClInclude Include="src\irbaga.h" />
     <ClInclude Include="src\Player.h" />
     <ClInclude Include="src\main.h" />
     <ClInclude Include="src\StarsParticles.h" />

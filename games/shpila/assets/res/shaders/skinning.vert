@@ -22,7 +22,7 @@ vec4 getPosition()
     int matrixIndex = int (a_blendIndices[0]) * 3;
     skinPosition(blendWeight, matrixIndex);
 
-	//#if !defined(BATCHING)
+	#if !defined(BATCHING)
 		blendWeight = a_blendWeights[1];
 		matrixIndex = int(a_blendIndices[1]) * 3;
 		skinPosition(blendWeight, matrixIndex);
@@ -34,7 +34,7 @@ vec4 getPosition()
 		blendWeight = a_blendWeights[3];
 		matrixIndex = int(a_blendIndices[3]) * 3;
 		skinPosition(blendWeight, matrixIndex);
-	//#endif
+	#endif
 
     return _skinnedPosition;    
 }
@@ -59,7 +59,7 @@ vec3 getTangentSpaceVector(vec3 vector)
     int matrixIndex = int (a_blendIndices[0]) * 3;
     skinTangentSpaceVector(vector, blendWeight, matrixIndex);
 
-	//#if !defined(BATCHING)
+	#if !defined(BATCHING)
 		blendWeight = a_blendWeights[1];
 		matrixIndex = int(a_blendIndices[1]) * 3;
 		skinTangentSpaceVector(vector, blendWeight, matrixIndex);
@@ -71,7 +71,7 @@ vec3 getTangentSpaceVector(vec3 vector)
 		blendWeight = a_blendWeights[3];
 		matrixIndex = int(a_blendIndices[3]) * 3;
 		skinTangentSpaceVector(vector, blendWeight, matrixIndex);
-	//#endif
+	#endif
 
     return _skinnedNormal;
 }

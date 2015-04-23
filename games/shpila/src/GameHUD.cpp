@@ -19,7 +19,7 @@ void GameHUD::controlEvent(Control* control, EventType evt)
 void GameHUD::initialize(Game* game, Scene* scene)
 {
 	_game = game;
-	_form = Form::create("res/editor.form");
+	_form = Form::create("res/hud.form");
 }
 void GameHUD::finalize(Game* game)
 {

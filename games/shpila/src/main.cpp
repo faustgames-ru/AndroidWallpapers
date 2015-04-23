@@ -68,8 +68,12 @@ void Shpila::initialize()
 		_hud.initialize(this, _scene);
 		_hud.bind("Player1_Auto", Control::Listener::CLICK, Player1_Auto_Click);
 		_hud.bind("Player2_Auto", Control::Listener::CLICK, Player2_Auto_Click);
-		_hud.bind("Player1_New", Control::Listener::CLICK, Player1_New_Click);
-		_hud.bind("Player2_New", Control::Listener::CLICK, Player2_New_Click);
+		_hud.bind("Player1_New_Irbaga", Control::Listener::CLICK, Player1_New_Irbaga);
+		_hud.bind("Player2_New_Irbaga", Control::Listener::CLICK, Player2_New_Irbaga);
+		_hud.bind("Player1_New_Budfoor", Control::Listener::CLICK, Player1_New_Budfoor);
+		_hud.bind("Player2_New_Budfoor", Control::Listener::CLICK, Player2_New_Budfoor);
+		_hud.bind("Player1_New_Barar", Control::Listener::CLICK, Player1_New_Barar);
+		_hud.bind("Player2_New_Barar", Control::Listener::CLICK, Player2_New_Barar);
 
 		// Load scene.
 		_scene = Scene::load("res/common/box.scene");
@@ -152,7 +156,7 @@ void Shpila::initializeSolarSystem()
 
 void Shpila::loadCharacters()
 {
-	_manager.addUnit("res/common/irbaga.scene", "irbaga", BaseWarrior::constructor);
+	_manager.addUnit("res/common/irbaga.scene", "irbaga", IrbagaWarrior::constructor);
 	_manager.addUnit(NULL, "tower", HiddenObject::constructor);
 	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor);
 	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
@@ -198,6 +202,9 @@ bool Shpila::drawScene(Node* node, bool transparent)
     return true;
 }
 
+std::string names[] = { "irbaga", "budfoor", "barar" };
+//shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
+
 void Shpila::Player1_Auto_Click(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
@@ -210,19 +217,36 @@ void Shpila::Player2_Auto_Click(Game* game)
 	shpila->_manager.Players[1]->AutoPlay = !shpila->_manager.Players[1]->AutoPlay;
 }
 
-void Shpila::Player1_New_Click(Game* game)
+void Shpila::Player1_New_Irbaga(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	std::string names[] = { "irbaga", "budfoor", "barar" };
-	//shpila->_manager.Players[0]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
 	shpila->_manager.Players[0]->CreateWarrior(names[0].c_str());
 }
 
-void Shpila::Player2_New_Click(Game* game)
+void Shpila::Player2_New_Irbaga(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	std::string names[] = { "irbaga", "budfoor", "barar" };
-	//shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
+	shpila->_manager.Players[1]->CreateWarrior(names[0].c_str());
+}
+
+void Shpila::Player1_New_Budfoor(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_manager.Players[0]->CreateWarrior(names[1].c_str());
+}
+void Shpila::Player2_New_Budfoor(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_manager.Players[1]->CreateWarrior(names[1].c_str());
+}
+void Shpila::Player1_New_Barar(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_manager.Players[0]->CreateWarrior(names[2].c_str());
+}
+void Shpila::Player2_New_Barar(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
 	shpila->_manager.Players[1]->CreateWarrior(names[2].c_str());
 }
 

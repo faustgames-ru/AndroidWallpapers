@@ -55,12 +55,7 @@ void Player::update(float time)
 
 void Player::CreateWarrior(const char* name)
 {
-	BaseWarrior* zealot = (BaseWarrior*)Manager.createObject(name, _position + Vector3(rnd(-1.0f, 1.0f), 0.0f, rnd(-3.0f, 3.0f)), ID);
-	zealot->SearchRadius = 10.0f;
-	zealot->ActionRadius = 0.7f;
-	zealot->GeometryRadius = 0.5f;
-	zealot->EnemyNexus = EnemyNexus;
-	zealot->Damage = 35;
-	zealot->DamageTime = 1000.0f;
+	BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(name, _position + Vector3(rnd(-1.0f, 1.0f), 0.0f, rnd(-3.0f, 3.0f)), ID);
+	warrior->EnemyNexus = EnemyNexus; 
 	_warriorsSpawnedCount++;
 }

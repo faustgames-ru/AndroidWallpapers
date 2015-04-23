@@ -59,8 +59,12 @@ private:
 
 	static void Player1_Auto_Click(Game* game);
 	static void Player2_Auto_Click(Game* game);
-	static void Player1_New_Click(Game* game);
-	static void Player2_New_Click(Game* game);
+	static void Player1_New_Irbaga(Game* game);
+	static void Player2_New_Irbaga(Game* game);
+	static void Player1_New_Budfoor(Game* game);
+	static void Player2_New_Budfoor(Game* game);
+	static void Player1_New_Barar(Game* game);
+	static void Player2_New_Barar(Game* game);
 	
 
     Font* _font;

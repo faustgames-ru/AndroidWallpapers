@@ -107,6 +107,10 @@ void GameObjectManager::addUnit(const char* filename, const char* name, GameObje
 		while (node)
 		{
 			Animation* animation = node->getAnimation("animations");
+			if (!animation)
+			{
+				animation = node->getAnimation(NULL);
+			}
 			if (animation)
 			{
 				std::string scenePath = filename;

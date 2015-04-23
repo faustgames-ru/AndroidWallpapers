@@ -76,6 +76,9 @@
     <ClCompile Include="src\barar.cpp">
       <Filter>src\Units</Filter>
     </ClCompile>
+    <ClCompile Include="src\irbaga.cpp">
+      <Filter>src\Units</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -118,6 +121,9 @@
       <Filter>src\Units</Filter>
     </ClInclude>
     <ClInclude Include="src\barar.h">
+      <Filter>src\Units</Filter>
+    </ClInclude>
+    <ClInclude Include="src\irbaga.h">
       <Filter>src\Units</Filter>
     </ClInclude>
   </ItemGroup>

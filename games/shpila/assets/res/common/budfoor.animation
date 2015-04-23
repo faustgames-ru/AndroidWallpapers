@@ -1,7 +1,15 @@
 animation animations
 {
     frameCount = 236
+	
 	clip attack
+    {
+        begin = 41
+        end = 63
+        repeatCount = INDEFINITE
+    }
+	
+	clip attack2
     {
         begin = 136
         end = 166

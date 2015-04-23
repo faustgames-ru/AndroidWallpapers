@@ -10,9 +10,8 @@ form sceneSettings
         style = sceneProps
         alignment = ALIGN_BOTTOM_LEFT
         width = 210
-		height = 150
+		height = 200
         autoHeight = false
-        scroll = SCROLL_VERTICAL
         scrollBarsAutoHide = false
 
         consumeInputEvents = false
@@ -20,7 +19,7 @@ form sceneSettings
         {
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
-           height = 700
+           height = 200
            layout = LAYOUT_VERTICAL
 
            button Player1_Auto
@@ -32,14 +31,32 @@ form sceneSettings
               x = 100
               text = Play auto
            }
-           button Player1_New
+           button Player1_New_Irbaga
            {
               consumeInputEvents = true
               style = buttonStyle
               width = 140
               height = 40
               x = 200
-              text = New warrior
+              text = Irbaga
+           }
+		   button Player1_New_Budfoor
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 250
+              text = Budfoor
+           }
+		   button Player1_New_Barar
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 300
+              text = Barar
            }
         }
 	}
@@ -49,9 +66,8 @@ form sceneSettings
         style = sceneProps
         alignment = ALIGN_BOTTOM_RIGHT
         width = 210
-		height = 150
+		height = 200
         autoHeight = false
-        scroll = SCROLL_VERTICAL
         scrollBarsAutoHide = false
 
         consumeInputEvents = false
@@ -59,7 +75,7 @@ form sceneSettings
         {
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
-           height = 700
+           height = 200
            layout = LAYOUT_VERTICAL
 
            button Player2_Auto
@@ -71,14 +87,32 @@ form sceneSettings
               x = 100
               text = Play auto
            }
-           button Player2_New
+           button Player2_New_Irbaga
            {
               consumeInputEvents = true
               style = buttonStyle
               width = 140
               height = 40
               x = 200
-              text = New warrior
+              text = Irbaga
+           }
+		   button Player2_New_Budfoor
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 250
+              text = Budfoor
+           }
+		   button Player2_New_Barar
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 300
+              text = Barar
            }
         }
 	 }
