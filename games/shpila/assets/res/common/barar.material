@@ -167,7 +167,7 @@ material skinedmesh : texturedTransparent
     {
         pass
         {
-            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 56;MODULATE_ALPHA;POINT_LIGHT
+            defines = SKINNING;SKINNING_JOINT_COUNT 56;MODULATE_ALPHA;POINT_LIGHT
             u_matrixPalette = MATRIX_PALETTE
             u_modulateAlpha = 1.0
         }
@@ -180,7 +180,7 @@ material skinedmeshcolored : colored
     {
         pass
         {
-            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 56;MODULATE_ALPHA;POINT_LIGHT
+            defines = SKINNING;SKINNING_JOINT_COUNT 56;MODULATE_ALPHA;POINT_LIGHT
             u_matrixPalette = MATRIX_PALETTE
             u_modulateAlpha = 1.0
         }
@@ -193,7 +193,7 @@ material skinedmeshbumped : texturedBumped
     {
         pass
         {
-            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 56;MODULATE_ALPHA;POINT_LIGHT
+            defines = SKINNING;SKINNING_JOINT_COUNT 56;MODULATE_ALPHA;POINT_LIGHT
             u_matrixPalette = MATRIX_PALETTE
             u_modulateAlpha = 1.0
         }
