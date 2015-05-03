@@ -346,6 +346,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\albiria.cpp" />
     <ClCompile Include="src\barar.cpp" />
     <ClCompile Include="src\BaseGameObject.cpp" />
     <ClCompile Include="src\BaseWarrior.cpp" />
@@ -362,6 +363,7 @@
     <ClCompile Include="src\TargetCamera.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\albiria.h" />
     <ClInclude Include="src\barar.h" />
     <ClInclude Include="src\BaseGameObject.h" />
     <ClInclude Include="src\BaseWarrior.h" />

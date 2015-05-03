@@ -10,7 +10,7 @@ form sceneSettings
         style = sceneProps
         alignment = ALIGN_BOTTOM_LEFT
         width = 210
-		height = 200
+		height = 250
         autoHeight = false
         scrollBarsAutoHide = false
 
@@ -19,7 +19,7 @@ form sceneSettings
         {
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
-           height = 200
+           height = 250
            layout = LAYOUT_VERTICAL
 
            button Player1_Auto
@@ -58,6 +58,16 @@ form sceneSettings
               x = 300
               text = Barar
            }
+		   
+		   button Player1_New_Albiria
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 350
+              text = Albiria
+           }
         }
 	}
 	
@@ -66,7 +76,7 @@ form sceneSettings
         style = sceneProps
         alignment = ALIGN_BOTTOM_RIGHT
         width = 210
-		height = 200
+		height = 250
         autoHeight = false
         scrollBarsAutoHide = false
 
@@ -75,7 +85,7 @@ form sceneSettings
         {
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
-           height = 200
+           height = 250
            layout = LAYOUT_VERTICAL
 
            button Player2_Auto
@@ -113,6 +123,16 @@ form sceneSettings
               height = 40
               x = 300
               text = Barar
+           }
+		   
+		   button Player2_New_Albiria
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 350
+              text = Albiria
            }
         }
 	 }

@@ -14,6 +14,7 @@
 #include "irbaga.h"
 #include "budfoor.h"
 #include "barar.h"
+#include "albiria.h"
 #include "HiddenObject.h"
 #include "GameObjectManager.h"
 #include "BaseWarrior.h"

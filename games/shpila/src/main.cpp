@@ -74,6 +74,8 @@ void Shpila::initialize()
 		_hud.bind("Player2_New_Budfoor", Control::Listener::CLICK, Player2_New_Budfoor);
 		_hud.bind("Player1_New_Barar", Control::Listener::CLICK, Player1_New_Barar);
 		_hud.bind("Player2_New_Barar", Control::Listener::CLICK, Player2_New_Barar);
+		_hud.bind("Player1_New_Albiria", Control::Listener::CLICK, Player1_New_Albiria);
+		_hud.bind("Player2_New_Albiria", Control::Listener::CLICK, Player2_New_Albiria);
 
 		// Load scene.
 		_scene = Scene::load("res/common/box.scene");
@@ -160,6 +162,7 @@ void Shpila::loadCharacters()
 	_manager.addUnit(NULL, "tower", HiddenObject::constructor);
 	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor);
 	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
+	_manager.addUnit("res/common/albiria.scene", "albiria", AlbiriaWarrior::constructor);
 	_manager.initUnits();
 }
 
@@ -202,7 +205,7 @@ bool Shpila::drawScene(Node* node, bool transparent)
     return true;
 }
 
-std::string names[] = { "irbaga", "budfoor", "barar" };
+std::string names[] = { "irbaga", "budfoor", "barar", "albiria" };
 //shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
 
 void Shpila::Player1_Auto_Click(Game* game)
@@ -249,6 +252,19 @@ void Shpila::Player2_New_Barar(Game* game)
 	Shpila* shpila = (Shpila*)game;
 	shpila->_manager.Players[1]->CreateWarrior(names[2].c_str());
 }
+
+void Shpila::Player1_New_Albiria(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_manager.Players[0]->CreateWarrior(names[3].c_str());
+}
+
+void Shpila::Player2_New_Albiria(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_manager.Players[1]->CreateWarrior(names[3].c_str());
+}
+
 
 void Shpila::update(float elapsedTime)
 {

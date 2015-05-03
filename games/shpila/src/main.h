@@ -65,6 +65,9 @@ private:
 	static void Player2_New_Budfoor(Game* game);
 	static void Player1_New_Barar(Game* game);
 	static void Player2_New_Barar(Game* game);
+	static void Player1_New_Albiria(Game* game);
+	static void Player2_New_Albiria(Game* game);
+	
 	
 
     Font* _font;

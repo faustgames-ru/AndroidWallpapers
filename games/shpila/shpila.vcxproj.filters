@@ -11,6 +11,9 @@
     <Filter Include="src\Units">
       <UniqueIdentifier>{b86a7fae-1583-4db9-9e5b-4b1f81a7ac26}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Units\Warriors">
+      <UniqueIdentifier>{3146edf3-afe5-474e-8690-a02db8b189c6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="bar-descriptor.xml" />
@@ -70,14 +73,17 @@
     <ClCompile Include="src\UnitMovement.cpp">
       <Filter>src\Units</Filter>
     </ClCompile>
-    <ClCompile Include="src\budfoor.cpp">
-      <Filter>src\Units</Filter>
-    </ClCompile>
     <ClCompile Include="src\barar.cpp">
-      <Filter>src\Units</Filter>
+      <Filter>src\Units\Warriors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\budfoor.cpp">
+      <Filter>src\Units\Warriors</Filter>
     </ClCompile>
     <ClCompile Include="src\irbaga.cpp">
-      <Filter>src\Units</Filter>
+      <Filter>src\Units\Warriors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\albiria.cpp">
+      <Filter>src\Units\Warriors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -117,14 +123,17 @@
     <ClInclude Include="src\Headers.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\budfoor.h">
-      <Filter>src\Units</Filter>
-    </ClInclude>
     <ClInclude Include="src\barar.h">
-      <Filter>src\Units</Filter>
+      <Filter>src\Units\Warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\budfoor.h">
+      <Filter>src\Units\Warriors</Filter>
     </ClInclude>
     <ClInclude Include="src\irbaga.h">
-      <Filter>src\Units</Filter>
+      <Filter>src\Units\Warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\albiria.h">
+      <Filter>src\Units\Warriors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
