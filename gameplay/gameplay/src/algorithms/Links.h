@@ -214,6 +214,7 @@ public:
 	AutoRef(T* other)	{ _object = other; other->addRef(); };
 	AutoRef() : _object(NULL){};
 	~AutoRef(){ SAFE_RELEASE(_object); };
+	void newRef(T* other){ if (_object != other) { SAFE_RELEASE(_object); _object = other; }};
 private:
 	T* _object;
 };

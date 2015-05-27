@@ -65,6 +65,8 @@ void Shpila::initialize()
 		// Load the font.
 		_font = Font::create("res/ui/arial.gpb");
 
+		const float FoV = 60.0f;
+
 		_hud.initialize(this, _scene);
 		_hud.bind("Player1_Auto", Control::Listener::CLICK, Player1_Auto_Click);
 		_hud.bind("Player2_Auto", Control::Listener::CLICK, Player2_Auto_Click);
@@ -76,6 +78,14 @@ void Shpila::initialize()
 		_hud.bind("Player2_New_Barar", Control::Listener::CLICK, Player2_New_Barar);
 		_hud.bind("Player1_New_Albiria", Control::Listener::CLICK, Player1_New_Albiria);
 		_hud.bind("Player2_New_Albiria", Control::Listener::CLICK, Player2_New_Albiria);
+		_hud.bind("Player1_New_Chasovoy", Control::Listener::CLICK, Player1_New_Chasovoy);
+		_hud.bind("Player2_New_Chasovoy", Control::Listener::CLICK, Player2_New_Chasovoy);
+
+		_hud.bind("CameraFoVPlus", Control::Listener::CLICK, CameraFoVPlus);
+		_hud.bind("CameraFoVMinus", Control::Listener::CLICK, CameraFoVMinus);
+		char buff[100];
+		sprintf(buff, "FoV-%0.0f", FoV);
+		((Label*)_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
 
 		// Load scene.
 		_scene = Scene::load("res/common/box.scene");
@@ -95,6 +105,7 @@ void Shpila::initialize()
 		_scene->addNode(_fpCamera.getRootNode());
 
 		//setup camera
+		_fpCamera.getCamera()->setFieldOfView(FoV);
 		_scene->setActiveCamera(_fpCamera.getCamera());
 		_scene->setAmbientColor(0.25f, 0.25f, 0.25f);
 
@@ -163,13 +174,14 @@ void Shpila::loadCharacters()
 	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor);
 	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
 	_manager.addUnit("res/common/albiria.scene", "albiria", AlbiriaWarrior::constructor);
+	_manager.addUnit("res/common/chasovoy.scene", "chasovoy", ChasovoyWarrior::constructor);
 	_manager.initUnits();
 }
 
 void Shpila::initPlayers()
 {
-	_manager.Players.push_back(new Player(_manager, 1, Vector3(10.0f, 0.0f, 0.0f)));
-	_manager.Players.push_back(new Player(_manager, 2, Vector3(-10.0f, 0.0f, 0.0f)));
+	_manager.Players.push_back(new Player(_manager, 1, Vector3(9.0f, 0.0f, -9.0f)));
+	_manager.Players.push_back(new Player(_manager, 2, Vector3(-9.0f, 0.0f, 9.0f)));
 }
 
 void Shpila::updatePlayers(float time)
@@ -200,12 +212,12 @@ void Shpila::drawSplash(void* param)
 
 bool Shpila::drawScene(Node* node, bool transparent)
 {
-	if (node->getDrawable() && (transparent == node->hasTag("transparent")))
+	if (node->isEnabled() && node->getDrawable() && (transparent == node->hasTag("transparent")))
 		node->getDrawable()->draw(_wireframe);
     return true;
 }
 
-std::string names[] = { "irbaga", "budfoor", "barar", "albiria" };
+std::string names[] = { "irbaga", "budfoor", "barar", "albiria", "chasovoy" };
 //shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
 
 void Shpila::Player1_Auto_Click(Game* game)
@@ -265,6 +277,35 @@ void Shpila::Player2_New_Albiria(Game* game)
 	shpila->_manager.Players[1]->CreateWarrior(names[3].c_str());
 }
 
+void Shpila::Player1_New_Chasovoy(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_manager.Players[0]->CreateWarrior(names[4].c_str());
+}
+void Shpila::Player2_New_Chasovoy(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_manager.Players[1]->CreateWarrior(names[4].c_str());
+}
+
+void Shpila::CameraFoVPlus(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	float fov = shpila->_fpCamera.getCamera()->getFieldOfView();
+	shpila->_fpCamera.getCamera()->setFieldOfView(fov + 1.0f);
+	char buff[100];
+	sprintf(buff, "FoV-%0.0f", fov + 1.0f);
+	((Label*)shpila->_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
+}
+void Shpila::CameraFoVMinus(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	float fov = shpila->_fpCamera.getCamera()->getFieldOfView();
+	shpila->_fpCamera.getCamera()->setFieldOfView(fov - 1.0f);
+	char buff[100];
+	sprintf(buff, "FoV-%0.0f", fov - 1.0f);
+	((Label*)shpila->_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
+}
 
 void Shpila::update(float elapsedTime)
 {

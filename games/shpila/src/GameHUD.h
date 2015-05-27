@@ -28,6 +28,7 @@ public:
 	void bind(char* control, Control::Listener::EventType evt, ControlEventHandler handler);
 	void update(Game* game, float elapsedTime);
 	void render(Game* game, float elapsedTime);
+	Form* form();
 
 private:
 	Form* _form;

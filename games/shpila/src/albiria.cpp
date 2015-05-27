@@ -5,10 +5,18 @@ BaseGameObject* AlbiriaWarrior::constructor()
 	return new AlbiriaWarrior();
 }
 
-void AlbiriaWarrior::init(GameObjectManager& manager, Node* node, int playerID, Vector3 position)
+AlbiriaWarrior::AlbiriaWarrior()
+: BaseWarrior()
+, _altitude(0.0f)
+, _fireListener(*this)
+, _rechangeListener(*this)
 {
-	float scale = 0.03f;
-	BaseWarrior::init(manager, node, playerID, position);
+}
+
+void AlbiriaWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+{
+	float scale = ALBIRIA_SCALE;
+	BaseWarrior::init(manager, node, playerID, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 10.0f;
 	ActionRadius = 3.5f;
@@ -16,14 +24,62 @@ void AlbiriaWarrior::init(GameObjectManager& manager, Node* node, int playerID, 
 	EnemyNexus = EnemyNexus;
 	Damage = 35;
 	DamageTime = 1000.0f;
+	_altitude = 1.0f;
+
+	if (_unitAnimation.size() > 0)
+	{
+		AnimationClip* clip = (*_unitAnimation[0]->_clips)[UnitAnimation::Attack];
+		clip->addBeginListener(&_rechangeListener);
+		clip->addListener(&_fireListener, (int)(0.25f * (float)clip->getDuration()));
+	}
 }
 
 void AlbiriaWarrior::update(float time)
 {
 	BaseWarrior::update(time);
-	OpenSteer::Vec3 pos = _movementController.position();
-	_node->setTranslation(Vector3(pos.x, pos.y + 2.5f, pos.z));
-	Quaternion rot;
-	Quaternion::multiply(_node->getRotation(), Quaternion(Vector3(0.0f, 1.0f, 0.0f), MATH_PI), &rot);
-	_node->setRotation(rot);
+	Node* holder = _node->findNode("Bip001 Xtra02");
+	Node* bullet = _node->findNode("bullet");
+	Matrix mRes;
+	Matrix mScale;
+	Matrix::createScale(3, 3, 3, &mScale);
+	Matrix::multiply(holder->getWorldMatrix(), mScale, &mRes);
+	bullet->set(mRes);
+	if (_dead)
+	{
+		_altitude = (_altitude > 0.0f) ? _altitude - 0.002f * time : 0.0f;
+	}
+	OpenSteer::Vec3 pos = _movementController.position(); 
+	_node->setTranslation(Vector3(pos.x, pos.y + _altitude, pos.z));
+	if (!_dead)
+	{
+		Quaternion rot;
+		Quaternion::multiply(_node->getRotation(), Quaternion(Vector3(0.0f, 1.0f, 0.0f), MATH_PI), &rot);
+		_node->setRotation(rot);
+	}
+}
+
+void AlbiriaWarrior::fire()
+{
+	Node* bullet = _node->findNode("bullet");
+	Node* holder = _node->findNode("Bip001 Xtra02");
+
+	Matrix mRes;
+	Matrix mScale;
+	Matrix mHolder;
+	Matrix mCharacterRoot = _node->getWorldMatrix();
+	Matrix::createScale(3, 3, 3, &mScale);
+	Matrix::multiply(holder->getWorldMatrix(), mScale, &mHolder);
+	Matrix::multiply(mCharacterRoot, mHolder, &mRes);
+	
+	BaseBullet* object = new BaseBullet();
+	object->Target = Target;
+	object->init(*_manager, bullet, PlayerID, mRes);
+
+	bullet->setEnabled(false);
+}
+
+void AlbiriaWarrior::recharge()
+{
+	Node* bullet = _node->findNode("bullet");
+	bullet->setEnabled(true);
 }

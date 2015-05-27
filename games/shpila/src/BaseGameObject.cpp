@@ -11,12 +11,34 @@ BaseGameObject::BaseGameObject()
 , _manager(NULL)
 , _node()
 , _damageTimer(0.0f)
-, _movementController()
 {}
+
+BaseGameObject::~BaseGameObject()
+{
+	if (_node)
+	{
+		_manager->scene()->removeNode(_node);
+	}
+}
 
 void BaseGameObject::interaction(BaseGameObject* object)
 {
 	
+}
+
+bool BaseGameObject::volumed()
+{
+	return true;
+}
+
+bool BaseGameObject::interactive()
+{
+	return true;
+}
+
+bool BaseGameObject::deleted()
+{
+	return false;
 }
 
 void BaseGameObject::update(float time)
@@ -24,34 +46,25 @@ void BaseGameObject::update(float time)
 	GP_ASSERT(_node);
 }
 
-void BaseGameObject::setNode(Node* node)
-{
-	_node = node;
-}
-
 Node* BaseGameObject::node()
 {
 	return _node;
 }
 
-UnitMovementBase& BaseGameObject::MovementController()
-{
-	return _movementController;
-}
-
-void BaseGameObject::init(GameObjectManager& manager, Node* node, int playerID, Vector3 position)
+void BaseGameObject::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
 {
 	_manager = &manager;
 	PlayerID = playerID;
 	manager.registerObject(this);
-	manager.registerMovementController(&_movementController);
 	if (node)
 	{
-		Node* n = node->clone();
-		setNode(n);
-		setPosition(position);
-		manager.registerSceneNode(n);
+		_node.newRef(node->clone());
+		_node->set(transform);
+		manager.registerSceneNode(_node);
 	}
+	Vector3 translation;
+	transform.getTranslation(&translation);
+	setPosition(translation);
 }
 
 const Vector3 BaseGameObject::position()
@@ -66,7 +79,6 @@ void BaseGameObject::setPosition(const Vector3 pos)
 	{
 		_node->setTranslation(pos);
 	}
-	_movementController.setPosition(OpenSteer::Vec3(pos.x, pos.y, pos.z));
 }
 
 float BaseGameObject::getInteractionDistance(BaseGameObject* object)

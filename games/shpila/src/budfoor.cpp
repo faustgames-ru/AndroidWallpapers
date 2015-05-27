@@ -5,10 +5,10 @@ BaseGameObject* BudfoorWarrior::constructor()
 	return new BudfoorWarrior();
 }
 
-void BudfoorWarrior::init(GameObjectManager& manager, Node* node, int playerID, Vector3 position)
+void BudfoorWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
 {
-	float scale = 0.01f;
-	BaseWarrior::init(manager, node, playerID, position);
+	float scale = BUDFOOR_SCALE;
+	BaseWarrior::init(manager, node, playerID, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 10.0f;
 	ActionRadius = 2.5f;

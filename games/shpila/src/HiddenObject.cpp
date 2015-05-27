@@ -17,7 +17,7 @@ const Vector3 HiddenObject::position()
 	return Position;
 }
 
-void HiddenObject::init(GameObjectManager& manager, Node* node, int playerID, Vector3 position)
+void HiddenObject::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
 {
 	_manager = &manager;
 	PlayerID = playerID;

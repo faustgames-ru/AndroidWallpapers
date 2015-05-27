@@ -16,22 +16,23 @@ public:
 	float Damage;
 	float DamageTime;
 	BaseGameObject();
+	~BaseGameObject();
 	bool InteractionPossible(BaseGameObject* object);
-	void setNode(Node* node);
 	Node* node();
-	UnitMovementBase& MovementController();
 
-	virtual void init(GameObjectManager& manager, Node* node, int playerID, Vector3 position);
+	virtual void init(GameObjectManager& manager, Node* node, int playerID, Matrix transform);
 	virtual const Vector3 position();
 	virtual void setPosition(const Vector3 pos);
 	virtual void interaction(BaseGameObject* object);
+	virtual bool volumed();
+	virtual bool interactive();
 	virtual void update(float time);
+	virtual bool deleted();
 protected:
 	GameObjectManager* _manager;
 	AutoRef<Node> _node;
 	float getInteractionDistance(BaseGameObject* object);
 	float _damageTimer;
-	UnitMovementBase _movementController;
 };
 
 #endif

@@ -10,6 +10,15 @@ scene
 			transparent
         }
     }
+	
+	node bullet
+    {
+        tags
+        {
+            dynamic
+			transparent
+        }
+    }
 
     physics
     {

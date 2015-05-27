@@ -1,8 +1,6 @@
 #ifndef BASEWARRIOR_H_
 #define BASEWARRIOR_H_
 
-#include "Headers.h"
-
 using namespace gameplay;
 
 class BaseGameObject;
@@ -39,7 +37,7 @@ public:
 	}
 };
 
-class BaseWarrior : public BaseGameObject
+class BaseWarrior : public BaseActor
 {
 public:
 	CLink<BaseGameObject> Target;
@@ -47,9 +45,10 @@ public:
 	BaseWarrior();
 	~BaseWarrior();
 	static BaseGameObject* constructor();
+	virtual void init(GameObjectManager& manager, Node* node, int playerID, Matrix transform);
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
-private:
+protected:
 	bool _initialized;
 	bool _dead;
 	std::vector<UnitAnimation*> _unitAnimation;

@@ -51,8 +51,8 @@ public:
 		setRadius(0.5); // width = 0.7, add 0.3 margin, take half
 
 		setSpeed(0);             // speed along Forward direction.
-		setMaxForce(30.0);        // steering force is clipped to this magnitude
-		setMaxSpeed(2.0);        // velocity is clipped to this magnitude
+		setMaxForce(20.0);        // steering force is clipped to this magnitude
+		setMaxSpeed(1.0);        // velocity is clipped to this magnitude
 
 		// notify proximity database that our position has changed
 		proximityToken->updateForNewPosition(position());

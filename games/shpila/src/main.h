@@ -67,8 +67,11 @@ private:
 	static void Player2_New_Barar(Game* game);
 	static void Player1_New_Albiria(Game* game);
 	static void Player2_New_Albiria(Game* game);
-	
-	
+	static void Player1_New_Chasovoy(Game* game);
+	static void Player2_New_Chasovoy(Game* game);
+
+	static void CameraFoVPlus(Game* game);
+	static void CameraFoVMinus(Game* game);
 
     Font* _font;
 	AutoRef<Scene> _scene;

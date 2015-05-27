@@ -4,7 +4,7 @@
 const unsigned long DEFAULT_BLENDING_TIME = 150;
 
 BaseWarrior::BaseWarrior()
-: BaseGameObject()
+: BaseActor()
 , Target()
 , EnemyNexus()
 , _initialized(false)
@@ -20,6 +20,12 @@ BaseWarrior::~BaseWarrior()
 BaseGameObject* BaseWarrior::constructor()
 {
 	return new BaseWarrior();
+}
+
+void BaseWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+{
+	BaseActor::init(manager, node, playerID, transform);
+	updateAnimationState();
 }
 
 void BaseWarrior::interaction(BaseGameObject* object)
@@ -51,8 +57,7 @@ void BaseWarrior::update(float time)
 		return;
 	}
 
-	BaseGameObject::update(time);
-	updateAnimationState();
+	BaseActor::update(time);
 	if (Health <= 0.0f)
 	{	
 		switchToAnimation(UnitAnimation::Death, 1.0f, DEFAULT_BLENDING_TIME);
@@ -88,7 +93,7 @@ void BaseWarrior::update(float time)
 			else
 			{
 				_movementController._applyBreakingForces = true;
-				switchToAnimation(UnitAnimation::Attack, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
+				switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);//AnimationClip::REPEAT_INDEFINITE
 				_damageTimer += time;
 				if ((_damageTimer > DamageTime) && (Target != NULL))
 				{
@@ -156,7 +161,7 @@ void BaseWarrior::switchToAnimation(UnitAnimation::Actions action, float repeatC
 		AnimationClip* clip = (*(*it)->_clips)[action];
 		if (((*it)->_clipCurrent != clip) || ((*it)->_clipCurrent == NULL) || (!(*it)->_clipCurrent->isPlaying()))
 		{
-			clip->setSpeed(1.0f);
+			//clip->setSpeed(1.0f);
 			clip->setRepeatCount(repeatCount);
 			if ((*it)->_clipCurrent && (blendingTime > 0))
 				(*it)->_clipCurrent->crossFade(clip, blendingTime);

@@ -213,3 +213,17 @@ material mtAlbiria : skinedmesh
         }
     }
 }
+
+material mtBullet : texturedTransparent
+{
+    technique
+    {
+        pass
+        {			
+            sampler u_diffuseTexture
+            {
+                path = @budfoorD
+            }
+        }
+    }
+}

@@ -73,14 +73,25 @@ void GameObjectManager::update(const float currentTime, const float elapsedTime)
 	Itr<BaseGameObject> it = _objects.GetFirst();
 	while (it)
 	{
-		interaction(it);
+		if (it->interactive())
+		{
+			interaction(it);
+		}
 		++it;
 	}
 	it = _objects.GetFirst();
+	BaseGameObject* deleted = NULL;
 	while (it)
 	{
 		it->update(elapsedTime);
+		if (it->deleted())
+			deleted = it;
 		++it;
+		if (deleted != NULL)
+		{
+			SAFE_DELETE(deleted);
+			deleted = NULL;
+		}
 	}
 }
 
@@ -145,8 +156,10 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 positi
 	GP_ASSERT(_scene);
 
 	GameUnit& unit = _units[name];
-	BaseGameObject* object = unit._constructor();
-	object->init(*this, unit._node, playerID, position);
+	BaseGameObject* object = unit._constructor(); 
+	Matrix translation;
+	Matrix::createTranslation(position, &translation);
+	object->init(*this, unit._node, playerID, translation);
 	return object;
 }
 
@@ -189,7 +202,7 @@ void GameObjectManager::interaction(BaseGameObject* object)
 	Itr<BaseGameObject> it = _objects.GetFirst();
 	while (it)
 	{
-		if (object != it)
+		if (it->interactive() && (object != it))
 		{
 			if (object->InteractionPossible(it))
 			{

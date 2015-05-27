@@ -10,7 +10,7 @@ form sceneSettings
         style = sceneProps
         alignment = ALIGN_BOTTOM_LEFT
         width = 210
-		height = 250
+		height = 300
         autoHeight = false
         scrollBarsAutoHide = false
 
@@ -19,7 +19,7 @@ form sceneSettings
         {
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
-           height = 250
+           height = 300
            layout = LAYOUT_VERTICAL
 
            button Player1_Auto
@@ -68,6 +68,16 @@ form sceneSettings
               x = 350
               text = Albiria
            }
+		   
+		   button Player1_New_Chasovoy
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 400
+              text = Chasovoy
+           }
         }
 	}
 	
@@ -76,7 +86,7 @@ form sceneSettings
         style = sceneProps
         alignment = ALIGN_BOTTOM_RIGHT
         width = 210
-		height = 250
+		height = 300
         autoHeight = false
         scrollBarsAutoHide = false
 
@@ -85,7 +95,7 @@ form sceneSettings
         {
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
-           height = 250
+           height = 300
            layout = LAYOUT_VERTICAL
 
            button Player2_Auto
@@ -134,6 +144,59 @@ form sceneSettings
               x = 350
               text = Albiria
            }
+		   button Player2_New_Chasovoy
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 140
+              height = 40
+              x = 400
+              text = Chasovoy
+           }
         }
 	 }
+	 
+	 
+	container Tune
+    {
+        style = sceneProps
+        alignment = ALIGN_BOTTOM_HCENTER
+        width = 210
+		height = 120
+        autoHeight = false
+        scrollBarsAutoHide = false
+
+        consumeInputEvents = false
+        container CameraFoV 
+        {
+           alignment = ALIGN_TOP_LEFT
+           autoWidth = true
+           height = 120
+           layout = LAYOUT_VERTICAL
+
+		   label CameraFoVTitle
+           {
+               style = title
+               size = 60, 35
+               text = Fov
+           }
+		   
+           button CameraFoVPlus
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 60
+              height = 35
+              text = FoV +
+           }
+           button CameraFoVMinus
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 60
+              height = 35
+              text = FoV -
+           }
+        }
+	}
 }

@@ -42,3 +42,8 @@ void GameHUD::render(Game* game, float elapsedTime)
 {
 	_form->draw();
 }
+
+Form* GameHUD::form()
+{
+	return _form;
+}
