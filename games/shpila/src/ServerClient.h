@@ -1,33 +1,8 @@
-/*
- *  Copyright (c) 2014, Oculus VR, Inc.
- *  All rights reserved.
- *
- *  This source code is licensed under the BSD-style license found in the
- *  LICENSE file in the root directory of this source tree. An additional grant 
- *  of patent rights can be found in the PATENTS file in the same directory.
- *
- */
-
-#include "RakPeerInterface.h"
-
-#include "BitStream.h"
-#include <stdlib.h> // For atoi
-#include <cstring> // For strlen
-#include "Rand.h"
-#include "RakNetStatistics.h"
-#include "MessageIdentifiers.h"
-#include <stdio.h>
-#include "Kbhit.h"
-#include "GetTime.h"
-#include "RakAssert.h"
-#include "RakSleep.h"
-#include "Gets.h"
-#include "RakNetTime.h"
-#include "RakNetworkFactory.h"
-#include "RakClientInterface.h"
-#include "RakServerInterface.h"
+#ifndef __NET_CLIENT_H
+#define __NET_CLIENT_H
 
 using namespace RakNet;
+using namespace gameplay;
 
 #ifdef _WIN32
 #include "WindowsIncludes.h" // Sleep64
@@ -37,28 +12,47 @@ using namespace RakNet;
 #include "Getche.h"
 #endif
 
-//static const int NUM_CLIENTS=100;
+#define NETGAME_VERSION 8830
+#define AUTH_BS "5E1C1837D2C54B24EAAED18C3F96D9EA51A2A481003"
 #define SERVER_PORT 1234
 #define RANDOM_DATA_SIZE_1 50
-//char randomData1[RANDOM_DATA_SIZE_1];
 #define RANDOM_DATA_SIZE_2 100
+//static const int NUM_CLIENTS=100;
+//char randomData1[RANDOM_DATA_SIZE_1];
 //char randomData2[RANDOM_DATA_SIZE_2];
 //char *remoteIPAddress=0;
+
+class GameObjectManager;
+
+struct ActorSyncData
+{
+	int actorID;
+	int actorType;
+	Vector3 pos;
+	float angle;
+};
 
 // Connects, sends data over time, disconnects, repeat
 class Client
 {
-	public:
-		Client();
-		~Client();
-		void Startup(void);
-		bool Connect(char *szHostname, int iPort, char *szNickname, char *szPassword);
-		void Disconnect(void);
-		void Update(RakNet::TimeMS curTime);
+public:
+	Client();
+	~Client();
+	void Startup(GameObjectManager* manager);
+	bool Connect(char *szHostname, int iPort, char *szNickname, char *szPassword);
+	void Disconnect(void);
+	void Update(RakNet::TimeMS curTime);
+private:
+	void updateNetwork();
+	void Packet_ConnectionSucceeded(Packet *p);
+	void Packet_ActorSync(Packet *p);
+	void Send_ActorSync(int playerID);
+	void UpdatePlayerScoresAndPings(int iWait, int iMS);
 
-		bool isConnected;
-		RakClientInterface *_pRakClient;
-		RakNet::TimeMS nextSendTime;
+	bool isConnected;
+	RakClientInterface *_pRakClient;
+	RakNet::TimeMS nextSendTime;
+	GameObjectManager* _manager;
 };
 
 // Just listens for ID_USER_PACKET_ENUM and validates its integrity
@@ -75,3 +69,5 @@ class Server
 		RakNet::TimeMS nextSendTime;
 		RakServerInterface *_pRakServer;
 };
+
+#endif

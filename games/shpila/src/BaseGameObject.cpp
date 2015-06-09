@@ -2,6 +2,7 @@
 
 BaseGameObject::BaseGameObject()
 : PlayerID(0)
+, ID(0)
 , SearchRadius(0.0f)
 , ActionRadius(0.0f)
 , GeometryRadius(0.0f)

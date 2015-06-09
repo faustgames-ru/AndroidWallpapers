@@ -17,10 +17,12 @@ public:
 	Player(GameObjectManager& manager, int id, Vector3 position);
 	void update(float time);
 	void CreateWarrior(const char* name);
+	int getNewObjectID();
 private:
 	float _spawnTimer;
 	Vector3 _position;
 	int _warriorsSpawnedCount;
+	int _newObjectID;
 };
 
 #endif

@@ -55,7 +55,7 @@ private:
 	void updatePlayers(float time);
     void drawSplash(void* param);
     bool drawScene(Node* node, bool transparent);
-    
+	void updateNetwork();
 
 	static void Player1_Auto_Click(Game* game);
 	static void Player2_Auto_Click(Game* game);
@@ -72,6 +72,8 @@ private:
 
 	static void CameraFoVPlus(Game* game);
 	static void CameraFoVMinus(Game* game);
+	static void SetCameraFree(Game* game);
+	static void SetCameraLocked(Game* game);
 
     Font* _font;
 	AutoRef<Scene> _scene;
@@ -82,9 +84,6 @@ private:
     Node* _basketballNode;
     float _floorLevel;
     Animation* _animation;
-    AnimationClip* _currentClip;
-    AnimationClip* _jumpClip;
-    AnimationClip* _kickClip;
     int _rotateX;
     MaterialParameter* _materialParameterAlpha;
     unsigned int _keyFlags;
@@ -100,6 +99,8 @@ private:
     Gamepad* _gamepad;
 	Camera* _camera;
 	TargetCamera _fpCamera;
+	bool _freeCamera;
+	Vector3 _battleFieldDirection;
 	unsigned int _moveFlags;
 	int _prevX;
 	int _prevY;
@@ -107,8 +108,11 @@ private:
 	Node* _particleEmitterStarsNode;
 	GameHUD _hud;
 	double _totalTime;
-
+	Client _client;
 	GameObjectManager _manager;
+public:
+	int _ping;
+	PLAYERID _netPlayerID;
 };
 
 #endif //SHPILA_H_

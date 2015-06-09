@@ -95,6 +95,11 @@ void GameObjectManager::update(const float currentTime, const float elapsedTime)
 	}
 }
 
+Itr<BaseGameObject> GameObjectManager::objects()
+{
+	return _objects.GetFirst();
+}
+
 void GameObjectManager::addUnit(const char* filename, const char* name, GameObjectConstructorProc constructor)
 {
 	if (filename != NULL)
@@ -160,6 +165,9 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 positi
 	Matrix translation;
 	Matrix::createTranslation(position, &translation);
 	object->init(*this, unit._node, playerID, translation);
+	std::vector<Player*>::iterator pl = std::find_if(Players.begin(), Players.end(), [&](Player* p){ return p->ID == playerID; });
+	if (pl != Players.end())
+		object->ID = (*pl)->getNewObjectID();
 	return object;
 }
 

@@ -9,6 +9,7 @@ Player::Player(GameObjectManager& manager, int id, Vector3 position)
 , _spawnTimer(0.0f)
 , _position(position)
 , _warriorsSpawnedCount(0)
+, _newObjectID(0)
 {
 }
 
@@ -58,4 +59,9 @@ void Player::CreateWarrior(const char* name)
 	BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(name, _position + Vector3(rnd(-1.0f, 1.0f), 0.0f, rnd(-3.0f, 3.0f)), ID);
 	warrior->EnemyNexus = EnemyNexus; 
 	_warriorsSpawnedCount++;
+}
+
+int Player::getNewObjectID()
+{
+	return _newObjectID++;
 }

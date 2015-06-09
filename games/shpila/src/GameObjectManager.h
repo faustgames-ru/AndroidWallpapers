@@ -43,6 +43,7 @@ public:
 	void open(void);
 	virtual void redraw(const float currentTime, const float elapsedTime){}
 	void update(const float currentTime, const float elapsedTime);
+	Itr<BaseGameObject> objects();
 	void close(void)
 	{
 		// clear the group of all vehicles

@@ -878,6 +878,7 @@
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <MinimalRebuild>false</MinimalRebuild>
+      <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -1039,6 +1040,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)src;$(ProjectDir)..\external-deps\lua\include;$(ProjectDir)..\external-deps\bullet\src;$(ProjectDir)..\external-deps\openal\include\AL;$(ProjectDir)..\external-deps\alut\include\AL;$(ProjectDir)..\external-deps\oggvorbis\include;$(ProjectDir)..\external-deps\glew\include;$(ProjectDir)..\external-deps\libpng\include;$(ProjectDir)..\external-deps\zlib\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>
       </DebugInformationFormat>
+      <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

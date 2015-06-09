@@ -51,6 +51,11 @@ void TargetCamera::setRotation(const Matrix& rotation)
 		rotation, Vector3(0.0f, 0.0f, 0.0f));
 }
 
+const Vector3& TargetCamera::getPosition()
+{
+	return _rootNode->getTranslation();
+}
+
 void TargetCamera::setPosition(const Vector3& position)
 {
     _rootNode->setTranslation(position);

@@ -140,6 +140,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../../raknet</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -263,8 +264,9 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_ITERATOR_DEBUG_LEVEL=0;RAKSAMP_CLIENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../../raknet</AdditionalIncludeDirectories>
+      <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

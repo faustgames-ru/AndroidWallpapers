@@ -53,6 +53,10 @@ public:
 	*/
 	void setRotation(const Matrix& rotation);
 
+	/**
+	* Gets the position of the camera.
+	*/
+	const Vector3& getPosition();
     /**
      * Sets the position of the camera.
      * 

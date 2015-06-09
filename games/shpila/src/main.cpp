@@ -31,11 +31,13 @@ static const float UP_DOWN_SPEED = 10.0f;
 
 static const bool EMPTY = false;
 
+std::string ACTOR_TYPE[] = { "irbaga", "budfoor", "barar", "albiria", "chasovoy" };
+
 Shpila::Shpila()
     : _font(NULL), _scene(), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
-      _animation(NULL), _currentClip(NULL), _jumpClip(NULL), _kickClip(NULL), _rotateX(0), _materialParameterAlpha(NULL),
-	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
-	  _hud(), _totalTime(0.0), _manager()
+      _animation(NULL), _rotateX(0), _materialParameterAlpha(NULL),
+	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _camera(), _fpCamera(), _freeCamera(true), _battleFieldDirection(), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
+	  _hud(), _totalTime(0.0), _manager(), _ping(0), _netPlayerID(-1)
 {
     _buttonPressed = new bool[2];
 }
@@ -86,6 +88,9 @@ void Shpila::initialize()
 		char buff[100];
 		sprintf(buff, "FoV-%0.0f", FoV);
 		((Label*)_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
+		_hud.bind("CameraFree", Control::Listener::CLICK, SetCameraFree);
+		_hud.bind("CameraLocked", Control::Listener::CLICK, SetCameraLocked);
+		
 
 		// Load scene.
 		_scene = Scene::load("res/common/box.scene");
@@ -94,12 +99,12 @@ void Shpila::initialize()
 		_scene->getActiveCamera()->setAspectRatio(getAspectRatio());
 
 		//static camera
-		Vector3 cameraPosition(0.0f, 5.0f, -8.0f);
+		Vector3 cameraPosition(0.0f, 1.8f, -4.4f);
 		_fpCamera.initialize(0.01f, 1000.0f);
 		_fpCamera.setPosition(cameraPosition);
 		Matrix rot;
 		Matrix::createLookAt(0.0f, 0.0f, 0.0f,
-			0.0f, -0.5f, 1.0f,
+			0.0f, -1.0f, 1.0f,
 			0.0f, 1.0f, 0.5f, &rot);
 		_fpCamera.setRotation(rot);
 		_scene->addNode(_fpCamera.getRootNode());
@@ -119,6 +124,9 @@ void Shpila::initialize()
 		_gamepad = getGamepad(0);
 
 		OpenSteer::OpenSteerManager::initialize();
+
+		_client.Startup(&_manager);
+		_client.Connect("localhost", 7777, "Jezuka", "");
 	}
 	else
 	{
@@ -180,8 +188,11 @@ void Shpila::loadCharacters()
 
 void Shpila::initPlayers()
 {
-	_manager.Players.push_back(new Player(_manager, 1, Vector3(9.0f, 0.0f, -9.0f)));
-	_manager.Players.push_back(new Player(_manager, 2, Vector3(-9.0f, 0.0f, 9.0f)));
+	Vector3 p1 = Vector3(9.0f, 0.0f, -9.0f);
+	Vector3 p2 = Vector3(-9.0f, 0.0f, 9.0f);
+	_battleFieldDirection = Vector3(p2 - p1).normalize();		
+	_manager.Players.push_back(new Player(_manager, 0, p1));
+	_manager.Players.push_back(new Player(_manager, 1, p2));
 }
 
 void Shpila::updatePlayers(float time)
@@ -217,75 +228,93 @@ bool Shpila::drawScene(Node* node, bool transparent)
     return true;
 }
 
-std::string names[] = { "irbaga", "budfoor", "barar", "albiria", "chasovoy" };
+
 //shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
 
 void Shpila::Player1_Auto_Click(Game* game)
 {
-	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[0]->AutoPlay = !shpila->_manager.Players[0]->AutoPlay;
+	//Shpila* shpila = (Shpila*)game;
+	//shpila->_manager.Players[0]->AutoPlay = !shpila->_manager.Players[0]->AutoPlay;
 }
 
 void Shpila::Player2_Auto_Click(Game* game)
 {
-	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[1]->AutoPlay = !shpila->_manager.Players[1]->AutoPlay;
+	//Shpila* shpila = (Shpila*)game;
+	//shpila->_manager.Players[1]->AutoPlay = !shpila->_manager.Players[1]->AutoPlay;
 }
 
 void Shpila::Player1_New_Irbaga(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[0]->CreateWarrior(names[0].c_str());
+	if ((shpila->_netPlayerID >= 0) && (shpila->_netPlayerID != 0))
+		return;
+	shpila->_manager.Players[0]->CreateWarrior(ACTOR_TYPE[0].c_str());
 }
 
 void Shpila::Player2_New_Irbaga(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[1]->CreateWarrior(names[0].c_str());
+	if ((shpila->_netPlayerID >= 0) && (shpila->_netPlayerID != 1))
+		return;
+	shpila->_manager.Players[1]->CreateWarrior(ACTOR_TYPE[0].c_str());
 }
 
 void Shpila::Player1_New_Budfoor(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[0]->CreateWarrior(names[1].c_str());
+	if ((shpila->_netPlayerID >= 0) && (shpila->_netPlayerID != 0))
+		return;
+	shpila->_manager.Players[0]->CreateWarrior(ACTOR_TYPE[1].c_str());
 }
 void Shpila::Player2_New_Budfoor(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[1]->CreateWarrior(names[1].c_str());
+	if ((shpila->_netPlayerID >= 0) && (shpila->_netPlayerID != 1))
+		return;
+	shpila->_manager.Players[1]->CreateWarrior(ACTOR_TYPE[1].c_str());
 }
 void Shpila::Player1_New_Barar(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[0]->CreateWarrior(names[2].c_str());
+	if ((shpila->_netPlayerID >= 0) && (shpila->_netPlayerID != 0))
+		return;
+	shpila->_manager.Players[0]->CreateWarrior(ACTOR_TYPE[2].c_str());
 }
 void Shpila::Player2_New_Barar(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[1]->CreateWarrior(names[2].c_str());
+	if ((shpila->_netPlayerID >= 0) && (shpila->_netPlayerID != 1))
+		return;
+	shpila->_manager.Players[1]->CreateWarrior(ACTOR_TYPE[2].c_str());
 }
 
 void Shpila::Player1_New_Albiria(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[0]->CreateWarrior(names[3].c_str());
+	if ((shpila->_netPlayerID >= 0) && (shpila->_netPlayerID != 0))
+		return;
+	shpila->_manager.Players[0]->CreateWarrior(ACTOR_TYPE[3].c_str());
 }
 
 void Shpila::Player2_New_Albiria(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[1]->CreateWarrior(names[3].c_str());
+	if ((shpila->_netPlayerID >= 0) && (shpila->_netPlayerID != 1))
+		return;
+	shpila->_manager.Players[1]->CreateWarrior(ACTOR_TYPE[3].c_str());
 }
 
 void Shpila::Player1_New_Chasovoy(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[0]->CreateWarrior(names[4].c_str());
+	if ((shpila->_netPlayerID >= 0) && (shpila->_netPlayerID != 0))
+		return;
+	shpila->_manager.Players[0]->CreateWarrior(ACTOR_TYPE[4].c_str());
 }
 void Shpila::Player2_New_Chasovoy(Game* game)
 {
 	Shpila* shpila = (Shpila*)game;
-	shpila->_manager.Players[1]->CreateWarrior(names[4].c_str());
+	shpila->_manager.Players[1]->CreateWarrior(ACTOR_TYPE[4].c_str());
 }
 
 void Shpila::CameraFoVPlus(Game* game)
@@ -307,6 +336,18 @@ void Shpila::CameraFoVMinus(Game* game)
 	((Label*)shpila->_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
 }
 
+void Shpila::SetCameraFree(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_freeCamera = true;
+
+}
+void Shpila::SetCameraLocked(Game* game)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_freeCamera = false;
+}
+
 void Shpila::update(float elapsedTime)
 {
 	_totalTime += elapsedTime;
@@ -321,6 +362,12 @@ void Shpila::update(float elapsedTime)
 		ParticleEmitter* emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterStarsNode->getDrawable());
 		if (emitter)
 			emitter->update(elapsedTime);*/
+		_client.Update(0);
+
+		char buff[100];
+		sprintf(buff, "Ping-%d", _ping);
+		((Label*)_hud.form()->getControl("PingLabel"))->setText(buff);
+
 		Vector2 move;
 		if (_moveFlags != 0)
 		{
@@ -347,11 +394,11 @@ void Shpila::update(float elapsedTime)
 			// Up and down
 			if (_moveFlags & MOVE_UP)
 			{
-				_fpCamera.moveUp(elapsedTime * UP_DOWN_SPEED);
+				_fpCamera.moveUp(elapsedTime * UP_DOWN_SPEED / 1000.0f);
 			}
 			else if (_moveFlags & MOVE_DOWN)
 			{
-				_fpCamera.moveDown(elapsedTime * UP_DOWN_SPEED);
+				_fpCamera.moveDown(elapsedTime * UP_DOWN_SPEED / 1000.0f);
 			}
 
 			if (!move.isZero())
@@ -417,7 +464,12 @@ void Shpila::touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contac
 							  _prevY = y;
 							  float pitch = -MATH_DEG_TO_RAD(deltaY * 0.5f);
 							  float yaw = MATH_DEG_TO_RAD(deltaX * 0.5f);
-							  _fpCamera.rotate(yaw, pitch);
+							  if (_freeCamera)
+								_fpCamera.rotate(yaw, pitch);
+							  else
+							  {
+								  _fpCamera.setPosition(_fpCamera.getPosition() - deltaX * 0.01f * _battleFieldDirection);
+							  }
 							  break;
 	}
 	};
@@ -487,7 +539,7 @@ bool Shpila::mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta)
 	switch (evt)
 	{
 	case Mouse::MOUSE_WHEEL:
-		_fpCamera.moveForward(wheelDelta * MOVE_SPEED / 10.0f);
+		_fpCamera.moveForward(wheelDelta * MOVE_SPEED / 100.0f);
 		return true;
 	}
 	return false;

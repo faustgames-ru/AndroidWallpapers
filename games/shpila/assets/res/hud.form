@@ -161,18 +161,21 @@ form sceneSettings
     {
         style = sceneProps
         alignment = ALIGN_BOTTOM_HCENTER
-        width = 210
-		height = 120
+        width = 250
+		height = 130
         autoHeight = false
         scrollBarsAutoHide = false
-
+		layout = LAYOUT_ABSOLUTE
         consumeInputEvents = false
+		
         container CameraFoV 
         {
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
            height = 120
+		   x=0
            layout = LAYOUT_VERTICAL
+		   consumeInputEvents = false
 
 		   label CameraFoVTitle
            {
@@ -196,6 +199,57 @@ form sceneSettings
               width = 60
               height = 35
               text = FoV -
+           }
+        }
+		
+		container CameraType 
+        {
+           alignment = ALIGN_TOP_LEFT
+           autoWidth = true
+           height = 120
+		   x=70
+           layout = LAYOUT_VERTICAL
+		   consumeInputEvents = false
+		   
+		   label CameraTypeLabel
+           {
+               style = title
+               size = 60, 35
+               text = Camera
+           }
+		   
+           button CameraFree
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 60
+              height = 35
+              text = Free
+           }
+           button CameraLocked
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 60
+              height = 35
+              text = Lock
+           }
+        }
+		
+		container Network
+        {
+           alignment = ALIGN_TOP_LEFT
+           autoWidth = true
+           height = 120
+		   x=140
+           layout = LAYOUT_VERTICAL
+		   consumeInputEvents = false
+		   
+		   label PingLabel
+           {
+               style = title
+               size = 60, 35
+               text = Ping 0
            }
         }
 	}
