@@ -4,6 +4,7 @@
 using namespace gameplay;
 
 class BaseGameObject;
+class Player;
 
 class UnitAnimation
 {
@@ -41,7 +42,10 @@ class BaseWarrior : public BaseActor
 {
 public:
 	CLink<BaseGameObject> Target;
-	CLink<BaseGameObject> EnemyNexus;
+	Player* Player;
+	bool Holder;
+	int Price;
+	std::string HolderWarriorName;
 	BaseWarrior();
 	~BaseWarrior();
 	static BaseGameObject* constructor();

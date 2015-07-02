@@ -277,7 +277,7 @@ void Client::Packet_ActorSync(Packet *p)
 		{
 			if (it->ID == actorSyncData.actorID)
 			{
-				it->setPosition(actorSyncData.pos);
+				it->setPositionOnServer(actorSyncData.pos); 
 				found = true;
 				break;
 			}
@@ -285,7 +285,7 @@ void Client::Packet_ActorSync(Packet *p)
 		}
 		if (!found)
 		{
-			_manager->createObject(ACTOR_TYPE[actorSyncData.actorType].c_str(), actorSyncData.pos, playerID);
+			_manager->createObject(ACTOR_DATA[actorSyncData.actorType].Name.c_str(), actorSyncData.pos, playerID);
 		}
 	}
 	//

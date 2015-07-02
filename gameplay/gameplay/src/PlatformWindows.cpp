@@ -18,6 +18,8 @@
 using gameplay::print;
 
 // Window defaults
+//#define DEFAULT_RESOLUTION_X 1920
+//#define DEFAULT_RESOLUTION_Y 1080
 #define DEFAULT_RESOLUTION_X 1024
 #define DEFAULT_RESOLUTION_Y 768
 #define DEFAULT_COLOR_BUFFER_SIZE 32

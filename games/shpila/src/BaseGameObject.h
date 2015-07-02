@@ -25,6 +25,7 @@ public:
 	virtual int ActorType() { return -1; }
 	virtual const Vector3 position();
 	virtual void setPosition(const Vector3 pos);
+	virtual void setPositionOnServer(const Vector3 pos);
 	virtual void interaction(BaseGameObject* object);
 	virtual bool volumed();
 	virtual bool interactive();
@@ -35,6 +36,7 @@ protected:
 	AutoRef<Node> _node;
 	float getInteractionDistance(BaseGameObject* object);
 	float _damageTimer;
+	Valuable<Vector3> _positionOnServer;
 };
 
 #endif

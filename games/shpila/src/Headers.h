@@ -28,9 +28,11 @@
 #define ACTOR_TYPE_BARAR 2
 #define ACTOR_TYPE_ALBIRIA 3
 #define ACTOR_TYPE_CHASOVOY 4
+#define ACTOR_TYPE_CORE 5
 
 #include "algorithms\Links.h"
 #include "algorithms\Utils.h"
+#include "algorithms\Valuable.h"
 #include "UnitManagement\OpenSteer.h"
 #include "UnitManagement\SimpleVehicle.h"
 #include "UnitManagement\Proximity.h"
@@ -44,6 +46,9 @@
 #include "barar.h"
 #include "albiria.h"
 #include "chasovoy.h"
+#include "Tower.h"
+#include "thebase.h"
+#include "Warriors.h"
 #include "BaseBullet.h"
 #include "BoomerangBullet.h"
 #include "HiddenObject.h"
@@ -54,13 +59,14 @@
 #include "UnitMovement.h"
 #include "StarsParticles.h"
 
-#define IRBAGA_SCALE 0.003f
-#define BUDFOOR_SCALE 0.005f
-#define BARAR_SCALE 0.005f
-#define ALBIRIA_SCALE 0.015f
-#define CHASOVOY_SCALE 0.0035f
+#define TIME_SCALE 0.6f
 
-extern std::string ACTOR_TYPE[];
+#define COMMON_SCALE 0.1f
+#define IRBAGA_SCALE COMMON_SCALE
+#define BUDFOOR_SCALE COMMON_SCALE
+#define BARAR_SCALE COMMON_SCALE
+#define ALBIRIA_SCALE COMMON_SCALE
+#define CHASOVOY_SCALE COMMON_SCALE
 
 typedef unsigned short PLAYERID;
 

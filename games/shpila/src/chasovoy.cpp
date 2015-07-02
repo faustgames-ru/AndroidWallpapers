@@ -9,10 +9,11 @@ void ChasovoyWarrior::init(GameObjectManager& manager, Node* node, int playerID,
 	float scale = CHASOVOY_SCALE;
 	BaseWarrior::init(manager, node, playerID, transform);
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 10.0f;
-	ActionRadius = 2.5f;
+	SearchRadius = 20.0f;
+	ActionRadius = 5.0f;
 	GeometryRadius = 0.5f;
-	EnemyNexus = EnemyNexus;
-	Damage = 35;
-	DamageTime = 1000.0f;
+	Damage = 6;
+	DamageTime = 1000.0f * TIME_SCALE;
+	Health = 80;
+	Price = 125;
 }

@@ -1,8 +1,8 @@
 scene
 {
-    path = res/common/barar.gpb
+    path = res/common/small.gpb
 
-    node barar
+    node Small
     {
         tags
         {

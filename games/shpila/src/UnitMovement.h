@@ -41,18 +41,25 @@ public:
 		SAFE_DELETE(proximityToken);
 	}
 
+
+	bool rightHanded(void) const 
+	{ 
+		return true; 
+	}
+
 	// reset all instance state
 	void reset(void)
 	{
 		// reset the vehicle 
 		SimpleVehicle::reset();
+		//setForward(-1.0f, 0.0f, 0.0f);
 
 		// size of bounding sphere, for obstacle avoidance, etc.
 		setRadius(0.5); // width = 0.7, add 0.3 margin, take half
 
 		setSpeed(0);             // speed along Forward direction.
 		setMaxForce(20.0);        // steering force is clipped to this magnitude
-		setMaxSpeed(1.0);        // velocity is clipped to this magnitude
+		setMaxSpeed(3.75);        // velocity is clipped to this magnitude
 
 		// notify proximity database that our position has changed
 		proximityToken->updateForNewPosition(position());

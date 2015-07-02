@@ -1,4 +1,5 @@
 #include "Headers.h"
+#include "main.h"
 #include "algorithms\StdUtils.h"
 
 const unsigned long DEFAULT_BLENDING_TIME = 150;
@@ -6,7 +7,9 @@ const unsigned long DEFAULT_BLENDING_TIME = 150;
 BaseWarrior::BaseWarrior()
 : BaseActor()
 , Target()
-, EnemyNexus()
+, Player(NULL)
+, Holder(false)
+, Price(0)
 , _initialized(false)
 , _dead(false)
 , _unitAnimation()
@@ -50,6 +53,16 @@ void BaseWarrior::interaction(BaseGameObject* object)
 
 void BaseWarrior::update(float time)
 {
+	if (Holder)
+	{
+		if (((Shpila*)Game::getInstance())->Respawn)
+		{
+			BaseWarrior* warrior = (BaseWarrior*)Player->Manager.createObject(HolderWarriorName.c_str(), position() + 15.0f * Player->BattleFieldDirection, Player->ID);
+			warrior->Player = Player;
+		}
+		return;
+	}
+
 	if (_dead)
 	{
 		if (!(*_unitAnimation[0]->_clips)[UnitAnimation::Death]->isPlaying())
@@ -67,7 +80,7 @@ void BaseWarrior::update(float time)
 	else
 	{
 		if (Target == NULL)
-			Target = EnemyNexus;
+			Target = Player->EnemyPlayer->getDefence();
 
 		if (Target != NULL)
 		{
@@ -78,13 +91,13 @@ void BaseWarrior::update(float time)
 
 			OpenSteer::Vec3 forward = _movementController.forward();
 			Matrix rot;
-			Matrix::createLookAt(0.0f, 0.0f, 0.0f, forward.x, forward.y, -forward.z, 0.0f, 1.0f, 0.0f, &rot);
+			Matrix::createLookAt(0.0f, 0.0f, 0.0f, forward.x, forward.y, forward.z, 0.0f, 1.0f, 0.0f, &rot);
 			_node->setRotation(rot);
 			OpenSteer::Vec3 pos = _movementController.position();
 			_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
 
 			float radius = ((ActionRadius + Target->GeometryRadius) * (ActionRadius + Target->GeometryRadius));
-			float distance = Target->position().distanceSquared(position());
+			float distance = tPos.distanceSquared(position());
 			if (radius < distance)
 			{
 				switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
@@ -100,9 +113,21 @@ void BaseWarrior::update(float time)
 					Target->Health -= Damage;
 					_damageTimer = 0.0f;
 				}
+			}	
+		}
+		if (_positionOnServer.defined())
+		{
+			float minStep = time * 1.0f;
+			float sqDist = position().distanceSquared(_positionOnServer);
+			if (sqDist <= (minStep * minStep))
+			{
+				setPosition(_positionOnServer);
 			}
-			
-			
+			else
+			{
+				Vector3 dir = (Vector3(_positionOnServer) - position()) / sqrt(sqDist);
+				setPosition(position() + dir * minStep);
+			}
 		}
 	}
 }

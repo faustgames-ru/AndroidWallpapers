@@ -389,6 +389,7 @@
     <ClInclude Include="src\algorithms\Links.h" />
     <ClInclude Include="src\algorithms\Utils.h" />
     <ClInclude Include="src\algorithms\StdUtils.h" />
+    <ClInclude Include="src\algorithms\Valuable.h" />
     <ClInclude Include="src\Animation.h" />
     <ClInclude Include="src\AnimationClip.h" />
     <ClInclude Include="src\AnimationController.h" />

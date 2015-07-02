@@ -12,6 +12,7 @@ BaseGameObject::BaseGameObject()
 , _manager(NULL)
 , _node()
 , _damageTimer(0.0f)
+, _positionOnServer()
 {}
 
 BaseGameObject::~BaseGameObject()
@@ -80,6 +81,11 @@ void BaseGameObject::setPosition(const Vector3 pos)
 	{
 		_node->setTranslation(pos);
 	}
+}
+
+void BaseGameObject::setPositionOnServer(const Vector3 pos)
+{
+	_positionOnServer = pos;
 }
 
 float BaseGameObject::getInteractionDistance(BaseGameObject* object)

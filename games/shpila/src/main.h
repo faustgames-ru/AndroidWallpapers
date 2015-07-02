@@ -57,23 +57,15 @@ private:
     bool drawScene(Node* node, bool transparent);
 	void updateNetwork();
 
-	static void Player1_Auto_Click(Game* game);
-	static void Player2_Auto_Click(Game* game);
-	static void Player1_New_Irbaga(Game* game);
-	static void Player2_New_Irbaga(Game* game);
-	static void Player1_New_Budfoor(Game* game);
-	static void Player2_New_Budfoor(Game* game);
-	static void Player1_New_Barar(Game* game);
-	static void Player2_New_Barar(Game* game);
-	static void Player1_New_Albiria(Game* game);
-	static void Player2_New_Albiria(Game* game);
-	static void Player1_New_Chasovoy(Game* game);
-	static void Player2_New_Chasovoy(Game* game);
+	static void Player1_Auto_Click(Game* game, Control* control);
+	static void Player2_Auto_Click(Game* game, Control* control);
+	static void CreateUnit(Game* game, Control* control);
+	static void ShowUnits(Game* game, Control* control);
 
-	static void CameraFoVPlus(Game* game);
-	static void CameraFoVMinus(Game* game);
-	static void SetCameraFree(Game* game);
-	static void SetCameraLocked(Game* game);
+	static void CameraFoVPlus(Game* game, Control* control);
+	static void CameraFoVMinus(Game* game, Control* control);
+	static void SetCameraFree(Game* game, Control* control);
+	static void SetCameraLocked(Game* game, Control* control);
 
     Font* _font;
 	AutoRef<Scene> _scene;
@@ -108,11 +100,13 @@ private:
 	Node* _particleEmitterStarsNode;
 	GameHUD _hud;
 	double _totalTime;
+	double _respawnTime;
 	Client _client;
 	GameObjectManager _manager;
 public:
 	int _ping;
 	PLAYERID _netPlayerID;
+	bool Respawn;
 };
 
 #endif //SHPILA_H_

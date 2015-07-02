@@ -1,26 +1,8 @@
 scene
 {
-    path = res/common/budfoor.gpb
+    path = res/common/medium.gpb
 
-    node obj_budfoor
-    {
-        tags
-        {
-            dynamic
-			transparent
-        }
-    }
-	
-	node obj_weapon
-    {
-        tags
-        {
-            dynamic
-			transparent
-        }
-    }
-	
-	node star
+    node Medium
     {
         tags
         {

@@ -10,9 +10,11 @@ void IrbagaWarrior::init(GameObjectManager& manager, Node* node, int playerID, M
 	float scale = IRBAGA_SCALE;
 	BaseWarrior::init(manager, node, playerID, transform);
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 10.0f;
-	ActionRadius = 0.7f;
+	SearchRadius = 20.0f;
+	ActionRadius = 1.5f;
 	GeometryRadius = 0.5f;
-	Damage = 35;
-	DamageTime = 1000.0f;
+	Damage = 16;
+	DamageTime = 1200.0f * TIME_SCALE;
+	Health = 150;
+	Price = 90;
 }

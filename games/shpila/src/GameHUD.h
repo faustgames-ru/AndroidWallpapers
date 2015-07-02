@@ -4,7 +4,7 @@
 #include "gameplay.h"
 using namespace gameplay;
 
-typedef void(*ControlEventHandler) (Game* game);
+typedef void(*ControlEventHandler) (Game* game, Control* control);
 
 struct ControlBind
 {

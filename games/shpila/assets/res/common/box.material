@@ -272,7 +272,7 @@ material mtGround : texturedUnlit
         {
             sampler u_diffuseTexture
             {
-                path = @mercury 
+                path = @Map_Grid
             }
         }
     }

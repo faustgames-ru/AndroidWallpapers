@@ -4,18 +4,56 @@ form sceneSettings
     autoWidth = true
     autoHeight = true
     consumeInputEvents = false
+	
+	container resource_info
+	{
+	   alignment = ALIGN_TOP
+	   autoWidth = true
+	   height = 150
+	   layout = LAYOUT_HORIZONTAL
+	   label timetospawn
+	   {
+		   style = title
+		   size = 120, 35
+		   text = time
+	   }
+	   label mainresource
+	   {
+		   x=100	
+		   style = title
+		   size = 120, 35
+		   text = res
+	   }
+	   
+	}
+	
+	container menu_p1
+	{
+	   alignment = ALIGN_BOTTOM_LEFT
+	   autoWidth = true
+	   height = 50
+	   layout = LAYOUT_VERTICAL
+	   
+	   button Show_Units_P1
+	   {
+		  consumeInputEvents = true
+		  style = buttonStyle
+		  width = 90
+		  height = 35
+		  text = Units
+	   }
+	}
 
     container Player1
     {
         style = sceneProps
         alignment = ALIGN_BOTTOM_LEFT
-        width = 210
-		height = 300
+        width = 140
+		height = 400
         autoHeight = false
         scrollBarsAutoHide = false
-
         consumeInputEvents = false
-        container widgets 
+        container units_p1
         {
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
@@ -26,57 +64,76 @@ form sceneSettings
            {
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
-              x = 100
+              width = 90
+              height = 35
               text = Play auto
            }
            button Player1_New_Irbaga
            {
+			  textTag = irbaga
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
-              x = 200
+              width = 90
+              height = 35
               text = Irbaga
            }
 		   button Player1_New_Budfoor
            {
+			  textTag = budfoor
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
-              x = 250
+              width = 90
+              height = 35
               text = Budfoor
            }
 		   button Player1_New_Barar
            {
+		      textTag = barar
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
-              x = 300
+              width = 90
+              height = 35
               text = Barar
            }
 		   
 		   button Player1_New_Albiria
            {
+			  textTag = albiria
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
-              x = 350
+              width = 90
+              height = 35
               text = Albiria
            }
 		   
 		   button Player1_New_Chasovoy
            {
+		      textTag = chasovoy
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
-              x = 400
+              width = 90
+              height = 35
               text = Chasovoy
+           }
+		   
+		   button Player1_New_Core
+           {
+		      textTag = core
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Core
+           }
+		   
+		   button Player1_New_Dark
+           {
+		      textTag = dark
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Dark
            }
         }
 	}
@@ -102,56 +159,72 @@ form sceneSettings
            {
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
+              width = 90
+              height = 35
               x = 100
               text = Play auto
            }
            button Player2_New_Irbaga
            {
+			  textTag = irbaga
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
+              width = 90
+              height = 35
               x = 200
               text = Irbaga
            }
 		   button Player2_New_Budfoor
            {
+		      textTag = budfoor
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
+              width = 90
+              height = 35
               x = 250
               text = Budfoor
            }
 		   button Player2_New_Barar
            {
+		      textTag = barar
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
+              width = 90
+              height = 35
               x = 300
               text = Barar
            }
 		   
 		   button Player2_New_Albiria
            {
+		      textTag = albiria
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
+              width = 90
+              height = 35
               x = 350
               text = Albiria
            }
 		   button Player2_New_Chasovoy
            {
+		      textTag = chasovoy
               consumeInputEvents = true
               style = buttonStyle
-              width = 140
-              height = 40
+              width = 90
+              height = 35
               x = 400
               text = Chasovoy
+           }
+		   
+		   button Player2_New_Core
+           {
+		      textTag = core
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              x = 400
+              text = Core
            }
         }
 	 }
@@ -241,7 +314,7 @@ form sceneSettings
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
            height = 120
-		   x=140
+		   x=90
            layout = LAYOUT_VERTICAL
 		   consumeInputEvents = false
 		   

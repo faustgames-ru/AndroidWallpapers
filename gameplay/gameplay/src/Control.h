@@ -253,6 +253,13 @@ public:
     const char* getId() const;
 
 	/**
+	* Get this control's text tag.
+	*
+	* @return This control's ID.
+	*/
+	const char* getTextTag() const;
+
+	/**
 	 * Sets this control's ID string.
 	 *
 	 * @param id The new control ID.
@@ -1359,6 +1366,11 @@ protected:
      * The Control's ID.
      */ 
     std::string _id;
+
+	/**
+	* The Control's ID.
+	*/
+	std::string _textTag;
 
     /**
      * Bits indicating whether bounds values are absolute values or percentages.

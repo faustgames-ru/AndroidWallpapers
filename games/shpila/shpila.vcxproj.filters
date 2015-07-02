@@ -253,6 +253,15 @@
     <ClCompile Include="..\..\raknet\Gets.cpp">
       <Filter>src\Raknet</Filter>
     </ClCompile>
+    <ClCompile Include="src\Warriors.cpp">
+      <Filter>src\GameObjects\Warriors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Tower.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="src\thebase.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -596,6 +605,15 @@
     </ClInclude>
     <ClInclude Include="..\..\raknet\main.h">
       <Filter>src\Raknet</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Warriors.h">
+      <Filter>src\GameObjects\Warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Tower.h">
+      <Filter>src\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\thebase.h">
+      <Filter>src\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

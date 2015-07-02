@@ -1,8 +1,8 @@
 scene
 {
-    path = res/common/chasovoy.gpb
+    path = res/common/small.gpb
 
-    node character
+    node Small
     {
         tags
         {

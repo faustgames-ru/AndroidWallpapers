@@ -1,8 +1,8 @@
 scene
 {
-    path = res/common/irbaga.gpb
+    path = res/common/small.gpb
 
-    node irbaga
+    node Small
     {
         tags
         {

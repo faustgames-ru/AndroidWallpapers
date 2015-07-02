@@ -10,19 +10,24 @@ class Player
 {
 public:
 	GameObjectManager& Manager;
-	CLink<HiddenObject> Nexus;
-	CLink<HiddenObject> EnemyNexus;
+	Player* EnemyPlayer;
 	bool AutoPlay;
 	int ID;
-	Player(GameObjectManager& manager, int id, Vector3 position);
+	Vector3 BattleFieldDirection;
+	int MainResource;
+	Player(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection);
 	void update(float time);
 	void CreateWarrior(const char* name);
 	int getNewObjectID();
+	HiddenObject* getDefence();
 private:
+	CLink<HiddenObject> _defenceTower;
+	CLink<HiddenObject> _defenceBase;
 	float _spawnTimer;
 	Vector3 _position;
 	int _warriorsSpawnedCount;
 	int _newObjectID;
+	float _mainResourceIncreacetimer;
 };
 
 #endif

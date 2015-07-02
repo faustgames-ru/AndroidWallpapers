@@ -1747,5 +1747,8 @@
     <ClInclude Include="src\UnitManagement\OpenSteer.h">
       <Filter>src\UnitManagement</Filter>
     </ClInclude>
+    <ClInclude Include="src\algorithms\Valuable.h">
+      <Filter>src\Algorithms</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

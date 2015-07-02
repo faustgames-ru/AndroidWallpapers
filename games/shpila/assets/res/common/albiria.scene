@@ -1,17 +1,8 @@
 scene
 {
-    path = res/common/albiria.gpb
+    path = res/common/medium.gpb
 
-    node albiria
-    {
-        tags
-        {
-            dynamic
-			transparent
-        }
-    }
-	
-	node bullet
+    node Medium
     {
         tags
         {

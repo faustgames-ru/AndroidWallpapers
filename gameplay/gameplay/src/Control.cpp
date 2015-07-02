@@ -8,7 +8,7 @@ namespace gameplay
 {
 
 Control::Control()
-    : _id(""), _boundsBits(0), _dirtyBits(DIRTY_BOUNDS | DIRTY_STATE), _consumeInputEvents(true), _alignment(ALIGN_TOP_LEFT),
+: _id(""), _textTag(""), _boundsBits(0), _dirtyBits(DIRTY_BOUNDS | DIRTY_STATE), _consumeInputEvents(true), _alignment(ALIGN_TOP_LEFT),
     _autoSize(AUTO_SIZE_BOTH), _listeners(NULL), _style(NULL), _visible(true), _opacity(0.0f), _zIndex(-1),
     _contactIndex(INVALID_CONTACT_INDEX), _focusIndex(-1), _canFocus(false), _state(NORMAL), _parent(NULL), _styleOverridden(false), _skin(NULL)
 {
@@ -96,6 +96,9 @@ void Control::initialize(const char* typeName, Theme::Style* style, Properties* 
         const char* id = properties->getId();
         if (id)
             _id = id;
+
+		if (properties->exists("textTag"))
+			_textTag = properties->getString("textTag");
 
 		// Properties not defined by the style.
 		const char* alignmentString = properties->getString("alignment");
@@ -247,6 +250,11 @@ const char* Control::getTypeName() const
 const char* Control::getId() const
 {
     return _id.c_str();
+}
+
+const char* Control::getTextTag() const
+{
+	return _textTag.c_str();
 }
 
 void Control::setId(const char* id)

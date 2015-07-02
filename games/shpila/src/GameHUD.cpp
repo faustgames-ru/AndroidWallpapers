@@ -10,7 +10,7 @@ void GameHUD::controlEvent(Control* control, EventType evt)
 	{
 		if ((it->_control == control) && (it->_evt == evt))
 		{
-			it->_handler(_game);
+			it->_handler(_game, it->_control);
 			break;
 		}
 	}
