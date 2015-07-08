@@ -24,23 +24,15 @@ void Player::update(float time)
 	if (_defenceBase == NULL)
 	{
 		_defenceBase = (HiddenObject*)Manager.createObject("base", _position + 25.45f * BattleFieldDirection, ID);
-		_defenceBase->SearchRadius = 3.0f;
-		_defenceBase->ActionRadius = 0.7f;
+		_defenceBase->SearchRadius = 10.0f;
 		_defenceBase->GeometryRadius = 0.5f;
-		_defenceBase->Damage = 50.0f;
-		_defenceBase->DamageTime = 1000.0f;
-		_defenceBase->Health = 2000;
 	}
 
 	if (_defenceTower == NULL)
 	{
 		_defenceTower = (HiddenObject*)Manager.createObject("tower", _position + 45.25f * BattleFieldDirection, ID);
-		_defenceTower->SearchRadius = 3.0f;
-		_defenceTower->ActionRadius = 0.7f;
+		_defenceTower->SearchRadius = 10.0f;
 		_defenceTower->GeometryRadius = 0.5f;
-		_defenceTower->Damage = 50.0f;
-		_defenceTower->DamageTime = 1000.0f;
-		_defenceTower->Health = 1000;
 	}
 	//spawn warriors
 	_mainResourceIncreacetimer += time;

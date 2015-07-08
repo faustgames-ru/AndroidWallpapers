@@ -4,18 +4,19 @@
 using namespace gameplay;
 
 class GameObjectManager;
+class ActorData;
 
 class BaseGameObject : public CLinkObject
 {
 public:
 	int PlayerID;
 	int ID;
+	const ActorData* GameData;
 	float SearchRadius;
-	float ActionRadius;
+	//float ActionRadius;
 	float GeometryRadius;
 	float Health;
-	float Damage;
-	float DamageTime;
+	//float DamageTime;
 	BaseGameObject();
 	~BaseGameObject();
 	bool InteractionPossible(BaseGameObject* object);

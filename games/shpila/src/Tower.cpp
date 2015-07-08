@@ -19,10 +19,10 @@ void TowerObject::init(GameObjectManager& manager, Node* node, int playerID, Mat
 
 void TowerObject::interaction(BaseGameObject* object)
 {
-	if (Damage > 0.0f)
+	if (GameData->Damage > 0.0f)
 	{
 		float distance = object->position().distanceSquared(position());
-		if ((object->PlayerID != PlayerID) && (object->Health > 0.0f) && (distance <= (ActionRadius * ActionRadius)))
+		if ((object->PlayerID != PlayerID) && (object->Health > 0.0f) && (distance <= (GameData->AttackDistance * GameData->AttackDistance)))
 		{
 			Target = object;
 		}
@@ -32,11 +32,11 @@ void TowerObject::interaction(BaseGameObject* object)
 void TowerObject::update(float time)
 {
 	_damageTimer += time;
-	if (Target && (Damage > 0.0f))
+	if (Target && (GameData->Damage > 0.0f))
 	{
-		if (_damageTimer > DamageTime)
+		if (_damageTimer > GameData->AttackDelay)
 		{
-			Target->Health -= Damage;
+			Target->Health -= GameData->Damage;
 			_damageTimer = 0.0f;
 		}
 	}

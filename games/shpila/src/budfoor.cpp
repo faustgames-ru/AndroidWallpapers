@@ -11,12 +11,7 @@ void BudfoorWarrior::init(GameObjectManager& manager, Node* node, int playerID, 
 	BaseWarrior::init(manager, node, playerID, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	ActionRadius = 6.0f;
 	GeometryRadius = 2.5f;
-	Damage = 10;
-	DamageTime = 1440 * TIME_SCALE;
-	Health = 120;
-	Price = 110;
 }
 
 void BudfoorWarrior::update(float time)

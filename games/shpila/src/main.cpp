@@ -70,24 +70,47 @@ void Shpila::initialize()
 		const float FoV = 60.0f;
 
 		_hud.initialize(this, _scene);
-		_hud.bind("Player1_Auto", Control::Listener::CLICK, Player1_Auto_Click);
-		_hud.bind("Player2_Auto", Control::Listener::CLICK, Player2_Auto_Click);
 		_hud.bind("Player1_New_Irbaga", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Irbaga", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player1_New_Budfoor", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Budfoor", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player1_New_Barar", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Barar", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player1_New_Albiria", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Albiria", Control::Listener::CLICK, CreateUnit);
 		_hud.bind("Player1_New_Chasovoy", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Chasovoy", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player1_New_Core", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Core", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Show_Units_P1", Control::Listener::CLICK, ShowUnits);
+		_hud.bind("Player1_New_Budfoor", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player1_New_Dark", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Barar", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player1_New_Archon", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Observer", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Immortal", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Colossus", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Albiria", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player1_New_VoidRay", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Carrier", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Tempest", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Mothership", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_MothershipCore", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Show_Units_P1", Control::Listener::CLICK, ShowUnitsP1);
+		_hud.form()->getControl("Player1")->setVisible(false);
 		
+		_hud.bind("Player2_New_Irbaga", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Chasovoy", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Budfoor", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Dark", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Barar", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Archon", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Observer", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Immortal", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Colossus", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Albiria", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_VoidRay", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Carrier", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Tempest", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_Mothership", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player2_New_MothershipCore", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Show_Units_P2", Control::Listener::CLICK, ShowUnitsP2);
+		_hud.form()->getControl("Player2")->setVisible(false);
 		
 
+		_hud.form()->getControl("Tune")->setVisible(false);
+		_hud.form()->getControl("Connection")->setVisible(false);
+		_hud.bind("ShowTune", Control::Listener::CLICK, ShowTunes);
+		_hud.bind("Connect", Control::Listener::CLICK, ShowConnection);		
 		_hud.bind("CameraFoVPlus", Control::Listener::CLICK, CameraFoVPlus);
 		_hud.bind("CameraFoVMinus", Control::Listener::CLICK, CameraFoVMinus);
 		char buff[100];
@@ -179,16 +202,41 @@ void Shpila::initializeSolarSystem()
 	}
 }
 
+/*#define ACTOR_TYPE_IRBAGA 0
+#define ACTOR_TYPE_CHASOVOY 1
+#define ACTOR_TYPE_BUDFOOR 2
+#define ACTOR_TYPE_DARK 3
+#define ACTOR_TYPE_BARAR 4
+#define ACTOR_TYPE_ARCHON 5
+#define ACTOR_TYPE_OBSERVER 6
+#define ACTOR_TYPE_IMMORTAL 7
+#define ACTOR_TYPE_COLOSSUS 8
+#define ACTOR_TYPE_ALBIRIA 9
+#define ACTOR_TYPE_VOIDRAY 10
+#define ACTOR_TYPE_c 11
+#define ACTOR_TYPE_TEMPEST 12
+#define ACTOR_TYPE_MOTHERSHIP 13
+#define ACTOR_TYPE_MothershipCore 14*/
+
 void Shpila::loadCharacters()
 {
 	_manager.addUnit("res/common/irbaga.scene", "irbaga", IrbagaWarrior::constructor);
+	_manager.addUnit("res/common/chasovoy.scene", "chasovoy", ChasovoyWarrior::constructor);
+	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor);
+	_manager.addUnit("res/common/dark.scene", "dark", DarkWarrior::constructor);
+	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
+	_manager.addUnit("res/common/archon.scene", "archon", ArchonWarrior::constructor);
+	_manager.addUnit("res/common/observer.scene", "observer", ObserverWarrior::constructor);
+	_manager.addUnit("res/common/immortal.scene", "immortal", ImmortalWarrior::constructor);
+	_manager.addUnit("res/common/colossus.scene", "colossus", ColossusWarrior::constructor);
+	_manager.addUnit("res/common/albiria.scene", "albiria", AlbiriaWarrior::constructor);
+	_manager.addUnit("res/common/voidray.scene", "voidray", VoidRayWarrior::constructor);
+	_manager.addUnit("res/common/carrier.scene", "carrier", CarrierWarrior::constructor);
+	_manager.addUnit("res/common/tempest.scene", "tempest", TempestWarrior::constructor);
+	_manager.addUnit("res/common/mothership.scene", "mothership", MothershipWarrior::constructor);
+	_manager.addUnit("res/common/core.scene", "core", CoreWarrior::constructor);
 	_manager.addUnit("res/common/SourceSmall.scene", "tower", TowerObject::constructor);
 	_manager.addUnit("res/common/SourceBig.scene", "base", TheBaseObject::constructor);
-	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor);
-	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
-	_manager.addUnit("res/common/albiria.scene", "albiria", AlbiriaWarrior::constructor);
-	_manager.addUnit("res/common/chasovoy.scene", "chasovoy", ChasovoyWarrior::constructor);
-	_manager.addUnit("res/common/core.scene", "core", CoreWarrior::constructor);
 	_manager.initUnits();
 }
 
@@ -243,23 +291,11 @@ bool Shpila::drawScene(Node* node, bool transparent)
 
 //shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
 
-void Shpila::Player1_Auto_Click(Game* game, Control* control)
-{
-	//Shpila* shpila = (Shpila*)game;
-	//shpila->_manager.Players[0]->AutoPlay = !shpila->_manager.Players[0]->AutoPlay;
-}
-
-void Shpila::Player2_Auto_Click(Game* game, Control* control)
-{
-	//Shpila* shpila = (Shpila*)game;
-	//shpila->_manager.Players[1]->AutoPlay = !shpila->_manager.Players[1]->AutoPlay;
-}
-
 void Shpila::CreateUnit(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
 	Control* parent = control->getParent();
-	int player = (!strcmp(parent->getId(), "units_p1")) ? 0 : 1;
+	int player = (!strcmp(parent->getTextTag(), "units_p1")) ? 0 : 1;
 	const char *character = control->getTextTag();
 
 	if ((shpila->_netPlayerID != 65535) && (shpila->_netPlayerID != player))
@@ -267,10 +303,28 @@ void Shpila::CreateUnit(Game* game, Control* control)
 	shpila->_manager.Players[player]->CreateWarrior(character);
 }
 
-void Shpila::ShowUnits(Game* game, Control* control)
+void Shpila::ShowUnitsP1(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
 	shpila->_hud.form()->getControl("Player1")->setVisible(!shpila->_hud.form()->getControl("Player1")->isVisible());
+}
+
+void Shpila::ShowUnitsP2(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_hud.form()->getControl("Player2")->setVisible(!shpila->_hud.form()->getControl("Player2")->isVisible());
+}
+
+void Shpila::ShowTunes(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_hud.form()->getControl("Tune")->setVisible(!shpila->_hud.form()->getControl("Tune")->isVisible());
+}
+
+void Shpila::ShowConnection(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_hud.form()->getControl("Connection")->setVisible(!shpila->_hud.form()->getControl("Connection")->isVisible());
 }
 
 void Shpila::CameraFoVPlus(Game* game, Control* control)

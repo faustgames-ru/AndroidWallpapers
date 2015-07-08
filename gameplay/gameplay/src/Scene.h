@@ -39,6 +39,14 @@ public:
      */
     static Scene* load(const char* filePath);
 
+	/**
+	* Loads a scene scene properties from '.scene' file and return gpb path.
+	*
+	* @param filePath The path to the '.scene'.
+	* @return gpb path
+	*/
+	static const std::string getGPBPath(const char* filePath);
+
     /**
      * Gets a currently active scene.
      *

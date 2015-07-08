@@ -30,7 +30,7 @@ form sceneSettings
 	container menu_p1
 	{
 	   alignment = ALIGN_BOTTOM_LEFT
-	   autoWidth = true
+	   autoWidth = false
 	   height = 50
 	   layout = LAYOUT_VERTICAL
 	   
@@ -43,31 +43,42 @@ form sceneSettings
 		  text = Units
 	   }
 	}
+	
+	container menu_p2
+	{
+	   alignment = ALIGN_BOTTOM_RIGHT
+	   autoWidth = false
+	   height = 50
+	   layout = LAYOUT_VERTICAL
+	   
+	   button Show_Units_P2
+	   {
+		  consumeInputEvents = true
+		  style = buttonStyle
+		  width = 90
+		  height = 35
+		  text = Units
+	   }
+	}
 
     container Player1
     {
-        style = sceneProps
+        style = noBorder
         alignment = ALIGN_BOTTOM_LEFT
-        width = 140
-		height = 400
+		layout = LAYOUT_HORIZONTAL
+        width = 190
+		height = 340
         autoHeight = false
         scrollBarsAutoHide = false
         consumeInputEvents = false
-        container units_p1
+        container units1_column1
         {
+		   textTag = units_p1
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
            height = 300
            layout = LAYOUT_VERTICAL
 
-           button Player1_Auto
-           {
-              consumeInputEvents = true
-              style = buttonStyle
-              width = 90
-              height = 35
-              text = Play auto
-           }
            button Player1_New_Irbaga
            {
 			  textTag = irbaga
@@ -76,6 +87,15 @@ form sceneSettings
               width = 90
               height = 35
               text = Irbaga
+           }
+		   button Player1_New_Chasovoy
+           {
+		      textTag = chasovoy
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Chasovoy
            }
 		   button Player1_New_Budfoor
            {
@@ -86,46 +106,6 @@ form sceneSettings
               height = 35
               text = Budfoor
            }
-		   button Player1_New_Barar
-           {
-		      textTag = barar
-              consumeInputEvents = true
-              style = buttonStyle
-              width = 90
-              height = 35
-              text = Barar
-           }
-		   
-		   button Player1_New_Albiria
-           {
-			  textTag = albiria
-              consumeInputEvents = true
-              style = buttonStyle
-              width = 90
-              height = 35
-              text = Albiria
-           }
-		   
-		   button Player1_New_Chasovoy
-           {
-		      textTag = chasovoy
-              consumeInputEvents = true
-              style = buttonStyle
-              width = 90
-              height = 35
-              text = Chasovoy
-           }
-		   
-		   button Player1_New_Core
-           {
-		      textTag = core
-              consumeInputEvents = true
-              style = buttonStyle
-              width = 90
-              height = 35
-              text = Core
-           }
-		   
 		   button Player1_New_Dark
            {
 		      textTag = dark
@@ -135,35 +115,135 @@ form sceneSettings
               height = 35
               text = Dark
            }
+		   button Player1_New_Barar
+           {
+		      textTag = barar
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Barar
+           }
+		   button Player1_New_Archon
+           {
+			  textTag = archon
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Archon
+           }
+		   button Player1_New_Observer
+           {
+			  textTag = observer
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Observer
+           }
+		   button Player1_New_Immortal
+           {
+		      textTag = immortal
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Immortal
+           }
         }
+		container units1_column2
+        {
+		   textTag = units_p1
+           alignment = ALIGN_TOP_LEFT
+           autoWidth = true
+           height = 300
+           layout = LAYOUT_VERTICAL
+		   x = 90
+		   
+		   button Player1_New_Colossus
+           {
+			  textTag = colossus
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Colossus
+           }
+		   button Player1_New_Albiria
+           {
+			  textTag = albiria
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Albiria
+           }
+		   button Player1_New_VoidRay
+           {
+			  textTag = voidray
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = VoidRay
+           }
+		   button Player1_New_Carrier
+           {
+			  textTag = carrier
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Carrier
+           }
+		   button Player1_New_Tempest
+           {
+			  textTag = tempest
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Tempest
+           }
+		   button Player1_New_Mothership
+           {
+			  textTag = mothership
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Mothership
+           }
+		   button Player1_New_MothershipCore
+           {
+		      textTag = mothershipcore
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Core
+           }
+		}
 	}
 	
 	container Player2
     {
-        style = sceneProps
+        style = noBorder
         alignment = ALIGN_BOTTOM_RIGHT
-        width = 210
-		height = 300
+        width = 190
+		height = 340
         autoHeight = false
         scrollBarsAutoHide = false
-
         consumeInputEvents = false
-        container widgets 
+        container units2_column1
         {
+		   textTag = units_p2
            alignment = ALIGN_TOP_LEFT
            autoWidth = true
            height = 300
            layout = LAYOUT_VERTICAL
 
-           button Player2_Auto
-           {
-              consumeInputEvents = true
-              style = buttonStyle
-              width = 90
-              height = 35
-              x = 100
-              text = Play auto
-           }
            button Player2_New_Irbaga
            {
 			  textTag = irbaga
@@ -171,39 +251,7 @@ form sceneSettings
               style = buttonStyle
               width = 90
               height = 35
-              x = 200
               text = Irbaga
-           }
-		   button Player2_New_Budfoor
-           {
-		      textTag = budfoor
-              consumeInputEvents = true
-              style = buttonStyle
-              width = 90
-              height = 35
-              x = 250
-              text = Budfoor
-           }
-		   button Player2_New_Barar
-           {
-		      textTag = barar
-              consumeInputEvents = true
-              style = buttonStyle
-              width = 90
-              height = 35
-              x = 300
-              text = Barar
-           }
-		   
-		   button Player2_New_Albiria
-           {
-		      textTag = albiria
-              consumeInputEvents = true
-              style = buttonStyle
-              width = 90
-              height = 35
-              x = 350
-              text = Albiria
            }
 		   button Player2_New_Chasovoy
            {
@@ -212,41 +260,218 @@ form sceneSettings
               style = buttonStyle
               width = 90
               height = 35
-              x = 400
               text = Chasovoy
            }
-		   
-		   button Player2_New_Core
+		   button Player2_New_Budfoor
            {
-		      textTag = core
+			  textTag = budfoor
               consumeInputEvents = true
               style = buttonStyle
               width = 90
               height = 35
-              x = 400
-              text = Core
+              text = Budfoor
+           }
+		   button Player2_New_Dark
+           {
+		      textTag = dark
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Dark
+           }
+		   button Player2_New_Barar
+           {
+		      textTag = barar
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Barar
+           }
+		   button Player2_New_Archon
+           {
+			  textTag = archon
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Archon
+           }
+		   button Player2_New_Observer
+           {
+			  textTag = observer
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Observer
+           }
+		   button Player2_New_Immortal
+           {
+		      textTag = immortal
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Immortal
            }
         }
+		container units2_column2
+        {
+		   textTag = units_p2
+           alignment = ALIGN_TOP_LEFT
+           autoWidth = true
+           height = 300
+           layout = LAYOUT_VERTICAL
+		   x = 90
+		   
+		   button Player2_New_Colossus
+           {
+			  textTag = colossus
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Colossus
+           }
+		   button Player2_New_Albiria
+           {
+			  textTag = albiria
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Albiria
+           }
+		   button Player2_New_VoidRay
+           {
+			  textTag = voidray
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = VoidRay
+           }
+		   button Player2_New_Carrier
+           {
+			  textTag = carrier
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Carrier
+           }
+		   button Player2_New_Tempest
+           {
+			  textTag = tempest
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Tempest
+           }
+		   button Player2_New_Mothership
+           {
+			  textTag = mothership
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Mothership
+           }
+		   button Player2_New_MothershipCore
+           {
+		      textTag = mothershipcore
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 90
+              height = 35
+              text = Core
+           }
+		}
 	 }
 	 
+	container Tools
+    {
+		style = noBorder
+        alignment = ALIGN_BOTTOM_HCENTER
+        width = 250
+		height = 50
+		autoWidth = false
+        autoHeight = false
+        scrollBarsAutoHide = false
+		layout = LAYOUT_FLOW
+        consumeInputEvents = false
+		
+		button ShowTune
+	   {
+		  consumeInputEvents = true
+		  style = buttonStyle
+		  width = 70
+		  height = 35
+		  text = Tune
+	   }
+	   
+	   button Connect
+	   {
+		  consumeInputEvents = true
+		  style = buttonStyle
+		  width = 70
+		  height = 35
+		  text = Connect
+	   }
+	}
+	 
+	 container Connection
+    {
+		style = noBorder
+        alignment = ALIGN_VCENTER_HCENTER
+        width = 250
+		height = 20
+		autoWidth = false
+        autoHeight = false
+        scrollBarsAutoHide = false
+		layout = LAYOUT_FLOW
+        consumeInputEvents = false
+		   
+		textBox ConnectionPath
+		{
+			alignment = ALIGN_VCENTER_LEFT
+			style = topLeftAlignedEntry
+			size = 120, 25
+			text = 127.0.0.1
+			consumeInputEvents = true
+		}   
+		   
+		button ApplyConnection
+		{
+			consumeInputEvents = true
+			style = buttonStyle
+			width = 70
+			height = 35
+			text = Connect
+		}
+	}
 	 
 	container Tune
     {
-        style = sceneProps
+        style = noBorder
         alignment = ALIGN_BOTTOM_HCENTER
         width = 250
-		height = 130
+		height = 200
+		autoWidth = false
         autoHeight = false
         scrollBarsAutoHide = false
-		layout = LAYOUT_ABSOLUTE
+		layout = LAYOUT_FLOW
         consumeInputEvents = false
 		
         container CameraFoV 
         {
            alignment = ALIGN_TOP_LEFT
-           autoWidth = true
+           autoWidth = false
+		   width = 70
            height = 120
-		   x=0
            layout = LAYOUT_VERTICAL
 		   consumeInputEvents = false
 
@@ -278,9 +503,9 @@ form sceneSettings
 		container CameraType 
         {
            alignment = ALIGN_TOP_LEFT
-           autoWidth = true
+           autoWidth = false
+		   width = 70
            height = 120
-		   x=70
            layout = LAYOUT_VERTICAL
 		   consumeInputEvents = false
 		   
@@ -312,9 +537,9 @@ form sceneSettings
 		container Network
         {
            alignment = ALIGN_TOP_LEFT
-           autoWidth = true
+           autoWidth = false
+		   width = 70
            height = 120
-		   x=90
            layout = LAYOUT_VERTICAL
 		   consumeInputEvents = false
 		   

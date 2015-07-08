@@ -292,4 +292,18 @@ theme sceneSettings
             textColor = #C3D9BFff
         }
     }
+	
+	style topLeftAlignedEntry : basic
+    {
+        stateNormal
+        {
+            skin = formEntry
+            textAlignment = ALIGN_TOP_LEFT
+        }
+
+        stateFocus
+        {
+            skin = formFocus
+        }
+    }
 }

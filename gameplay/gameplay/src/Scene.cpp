@@ -112,6 +112,42 @@ Scene* Scene::load(const char* filePath)
     return SceneLoader::load(filePath);
 }
 
+const std::string Scene::getGPBPath(const char* filePath)
+{
+	if (endsWith(filePath, ".scene", true))
+	{
+		// Load the scene properties from file.
+		Properties* properties = Properties::create(filePath);
+		if (properties == NULL)
+		{
+			GP_ERROR("Failed to load scene file '%s'.", filePath);
+			return filePath;
+		}
+
+		// Check if the properties object is valid and has a valid namespace.
+		Properties* sceneProperties = (strlen(properties->getNamespace()) > 0) ? properties : properties->getNextNamespace();
+		if (!sceneProperties || !(strcmp(sceneProperties->getNamespace(), "scene") == 0))
+		{
+			GP_ERROR("Failed to load scene from properties object: must be non-null object and have namespace equal to 'scene'.");
+			SAFE_DELETE(properties);
+			return filePath;
+		}
+
+		// Get the path to the main GPB.
+		std::string path;
+		if (sceneProperties->getPath("path", &path))
+		{
+			return path;
+		}
+		else
+		{
+			return filePath;
+		}
+	}
+	else
+		return filePath;
+}
+
 Scene* Scene::getScene(const char* id)
 {
     if (id == NULL)

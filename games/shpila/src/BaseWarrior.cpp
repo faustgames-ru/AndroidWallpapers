@@ -9,7 +9,6 @@ BaseWarrior::BaseWarrior()
 , Target()
 , Player(NULL)
 , Holder(false)
-, Price(0)
 , _initialized(false)
 , _dead(false)
 , _unitAnimation()
@@ -44,7 +43,7 @@ void BaseWarrior::interaction(BaseGameObject* object)
 		_node->setTranslation(_node->getTranslation() + offset);
 	}
 	float distanceToTarget = Target != NULL ? Target->position().distanceSquared(position()) : FLT_MAX;
-	if ((distanceToTarget > (ActionRadius * ActionRadius)) && (object->PlayerID != PlayerID)
+	if ((distanceToTarget > (GameData->AttackDistance * GameData->AttackDistance)) && (object->PlayerID != PlayerID)
 		&& (object->Health > 0.0f))
 	{
 		Target = object;
@@ -96,7 +95,7 @@ void BaseWarrior::update(float time)
 			OpenSteer::Vec3 pos = _movementController.position();
 			_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
 
-			float radius = ((ActionRadius + Target->GeometryRadius) * (ActionRadius + Target->GeometryRadius));
+			float radius = ((GameData->AttackDistance + Target->GeometryRadius + GeometryRadius) * (GameData->AttackDistance + Target->GeometryRadius + GeometryRadius));
 			float distance = tPos.distanceSquared(position());
 			if (radius < distance)
 			{
@@ -108,9 +107,9 @@ void BaseWarrior::update(float time)
 				_movementController._applyBreakingForces = true;
 				switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);//AnimationClip::REPEAT_INDEFINITE
 				_damageTimer += time;
-				if ((_damageTimer > DamageTime) && (Target != NULL))
+				if ((_damageTimer > GameData->AttackDelay) && (Target != NULL))
 				{
-					Target->Health -= Damage;
+					Target->Health -= GameData->Damage;
 					_damageTimer = 0.0f;
 				}
 			}	

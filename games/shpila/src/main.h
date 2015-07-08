@@ -57,11 +57,12 @@ private:
     bool drawScene(Node* node, bool transparent);
 	void updateNetwork();
 
-	static void Player1_Auto_Click(Game* game, Control* control);
-	static void Player2_Auto_Click(Game* game, Control* control);
 	static void CreateUnit(Game* game, Control* control);
-	static void ShowUnits(Game* game, Control* control);
+	static void ShowUnitsP1(Game* game, Control* control);
+	static void ShowUnitsP2(Game* game, Control* control);
 
+	static void ShowTunes(Game* game, Control* control);
+	static void ShowConnection(Game* game, Control* control);
 	static void CameraFoVPlus(Game* game, Control* control);
 	static void CameraFoVMinus(Game* game, Control* control);
 	static void SetCameraFree(Game* game, Control* control);

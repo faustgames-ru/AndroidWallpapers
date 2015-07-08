@@ -19,13 +19,8 @@ void AlbiriaWarrior::init(GameObjectManager& manager, Node* node, int playerID, 
 	BaseWarrior::init(manager, node, playerID, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	ActionRadius = 5.0f;
 	GeometryRadius = 0.5f;
-	Damage = 10;
-	Health = 180;
-	DamageTime = 1100.0f * TIME_SCALE;
 	_altitude = 3.75f;
-	Price = 150;
 
 	if (_unitAnimation.size() > 0)
 	{

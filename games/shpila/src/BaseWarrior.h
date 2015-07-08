@@ -44,7 +44,7 @@ public:
 	CLink<BaseGameObject> Target;
 	Player* Player;
 	bool Holder;
-	int Price;
+	//int Price;
 	std::string HolderWarriorName;
 	BaseWarrior();
 	~BaseWarrior();

@@ -129,7 +129,7 @@ void GameObjectManager::addUnit(const char* filename, const char* name, GameObje
 			}
 			if (animation)
 			{
-				std::string scenePath = filename;
+				std::string scenePath = Scene::getGPBPath(filename);
 				int pos = scenePath.find_last_of('.');
 				if (pos > 2)
 				{
@@ -164,6 +164,7 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 positi
 	BaseGameObject* object = unit._constructor(); 
 	Matrix translation;
 	Matrix::createTranslation(position, &translation);
+	object->GameData = &getActorData(name);
 	object->init(*this, unit._node, playerID, translation);
 	std::vector<Player*>::iterator pl = std::find_if(Players.begin(), Players.end(), [&](Player* p){ return p->ID == playerID; });
 	if (pl != Players.end())

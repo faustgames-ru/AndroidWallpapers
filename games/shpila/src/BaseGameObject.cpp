@@ -3,12 +3,10 @@
 BaseGameObject::BaseGameObject()
 : PlayerID(0)
 , ID(0)
+, GameData(NULL)
 , SearchRadius(0.0f)
-, ActionRadius(0.0f)
 , GeometryRadius(0.0f)
 , Health(100.0f)
-, Damage(0.0f)
-, DamageTime(0.0f)
 , _manager(NULL)
 , _node()
 , _damageTimer(0.0f)
@@ -67,6 +65,8 @@ void BaseGameObject::init(GameObjectManager& manager, Node* node, int playerID, 
 	Vector3 translation;
 	transform.getTranslation(&translation);
 	setPosition(translation);
+
+	Health = GameData->Health;
 }
 
 const Vector3 BaseGameObject::position()
@@ -96,6 +96,6 @@ float BaseGameObject::getInteractionDistance(BaseGameObject* object)
 
 bool BaseGameObject::InteractionPossible(BaseGameObject* object)
 {
-	float radius = max(max(SearchRadius, GeometryRadius), ActionRadius);
+	float radius = max(max(SearchRadius, GeometryRadius), GameData->AttackDistance);
 	return radius > getInteractionDistance(object);
 }
