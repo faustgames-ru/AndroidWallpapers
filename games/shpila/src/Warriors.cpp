@@ -9,6 +9,7 @@ ActorData ACTOR_DATA[] =
 		16.0f, //Damage
 		1.0f, //Distance
 		1200.0f * TIME_SCALE, //attack delay
+		0, //UprgadeRequired
 	},
 	{
 		"chasovoy",
@@ -17,6 +18,7 @@ ActorData ACTOR_DATA[] =
 		6.0f, //Damage
 		5.0f, //Distance
 		1000.0f * TIME_SCALE, //attack delay
+		0, //UprgadeRequired
 	},
 	{ 
 		"budfoor", 
@@ -25,6 +27,7 @@ ActorData ACTOR_DATA[] =
 		10.0f, //Damage
 		6.0f, //Distance
 		1440.0f * TIME_SCALE, //attack delay
+		0, //UprgadeRequired
 	},
 	{
 		"dark",
@@ -33,6 +36,7 @@ ActorData ACTOR_DATA[] =
 		45.0f, //Damage
 		1.0f, //Distance
 		1690.0f * TIME_SCALE, //attack delay
+		1, //UprgadeRequired
 	},
 	{ 
 		"barar", 
@@ -41,6 +45,7 @@ ActorData ACTOR_DATA[] =
 		0.0f, //Damage
 		4.0f, //Distance
 		1440.0f * TIME_SCALE, //attack delay
+		1, //UprgadeRequired
 	},
 	{
 		"archon",
@@ -49,6 +54,7 @@ ActorData ACTOR_DATA[] =
 		25.0f, //Damage
 		3.0f, //Distance
 		1750.0f * TIME_SCALE, //attack delay
+		1, //UprgadeRequired
 	},
 	{
 		"observer",
@@ -57,6 +63,7 @@ ActorData ACTOR_DATA[] =
 		0.0f, //Damage
 		4.0f, //Distance
 		1440.0f * TIME_SCALE, //attack delay
+		1, //UprgadeRequired
 	},
 	{
 		"immortal",
@@ -65,6 +72,7 @@ ActorData ACTOR_DATA[] =
 		20.0f, //Damage
 		6.0f, //Distance
 		1450.0f * TIME_SCALE, //attack delay
+		1, //UprgadeRequired
 	},
 	{
 		"colossus",
@@ -73,6 +81,7 @@ ActorData ACTOR_DATA[] =
 		30.0f, //Damage
 		6.0f, //Distance
 		1650.0f * TIME_SCALE, //attack delay
+		2, //UprgadeRequired
 	},
 	{
 		"albiria",
@@ -81,6 +90,7 @@ ActorData ACTOR_DATA[] =
 		10.0f, //Damage
 		5.0f, //Distance
 		1100.0f * TIME_SCALE, //attack delay
+		1, //UprgadeRequired
 	},
 	{ 
 		"voidray", 
@@ -89,6 +99,7 @@ ActorData ACTOR_DATA[] =
 		6.0f, //Damage
 		6.0f, //Distance
 		500.0f * TIME_SCALE, //attack delay
+		1, //UprgadeRequired
 	},
 	{
 		"carrier",
@@ -97,6 +108,7 @@ ActorData ACTOR_DATA[] =
 		0.0f, //Damage
 		8.0f, //Distance
 		1100.0f * TIME_SCALE, //attack delay
+		2, //UprgadeRequired
 	},
 	{
 		"tempest",
@@ -105,6 +117,7 @@ ActorData ACTOR_DATA[] =
 		30.0f, //Damage
 		15.0f, //Distance
 		3300.0f * TIME_SCALE, //attack delay
+		2, //UprgadeRequired
 	},
 	{
 		"mothership",
@@ -113,6 +126,7 @@ ActorData ACTOR_DATA[] =
 		6.0f, //Damage
 		7.0f, //Distance
 		2210.0f * TIME_SCALE, //attack delay
+		2, //UprgadeRequired
 	},
 	{
 		"mothershipcore", 
@@ -121,6 +135,7 @@ ActorData ACTOR_DATA[] =
 		8.0f, //Damage
 		5.0f, //Distance
 		850.0f * TIME_SCALE, //attack delay
+		0, //UprgadeRequired
 	},
 	{
 		"tower",
@@ -129,6 +144,7 @@ ActorData ACTOR_DATA[] =
 		25.0f, //Damage
 		15.0f, //Distance
 		500.0f * TIME_SCALE, //attack delay
+		0, //UprgadeRequired
 	},
 	{
 		"base",
@@ -137,6 +153,7 @@ ActorData ACTOR_DATA[] =
 		25.0f, //Damage
 		15.0f, //Distance
 		500.0f * TIME_SCALE, //attack delay
+		0, //UprgadeRequired
 	}
 
 
@@ -148,17 +165,18 @@ ActorData ACTOR_DATA[] =
 		0.0f, //Damage
 		0.0f, //Distance
 		1000.0f * TIME_SCALE, //attack delay
+		0, //UprgadeRequired
 	}
 };
 
 const ActorData& getActorData(const char* actorName)
 {
-	for (int i = 0; i < 6; i++)
+	for (int i = 0; i < ACTOR_TYPE_LAST; i++)
 	{
 		if (!strcmp(actorName, ACTOR_DATA[i].Name.c_str()))
 			return ACTOR_DATA[i];
 	}
-	return ACTOR_DATA[6];
+	return ACTOR_DATA[ACTOR_TYPE_LAST];
 }
 
 BaseGameObject* DarkWarrior::constructor()
@@ -194,7 +212,7 @@ void ArchonWarrior::init(GameObjectManager& manager, Node* node, int playerID, M
 	BaseWarrior::init(manager, node, playerID, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 1.5f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -213,7 +231,7 @@ void ObserverWarrior::init(GameObjectManager& manager, Node* node, int playerID,
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 1.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -232,7 +250,7 @@ void ImmortalWarrior::init(GameObjectManager& manager, Node* node, int playerID,
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 1.5f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -250,7 +268,7 @@ void ColossusWarrior::init(GameObjectManager& manager, Node* node, int playerID,
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 1.5f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -268,7 +286,7 @@ void VoidRayWarrior::init(GameObjectManager& manager, Node* node, int playerID, 
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 1.5f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -286,7 +304,7 @@ void CarrierWarrior::init(GameObjectManager& manager, Node* node, int playerID, 
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 2.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -304,7 +322,7 @@ void TempestWarrior::init(GameObjectManager& manager, Node* node, int playerID, 
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 1.5f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -324,7 +342,7 @@ void MothershipWarrior::init(GameObjectManager& manager, Node* node, int playerI
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 2.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -346,7 +364,7 @@ void CoreWarrior::init(GameObjectManager& manager, Node* node, int playerID, Mat
 	BaseWarrior::init(manager, node, playerID, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 2.0f;
 	_altitude = 3.75f;
 }
 

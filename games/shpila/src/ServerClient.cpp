@@ -106,7 +106,7 @@ void Client::Startup(GameObjectManager* manager)
 	nextSendTime = GetTickCount();
 	isConnected=false;
 }
-bool Client::Connect(char *szHostname, int iPort, char *szNickname, char *szPassword)
+bool Client::Connect(const char *szHostname, int iPort, char *szNickname, char *szPassword)
 {
 	_pRakClient->SetPassword(szPassword);
 	return isConnected = _pRakClient->Connect(szHostname, iPort, 0, 0, 5);
@@ -131,6 +131,8 @@ void Client::Disconnect(void)
 }
 void Client::Update(RakNet::TimeMS curTime)
 {
+	if (!isConnected)
+		return;
 	updateNetwork();
 
 	if ((GetTickCount() - nextSendTime) > 50)
@@ -285,7 +287,8 @@ void Client::Packet_ActorSync(Packet *p)
 		}
 		if (!found)
 		{
-			_manager->createObject(ACTOR_DATA[actorSyncData.actorType].Name.c_str(), actorSyncData.pos, playerID);
+			BaseWarrior* warrior = (BaseWarrior*)_manager->createObject(ACTOR_DATA[actorSyncData.actorType].Name.c_str(), actorSyncData.pos, playerID);
+			warrior->Player = _manager->Players[playerID];
 		}
 	}
 	//

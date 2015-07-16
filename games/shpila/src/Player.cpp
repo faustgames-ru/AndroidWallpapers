@@ -5,6 +5,7 @@ Player::Player(GameObjectManager& manager, int id, Vector3 position, Vector3 bat
 , EnemyPlayer(NULL)
 , AutoPlay(false)
 , ID(id)
+, UprgadeLevel(0)
 , BattleFieldDirection(battleFieldDirection)
 , MainResource(0)
 , _defenceTower()
@@ -58,7 +59,7 @@ void Player::update(float time)
 void Player::CreateWarrior(const char* name)
 {
 	const ActorData& ad = getActorData(name);
-	if (ad.Price < MainResource)
+	//if (ad.Price < MainResource)
 	{
 		BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(name, _position + Vector3(rnd(-10.0f, 10.0f), 0.0f, rnd(-10.0f, 10.0f)), ID);
 		warrior->Player = this;

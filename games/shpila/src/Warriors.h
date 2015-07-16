@@ -12,6 +12,7 @@ public:
 	float Damage;
 	float AttackDistance;
 	float AttackDelay;
+	int UpgradeRequired;
 };
 
 extern ActorData ACTOR_DATA[];

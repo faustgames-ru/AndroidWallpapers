@@ -42,6 +42,8 @@
 #define ACTOR_TYPE_TOWER 15
 #define ACTOR_TYPE_BASE 16
 
+#define ACTOR_TYPE_LAST 17
+
 #include "algorithms\Links.h"
 #include "algorithms\Utils.h"
 #include "algorithms\Valuable.h"

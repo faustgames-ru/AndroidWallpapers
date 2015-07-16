@@ -1,8 +1,8 @@
 scene
 {
-    path = res/common/small.gpb
+    path = res/common/default/mediumair.gpb
 
-    node Small
+    node Medium
     {
         tags
         {

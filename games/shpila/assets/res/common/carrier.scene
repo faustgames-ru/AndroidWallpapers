@@ -1,8 +1,8 @@
 scene
 {
-    path = res/common/small.gpb
+    path = res/common/default/largeair.gpb
 
-    node Small
+    node Large
     {
         tags
         {

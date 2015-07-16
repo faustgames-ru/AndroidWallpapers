@@ -37,7 +37,7 @@ Shpila::Shpila()
     : _font(NULL), _scene(), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _rotateX(0), _materialParameterAlpha(NULL),
 	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _camera(), _fpCamera(), _freeCamera(true), _battleFieldDirection(), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
-	  _hud(), _totalTime(0.0), _respawnTime(0.0), _manager(), _ping(0), _netPlayerID(-1), Respawn(false)
+	  _hud(), _totalTime(0.0), _respawnTime(0.0), _manager(), _ping(0), _netPlayerID(-1), Respawn(false), _currentPlayerIDforUI(0)
 {
     _buttonPressed = new bool[2];
 }
@@ -88,31 +88,20 @@ void Shpila::initialize()
 		_hud.bind("Show_Units_P1", Control::Listener::CLICK, ShowUnitsP1);
 		_hud.form()->getControl("Player1")->setVisible(false);
 		
-		_hud.bind("Player2_New_Irbaga", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Chasovoy", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Budfoor", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Dark", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Barar", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Archon", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Observer", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Immortal", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Colossus", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Albiria", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_VoidRay", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Carrier", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Tempest", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_Mothership", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player2_New_MothershipCore", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Show_Units_P2", Control::Listener::CLICK, ShowUnitsP2);
-		_hud.form()->getControl("Player2")->setVisible(false);
-		
-
 		_hud.form()->getControl("Tune")->setVisible(false);
 		_hud.form()->getControl("Connection")->setVisible(false);
 		_hud.bind("ShowTune", Control::Listener::CLICK, ShowTunes);
 		_hud.bind("Connect", Control::Listener::CLICK, ShowConnection);		
 		_hud.bind("CameraFoVPlus", Control::Listener::CLICK, CameraFoVPlus);
 		_hud.bind("CameraFoVMinus", Control::Listener::CLICK, CameraFoVMinus);
+		_hud.bind("ApplyConnection", Control::Listener::CLICK, ConnectToServer);
+		_hud.bind("SwitchToPlayer1", Control::Listener::CLICK, SwitchPlayer);
+		_hud.bind("SwitchToPlayer2", Control::Listener::CLICK, SwitchPlayer);
+
+		_hud.bind("UpgradeLevel1", Control::Listener::CLICK, Upgrade);
+		_hud.bind("UpgradeLevel2", Control::Listener::CLICK, Upgrade);
+		
+		
 		char buff[100];
 		sprintf(buff, "FoV-%0.0f", FoV);
 		((Label*)_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
@@ -151,9 +140,6 @@ void Shpila::initialize()
 		_gamepad = getGamepad(0);
 
 		OpenSteer::OpenSteerManager::initialize();
-
-		_client.Startup(&_manager);
-		_client.Connect("localhost", 7777, "Jezuka", "");
 	}
 	else
 	{
@@ -234,7 +220,7 @@ void Shpila::loadCharacters()
 	_manager.addUnit("res/common/carrier.scene", "carrier", CarrierWarrior::constructor);
 	_manager.addUnit("res/common/tempest.scene", "tempest", TempestWarrior::constructor);
 	_manager.addUnit("res/common/mothership.scene", "mothership", MothershipWarrior::constructor);
-	_manager.addUnit("res/common/core.scene", "core", CoreWarrior::constructor);
+	_manager.addUnit("res/common/mothershipcore.scene", "mothershipcore", CoreWarrior::constructor);
 	_manager.addUnit("res/common/SourceSmall.scene", "tower", TowerObject::constructor);
 	_manager.addUnit("res/common/SourceBig.scene", "base", TheBaseObject::constructor);
 	_manager.initUnits();
@@ -288,19 +274,61 @@ bool Shpila::drawScene(Node* node, bool transparent)
     return true;
 }
 
+void Shpila::updateMenuButtons()
+{
+	char buff[100];
+	sprintf(buff, "Ping-%d", _ping);
+	((Label*)_hud.form()->getControl("PingLabel"))->setText(buff);
+
+	char buff2[100];
+	sprintf(buff2, "Energy-%d", _manager.Players[0]->MainResource);
+	((Label*)_hud.form()->getControl("mainresource"))->setText(buff2);
+
+	char buff3[100];
+	int rTime = (RESPAWN_TIME - _respawnTime) / 1000.0f;
+	sprintf(buff3, "Time-%d", rTime);
+	((Label*)_hud.form()->getControl("timetospawn"))->setText(buff3);
+
+	Player* player = _manager.Players[_currentPlayerIDforUI];
+	Container* container = (Container*)_hud.form()->getControl("units1_column1");
+	const std::vector<Control*>& controls = container->getControls();
+	int firstInvesible = -1;
+	for (int i = 0; i < controls.size(); i++)
+	{
+		const ActorData& aData = getActorData(controls[i]->getTextTag());
+		bool vis = aData.UpgradeRequired <= player->UprgadeLevel;
+		controls[i]->setVisible(vis);
+		if ((!vis) && (firstInvesible == -1))
+		{
+			firstInvesible = i;
+		}
+	}
+
+	Control* buttonUpgrade1 = _hud.form()->getControl("UpgradeLevel1");
+	Control* buttonUpgrade2 = _hud.form()->getControl("UpgradeLevel2");
+	if (firstInvesible != -1)
+	{
+		buttonUpgrade1->setVisible(player->UprgadeLevel == 0);
+		buttonUpgrade1->setPosition(controls[firstInvesible]->getX(), controls[firstInvesible]->getY());
+		buttonUpgrade2->setVisible(player->UprgadeLevel == 1);
+		buttonUpgrade2->setPosition(controls[firstInvesible]->getX(), controls[firstInvesible]->getY());
+	}
+	else
+	{
+		buttonUpgrade1->setVisible(false);
+		buttonUpgrade2->setVisible(false);
+	}
+}
+
 
 //shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
 
 void Shpila::CreateUnit(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
-	Control* parent = control->getParent();
-	int player = (!strcmp(parent->getTextTag(), "units_p1")) ? 0 : 1;
+	int player = (shpila->_netPlayerID != 65535) ? shpila->_netPlayerID : shpila->_currentPlayerIDforUI;
 	const char *character = control->getTextTag();
-
-	if ((shpila->_netPlayerID != 65535) && (shpila->_netPlayerID != player))
-		return;
-	shpila->_manager.Players[player]->CreateWarrior(character);
+	shpila->_manager.Players[player]->CreateWarrior(character);	
 }
 
 void Shpila::ShowUnitsP1(Game* game, Control* control)
@@ -313,6 +341,13 @@ void Shpila::ShowUnitsP2(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
 	shpila->_hud.form()->getControl("Player2")->setVisible(!shpila->_hud.form()->getControl("Player2")->isVisible());
+}
+
+void Shpila::SwitchPlayer(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	if (shpila->_netPlayerID == 65535)
+		shpila->_currentPlayerIDforUI = (!strcmp(control->getTextTag(), "player1")) ? 0 : 1;
 }
 
 void Shpila::ShowTunes(Game* game, Control* control)
@@ -358,6 +393,24 @@ void Shpila::SetCameraLocked(Game* game, Control* control)
 	shpila->_freeCamera = false;
 }
 
+void Shpila::ConnectToServer(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	const char* host = ((TextBox*)shpila->_hud.form()->getControl("ConnectionPath"))->getText();
+	shpila->_client.Startup(&shpila->_manager);
+	shpila->_client.Connect(host, 7777, "Jezuka", "");
+}
+
+void Shpila::Upgrade(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	int ul = shpila->_manager.Players[shpila->_currentPlayerIDforUI]->UprgadeLevel;
+	if (ul < 2)
+	{
+		shpila->_manager.Players[shpila->_currentPlayerIDforUI]->UprgadeLevel += 1;
+	}
+}
+
 void Shpila::update(float elapsedTime)
 {
 	_totalTime += elapsedTime;
@@ -381,19 +434,10 @@ void Shpila::update(float elapsedTime)
 		if (emitter)
 			emitter->update(elapsedTime);*/
 		_client.Update(0);
+		if (_netPlayerID != 65535)
+			_currentPlayerIDforUI = _netPlayerID;
 
-		char buff[100];
-		sprintf(buff, "Ping-%d", _ping);
-		((Label*)_hud.form()->getControl("PingLabel"))->setText(buff);
-
-		char buff2[100];
-		sprintf(buff2, "Energy-%d", _manager.Players[0]->MainResource);
-		((Label*)_hud.form()->getControl("mainresource"))->setText(buff2);
-
-		char buff3[100];
-		int rTime = (RESPAWN_TIME - _respawnTime) / 1000.0f;
-		sprintf(buff3, "Time-%d", rTime);
-		((Label*)_hud.form()->getControl("timetospawn"))->setText(buff3);
+		updateMenuButtons();
 
 		Vector2 move;
 		if (_moveFlags != 0)
@@ -430,8 +474,8 @@ void Shpila::update(float elapsedTime)
 
 			if (!move.isZero())
 			{
-				_fpCamera.moveForward(elapsedTime * move.y / 100.0f);
-				_fpCamera.moveLeft(elapsedTime * move.x / 100.0f);
+				_fpCamera.moveForward(elapsedTime * move.y / 20.0f);
+				_fpCamera.moveLeft(elapsedTime * move.x / 20.0f);
 			}
 
 		}

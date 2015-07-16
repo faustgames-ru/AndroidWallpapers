@@ -13,6 +13,7 @@ public:
 	Player* EnemyPlayer;
 	bool AutoPlay;
 	int ID;
+	int UprgadeLevel;
 	Vector3 BattleFieldDirection;
 	int MainResource;
 	Player(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection);

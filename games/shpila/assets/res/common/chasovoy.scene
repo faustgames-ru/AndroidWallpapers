@@ -1,6 +1,6 @@
 scene
 {
-    path = res/common/small.gpb
+    path = res/common/default/small.gpb
 
     node Small
     {

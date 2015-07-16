@@ -56,10 +56,12 @@ private:
     void drawSplash(void* param);
     bool drawScene(Node* node, bool transparent);
 	void updateNetwork();
+	void updateMenuButtons();
 
 	static void CreateUnit(Game* game, Control* control);
 	static void ShowUnitsP1(Game* game, Control* control);
 	static void ShowUnitsP2(Game* game, Control* control);
+	static void SwitchPlayer(Game* game, Control* control);
 
 	static void ShowTunes(Game* game, Control* control);
 	static void ShowConnection(Game* game, Control* control);
@@ -67,6 +69,8 @@ private:
 	static void CameraFoVMinus(Game* game, Control* control);
 	static void SetCameraFree(Game* game, Control* control);
 	static void SetCameraLocked(Game* game, Control* control);
+	static void ConnectToServer(Game* game, Control* control);
+	static void Upgrade(Game* game, Control* control);
 
     Font* _font;
 	AutoRef<Scene> _scene;
@@ -104,6 +108,7 @@ private:
 	double _respawnTime;
 	Client _client;
 	GameObjectManager _manager;
+	int _currentPlayerIDforUI;
 public:
 	int _ping;
 	PLAYERID _netPlayerID;

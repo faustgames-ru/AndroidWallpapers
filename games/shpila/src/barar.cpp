@@ -11,5 +11,5 @@ void BararWarrior::init(GameObjectManager& manager, Node* node, int playerID, Ma
 	BaseWarrior::init(manager, node, playerID, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	GeometryRadius = 0.5f;
+	GeometryRadius = 1.0f;
 }

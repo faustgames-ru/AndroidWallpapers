@@ -1,6 +1,6 @@
 scene
 {
-    path = res/common/SourceBig.gpb
+    path = res/common/default/SourceBig.gpb
 
     physics
     {

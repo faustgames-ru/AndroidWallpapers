@@ -1,0 +1,19 @@
+scene
+{
+    path = res/common/default/largeair.gpb
+
+    node Large
+    {
+        tags
+        {
+            dynamic
+			transparent
+        }
+    }
+
+    physics
+    {
+        // TODO: Fixme Gravity is set to 3x normal gravity to compenate for larger scale of scene. Bug
+        gravity = 0.0, -29.4, 0.0
+    }
+}

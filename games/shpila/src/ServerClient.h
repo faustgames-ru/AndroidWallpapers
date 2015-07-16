@@ -39,7 +39,7 @@ public:
 	Client();
 	~Client();
 	void Startup(GameObjectManager* manager);
-	bool Connect(char *szHostname, int iPort, char *szNickname, char *szPassword);
+	bool Connect(const char *szHostname, int iPort, char *szNickname, char *szPassword);
 	void Disconnect(void);
 	void Update(RakNet::TimeMS curTime);
 private:

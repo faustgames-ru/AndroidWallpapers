@@ -1,6 +1,6 @@
 scene
 {
-    path = res/common/medium.gpb
+    path = res/common/default/medium.gpb
 
     node Medium
     {
