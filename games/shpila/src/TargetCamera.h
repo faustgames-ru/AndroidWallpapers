@@ -47,6 +47,11 @@ public:
     Camera* getCamera();
 
 	/**
+	* Gets the transform of the camera.
+	*/
+	const Matrix getTransform();
+
+	/**
 	* Sets the rotation of the camera.
 	*
 	* @param rotation.

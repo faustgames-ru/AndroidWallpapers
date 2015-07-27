@@ -79,7 +79,7 @@ form hud
         style = noBorder
         alignment = ALIGN_BOTTOM_LEFT
 		layout = LAYOUT_ABSOLUTE
-        width = 1024
+        width = 1920
 		height = 101
         autoHeight = false
         scrollBarsAutoHide = false
@@ -235,7 +235,7 @@ form hud
 		{
 			layout = LAYOUT_ABSOLUTE
 			alignment = ALIGN_BOTTOM_LEFT
-			width = 1024
+			width = 1920
 			height = 116
 			consumeInputEvents = false
 			
@@ -324,7 +324,7 @@ form hud
     {
         style = noBorder
         alignment = ALIGN_VCENTER_HCENTER
-        width = 250
+        width = 350
 		height = 300
 		autoWidth = false
         autoHeight = false
@@ -414,6 +414,40 @@ form hud
                style = title
                size = 60, 35
                text = Ping 0
+           }
+        }
+		
+		container Settings 
+        {
+           alignment = ALIGN_TOP_LEFT
+           autoWidth = false
+		   width = 70
+           height = 120
+           layout = LAYOUT_VERTICAL
+		   consumeInputEvents = false
+		   
+		   label Settings
+           {
+               style = title
+               size = 70, 35
+               text = Settings
+           }
+		   
+           button SettingsLoad
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 60
+              height = 35
+              text = Load
+           }
+           button SettingsSave
+           {
+              consumeInputEvents = true
+              style = buttonStyle
+              width = 60
+              height = 35
+              text = Save
            }
         }
 	}

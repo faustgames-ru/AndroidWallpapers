@@ -26,14 +26,12 @@ void Player::update(float time)
 	{
 		_defenceBase = (HiddenObject*)Manager.createObject("base", _position + 25.45f * BattleFieldDirection, ID);
 		_defenceBase->SearchRadius = 10.0f;
-		_defenceBase->GeometryRadius = 0.5f;
 	}
 
 	if (_defenceTower == NULL)
 	{
 		_defenceTower = (HiddenObject*)Manager.createObject("tower", _position + 45.25f * BattleFieldDirection, ID);
 		_defenceTower->SearchRadius = 10.0f;
-		_defenceTower->GeometryRadius = 0.5f;
 	}
 	//spawn warriors
 	_mainResourceIncreacetimer += time;

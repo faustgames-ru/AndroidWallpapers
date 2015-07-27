@@ -287,7 +287,7 @@ void Client::Packet_ActorSync(Packet *p)
 		}
 		if (!found)
 		{
-			BaseWarrior* warrior = (BaseWarrior*)_manager->createObject(ACTOR_DATA[actorSyncData.actorType].Name.c_str(), actorSyncData.pos, playerID);
+			BaseWarrior* warrior = (BaseWarrior*)_manager->createObject(getActorData(actorSyncData.actorType).Name.c_str(), actorSyncData.pos, playerID);
 			warrior->Player = _manager->Players[playerID];
 		}
 	}

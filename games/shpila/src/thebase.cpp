@@ -19,10 +19,10 @@ void TheBaseObject::init(GameObjectManager& manager, Node* node, int playerID, M
 
 void TheBaseObject::interaction(BaseGameObject* object)
 {
-	if (GameData->Damage > 0.0f)
+	if (GameData->DamageLight > 0.0f)
 	{
 		float distance = object->position().distanceSquared(position());
-		if ((object->PlayerID != PlayerID) && (object->Health > 0.0f) && (distance <= (GameData->AttackDistance * GameData->AttackDistance)))
+		if ((object->PlayerID != PlayerID) && (object->Health > 0.0f) && (distance <= (GameData->DistanceGround * GameData->DistanceGround)))
 		{
 			Target = object;
 		}
@@ -32,11 +32,11 @@ void TheBaseObject::interaction(BaseGameObject* object)
 void TheBaseObject::update(float time)
 {
 	_damageTimer += time;
-	if (Target && (GameData->Damage > 0.0f))
+	if (Target && (GameData->DamageLight > 0.0f))
 	{
-		if (_damageTimer > GameData->AttackDelay)
+		if (_damageTimer > GameData->AttackDelayGround)
 		{
-			Target->Health -= GameData->Damage;
+			Target->Health -= GameData->DamageLight;
 			_damageTimer = 0.0f;
 		}
 	}

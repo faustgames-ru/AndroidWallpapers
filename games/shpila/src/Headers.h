@@ -23,27 +23,6 @@
 #include "SAMP\SAMPRPC.h"
 #include "ServerClient.h"
 
-#define ACTOR_TYPE_IRBAGA 0
-#define ACTOR_TYPE_CHASOVOY 1
-#define ACTOR_TYPE_BUDFOOR 2
-#define ACTOR_TYPE_DARK 3
-#define ACTOR_TYPE_BARAR 4
-#define ACTOR_TYPE_ARCHON 5
-#define ACTOR_TYPE_OBSERVER 6
-#define ACTOR_TYPE_IMMORTAL 7
-#define ACTOR_TYPE_COLOSSUS 8
-#define ACTOR_TYPE_ALBIRIA 9
-#define ACTOR_TYPE_VOIDRAY 10
-#define ACTOR_TYPE_CARRIER 11
-#define ACTOR_TYPE_TEMPEST 12
-#define ACTOR_TYPE_MOTHERSHIP 13
-#define ACTOR_TYPE_MOTHERSHIPCORE 14
-
-#define ACTOR_TYPE_TOWER 15
-#define ACTOR_TYPE_BASE 16
-
-#define ACTOR_TYPE_LAST 17
-
 #include "algorithms\Links.h"
 #include "algorithms\Utils.h"
 #include "algorithms\Valuable.h"
@@ -52,6 +31,7 @@
 #include "UnitManagement\Proximity.h"
 #include "TargetCamera.h"
 #include "UnitMovement.h"
+#include "ActorData.h"
 #include "BaseGameObject.h"
 #include "BaseActor.h"
 #include "BaseWarrior.h"

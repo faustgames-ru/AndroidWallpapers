@@ -5,5 +5,6 @@
 
 float rnd(float min = 0.0, float max = 1.0);
 float rndSign();
+#define SQR(x) ((x) * (x))
 
 #endif

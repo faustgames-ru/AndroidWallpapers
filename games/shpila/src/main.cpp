@@ -1,5 +1,7 @@
 #include "main.h"
 
+#include "tinyxml\tinyxml.h"
+
 // Declare our game instance
 Shpila game;
 
@@ -36,7 +38,7 @@ static const bool EMPTY = false;
 Shpila::Shpila()
     : _font(NULL), _scene(), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _rotateX(0), _materialParameterAlpha(NULL),
-	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _camera(), _fpCamera(), _freeCamera(true), _battleFieldDirection(), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
+	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _fpCamera(), _freeCamera(true), _battleFieldDirection(), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
 	  _hud(), _totalTime(0.0), _respawnTime(0.0), _manager(), _ping(0), _netPlayerID(-1), Respawn(false), _currentPlayerIDforUI(0)
 {
     _buttonPressed = new bool[2];
@@ -100,8 +102,10 @@ void Shpila::initialize()
 
 		_hud.bind("UpgradeLevel1", Control::Listener::CLICK, Upgrade);
 		_hud.bind("UpgradeLevel2", Control::Listener::CLICK, Upgrade);
-		
-		
+
+		_hud.bind("SettingsSave", Control::Listener::CLICK, saveSetting);
+		_hud.bind("SettingsLoad", Control::Listener::CLICK, loadSetting);
+			
 		char buff[100];
 		sprintf(buff, "FoV-%0.0f", FoV);
 		((Label*)_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
@@ -188,24 +192,10 @@ void Shpila::initializeSolarSystem()
 	}
 }
 
-/*#define ACTOR_TYPE_IRBAGA 0
-#define ACTOR_TYPE_CHASOVOY 1
-#define ACTOR_TYPE_BUDFOOR 2
-#define ACTOR_TYPE_DARK 3
-#define ACTOR_TYPE_BARAR 4
-#define ACTOR_TYPE_ARCHON 5
-#define ACTOR_TYPE_OBSERVER 6
-#define ACTOR_TYPE_IMMORTAL 7
-#define ACTOR_TYPE_COLOSSUS 8
-#define ACTOR_TYPE_ALBIRIA 9
-#define ACTOR_TYPE_VOIDRAY 10
-#define ACTOR_TYPE_c 11
-#define ACTOR_TYPE_TEMPEST 12
-#define ACTOR_TYPE_MOTHERSHIP 13
-#define ACTOR_TYPE_MothershipCore 14*/
-
 void Shpila::loadCharacters()
 {
+	loadActorsData("res/units.xml");
+
 	_manager.addUnit("res/common/irbaga.scene", "irbaga", IrbagaWarrior::constructor);
 	_manager.addUnit("res/common/chasovoy.scene", "chasovoy", ChasovoyWarrior::constructor);
 	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor);
@@ -255,6 +245,7 @@ void Shpila::finalize()
 	SAFE_RELEASE(_scene);
     SAFE_RELEASE(_font);
     SAFE_DELETE_ARRAY(_buttonPressed);
+	freedActorsData();
 }
 
 void Shpila::drawSplash(void* param)
@@ -293,10 +284,10 @@ void Shpila::updateMenuButtons()
 	Container* container = (Container*)_hud.form()->getControl("units1_column1");
 	const std::vector<Control*>& controls = container->getControls();
 	int firstInvesible = -1;
-	for (int i = 0; i < controls.size(); i++)
+	for (int i = 0; i < (int)controls.size(); i++)
 	{
 		const ActorData& aData = getActorData(controls[i]->getTextTag());
-		bool vis = aData.UpgradeRequired <= player->UprgadeLevel;
+		bool vis = aData.RequireUpgrade <= player->UprgadeLevel;
 		controls[i]->setVisible(vis);
 		if ((!vis) && (firstInvesible == -1))
 		{
@@ -409,6 +400,73 @@ void Shpila::Upgrade(Game* game, Control* control)
 	{
 		shpila->_manager.Players[shpila->_currentPlayerIDforUI]->UprgadeLevel += 1;
 	}
+}
+
+void Shpila::loadSetting(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	Quaternion qRotX;
+	Quaternion qRotY;
+	Vector3 pos;
+
+	TiXmlDocument doc;
+	doc.SetTabSize(8);
+	doc.LoadFile("res/settings.xml");
+	TiXmlNode *node = doc.FirstChild("camera");
+
+	qRotX.x = (float)atof(node->FirstChildElement("rx0")->GetText());
+	qRotX.y = (float)atof(node->FirstChildElement("rx1")->GetText());
+	qRotX.z = (float)atof(node->FirstChildElement("rx2")->GetText());
+	qRotX.w = (float)atof(node->FirstChildElement("rx3")->GetText());
+	qRotY.x = (float)atof(node->FirstChildElement("ry0")->GetText());
+	qRotY.y = (float)atof(node->FirstChildElement("ry1")->GetText());
+	qRotY.z = (float)atof(node->FirstChildElement("ry2")->GetText());
+	qRotY.w = (float)atof(node->FirstChildElement("ry3")->GetText());
+	pos.x = (float)atof(node->FirstChildElement("posx")->GetText());
+	pos.y = (float)atof(node->FirstChildElement("posy")->GetText());
+	pos.z = (float)atof(node->FirstChildElement("posz")->GetText());
+	shpila->_fpCamera.getRootNode()->getFirstChild()->setRotation(qRotX);
+	shpila->_fpCamera.getRootNode()->setRotation(qRotY);
+	shpila->_fpCamera.getRootNode()->setTranslation(pos);
+}
+
+void AddFloatElement(TiXmlElement * rootElement, char* name, float value)
+{
+	char buff[100];
+	TiXmlElement * element;
+	element = new TiXmlElement(name);
+	sprintf(buff, "%f", value);
+	element->LinkEndChild(new TiXmlText(buff));
+	rootElement->LinkEndChild(element);
+}
+
+void Shpila::saveSetting(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	Quaternion qRotX = shpila->_fpCamera.getRootNode()->getFirstChild()->getRotation();
+	Quaternion qRotY = shpila->_fpCamera.getRootNode()->getRotation();	
+	Vector3 pos = shpila->_fpCamera.getRootNode()->getTranslation();
+	TiXmlDocument doc;
+
+	doc.SetTabSize(8);
+	TiXmlDeclaration * decl = new TiXmlDeclaration("1.0", "", "");
+	TiXmlElement * element = new TiXmlElement("camera");
+	doc.LinkEndChild(decl);
+	doc.LinkEndChild(element);
+
+	AddFloatElement(element, "rx0", qRotX.x);
+	AddFloatElement(element, "rx1", qRotX.y);
+	AddFloatElement(element, "rx2", qRotX.z);
+	AddFloatElement(element, "rx3", qRotX.w);
+	AddFloatElement(element, "ry0", qRotY.x);
+	AddFloatElement(element, "ry1", qRotY.y);
+	AddFloatElement(element, "ry2", qRotY.z);
+	AddFloatElement(element, "ry3", qRotY.w);
+	AddFloatElement(element, "posx", pos.x);
+	AddFloatElement(element, "posy", pos.y);
+	AddFloatElement(element, "posz", pos.z);
+
+	doc.SaveFile("res/settings.xml");
 }
 
 void Shpila::update(float elapsedTime)

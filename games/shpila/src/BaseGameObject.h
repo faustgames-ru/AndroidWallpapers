@@ -4,7 +4,6 @@
 using namespace gameplay;
 
 class GameObjectManager;
-class ActorData;
 
 class BaseGameObject : public CLinkObject
 {
@@ -13,17 +12,14 @@ public:
 	int ID;
 	const ActorData* GameData;
 	float SearchRadius;
-	//float ActionRadius;
-	float GeometryRadius;
 	float Health;
-	//float DamageTime;
 	BaseGameObject();
 	~BaseGameObject();
 	bool InteractionPossible(BaseGameObject* object);
 	Node* node();
 
 	virtual void init(GameObjectManager& manager, Node* node, int playerID, Matrix transform);
-	virtual int ActorType() { return -1; }
+	virtual int ActorType();
 	virtual const Vector3 position();
 	virtual void setPosition(const Vector3 pos);
 	virtual void setPositionOnServer(const Vector3 pos);

@@ -13,6 +13,7 @@ void BaseActor::init(GameObjectManager& manager, Node* node, int playerID, Matri
 	manager.registerMovementController(&_movementController);
 	Vector3 pos;
 	transform.getTranslation(&pos);
+	_movementController.setRadius(GameData->GeometryRadius);
 	_movementController.setPosition(OpenSteer::Vec3(pos.x, pos.y, pos.z));
 }
 

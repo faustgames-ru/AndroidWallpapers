@@ -55,7 +55,7 @@ public:
 		//setForward(-1.0f, 0.0f, 0.0f);
 
 		// size of bounding sphere, for obstacle avoidance, etc.
-		setRadius(0.5); // width = 0.7, add 0.3 margin, take half
+		setRadius(1.5); // width = 0.7, add 0.3 margin, take half
 
 		setSpeed(0);             // speed along Forward direction.
 		setMaxForce(20.0);        // steering force is clipped to this magnitude

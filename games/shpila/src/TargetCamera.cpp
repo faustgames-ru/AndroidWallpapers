@@ -45,6 +45,17 @@ Camera* TargetCamera::getCamera()
     return NULL;
 }
 
+const Matrix TargetCamera::getTransform()
+{
+	Matrix res;
+	_pitchNode->getRotation(&res);
+	//res.translate(_rootNode->getTranslation());
+	res.m[12] = _rootNode->getTranslation().x;
+	res.m[13] = _rootNode->getTranslation().y;
+	res.m[14] = _rootNode->getTranslation().z;
+	return res;
+}
+
 void TargetCamera::setRotation(const Matrix& rotation)
 {
 	_pitchNode->set(Vector3(1.0f, 1.0f, 1.0f),

@@ -37,13 +37,13 @@ void BaseWarrior::interaction(BaseGameObject* object)
 		if (Target->Health <= 0.0f)
 			Target = NULL;
 	}
-	if ((Health > 0.0f) && (object->Health > 0.0f) && (position().distanceSquared(object->position()) < (GeometryRadius * GeometryRadius)))
+	if ((Health > 0.0f) && (object->Health > 0.0f) && (position().distanceSquared(object->position()) < (GameData->GeometryRadius * GameData->GeometryRadius)))
 	{
 		Vector3 offset = (position() - object->position()) * 0.5f;
 		_node->setTranslation(_node->getTranslation() + offset);
 	}
 	float distanceToTarget = Target != NULL ? Target->position().distanceSquared(position()) : FLT_MAX;
-	if ((distanceToTarget > (GameData->AttackDistance * GameData->AttackDistance)) && (object->PlayerID != PlayerID)
+	if ((distanceToTarget > (GameData->DistanceGround * GameData->DistanceGround)) && (object->PlayerID != PlayerID)
 		&& (object->Health > 0.0f))
 	{
 		Target = object;
@@ -64,8 +64,13 @@ void BaseWarrior::update(float time)
 
 	if (_dead)
 	{
-		if (!(*_unitAnimation[0]->_clips)[UnitAnimation::Death]->isPlaying())
-			switchToAnimation(UnitAnimation::Dead, AnimationClip::REPEAT_INDEFINITE, 0);
+		if (_unitAnimation.size() > 0)
+		{
+			if (!(*_unitAnimation[0]->_clips)[UnitAnimation::Death]->isPlaying())
+			{
+				switchToAnimation(UnitAnimation::Dead, AnimationClip::REPEAT_INDEFINITE, 0);
+			}
+		}
 		return;
 	}
 
@@ -95,7 +100,7 @@ void BaseWarrior::update(float time)
 			OpenSteer::Vec3 pos = _movementController.position();
 			_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
 
-			float radius = ((GameData->AttackDistance + Target->GeometryRadius + GeometryRadius) * (GameData->AttackDistance + Target->GeometryRadius + GeometryRadius));
+			float radius = SQR(GameData->DistanceGround + Target->GameData->GeometryRadius + GameData->GeometryRadius);
 			float distance = tPos.distanceSquared(position());
 			if (radius < distance)
 			{
@@ -107,9 +112,9 @@ void BaseWarrior::update(float time)
 				_movementController._applyBreakingForces = true;
 				switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);//AnimationClip::REPEAT_INDEFINITE
 				_damageTimer += time;
-				if ((_damageTimer > GameData->AttackDelay) && (Target != NULL))
+				if ((_damageTimer > GameData->AttackDelayGround) && (Target != NULL))
 				{
-					Target->Health -= GameData->Damage;
+					Target->Health -= GameData->getDamage(*Target->GameData);
 					_damageTimer = 0.0f;
 				}
 			}	

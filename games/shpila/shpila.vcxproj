@@ -396,6 +396,7 @@
     <ClCompile Include="..\..\raknet\TCPInterface.cpp" />
     <ClCompile Include="..\..\raknet\TelnetTransport.cpp" />
     <ClCompile Include="..\..\raknet\_findfirst.cpp" />
+    <ClCompile Include="src\ActorData.cpp" />
     <ClCompile Include="src\albiria.cpp" />
     <ClCompile Include="src\barar.cpp" />
     <ClCompile Include="src\BaseActor.cpp" />
@@ -514,6 +515,7 @@
     <ClInclude Include="..\..\raknet\Types.h" />
     <ClInclude Include="..\..\raknet\WindowsIncludes.h" />
     <ClInclude Include="..\..\raknet\_findfirst.h" />
+    <ClInclude Include="src\ActorData.h" />
     <ClInclude Include="src\albiria.h" />
     <ClInclude Include="src\barar.h" />
     <ClInclude Include="src\BaseActor.h" />

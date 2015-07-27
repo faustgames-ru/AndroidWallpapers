@@ -24,7 +24,6 @@ public:
 	static BaseGameObject* constructor();
 	AlbiriaWarrior();
 	virtual void init(GameObjectManager& manager, Node* node, int playerID, Matrix transform);
-	virtual int ActorType() { return ACTOR_TYPE_ALBIRIA; }
 	virtual void update(float time);
 	void fire();
 	void recharge();

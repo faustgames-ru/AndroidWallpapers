@@ -19,6 +19,9 @@
     <Filter Include="src\UnitManagement">
       <UniqueIdentifier>{7a6e0b15-b828-42c2-b884-68be7592e9a4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\TinyXML">
+      <UniqueIdentifier>{31e2936e-fbb9-4632-9472-34b563932299}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\logo_black.png">
@@ -953,6 +956,18 @@
     <ClCompile Include="src\UnitManagement\OpenSteer.cpp">
       <Filter>src\UnitManagement</Filter>
     </ClCompile>
+    <ClCompile Include="src\tinyxml\tinystr.cpp">
+      <Filter>src\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxml.cpp">
+      <Filter>src\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxmlerror.cpp">
+      <Filter>src\TinyXML</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tinyxml\tinyxmlparser.cpp">
+      <Filter>src\TinyXML</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\AbsoluteLayout.h">
@@ -1749,6 +1764,12 @@
     </ClInclude>
     <ClInclude Include="src\algorithms\Valuable.h">
       <Filter>src\Algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tinyxml\tinystr.h">
+      <Filter>src\TinyXML</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tinyxml\tinyxml.h">
+      <Filter>src\TinyXML</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

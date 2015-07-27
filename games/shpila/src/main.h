@@ -72,6 +72,9 @@ private:
 	static void ConnectToServer(Game* game, Control* control);
 	static void Upgrade(Game* game, Control* control);
 
+	static void loadSetting(Game* game, Control* control);
+	static void saveSetting(Game* game, Control* control);
+
     Font* _font;
 	AutoRef<Scene> _scene;
     PhysicsCharacter* _character;
@@ -94,7 +97,6 @@ private:
     bool* _buttonPressed;
     Vector2 _currentDirection;
     Gamepad* _gamepad;
-	Camera* _camera;
 	TargetCamera _fpCamera;
 	bool _freeCamera;
 	Vector3 _battleFieldDirection;
