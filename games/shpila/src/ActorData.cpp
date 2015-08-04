@@ -5,7 +5,7 @@ std::vector<ActorData*> ActorsData;
 
 float ActorData::getDefaultDamage() const
 {
-	float min = 1e20;
+	float min = 1e20f;
 	for (int i = 0; i < DamageTypesCount; i++)
 	{
 		if (min > Damage[i])

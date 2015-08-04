@@ -107,13 +107,14 @@ private:
 	Node* _particleEmitterStarsNode;
 	GameHUD _hud;
 	double _totalTime;
-	double _respawnTime;
+	
 	Client _client;
 	GameObjectManager _manager;
 	int _currentPlayerIDforUI;
 public:
 	int _ping;
 	PLAYERID _netPlayerID;
+	double _respawnTime;
 	bool Respawn;
 };
 

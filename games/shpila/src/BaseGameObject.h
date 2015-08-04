@@ -10,6 +10,7 @@ class BaseGameObject : public CLinkObject
 public:
 	int PlayerID;
 	int ID;
+	bool Holder;
 	const ActorData* GameData;
 	float SearchRadius;
 	float Health;
@@ -34,6 +35,7 @@ protected:
 	float getInteractionDistance(BaseGameObject* object);
 	float _damageTimer;
 	Valuable<Vector3> _positionOnServer;
+	bool _synkPositionMode;
 };
 
 #endif

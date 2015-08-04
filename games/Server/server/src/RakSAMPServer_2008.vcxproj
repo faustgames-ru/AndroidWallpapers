@@ -85,7 +85,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <AdditionalIncludeDirectories>./;../../raknet/;../../raknet/SAMP/;./LUA/;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;DEBUG;_CRT_SECURE_NO_WARNINGS;_RAKNET_THREADSAFE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;DEBUG;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ExceptionHandling>Sync</ExceptionHandling>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
@@ -109,6 +109,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\raknet\Gets.cpp" />
     <ClCompile Include="..\..\raknet\_findfirst.cpp" />
     <ClCompile Include="..\..\raknet\AsynchronousFileIO.cpp" />
     <ClCompile Include="..\..\raknet\BitStream.cpp" />
@@ -155,6 +156,7 @@
     <ClCompile Include="..\..\raknet\TelnetTransport.cpp" />
     <ClCompile Include="..\..\raknet\SAMP\samp_netencr.cpp" />
     <ClCompile Include="..\..\raknet\SAMP\SAMPRPC.cpp" />
+    <ClCompile Include="Game.cpp" />
     <ClCompile Include="LUA\lapi.c" />
     <ClCompile Include="LUA\lauxlib.c" />
     <ClCompile Include="LUA\lbaselib.c" />
@@ -202,6 +204,10 @@
     <ClCompile Include="vehicles.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\raknet\Gets.h" />
+    <ClInclude Include="..\..\raknet\Kbhit.h" />
+    <ClInclude Include="..\..\raknet\RakNetTime.h" />
+    <ClInclude Include="..\..\raknet\WindowsIncludes.h" />
     <ClInclude Include="..\..\raknet\_findfirst.h" />
     <ClInclude Include="..\..\raknet\AsynchronousFileIO.h" />
     <ClInclude Include="..\..\raknet\AutopatcherPatchContext.h" />
@@ -290,6 +296,7 @@
     <ClInclude Include="..\..\raknet\Types.h" />
     <ClInclude Include="..\..\raknet\SAMP\samp_netencr.h" />
     <ClInclude Include="..\..\raknet\SAMP\SAMPRPC.h" />
+    <ClInclude Include="Game.h" />
     <ClInclude Include="LUA\lapi.h" />
     <ClInclude Include="LUA\lauxlib.h" />
     <ClInclude Include="LUA\lcode.h" />

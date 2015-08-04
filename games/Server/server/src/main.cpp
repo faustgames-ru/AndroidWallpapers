@@ -14,6 +14,8 @@ FILE *flLog = NULL;
 
 struct stPlayerInfo playerInfo[MAX_PLAYERS];
 
+Game* __game = NULL;
+
 int main(int argc, char *argv[])
 {
 	if(GetModuleFileName(NULL, szWorkingDirectory, sizeof(szWorkingDirectory) - 32) != 0)
@@ -60,10 +62,14 @@ int main(int argc, char *argv[])
 	pRakServer->StartOccasionalPing();
 	RegisterServerRPCs(pRakServer);
 
+	Game game;
+	__game = &game;
+
 	// Main loop
 	while(iMainLoop)
 	{
-		UpdateNetwork();
+		game.update();
+		UpdateNetwork();		
 
 		Sleep(5);
 	}

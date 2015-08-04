@@ -3,6 +3,7 @@
 BaseGameObject::BaseGameObject()
 : PlayerID(0)
 , ID(0)
+, Holder(false)
 , GameData(NULL)
 , SearchRadius(0.0f)
 , Health(100.0f)
@@ -10,6 +11,7 @@ BaseGameObject::BaseGameObject()
 , _node()
 , _damageTimer(0.0f)
 , _positionOnServer()
+, _synkPositionMode(false)
 {}
 
 BaseGameObject::~BaseGameObject()

@@ -29,6 +29,7 @@ int RPC_DisableCheckpoint = 255;
 int RPC_SetRaceCheckpoint = 255;
 int RPC_DisableRaceCheckpoint = 255;
 int RPC_UpdateScoresPingsIPs = 130;
+int RPC_AddNewActor = 131;
 int RPC_SvrStats = 255;
 int RPC_GameModeRestart = 113;
 int RPC_ConnectionRejected = 114;

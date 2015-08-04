@@ -137,7 +137,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_WINDOWS;_ITERATOR_DEBUG_LEVEL=2;RAKSAMP_CLIENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../../raknet</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../Server/raknet;$(ProjectDir)src/client</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
@@ -169,7 +169,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../Server/raknet;$(ProjectDir)src/client</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
@@ -199,7 +199,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GAMEPLAY_MEM_LEAK_DETECTION;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../../raknet</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../Server/raknet;$(ProjectDir)src/client</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ShowIncludes>false</ShowIncludes>
       <PreprocessToFile>false</PreprocessToFile>
@@ -231,7 +231,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;GAMEPLAY_MEM_LEAK_DETECTION;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../Server/raknet;$(ProjectDir)src/client</AdditionalIncludeDirectories>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <ShowIncludes>false</ShowIncludes>
       <PreprocessToFile>false</PreprocessToFile>
@@ -265,7 +265,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_ITERATOR_DEBUG_LEVEL=0;RAKSAMP_CLIENT;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../../raknet</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../Server/raknet;$(ProjectDir)src/client</AdditionalIncludeDirectories>
       <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
     <Link>
@@ -298,7 +298,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_WINDOWS;_ITERATOR_DEBUG_LEVEL=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)../../gameplay/external-deps/lua/include;$(ProjectDir)../../gameplay/external-deps/bullet/src;$(ProjectDir)../../gameplay/gameplay/src;$(ProjectDir)../../gameplay/external-deps/openal/include/AL;$(ProjectDir)../../gameplay/external-deps/oggvorbis/include;$(ProjectDir)../../gameplay/external-deps/libpng/include;$(ProjectDir)../../gameplay/external-deps/zlib/include;$(ProjectDir)../../gameplay/external-deps/glew/include;$(ProjectDir)../Server/raknet;$(ProjectDir)src/client</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -322,7 +322,6 @@
     </CustomBuildStep>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <None Include="..\..\raknet\RakNet.vcxproj.filters" />
     <None Include="bar-descriptor.xml">
       <SubType>Designer</SubType>
     </None>
@@ -349,53 +348,53 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\raknet\AsynchronousFileIO.cpp" />
-    <ClCompile Include="..\..\raknet\BitStream.cpp" />
-    <ClCompile Include="..\..\raknet\BitStream_NoTemplate.cpp" />
-    <ClCompile Include="..\..\raknet\CheckSum.cpp" />
-    <ClCompile Include="..\..\raknet\CommandParserInterface.cpp" />
-    <ClCompile Include="..\..\raknet\ConsoleServer.cpp" />
-    <ClCompile Include="..\..\raknet\DataBlockEncryptor.cpp" />
-    <ClCompile Include="..\..\raknet\DataCompressor.cpp" />
-    <ClCompile Include="..\..\raknet\DS_ByteQueue.cpp" />
-    <ClCompile Include="..\..\raknet\DS_HuffmanEncodingTree.cpp" />
-    <ClCompile Include="..\..\raknet\DS_Table.cpp" />
-    <ClCompile Include="..\..\raknet\EncodeClassName.cpp" />
-    <ClCompile Include="..\..\raknet\ExtendedOverlappedPool.cpp" />
-    <ClCompile Include="..\..\raknet\FileOperations.cpp" />
-    <ClCompile Include="..\..\raknet\Gets.cpp" />
-    <ClCompile Include="..\..\raknet\GetTime.cpp" />
-    <ClCompile Include="..\..\raknet\InternalPacketPool.cpp" />
-    <ClCompile Include="..\..\raknet\LinuxStrings.cpp" />
-    <ClCompile Include="..\..\raknet\LogCommandParser.cpp" />
-    <ClCompile Include="..\..\raknet\NetworkIDGenerator.cpp" />
-    <ClCompile Include="..\..\raknet\NetworkTypes.cpp" />
-    <ClCompile Include="..\..\raknet\PluginInterface.cpp" />
-    <ClCompile Include="..\..\raknet\RakClient.cpp" />
-    <ClCompile Include="..\..\raknet\RakNetCommandParser.cpp" />
-    <ClCompile Include="..\..\raknet\RakNetStatistics.cpp" />
-    <ClCompile Include="..\..\raknet\RakNetworkFactory.cpp" />
-    <ClCompile Include="..\..\raknet\RakPeer.cpp" />
-    <ClCompile Include="..\..\raknet\rakserver.cpp" />
-    <ClCompile Include="..\..\raknet\RakSleep.cpp" />
-    <ClCompile Include="..\..\raknet\Rand.cpp" />
-    <ClCompile Include="..\..\raknet\ReliabilityLayer.cpp" />
-    <ClCompile Include="..\..\raknet\rijndael.cpp" />
-    <ClCompile Include="..\..\raknet\RPCMap.cpp" />
-    <ClCompile Include="..\..\raknet\SAMP\SAMPRPC.cpp" />
-    <ClCompile Include="..\..\raknet\SAMP\samp_netencr.cpp" />
-    <ClCompile Include="..\..\raknet\SHA1.cpp" />
-    <ClCompile Include="..\..\raknet\SimpleMutex.cpp" />
-    <ClCompile Include="..\..\raknet\SocketLayer.cpp" />
-    <ClCompile Include="..\..\raknet\StringCompressor.cpp" />
-    <ClCompile Include="..\..\raknet\StringTable.cpp" />
-    <ClCompile Include="..\..\raknet\SystemAddressList.cpp" />
-    <ClCompile Include="..\..\raknet\SystemDatabaseClient.cpp" />
-    <ClCompile Include="..\..\raknet\SystemDatabaseServer.cpp" />
-    <ClCompile Include="..\..\raknet\TableSerializer.cpp" />
-    <ClCompile Include="..\..\raknet\TCPInterface.cpp" />
-    <ClCompile Include="..\..\raknet\TelnetTransport.cpp" />
-    <ClCompile Include="..\..\raknet\_findfirst.cpp" />
+    <ClCompile Include="..\Server\raknet\AsynchronousFileIO.cpp" />
+    <ClCompile Include="..\Server\raknet\BitStream.cpp" />
+    <ClCompile Include="..\Server\raknet\BitStream_NoTemplate.cpp" />
+    <ClCompile Include="..\Server\raknet\CheckSum.cpp" />
+    <ClCompile Include="..\Server\raknet\CommandParserInterface.cpp" />
+    <ClCompile Include="..\Server\raknet\ConsoleServer.cpp" />
+    <ClCompile Include="..\Server\raknet\DataBlockEncryptor.cpp" />
+    <ClCompile Include="..\Server\raknet\DataCompressor.cpp" />
+    <ClCompile Include="..\Server\raknet\DS_ByteQueue.cpp" />
+    <ClCompile Include="..\Server\raknet\DS_HuffmanEncodingTree.cpp" />
+    <ClCompile Include="..\Server\raknet\DS_Table.cpp" />
+    <ClCompile Include="..\Server\raknet\EncodeClassName.cpp" />
+    <ClCompile Include="..\Server\raknet\ExtendedOverlappedPool.cpp" />
+    <ClCompile Include="..\Server\raknet\FileOperations.cpp" />
+    <ClCompile Include="..\Server\raknet\Gets.cpp" />
+    <ClCompile Include="..\Server\raknet\GetTime.cpp" />
+    <ClCompile Include="..\Server\raknet\InternalPacketPool.cpp" />
+    <ClCompile Include="..\Server\raknet\LinuxStrings.cpp" />
+    <ClCompile Include="..\Server\raknet\LogCommandParser.cpp" />
+    <ClCompile Include="..\Server\raknet\NetworkIDGenerator.cpp" />
+    <ClCompile Include="..\Server\raknet\NetworkTypes.cpp" />
+    <ClCompile Include="..\Server\raknet\PluginInterface.cpp" />
+    <ClCompile Include="..\Server\raknet\RakClient.cpp" />
+    <ClCompile Include="..\Server\raknet\RakNetCommandParser.cpp" />
+    <ClCompile Include="..\Server\raknet\RakNetStatistics.cpp" />
+    <ClCompile Include="..\Server\raknet\RakNetworkFactory.cpp" />
+    <ClCompile Include="..\Server\raknet\RakPeer.cpp" />
+    <ClCompile Include="..\Server\raknet\rakserver.cpp" />
+    <ClCompile Include="..\Server\raknet\RakSleep.cpp" />
+    <ClCompile Include="..\Server\raknet\Rand.cpp" />
+    <ClCompile Include="..\Server\raknet\ReliabilityLayer.cpp" />
+    <ClCompile Include="..\Server\raknet\rijndael.cpp" />
+    <ClCompile Include="..\Server\raknet\RPCMap.cpp" />
+    <ClCompile Include="..\Server\raknet\SAMP\SAMPRPC.cpp" />
+    <ClCompile Include="..\Server\raknet\SAMP\samp_netencr.cpp" />
+    <ClCompile Include="..\Server\raknet\SHA1.cpp" />
+    <ClCompile Include="..\Server\raknet\SimpleMutex.cpp" />
+    <ClCompile Include="..\Server\raknet\SocketLayer.cpp" />
+    <ClCompile Include="..\Server\raknet\StringCompressor.cpp" />
+    <ClCompile Include="..\Server\raknet\StringTable.cpp" />
+    <ClCompile Include="..\Server\raknet\SystemAddressList.cpp" />
+    <ClCompile Include="..\Server\raknet\SystemDatabaseClient.cpp" />
+    <ClCompile Include="..\Server\raknet\SystemDatabaseServer.cpp" />
+    <ClCompile Include="..\Server\raknet\TableSerializer.cpp" />
+    <ClCompile Include="..\Server\raknet\TCPInterface.cpp" />
+    <ClCompile Include="..\Server\raknet\TelnetTransport.cpp" />
+    <ClCompile Include="..\Server\raknet\_findfirst.cpp" />
     <ClCompile Include="src\ActorData.cpp" />
     <ClCompile Include="src\albiria.cpp" />
     <ClCompile Include="src\barar.cpp" />
@@ -422,99 +421,99 @@
     <ClCompile Include="src\Warriors.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\raknet\AsynchronousFileIO.h" />
-    <ClInclude Include="..\..\raknet\AutopatcherPatchContext.h" />
-    <ClInclude Include="..\..\raknet\AutopatcherRepositoryInterface.h" />
-    <ClInclude Include="..\..\raknet\BigTypes.h" />
-    <ClInclude Include="..\..\raknet\BitStream.h" />
-    <ClInclude Include="..\..\raknet\BitStream_NoTemplate.h" />
-    <ClInclude Include="..\..\raknet\CheckSum.h" />
-    <ClInclude Include="..\..\raknet\ClientContextStruct.h" />
-    <ClInclude Include="..\..\raknet\CommandParserInterface.h" />
-    <ClInclude Include="..\..\raknet\ConsoleServer.h" />
-    <ClInclude Include="..\..\raknet\DataBlockEncryptor.h" />
-    <ClInclude Include="..\..\raknet\DataCompressor.h" />
-    <ClInclude Include="..\..\raknet\DS_BinarySearchTree.h" />
-    <ClInclude Include="..\..\raknet\DS_BPlusTree.h" />
-    <ClInclude Include="..\..\raknet\DS_ByteQueue.h" />
-    <ClInclude Include="..\..\raknet\DS_Heap.h" />
-    <ClInclude Include="..\..\raknet\DS_HuffmanEncodingTree.h" />
-    <ClInclude Include="..\..\raknet\DS_HuffmanEncodingTreeFactory.h" />
-    <ClInclude Include="..\..\raknet\DS_HuffmanEncodingTreeNode.h" />
-    <ClInclude Include="..\..\raknet\DS_LinkedList.h" />
-    <ClInclude Include="..\..\raknet\DS_List.h" />
-    <ClInclude Include="..\..\raknet\DS_Map.h" />
-    <ClInclude Include="..\..\raknet\DS_MemoryPool.h" />
-    <ClInclude Include="..\..\raknet\DS_OrderedChannelHeap.h" />
-    <ClInclude Include="..\..\raknet\DS_OrderedList.h" />
-    <ClInclude Include="..\..\raknet\DS_Queue.h" />
-    <ClInclude Include="..\..\raknet\DS_QueueLinkedList.h" />
-    <ClInclude Include="..\..\raknet\DS_RangeList.h" />
-    <ClInclude Include="..\..\raknet\DS_Table.h" />
-    <ClInclude Include="..\..\raknet\DS_Tree.h" />
-    <ClInclude Include="..\..\raknet\DS_WeightedGraph.h" />
-    <ClInclude Include="..\..\raknet\Export.h" />
-    <ClInclude Include="..\..\raknet\ExtendedOverlappedPool.h" />
-    <ClInclude Include="..\..\raknet\FileOperations.h" />
-    <ClInclude Include="..\..\raknet\Gets.h" />
-    <ClInclude Include="..\..\raknet\GetTime.h" />
-    <ClInclude Include="..\..\raknet\InternalPacket.h" />
-    <ClInclude Include="..\..\raknet\InternalPacketPool.h" />
-    <ClInclude Include="..\..\raknet\Kbhit.h" />
-    <ClInclude Include="..\..\raknet\LinuxStrings.h" />
-    <ClInclude Include="..\..\raknet\LogCommandParser.h" />
-    <ClInclude Include="..\..\raknet\main.h" />
-    <ClInclude Include="..\..\raknet\MTUSize.h" />
-    <ClInclude Include="..\..\raknet\multiplayer.h" />
-    <ClInclude Include="..\..\raknet\NetworkIDGenerator.h" />
-    <ClInclude Include="..\..\raknet\NetworkTypes.h" />
-    <ClInclude Include="..\..\raknet\PacketEnumerations.h" />
-    <ClInclude Include="..\..\raknet\PacketPool.h" />
-    <ClInclude Include="..\..\raknet\PacketPriority.h" />
-    <ClInclude Include="..\..\raknet\PluginInterface.h" />
-    <ClInclude Include="..\..\raknet\RakAssert.h" />
-    <ClInclude Include="..\..\raknet\RakClient.h" />
-    <ClInclude Include="..\..\raknet\RakClientInterface.h" />
-    <ClInclude Include="..\..\raknet\RakNetCommandParser.h" />
-    <ClInclude Include="..\..\raknet\RakNetDefines.h" />
-    <ClInclude Include="..\..\raknet\RakNetStatistics.h" />
-    <ClInclude Include="..\..\raknet\RakNetTime.h" />
-    <ClInclude Include="..\..\raknet\RakNetworkFactory.h" />
-    <ClInclude Include="..\..\raknet\rakpeer.h" />
-    <ClInclude Include="..\..\raknet\rakpeerinterface.h" />
-    <ClInclude Include="..\..\raknet\RakServer.h" />
-    <ClInclude Include="..\..\raknet\rakserverinterface.h" />
-    <ClInclude Include="..\..\raknet\RakSleep.h" />
-    <ClInclude Include="..\..\raknet\Rand.h" />
-    <ClInclude Include="..\..\raknet\ReliabilityLayer.h" />
-    <ClInclude Include="..\..\raknet\Replica.h" />
-    <ClInclude Include="..\..\raknet\ReplicaEnums.h" />
-    <ClInclude Include="..\..\raknet\rijndael-boxes.h" />
-    <ClInclude Include="..\..\raknet\rijndael.h" />
-    <ClInclude Include="..\..\raknet\RouterInterface.h" />
-    <ClInclude Include="..\..\raknet\RPCMap.h" />
-    <ClInclude Include="..\..\raknet\RPCNode.h" />
-    <ClInclude Include="..\..\raknet\RSACrypt.h" />
-    <ClInclude Include="..\..\raknet\SAMP\SAMPRPC.h" />
-    <ClInclude Include="..\..\raknet\SAMP\samp_netencr.h" />
-    <ClInclude Include="..\..\raknet\SHA1.h" />
-    <ClInclude Include="..\..\raknet\SimpleMutex.h" />
-    <ClInclude Include="..\..\raknet\SimpleTCPServer.h" />
-    <ClInclude Include="..\..\raknet\SingleProducerConsumer.h" />
-    <ClInclude Include="..\..\raknet\SocketLayer.h" />
-    <ClInclude Include="..\..\raknet\StringCompressor.h" />
-    <ClInclude Include="..\..\raknet\StringTable.h" />
-    <ClInclude Include="..\..\raknet\systemaddresslist.h" />
-    <ClInclude Include="..\..\raknet\SystemDatabaseClient.h" />
-    <ClInclude Include="..\..\raknet\SystemDatabaseServer.h" />
-    <ClInclude Include="..\..\raknet\TableSerializer.h" />
-    <ClInclude Include="..\..\raknet\TCPInterface.h" />
-    <ClInclude Include="..\..\raknet\TelnetTransport.h" />
-    <ClInclude Include="..\..\raknet\ThreadPool.h" />
-    <ClInclude Include="..\..\raknet\TransportInterface.h" />
-    <ClInclude Include="..\..\raknet\Types.h" />
-    <ClInclude Include="..\..\raknet\WindowsIncludes.h" />
-    <ClInclude Include="..\..\raknet\_findfirst.h" />
+    <ClInclude Include="..\Server\raknet\AsynchronousFileIO.h" />
+    <ClInclude Include="..\Server\raknet\AutopatcherPatchContext.h" />
+    <ClInclude Include="..\Server\raknet\AutopatcherRepositoryInterface.h" />
+    <ClInclude Include="..\Server\raknet\BigTypes.h" />
+    <ClInclude Include="..\Server\raknet\BitStream.h" />
+    <ClInclude Include="..\Server\raknet\BitStream_NoTemplate.h" />
+    <ClInclude Include="..\Server\raknet\CheckSum.h" />
+    <ClInclude Include="..\Server\raknet\ClientContextStruct.h" />
+    <ClInclude Include="..\Server\raknet\CommandParserInterface.h" />
+    <ClInclude Include="..\Server\raknet\ConsoleServer.h" />
+    <ClInclude Include="..\Server\raknet\DataBlockEncryptor.h" />
+    <ClInclude Include="..\Server\raknet\DataCompressor.h" />
+    <ClInclude Include="..\Server\raknet\DS_BinarySearchTree.h" />
+    <ClInclude Include="..\Server\raknet\DS_BPlusTree.h" />
+    <ClInclude Include="..\Server\raknet\DS_ByteQueue.h" />
+    <ClInclude Include="..\Server\raknet\DS_Heap.h" />
+    <ClInclude Include="..\Server\raknet\DS_HuffmanEncodingTree.h" />
+    <ClInclude Include="..\Server\raknet\DS_HuffmanEncodingTreeFactory.h" />
+    <ClInclude Include="..\Server\raknet\DS_HuffmanEncodingTreeNode.h" />
+    <ClInclude Include="..\Server\raknet\DS_LinkedList.h" />
+    <ClInclude Include="..\Server\raknet\DS_List.h" />
+    <ClInclude Include="..\Server\raknet\DS_Map.h" />
+    <ClInclude Include="..\Server\raknet\DS_MemoryPool.h" />
+    <ClInclude Include="..\Server\raknet\DS_OrderedChannelHeap.h" />
+    <ClInclude Include="..\Server\raknet\DS_OrderedList.h" />
+    <ClInclude Include="..\Server\raknet\DS_Queue.h" />
+    <ClInclude Include="..\Server\raknet\DS_QueueLinkedList.h" />
+    <ClInclude Include="..\Server\raknet\DS_RangeList.h" />
+    <ClInclude Include="..\Server\raknet\DS_Table.h" />
+    <ClInclude Include="..\Server\raknet\DS_Tree.h" />
+    <ClInclude Include="..\Server\raknet\DS_WeightedGraph.h" />
+    <ClInclude Include="..\Server\raknet\Export.h" />
+    <ClInclude Include="..\Server\raknet\ExtendedOverlappedPool.h" />
+    <ClInclude Include="..\Server\raknet\FileOperations.h" />
+    <ClInclude Include="..\Server\raknet\Gets.h" />
+    <ClInclude Include="..\Server\raknet\GetTime.h" />
+    <ClInclude Include="..\Server\raknet\InternalPacket.h" />
+    <ClInclude Include="..\Server\raknet\InternalPacketPool.h" />
+    <ClInclude Include="..\Server\raknet\Kbhit.h" />
+    <ClInclude Include="..\Server\raknet\LinuxStrings.h" />
+    <ClInclude Include="..\Server\raknet\LogCommandParser.h" />
+    <ClInclude Include="..\Server\raknet\main.h" />
+    <ClInclude Include="..\Server\raknet\MTUSize.h" />
+    <ClInclude Include="..\Server\raknet\multiplayer.h" />
+    <ClInclude Include="..\Server\raknet\NetworkIDGenerator.h" />
+    <ClInclude Include="..\Server\raknet\NetworkTypes.h" />
+    <ClInclude Include="..\Server\raknet\PacketEnumerations.h" />
+    <ClInclude Include="..\Server\raknet\PacketPool.h" />
+    <ClInclude Include="..\Server\raknet\PacketPriority.h" />
+    <ClInclude Include="..\Server\raknet\PluginInterface.h" />
+    <ClInclude Include="..\Server\raknet\RakAssert.h" />
+    <ClInclude Include="..\Server\raknet\RakClient.h" />
+    <ClInclude Include="..\Server\raknet\RakClientInterface.h" />
+    <ClInclude Include="..\Server\raknet\RakNetCommandParser.h" />
+    <ClInclude Include="..\Server\raknet\RakNetDefines.h" />
+    <ClInclude Include="..\Server\raknet\RakNetStatistics.h" />
+    <ClInclude Include="..\Server\raknet\RakNetTime.h" />
+    <ClInclude Include="..\Server\raknet\RakNetworkFactory.h" />
+    <ClInclude Include="..\Server\raknet\rakpeer.h" />
+    <ClInclude Include="..\Server\raknet\rakpeerinterface.h" />
+    <ClInclude Include="..\Server\raknet\RakServer.h" />
+    <ClInclude Include="..\Server\raknet\rakserverinterface.h" />
+    <ClInclude Include="..\Server\raknet\RakSleep.h" />
+    <ClInclude Include="..\Server\raknet\Rand.h" />
+    <ClInclude Include="..\Server\raknet\ReliabilityLayer.h" />
+    <ClInclude Include="..\Server\raknet\Replica.h" />
+    <ClInclude Include="..\Server\raknet\ReplicaEnums.h" />
+    <ClInclude Include="..\Server\raknet\rijndael-boxes.h" />
+    <ClInclude Include="..\Server\raknet\rijndael.h" />
+    <ClInclude Include="..\Server\raknet\RouterInterface.h" />
+    <ClInclude Include="..\Server\raknet\RPCMap.h" />
+    <ClInclude Include="..\Server\raknet\RPCNode.h" />
+    <ClInclude Include="..\Server\raknet\RSACrypt.h" />
+    <ClInclude Include="..\Server\raknet\SAMP\SAMPRPC.h" />
+    <ClInclude Include="..\Server\raknet\SAMP\samp_netencr.h" />
+    <ClInclude Include="..\Server\raknet\SHA1.h" />
+    <ClInclude Include="..\Server\raknet\SimpleMutex.h" />
+    <ClInclude Include="..\Server\raknet\SimpleTCPServer.h" />
+    <ClInclude Include="..\Server\raknet\SingleProducerConsumer.h" />
+    <ClInclude Include="..\Server\raknet\SocketLayer.h" />
+    <ClInclude Include="..\Server\raknet\StringCompressor.h" />
+    <ClInclude Include="..\Server\raknet\StringTable.h" />
+    <ClInclude Include="..\Server\raknet\systemaddresslist.h" />
+    <ClInclude Include="..\Server\raknet\SystemDatabaseClient.h" />
+    <ClInclude Include="..\Server\raknet\SystemDatabaseServer.h" />
+    <ClInclude Include="..\Server\raknet\TableSerializer.h" />
+    <ClInclude Include="..\Server\raknet\TCPInterface.h" />
+    <ClInclude Include="..\Server\raknet\TelnetTransport.h" />
+    <ClInclude Include="..\Server\raknet\ThreadPool.h" />
+    <ClInclude Include="..\Server\raknet\TransportInterface.h" />
+    <ClInclude Include="..\Server\raknet\Types.h" />
+    <ClInclude Include="..\Server\raknet\WindowsIncludes.h" />
+    <ClInclude Include="..\Server\raknet\_findfirst.h" />
     <ClInclude Include="src\ActorData.h" />
     <ClInclude Include="src\albiria.h" />
     <ClInclude Include="src\barar.h" />

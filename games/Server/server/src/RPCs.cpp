@@ -11,7 +11,8 @@
 void InitGameForPlayer(PLAYERID playerID)
 {
 	RakNet::BitStream bsInitGame;
-	bsInitGame.WriteCompressed((bool)1); // m_bZoneNames
+	bsInitGame.Write(__game->getRespawnTime()); // m_fNameTagDrawDistance
+	/*bsInitGame.WriteCompressed((bool)1); // m_bZoneNames
 	bsInitGame.WriteCompressed((bool)1); // m_bUseCJWalk
 	bsInitGame.WriteCompressed((bool)1); // m_bAllowWeapons
 	bsInitGame.WriteCompressed((bool)0); // m_bLimitGlobalChatRadius
@@ -43,7 +44,8 @@ void InitGameForPlayer(PLAYERID playerID)
 
 	BYTE vehModels[212];
 	memset(vehModels, 1, 212);
-	bsInitGame.Write((char *)&vehModels, 212);
+	bsInitGame.Write((char *)&vehModels, 212);*/
+
 
 	pRakServer->RPC(&RPC_InitGame, &bsInitGame, HIGH_PRIORITY, RELIABLE,
 		0, pRakServer->GetPlayerIDFromIndex(playerID), FALSE, FALSE, UNASSIGNED_NETWORK_ID, NULL);

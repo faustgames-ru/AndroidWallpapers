@@ -10,6 +10,9 @@
 
 #include "Headers.h"
 #include "main.h"
+#ifdef WIN32
+#include <windows.h>
+#endif
 
 
 using namespace RakNet;
@@ -63,6 +66,15 @@ void UpdateScoresPingsIPs(RPCParameters *rpcParams)
 
 void InitNetGame(RPCParameters *rpcParams)
 {
+	PCHAR Data = reinterpret_cast<PCHAR>(rpcParams->input);
+	int iBitLength = rpcParams->numberOfBitsOfData;
+	RakNet::BitStream bsData((unsigned char *)Data, (iBitLength / 8) + 1, false);
+	Shpila* shpila = (Shpila*)Game::getInstance();
+	bsData.Read(shpila->_respawnTime);
+}
+
+void RPCAddNewActor(RPCParameters *rpcParams)
+{
 
 }
 
@@ -92,6 +104,7 @@ void Client::Startup(GameObjectManager* manager)
 
 	_pRakClient->RegisterAsRemoteProcedureCall(&RPC_UpdateScoresPingsIPs, UpdateScoresPingsIPs);
 	_pRakClient->RegisterAsRemoteProcedureCall(&RPC_InitGame, InitNetGame);
+	_pRakClient->RegisterAsRemoteProcedureCall(&RPC_AddNewActor, RPCAddNewActor);	
 	_pRakClient->RegisterAsRemoteProcedureCall(&RPC_WorldVehicleAdd, tmp1);
 	_pRakClient->RegisterAsRemoteProcedureCall(&RPC_ServerJoin, tmp1);
 	_pRakClient->RegisterAsRemoteProcedureCall(&RPC_ServerQuit, tmp1);	
@@ -116,6 +129,7 @@ void Client::Disconnect(void)
 	_pRakClient->UnregisterAsRemoteProcedureCall(&RPC_ServerJoin);
 	_pRakClient->UnregisterAsRemoteProcedureCall(&RPC_ServerQuit);
 	_pRakClient->UnregisterAsRemoteProcedureCall(&RPC_InitGame);
+	_pRakClient->UnregisterAsRemoteProcedureCall(&RPC_AddNewActor);
 	_pRakClient->UnregisterAsRemoteProcedureCall(&RPC_WorldPlayerAdd);
 	_pRakClient->UnregisterAsRemoteProcedureCall(&RPC_WorldPlayerDeath);
 	_pRakClient->UnregisterAsRemoteProcedureCall(&RPC_WorldPlayerRemove);
@@ -232,8 +246,7 @@ void Client::Packet_ConnectionSucceeded(Packet *p)
 	bsSuccAuth.IgnoreBits(8); // ID_CONNECTION_REQUEST_ACCEPTED
 	bsSuccAuth.IgnoreBits(32); // binaryAddress
 	bsSuccAuth.IgnoreBits(16); // port
-
-	bsSuccAuth.Read(myPlayerID);
+	bsSuccAuth.Read(myPlayerID);	
 	shpila->_netPlayerID = myPlayerID;
 	playerInfo[myPlayerID].iIsConnected = 1;
 	strcpy(playerInfo[myPlayerID].szPlayerName, g_szNickName);
@@ -245,6 +258,7 @@ void Client::Packet_ConnectionSucceeded(Packet *p)
 	char *pszAuthBullshit = AUTH_BS;
 	int iVersion = NETGAME_VERSION;
 	BYTE byteMod = 1;
+	sprintf(g_szNickName, "player %d", (int)shpila->_netPlayerID);
 	BYTE byteNameLen = (BYTE)strlen(g_szNickName);
 	BYTE byteAuthBSLen = (BYTE)strlen(pszAuthBullshit);
 	unsigned int uiClientChallengeResponse = uiChallenge ^ iVersion;
@@ -277,7 +291,7 @@ void Client::Packet_ActorSync(Packet *p)
 		Itr<BaseGameObject> it = _manager->objects();
 		while (it)
 		{
-			if (it->ID == actorSyncData.actorID)
+			if ((it->ID == actorSyncData.actorID) && (it->PlayerID == playerID))
 			{
 				it->setPositionOnServer(actorSyncData.pos); 
 				found = true;
@@ -287,7 +301,11 @@ void Client::Packet_ActorSync(Packet *p)
 		}
 		if (!found)
 		{
-			BaseWarrior* warrior = (BaseWarrior*)_manager->createObject(getActorData(actorSyncData.actorType).Name.c_str(), actorSyncData.pos, playerID);
+			const char * name = getActorData(actorSyncData.actorType).Name.c_str();
+			BaseWarrior* warrior = (BaseWarrior*)_manager->createObject(name, actorSyncData.pos, playerID);
+			warrior->ID = actorSyncData.actorID;
+			warrior->Holder = actorSyncData.holder;
+			warrior->HolderWarriorName = name;
 			warrior->Player = _manager->Players[playerID];
 		}
 	}
@@ -321,6 +339,7 @@ void Client::Send_ActorSync(int playerID)
 			data.pos = it->position();
 			data.actorType = it->ActorType();
 			data.angle = 0.0f;
+			data.holder = it->Holder;
 			bsActorSync.Write((PCHAR)&data, sizeof(ActorSyncData));
 		}
 		++it;
@@ -346,6 +365,11 @@ void Client::UpdatePlayerScoresAndPings(int iWait, int iMS)
 		RakNet::BitStream bsParams;
 		_pRakClient->RPC(&RPC_UpdateScoresPingsIPs, &bsParams, HIGH_PRIORITY, RELIABLE, 0, FALSE, UNASSIGNED_NETWORK_ID, NULL);
 	}
+}
+
+void Client::RequestAddNewActor()
+{
+
 }
 
 // Just listens for ID_USER_PACKET_ENUM and validates its integrity

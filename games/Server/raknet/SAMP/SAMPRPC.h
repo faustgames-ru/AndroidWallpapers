@@ -26,6 +26,7 @@ extern int RPC_DisableCheckpoint;
 extern int RPC_SetRaceCheckpoint;
 extern int RPC_DisableRaceCheckpoint;
 extern int RPC_UpdateScoresPingsIPs;
+extern int RPC_AddNewActor;
 extern int RPC_SvrStats;
 extern int RPC_GameModeRestart;
 extern int RPC_ConnectionRejected;

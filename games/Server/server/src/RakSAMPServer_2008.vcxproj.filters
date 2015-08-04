@@ -266,6 +266,10 @@
     <ClCompile Include="ScrFunctions.cpp" />
     <ClCompile Include="ScrInternal.cpp" />
     <ClCompile Include="vehicles.cpp" />
+    <ClCompile Include="Game.cpp" />
+    <ClCompile Include="..\..\raknet\Gets.cpp">
+      <Filter>raknet</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\raknet\_findfirst.h">
@@ -618,6 +622,19 @@
     <ClInclude Include="ScrFunctions.h" />
     <ClInclude Include="ScrInternal.h" />
     <ClInclude Include="vehicles.h" />
+    <ClInclude Include="Game.h" />
+    <ClInclude Include="..\..\raknet\RakNetTime.h">
+      <Filter>raknet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\raknet\Gets.h">
+      <Filter>raknet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\raknet\Kbhit.h">
+      <Filter>raknet</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\raknet\WindowsIncludes.h">
+      <Filter>raknet</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="LUA\Makefile">

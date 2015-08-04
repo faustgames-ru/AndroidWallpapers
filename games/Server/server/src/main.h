@@ -30,6 +30,9 @@ extern "C" {
 #include "ScrInternal.h"
 #include "ScrFunctions.h"
 
+#include "Game.h"
+
+extern Game* __game;
 
 extern TiXmlDocument xmlSettings;
 

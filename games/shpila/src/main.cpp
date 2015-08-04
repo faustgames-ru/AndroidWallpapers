@@ -225,8 +225,10 @@ void Shpila::initPlayers()
 	Player* pl2 = new Player(_manager, 1, p2, -_battleFieldDirection);
 	pl1->EnemyPlayer = pl2;
 	pl1->MainResource = 600;
+	pl1->ID = 0;
 	pl2->EnemyPlayer = pl1;
-	pl2->MainResource = 600;
+	pl2->MainResource = 600;	
+	pl2->ID = 1;
 	_manager.Players.push_back(pl1);
 	_manager.Players.push_back(pl2);
 }
@@ -317,7 +319,7 @@ void Shpila::updateMenuButtons()
 void Shpila::CreateUnit(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
-	int player = (shpila->_netPlayerID != 65535) ? shpila->_netPlayerID : shpila->_currentPlayerIDforUI;
+	int player = (shpila->_netPlayerID != UNASSIGNED_PLAYER_INDEX) ? shpila->_netPlayerID : shpila->_currentPlayerIDforUI;
 	const char *character = control->getTextTag();
 	shpila->_manager.Players[player]->CreateWarrior(character);	
 }
@@ -337,7 +339,7 @@ void Shpila::ShowUnitsP2(Game* game, Control* control)
 void Shpila::SwitchPlayer(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
-	if (shpila->_netPlayerID == 65535)
+	if (shpila->_netPlayerID == UNASSIGNED_PLAYER_INDEX)
 		shpila->_currentPlayerIDforUI = (!strcmp(control->getTextTag(), "player1")) ? 0 : 1;
 }
 
@@ -492,7 +494,7 @@ void Shpila::update(float elapsedTime)
 		if (emitter)
 			emitter->update(elapsedTime);*/
 		_client.Update(0);
-		if (_netPlayerID != 65535)
+		if (_netPlayerID != UNASSIGNED_PLAYER_INDEX)
 			_currentPlayerIDforUI = _netPlayerID;
 
 		updateMenuButtons();

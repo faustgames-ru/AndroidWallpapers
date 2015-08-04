@@ -6,6 +6,14 @@ void resetPools()
 	memset(vehiclePool, 0, sizeof(stVehiclePool));
 }
 
+void Packet_RespawnTimeSync(PlayerID playerID)
+{
+	double time = __game->getRespawnTime();
+	RakNet::BitStream bsRespawnTimeSync((unsigned char *)&time, 8, false);
+
+	pRakServer->Send(&bsRespawnTimeSync, HIGH_PRIORITY, UNRELIABLE_SEQUENCED, 0, playerID, TRUE);
+}
+
 void Packet_ActorsSync(Packet *p)
 {
 	RakNet::BitStream bsActorsSync((unsigned char *)p->data, p->length, false);
@@ -282,6 +290,7 @@ void UpdateNetwork()
 				break;
 
 			case ID_NEW_INCOMING_CONNECTION:
+				//!!Packet_RespawnTimeSync(pkt->playerId);
 				for(int i = 0; i < iScriptsRunning; i++)
 				{
 					if(script.scriptVM[i] != NULL && script.szScriptName[i][0] != 0x00)

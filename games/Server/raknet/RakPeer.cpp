@@ -2685,7 +2685,7 @@ void RakPeer::ParseConnectionRequestPacket( RakPeer::RemoteSystemStruct *remoteS
 }
 // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 void RakPeer::OnConnectionRequest( RakPeer::RemoteSystemStruct *remoteSystem, unsigned char *AESKey, bool setAESKey )
-{
+{	
 	// Already handled by caller
 	//if ( AllowIncomingConnections() )
 	{
@@ -2705,8 +2705,14 @@ void RakPeer::OnConnectionRequest( RakPeer::RemoteSystemStruct *remoteSystem, un
 			return ;
 		}
 #endif
-
-		RakNet::BitStream bitStream(sizeof(unsigned char)+sizeof(unsigned short)+sizeof(unsigned int)+sizeof(unsigned short)+sizeof(PlayerIndex));
+		int bitStreamSize = 0;
+#ifdef RAKSAMP_CLIENT
+		bitStreamSize = sizeof(unsigned char)+sizeof(unsigned short)+sizeof(unsigned int)+sizeof(unsigned short)+sizeof(PlayerIndex);
+#else
+		bitStreamSize = sizeof(unsigned char)+sizeof(unsigned short)+sizeof(unsigned int)+sizeof(unsigned short)+sizeof(PlayerIndex) + sizeof(double);
+#endif
+		
+		RakNet::BitStream bitStream(bitStreamSize);
 		bitStream.Write((unsigned char)ID_CONNECTION_REQUEST_ACCEPTED);
 //#ifdef __USE_IO_COMPLETION_PORTS
 //		bitStream.Write((unsigned short)myPlayerId.port + ( unsigned short ) index + ( unsigned short ) 1);

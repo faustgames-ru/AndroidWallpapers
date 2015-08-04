@@ -8,9 +8,9 @@ BaseWarrior::BaseWarrior()
 : BaseActor()
 , Target()
 , Player(NULL)
-, Holder(false)
 , _initialized(false)
 , _dead(false)
+, _deadAltitude(0.0f)
 , _unitAnimation()
 {}
 
@@ -54,7 +54,9 @@ void BaseWarrior::update(float time)
 {
 	if (Holder)
 	{
-		if (((Shpila*)Game::getInstance())->Respawn)
+		int netPlayerID = ((Shpila*)Game::getInstance())->_netPlayerID;
+		bool resp = ((Shpila*)Game::getInstance())->Respawn;
+		if (((netPlayerID == UNASSIGNED_PLAYER_INDEX) || (netPlayerID == Player->ID)) && resp)
 		{
 			BaseWarrior* warrior = (BaseWarrior*)Player->Manager.createObject(HolderWarriorName.c_str(), position() + 15.0f * Player->BattleFieldDirection, Player->ID);
 			warrior->Player = Player;
@@ -71,6 +73,8 @@ void BaseWarrior::update(float time)
 				switchToAnimation(UnitAnimation::Dead, AnimationClip::REPEAT_INDEFINITE, 0);
 			}
 		}
+		_deadAltitude -= time * 0.001f;
+		_node->setTranslation(_node->getTranslation() + Vector3(0.0, -time * 0.001f, 0.0f));
 		return;
 	}
 
@@ -121,19 +125,30 @@ void BaseWarrior::update(float time)
 		}
 		if (_positionOnServer.defined())
 		{
-			float minStep = time * 1.0f;
+			float minStep = time * 0.01f;
 			float sqDist = position().distanceSquared(_positionOnServer);
-			if (sqDist <= (minStep * minStep))
+			if (sqDist > 1.0f)
+				_synkPositionMode = true;
+			if (_synkPositionMode)
 			{
-				setPosition(_positionOnServer);
-			}
-			else
-			{
-				Vector3 dir = (Vector3(_positionOnServer) - position()) / sqrt(sqDist);
-				setPosition(position() + dir * minStep);
+				if (sqDist <= (minStep * minStep))
+				{
+					setPosition(_positionOnServer);
+					_synkPositionMode = false;
+				}
+				else
+				{
+					Vector3 dir = (Vector3(_positionOnServer) - position()) / sqrt(sqDist);
+					setPosition(position() + dir * minStep);
+				}
 			}
 		}
 	}
+}
+
+bool BaseWarrior::deleted()
+{
+	return _deadAltitude < -3.0f;
 }
 
 //const float ROTATION_FACTOR = 0.002f;

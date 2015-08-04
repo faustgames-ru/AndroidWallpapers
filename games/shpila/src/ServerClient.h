@@ -30,6 +30,7 @@ struct ActorSyncData
 	int actorType;
 	Vector3 pos;
 	float angle;
+	bool holder;
 };
 
 // Connects, sends data over time, disconnects, repeat
@@ -48,6 +49,7 @@ private:
 	void Packet_ActorSync(Packet *p);
 	void Send_ActorSync(int playerID);
 	void UpdatePlayerScoresAndPings(int iWait, int iMS);
+	void RequestAddNewActor();
 
 	bool isConnected;
 	RakClientInterface *_pRakClient;
