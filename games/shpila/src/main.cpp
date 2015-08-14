@@ -156,6 +156,16 @@ bool Shpila::initializeNodeMaterials(Node* node)
     return _manager.initializeNodeMaterials(node);
 }
 
+bool Shpila::isActivePlayer(PlayerObject* player)
+{
+	return (_netPlayerID == UNASSIGNED_PLAYER_INDEX) || (_netPlayerID == player->ID);
+}
+PlayerObject* Shpila::getActivePlayer()
+{
+	int player = (_netPlayerID != UNASSIGNED_PLAYER_INDEX) ? _netPlayerID : _currentPlayerIDforUI;
+	return _manager.Players[player];
+}
+
 void Shpila::initializeMaterial(Scene* scene, Node* node, Material* material)
 {
 	_manager.initializeMaterial(node, material);
@@ -213,6 +223,7 @@ void Shpila::loadCharacters()
 	_manager.addUnit("res/common/mothershipcore.scene", "mothershipcore", CoreWarrior::constructor);
 	_manager.addUnit("res/common/SourceSmall.scene", "tower", TowerObject::constructor);
 	_manager.addUnit("res/common/SourceBig.scene", "base", TheBaseObject::constructor);
+	_manager.addUnit("res/common/bullet.scene", "bullet", BaseBullet::constructor);
 	_manager.initUnits();
 }
 
@@ -221,8 +232,8 @@ void Shpila::initPlayers()
 	Vector3 p1 = Vector3(50.0f, 0.0f, -50.0f);
 	Vector3 p2 = Vector3(-50.0f, 0.0f, 50.0f);
 	_battleFieldDirection = Vector3(p2 - p1).normalize();		
-	Player* pl1 = new Player(_manager, 0, p1, _battleFieldDirection);
-	Player* pl2 = new Player(_manager, 1, p2, -_battleFieldDirection);
+	PlayerObject* pl1 = new PlayerObject(_manager, 0, p1, _battleFieldDirection);
+	PlayerObject* pl2 = new PlayerObject(_manager, 1, p2, -_battleFieldDirection);
 	pl1->EnemyPlayer = pl2;
 	pl1->MainResource = 600;
 	pl1->ID = 0;
@@ -235,7 +246,7 @@ void Shpila::initPlayers()
 
 void Shpila::updatePlayers(float time)
 {
-	for (std::vector<Player*>::iterator it = _manager.Players.begin(); it != _manager.Players.end(); ++it)
+	for (std::vector<PlayerObject*>::iterator it = _manager.Players.begin(); it != _manager.Players.end(); ++it)
 	{
 		(*it)->update(time);
 	}
@@ -282,7 +293,7 @@ void Shpila::updateMenuButtons()
 	sprintf(buff3, "Time-%d", rTime);
 	((Label*)_hud.form()->getControl("timetospawn"))->setText(buff3);
 
-	Player* player = _manager.Players[_currentPlayerIDforUI];
+	PlayerObject * player = _manager.Players[_currentPlayerIDforUI];
 	Container* container = (Container*)_hud.form()->getControl("units1_column1");
 	const std::vector<Control*>& controls = container->getControls();
 	int firstInvesible = -1;
@@ -318,10 +329,8 @@ void Shpila::updateMenuButtons()
 
 void Shpila::CreateUnit(Game* game, Control* control)
 {
-	Shpila* shpila = (Shpila*)game;
-	int player = (shpila->_netPlayerID != UNASSIGNED_PLAYER_INDEX) ? shpila->_netPlayerID : shpila->_currentPlayerIDforUI;
 	const char *character = control->getTextTag();
-	shpila->_manager.Players[player]->CreateWarrior(character);	
+	((Shpila*)game)->getActivePlayer()->CreateWarrior(character);
 }
 
 void Shpila::ShowUnitsP1(Game* game, Control* control)

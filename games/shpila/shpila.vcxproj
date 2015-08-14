@@ -401,6 +401,7 @@
     <ClCompile Include="src\BaseActor.cpp" />
     <ClCompile Include="src\BaseBullet.cpp" />
     <ClCompile Include="src\BaseGameObject.cpp" />
+    <ClCompile Include="src\BaseStaticActor.cpp" />
     <ClCompile Include="src\BaseWarrior.cpp" />
     <ClCompile Include="src\BoomerangBullet.cpp" />
     <ClCompile Include="src\budfoor.cpp" />
@@ -520,6 +521,7 @@
     <ClInclude Include="src\BaseActor.h" />
     <ClInclude Include="src\BaseBullet.h" />
     <ClInclude Include="src\BaseGameObject.h" />
+    <ClInclude Include="src\BaseStaticActor.h" />
     <ClInclude Include="src\BaseWarrior.h" />
     <ClInclude Include="src\BoomerangBullet.h" />
     <ClInclude Include="src\budfoor.h" />

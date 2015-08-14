@@ -6,9 +6,8 @@ const unsigned long DEFAULT_BLENDING_TIME = 150;
 
 BaseWarrior::BaseWarrior()
 : BaseActor()
-, Target()
-, Player(NULL)
 , _initialized(false)
+, _attack(false)
 , _dead(false)
 , _deadAltitude(0.0f)
 , _unitAnimation()
@@ -24,27 +23,28 @@ BaseGameObject* BaseWarrior::constructor()
 	return new BaseWarrior();
 }
 
-void BaseWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void BaseWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseActor::init(manager, node, playerID, transform);
+	BaseActor::init(manager, gameData, node, player, transform);
 	updateAnimationState();
+	addTimer(Timer(LocalGameData.GameData->AttackDelayGround, LocalGameData.GameData->AttackDelayGround, damageHandler, damageEnableHandler));
 }
 
 void BaseWarrior::interaction(BaseGameObject* object)
 {
 	if (Target != NULL)
 	{
-		if (Target->Health <= 0.0f)
+		if (Target->LocalGameData.Health <= 0.0f)
 			Target = NULL;
 	}
-	if ((Health > 0.0f) && (object->Health > 0.0f) && (position().distanceSquared(object->position()) < (GameData->GeometryRadius * GameData->GeometryRadius)))
+	if ((LocalGameData.Health > 0.0f) && (object->LocalGameData.Health > 0.0f) && (position().distanceSquared(object->position()) < SQR(LocalGameData.GameData->GeometryRadius)))
 	{
 		Vector3 offset = (position() - object->position()) * 0.5f;
 		_node->setTranslation(_node->getTranslation() + offset);
 	}
 	float distanceToTarget = Target != NULL ? Target->position().distanceSquared(position()) : FLT_MAX;
-	if ((distanceToTarget > (GameData->DistanceGround * GameData->DistanceGround)) && (object->PlayerID != PlayerID)
-		&& (object->Health > 0.0f))
+	if ((distanceToTarget > SQR(LocalGameData.GameData->DistanceGround)) && (object->Player->ID != Player->ID)
+		&& (object->LocalGameData.Health > 0.0f) && (LocalGameData.GameData->isAttackToTargetAllowed(*object->LocalGameData.GameData)))
 	{
 		Target = object;
 	}
@@ -52,14 +52,13 @@ void BaseWarrior::interaction(BaseGameObject* object)
 
 void BaseWarrior::update(float time)
 {
+	BaseActor::update(time);
 	if (Holder)
 	{
-		int netPlayerID = ((Shpila*)Game::getInstance())->_netPlayerID;
 		bool resp = ((Shpila*)Game::getInstance())->Respawn;
-		if (((netPlayerID == UNASSIGNED_PLAYER_INDEX) || (netPlayerID == Player->ID)) && resp)
+		if (((Shpila*)Game::getInstance())->isActivePlayer(Player) && resp)
 		{
-			BaseWarrior* warrior = (BaseWarrior*)Player->Manager.createObject(HolderWarriorName.c_str(), position() + 15.0f * Player->BattleFieldDirection, Player->ID);
-			warrior->Player = Player;
+			Player->Manager.createObject(HolderWarriorName.c_str(), position() + 15.0f * Player->BattleFieldDirection, Player);
 		}
 		return;
 	}
@@ -73,13 +72,12 @@ void BaseWarrior::update(float time)
 				switchToAnimation(UnitAnimation::Dead, AnimationClip::REPEAT_INDEFINITE, 0);
 			}
 		}
-		_deadAltitude -= time * 0.001f;
-		_node->setTranslation(_node->getTranslation() + Vector3(0.0, -time * 0.001f, 0.0f));
+		disappearing(time);
 		return;
 	}
 
 	BaseActor::update(time);
-	if (Health <= 0.0f)
+	if (LocalGameData.Health <= 0.0f)
 	{	
 		switchToAnimation(UnitAnimation::Death, 1.0f, DEFAULT_BLENDING_TIME);
 		_dead = true;
@@ -104,22 +102,21 @@ void BaseWarrior::update(float time)
 			OpenSteer::Vec3 pos = _movementController.position();
 			_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
 
-			float radius = SQR(GameData->DistanceGround + Target->GameData->GeometryRadius + GameData->GeometryRadius);
+			float radius = SQR(LocalGameData.GameData->DistanceGround + Target->LocalGameData.GameData->GeometryRadius + LocalGameData.GameData->GeometryRadius);
 			float distance = tPos.distanceSquared(position());
 			if (radius < distance)
 			{
 				switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
 				_movementController._applyBreakingForces = false;
+				_attack = false;
 			}
 			else
 			{
-				_movementController._applyBreakingForces = true;
-				switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);//AnimationClip::REPEAT_INDEFINITE
-				_damageTimer += time;
-				if ((_damageTimer > GameData->AttackDelayGround) && (Target != NULL))
+				_movementController._applyBreakingForces = true;				
+				if (LocalGameData.GameData->isAttackToTargetAllowed(*Target->LocalGameData.GameData))
 				{
-					Target->Health -= GameData->getDamage(*Target->GameData);
-					_damageTimer = 0.0f;
+					_attack = true;
+					switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);
 				}
 			}	
 		}
@@ -150,6 +147,13 @@ bool BaseWarrior::deleted()
 {
 	return _deadAltitude < -3.0f;
 }
+
+void BaseWarrior::disappearing(float time)
+{
+	_deadAltitude -= time * 0.001f;
+	_node->setTranslation(_node->getTranslation() + Vector3(0.0, -time * 0.001f, 0.0f));
+}
+
 
 //const float ROTATION_FACTOR = 0.002f;
 //const float MOVE_FACTOR = 0.0005f;
@@ -214,4 +218,9 @@ void BaseWarrior::switchToAnimation(UnitAnimation::Actions action, float repeatC
 			(*it)->_clipCurrent = clip;
 		}
 	}
+}
+
+bool BaseWarrior::damageEnableHandler(BaseGameObject* object)
+{
+	return ((BaseWarrior*)object)->_attack && !((BaseWarrior*)object)->_dead;
 }

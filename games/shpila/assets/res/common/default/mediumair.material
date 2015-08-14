@@ -201,7 +201,21 @@ material skinedmeshbumped : texturedBumped
     }
 }
 
-material mtMedium : skinedmesh
+material skinedmeshunlit : texturedUnlit
+{
+    technique
+    {
+        pass
+        {
+            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
+            u_matrixPalette = MATRIX_PALETTE
+            u_modulateAlpha = 1.0
+        }
+    }
+}
+
+
+material mtMedium : skinedmeshunlit
 {
     technique
     {

@@ -156,7 +156,7 @@ void GameObjectManager::initUnits()
 	//_store->visit(this, &GameObjectManager::initializeCharacterNodeScale);	
 }
 
-BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 position, int playerID)
+BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 position, PlayerObject* player)
 {
 	GP_ASSERT(_scene);
 
@@ -164,9 +164,8 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 positi
 	BaseGameObject* object = unit._constructor(); 
 	Matrix translation;
 	Matrix::createTranslation(position, &translation);
-	object->GameData = &getActorData(name);
-	object->init(*this, unit._node, playerID, translation);
-	std::vector<Player*>::iterator pl = std::find_if(Players.begin(), Players.end(), [&](Player* p){ return p->ID == playerID; });
+	object->init(*this, &getActorData(name), unit._node, player, translation);
+	std::vector<PlayerObject*>::iterator pl = std::find_if(Players.begin(), Players.end(), [&](PlayerObject* p){ return p->ID == player->ID; });
 	if (pl != Players.end())
 		object->ID = (*pl)->getNewObjectID();
 	return object;

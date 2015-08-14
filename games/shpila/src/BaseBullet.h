@@ -8,9 +8,10 @@ class BaseGameObject;
 class BaseBullet : public BaseGameObject
 {
 public:
-	CLink<BaseGameObject> Target;
 	BaseBullet();
 	~BaseBullet();
+	static BaseGameObject* constructor();
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual bool interactive() { return false; }
 	virtual void update(float time);
 	virtual bool deleted();

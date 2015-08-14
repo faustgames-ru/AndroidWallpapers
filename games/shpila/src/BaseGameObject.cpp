@@ -1,15 +1,63 @@
 #include "Headers.h"
 
+Timer::Timer(float time, float startTime, TimerEventHandler handler, TimerEventEnableHandler enableHandler)
+: _time(time)
+, _handler(handler)
+, EnableHandler(enableHandler)
+, _timeCounter(startTime)
+, _startTime(startTime)
+{
+}
+
+void Timer::update(float time, BaseGameObject* object)
+{
+	bool enabled = (EnableHandler != NULL) ? EnableHandler(object): true;
+
+	if (enabled || (_timeCounter < _startTime))
+		_timeCounter += time;
+
+	if (!enabled && (_timeCounter > _startTime))
+		_timeCounter = _startTime;
+
+	if (enabled)
+	{
+		if (_timeCounter > _time)
+		{
+			_handler(object);
+			_timeCounter = 0.0f;
+		}
+	}
+}
+
+LocalActorData::LocalActorData()
+: GameData(NULL)
+, Health(0.0f)
+, Shield(0.0f)
+, ArmorUpgrade(0.0f)
+, DamageUpgrade(0.0f)
+, ShieldUpgrade(0.0f)
+{
+}
+
+void LocalActorData::init(const ActorData* gameData)
+{
+	if (gameData)
+	{
+		GameData = gameData;
+		Health = GameData->HP;
+		Shield = GameData->shield;
+	}
+}
+
 BaseGameObject::BaseGameObject()
-: PlayerID(0)
+: Player(NULL)
+, Target()
 , ID(0)
 , Holder(false)
-, GameData(NULL)
 , SearchRadius(0.0f)
-, Health(100.0f)
+, LocalGameData()
 , _manager(NULL)
 , _node()
-, _damageTimer(0.0f)
 , _positionOnServer()
 , _synkPositionMode(false)
 {}
@@ -42,9 +90,25 @@ bool BaseGameObject::deleted()
 	return false;
 }
 
-void BaseGameObject::update(float time)
+void BaseGameObject::doDamage(BaseGameObject* target)
 {
-	GP_ASSERT(_node);
+	if (target != NULL)
+	{
+		Target->LocalGameData.Health -= LocalGameData.GameData->getDamage(*target->LocalGameData.GameData);
+	}
+}
+
+void BaseGameObject::addTimer(const Timer timer)
+{
+	_timers.push_back(timer);
+}
+
+void BaseGameObject::update(float time)
+{	
+	for (std::vector<Timer>::iterator it = _timers.begin(); it != _timers.end(); it++)
+	{
+		it->update(time, this);
+	}
 }
 
 Node* BaseGameObject::node()
@@ -52,10 +116,11 @@ Node* BaseGameObject::node()
 	return _node;
 }
 
-void BaseGameObject::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
 	_manager = &manager;
-	PlayerID = playerID;
+	Player = player;
+	LocalGameData.init(gameData);
 	manager.registerObject(this);
 	if (node)
 	{
@@ -66,19 +131,24 @@ void BaseGameObject::init(GameObjectManager& manager, Node* node, int playerID, 
 	Vector3 translation;
 	transform.getTranslation(&translation);
 	setPosition(translation);
-
-	Health = GameData->HP;
 }
 
 int BaseGameObject::ActorType() 
 { 
-	return GameData->ActorType; 
+	return LocalGameData.GameData->ActorType; 
 }
 
 const Vector3 BaseGameObject::position()
 {
 	GP_ASSERT(_node);
 	return _node->getTranslation();
+}
+
+const Vector3 BaseGameObject::massCenterPosition()
+{
+	Vector3 res = _node->getTranslation();
+	res += Vector3(0.0f, LocalGameData.GameData->GeometryRadius, 0.0f);
+	return res;
 }
 
 void BaseGameObject::setPosition(const Vector3 pos)
@@ -102,6 +172,6 @@ float BaseGameObject::getInteractionDistance(BaseGameObject* object)
 
 bool BaseGameObject::InteractionPossible(BaseGameObject* object)
 {
-	float radius = max(max(SearchRadius, GameData->GeometryRadius), GameData->DistanceGround);
+	float radius = max(max(SearchRadius, LocalGameData.GameData->GeometryRadius), LocalGameData.GameData->DistanceGround);
 	return radius > getInteractionDistance(object);
 }

@@ -20,6 +20,8 @@ public:
 
 	bool initializeNodeMaterials(Node* node);
 
+	bool isActivePlayer(PlayerObject* player);
+	PlayerObject* getActivePlayer();
 protected:
 
     /**

@@ -55,6 +55,11 @@ float ActorData::getDamage(const ActorData& targetActorData) const
 	return result;
 }
 
+bool ActorData::isAttackToTargetAllowed(const ActorData& targetGameData) const
+{
+	return (TargetGround && targetGameData.MovementGround) || (TargetAir && targetGameData.MovementAir);
+}
+
 void loadActorsData(char *filaname)
 {
 	TiXmlDocument doc;

@@ -262,6 +262,9 @@
     <ClCompile Include="..\Server\raknet\SAMP\SAMPRPC.cpp">
       <Filter>src\RakNet\SAMP</Filter>
     </ClCompile>
+    <ClCompile Include="src\BaseStaticActor.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -617,6 +620,9 @@
     </ClInclude>
     <ClInclude Include="..\Server\raknet\main.h">
       <Filter>src\RakNet</Filter>
+    </ClInclude>
+    <ClInclude Include="src\BaseStaticActor.h">
+      <Filter>src\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

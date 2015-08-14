@@ -1,19 +1,19 @@
 #include "Headers.h"
 
 BaseActor::BaseActor()
-: BaseGameObject()
+: BaseStaticActor()
 , _movementController()
 {}
 
 BaseActor::~BaseActor(){}
 
-void BaseActor::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void BaseActor::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseGameObject::init(manager, node, playerID, transform);
+	BaseGameObject::init(manager, gameData, node, player, transform);
 	manager.registerMovementController(&_movementController);
 	Vector3 pos;
 	transform.getTranslation(&pos);
-	_movementController.setRadius(GameData->GeometryRadius);
+	_movementController.setRadius(LocalGameData.GameData->GeometryRadius);
 	_movementController.setPosition(OpenSteer::Vec3(pos.x, pos.y, pos.z));
 }
 

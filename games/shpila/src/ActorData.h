@@ -65,6 +65,7 @@ public:
 
 	float getDefaultDamage() const;
 	float getDamage(const ActorData& targetActorData) const;
+	bool isAttackToTargetAllowed(const ActorData& targetGameData) const;
 };
 
 void loadActorsData(char *filaname);

@@ -1,6 +1,6 @@
 #include "Headers.h"
 
-Player::Player(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection)
+PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection)
 : Manager(manager)
 , EnemyPlayer(NULL)
 , AutoPlay(false)
@@ -10,7 +10,6 @@ Player::Player(GameObjectManager& manager, int id, Vector3 position, Vector3 bat
 , MainResource(0)
 , _defenceTower()
 , _defenceBase()
-, _spawnTimer(0.0f)
 , _position(position)
 , _warriorsSpawnedCount(0)
 , _newObjectID(0)
@@ -19,18 +18,18 @@ Player::Player(GameObjectManager& manager, int id, Vector3 position, Vector3 bat
 }
 
 
-void Player::update(float time)
+void PlayerObject::update(float time)
 {
 	//create own nexus
 	if (_defenceBase == NULL)
 	{
-		_defenceBase = (HiddenObject*)Manager.createObject("base", _position + 25.45f * BattleFieldDirection, ID);
+		_defenceBase = (TheBaseObject*)Manager.createObject("base", _position + 25.45f * BattleFieldDirection, this);
 		_defenceBase->SearchRadius = 10.0f;
 	}
 
 	if (_defenceTower == NULL)
 	{
-		_defenceTower = (HiddenObject*)Manager.createObject("tower", _position + 45.25f * BattleFieldDirection, ID);
+		_defenceTower = (TowerObject*)Manager.createObject("tower", _position + 45.25f * BattleFieldDirection, this);
 		_defenceTower->SearchRadius = 10.0f;
 	}
 	//spawn warriors
@@ -40,27 +39,14 @@ void Player::update(float time)
 		MainResource += 2;
 		_mainResourceIncreacetimer = 0.0f;
 	}
-	_spawnTimer += time;
-	if (AutoPlay)
-	{
-		if (_spawnTimer >= 3000.0f)
-		{
-			//if (_warriorsSpawnedCount < 100)
-			{
-				CreateWarrior("zealot");
-				_spawnTimer = 0.0f;
-			}
-		}
-	}
 }
 
-void Player::CreateWarrior(const char* name)
+void PlayerObject::CreateWarrior(const char* name)
 {
 	const ActorData& ad = getActorData(name);
 	//if (ad.Price < MainResource)
 	{
-		BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(name, _position + Vector3(rnd(-10.0f, 10.0f), 0.0f, rnd(-10.0f, 10.0f)), ID);
-		warrior->Player = this;
+		BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(name, _position + Vector3(rnd(-10.0f, 10.0f), 0.0f, rnd(-10.0f, 10.0f)), this);
 		warrior->Holder = true;
 		warrior->HolderWarriorName = name;
 		_warriorsSpawnedCount++;
@@ -68,12 +54,12 @@ void Player::CreateWarrior(const char* name)
 	}
 }
 
-int Player::getNewObjectID()
+int PlayerObject::getNewObjectID()
 {
 	return _newObjectID++;
 }
 
-HiddenObject* Player::getDefence()
+BaseStaticActor* PlayerObject::getDefence()
 {
-	return _defenceTower->Health > 0.0 ? _defenceTower : _defenceBase;
+	return _defenceTower->LocalGameData.Health > 0.0 ? (BaseStaticActor*)_defenceTower : (BaseStaticActor*)_defenceBase;
 }

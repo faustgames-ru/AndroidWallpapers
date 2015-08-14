@@ -291,7 +291,7 @@ void Client::Packet_ActorSync(Packet *p)
 		Itr<BaseGameObject> it = _manager->objects();
 		while (it)
 		{
-			if ((it->ID == actorSyncData.actorID) && (it->PlayerID == playerID))
+			if ((it->ID == actorSyncData.actorID) && (it->Player->ID == playerID))
 			{
 				it->setPositionOnServer(actorSyncData.pos); 
 				found = true;
@@ -302,11 +302,10 @@ void Client::Packet_ActorSync(Packet *p)
 		if (!found)
 		{
 			const char * name = getActorData(actorSyncData.actorType).Name.c_str();
-			BaseWarrior* warrior = (BaseWarrior*)_manager->createObject(name, actorSyncData.pos, playerID);
+			BaseWarrior* warrior = (BaseWarrior*)_manager->createObject(name, actorSyncData.pos, _manager->Players[playerID]);
 			warrior->ID = actorSyncData.actorID;
 			warrior->Holder = actorSyncData.holder;
 			warrior->HolderWarriorName = name;
-			warrior->Player = _manager->Players[playerID];
 		}
 	}
 	//
@@ -318,7 +317,7 @@ void Client::Send_ActorSync(int playerID)
 	Itr<BaseGameObject> it = _manager->objects();
 	while (it)
 	{
-		if (it->PlayerID == playerID)
+		if (it->Player->ID == playerID)
 		{
 			count++;
 		}
@@ -333,7 +332,7 @@ void Client::Send_ActorSync(int playerID)
 	it = _manager->objects();
 	while (it)
 	{
-		if (it->PlayerID == playerID)
+		if (it->Player->ID == playerID)
 		{
 			data.actorID = it->ID;
 			data.pos = it->position();

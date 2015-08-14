@@ -33,6 +33,7 @@
 #include "UnitMovement.h"
 #include "ActorData.h"
 #include "BaseGameObject.h"
+#include "BaseStaticActor.h"
 #include "BaseActor.h"
 #include "BaseWarrior.h"
 #include "irbaga.h"
@@ -55,7 +56,7 @@
 
 
 
-#define TIME_SCALE 0.6f
+#define TIME_SCALE 1.0f
 
 #define COMMON_SCALE 0.1f
 #define IRBAGA_SCALE COMMON_SCALE

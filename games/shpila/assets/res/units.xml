@@ -2438,7 +2438,7 @@
 		<TargetGround>1</TargetGround>
 		<TargetAir>1</TargetAir>
 		<MovementGround>1</MovementGround>
-		<MovementAir>1</MovementAir>
+		<MovementAir>0</MovementAir>
 		<LightArmor>0</LightArmor>
 		<HavyArmor>1</HavyArmor>
 		<Organic>0</Organic>
@@ -2487,7 +2487,7 @@
 		<TargetGround>1</TargetGround>
 		<TargetAir>1</TargetAir>
 		<MovementGround>1</MovementGround>
-		<MovementAir>1</MovementAir>
+		<MovementAir>0</MovementAir>
 		<LightArmor>0</LightArmor>
 		<HavyArmor>1</HavyArmor>
 		<Organic>0</Organic>

@@ -13,7 +13,7 @@ public:
 	static BaseGameObject* constructor();
 	HiddenObject();
 	virtual const Vector3 position();
-	virtual void init(GameObjectManager& manager, Node* node, int playerID, Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
 };

@@ -1,7 +1,7 @@
 #include "Headers.h"
 
 TheBaseObject::TheBaseObject()
-: BaseGameObject()
+: BaseStaticActor()
 , Target()
 {}
 
@@ -10,34 +10,24 @@ BaseGameObject* TheBaseObject::constructor()
 	return new TheBaseObject();
 }
 
-void TheBaseObject::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void TheBaseObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseGameObject::init(manager, node, playerID, transform);
+	BaseStaticActor::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
+	addTimer(Timer(LocalGameData.GameData->AttackDelayGround, LocalGameData.GameData->AttackDelayGround, damageHandler, damageEnableHandler));
 }
 
 void TheBaseObject::interaction(BaseGameObject* object)
 {
-	if (GameData->DamageLight > 0.0f)
+	float distance = object->position().distanceSquared(position());
+	if ((object->Player->ID != Player->ID) && (object->LocalGameData.Health > 0.0f) && (distance <= (LocalGameData.GameData->DistanceGround * LocalGameData.GameData->DistanceGround)))
 	{
-		float distance = object->position().distanceSquared(position());
-		if ((object->PlayerID != PlayerID) && (object->Health > 0.0f) && (distance <= (GameData->DistanceGround * GameData->DistanceGround)))
-		{
-			Target = object;
-		}
+		Target = object;
 	}
 }
 
 void TheBaseObject::update(float time)
 {
-	_damageTimer += time;
-	if (Target && (GameData->DamageLight > 0.0f))
-	{
-		if (_damageTimer > GameData->AttackDelayGround)
-		{
-			Target->Health -= GameData->DamageLight;
-			_damageTimer = 0.0f;
-		}
-	}
+	BaseStaticActor::update(time);
 }

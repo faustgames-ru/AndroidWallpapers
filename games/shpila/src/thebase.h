@@ -5,13 +5,13 @@ using namespace gameplay;
 
 class BaseGameObject;
 
-class TheBaseObject : public BaseGameObject
+class TheBaseObject : public BaseStaticActor
 {
 public:
 	CLink<BaseGameObject> Target;
 	static BaseGameObject* constructor();
 	TheBaseObject();
-	virtual void init(GameObjectManager& manager, Node* node, int playerID, Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
 };

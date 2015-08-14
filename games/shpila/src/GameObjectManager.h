@@ -5,8 +5,6 @@ using namespace gameplay;
 
 typedef BaseGameObject* (*GameObjectConstructorProc) ();
 
-class Player;
-
 struct GameUnit
 {
 	Node* _node;
@@ -22,7 +20,7 @@ struct GameUnit
 class GameObjectManager : public PlugIn
 {
 public:
-	std::vector<Player*> Players;
+	std::vector<PlayerObject*> Players;
 
 	GameObjectManager();
 	void setScene(Scene* scene);
@@ -32,7 +30,7 @@ public:
 	void initializeMaterial(Node* node, Material* material);
 	void addUnit(const char* filename, const char* name, GameObjectConstructorProc constructor);
 	void initUnits();
-	BaseGameObject* createObject(const char* name, Vector3 position, int playerID);
+	BaseGameObject* createObject(const char* name, Vector3 position, PlayerObject* player);
 	void registerMovementController(UnitMovementBase* controller);
 	void unregisterMovementController(UnitMovementBase* controller);
 	void registerObject(BaseGameObject* object);

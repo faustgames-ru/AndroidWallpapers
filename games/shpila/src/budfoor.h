@@ -7,7 +7,7 @@ class BudfoorWarrior : public BaseWarrior
 {
 public:
 	static BaseGameObject* constructor();
-	virtual void init(GameObjectManager& manager, Node* node, int playerID, Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual void update(float time);
 };
 

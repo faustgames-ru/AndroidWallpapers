@@ -4,7 +4,7 @@
 using namespace gameplay;
 
 class BaseGameObject;
-class Player;
+class PlayerObject;
 
 class UnitAnimation
 {
@@ -41,24 +41,26 @@ public:
 class BaseWarrior : public BaseActor
 {
 public:
-	CLink<BaseGameObject> Target;
-	Player* Player;
 	//int Price;
 	std::string HolderWarriorName;
 	BaseWarrior();
 	~BaseWarrior();
 	static BaseGameObject* constructor();
-	virtual void init(GameObjectManager& manager, Node* node, int playerID, Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
 	virtual bool deleted();
+	virtual void disappearing(float time);
+
 protected:
 	bool _initialized;
+	bool _attack;
 	bool _dead;
 	float _deadAltitude;
 	std::vector<UnitAnimation*> _unitAnimation;
 	void updateAnimationState();
 	void switchToAnimation(UnitAnimation::Actions action, float repeatCount, unsigned long blendingTime);
+	static bool damageEnableHandler(BaseGameObject* object);
 };
 
 #endif

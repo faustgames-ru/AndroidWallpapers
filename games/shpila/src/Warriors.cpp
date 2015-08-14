@@ -10,10 +10,10 @@ DarkWarrior::DarkWarrior()
 : BaseWarrior()
 {}
 
-void DarkWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void DarkWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
 	float scale = COMMON_SCALE;
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
 }
@@ -28,10 +28,10 @@ ArchonWarrior::ArchonWarrior()
 : BaseWarrior()
 {
 }
-void ArchonWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void ArchonWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
 	float scale = COMMON_SCALE;
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
 }
@@ -46,9 +46,9 @@ ObserverWarrior::ObserverWarrior()
 : BaseWarrior()
 {
 }
-void ObserverWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void ObserverWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
@@ -64,9 +64,9 @@ ImmortalWarrior::ImmortalWarrior()
 : BaseWarrior()
 {
 }
-void ImmortalWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void ImmortalWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
@@ -81,9 +81,9 @@ BaseGameObject* ColossusWarrior::constructor()
 ColossusWarrior::ColossusWarrior()
 : BaseWarrior()
 {}
-void ColossusWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void ColossusWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
@@ -98,9 +98,9 @@ BaseGameObject* VoidRayWarrior::constructor()
 VoidRayWarrior::VoidRayWarrior()
 : BaseWarrior()
 {}
-void VoidRayWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void VoidRayWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
@@ -115,9 +115,9 @@ BaseGameObject* CarrierWarrior::constructor()
 CarrierWarrior::CarrierWarrior()
 : BaseWarrior()
 {}
-void CarrierWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void CarrierWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
@@ -132,9 +132,9 @@ BaseGameObject* TempestWarrior::constructor()
 TempestWarrior::TempestWarrior()
 : BaseWarrior()
 {}
-void TempestWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void TempestWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
@@ -151,9 +151,9 @@ MothershipWarrior::MothershipWarrior()
 : BaseWarrior()
 {}
 
-void MothershipWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void MothershipWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
@@ -172,10 +172,10 @@ CoreWarrior::CoreWarrior()
 {
 }
 
-void CoreWarrior::init(GameObjectManager& manager, Node* node, int playerID, Matrix transform)
+void CoreWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
 	float scale = COMMON_SCALE;
-	BaseWarrior::init(manager, node, playerID, transform);
+	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
 	_altitude = 3.75f;
