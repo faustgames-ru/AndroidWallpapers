@@ -16,48 +16,105 @@ float ActorData::getDefaultDamage() const
 	return min;
 }
 
-float ActorData::getDamage(const ActorData& targetActorData) const
+float ActorData::getDefaultDamageUpgradeFactor() const
 {
-	float defaultDamage = getDefaultDamage();
-	float result = defaultDamage;
-	if (targetActorData.MovementGround)
+	float min = 1e20f;
+	for (int i = 0; i < DamageTypesCount; i++)
 	{
-		if (targetActorData.LightArmor)
-			result = max(result, Damage[DamageLight]);
-		if (targetActorData.HavyArmor)
-			result = max(result, Damage[DamageArmored]);
-		if (targetActorData.Organic)
-			result = max(result, Damage[DamageOrganic]);
-		if (targetActorData.Psionic)
-			result = max(result, defaultDamage);
-		if (targetActorData.Mechanic)
-			result = max(result, defaultDamage);
-		if (targetActorData.Massive)
-			result = max(result, Damage[DamageMassive]);
-		if (targetActorData.Building)
-			result = max(result, Damage[DamageBuilding]);
+		if (min > DamageUpgradeFactor[i])
+		{
+			min = DamageUpgradeFactor[i];
+		}
 	}
-	else if (targetActorData.MovementAir)
-	{
-		if (targetActorData.LightArmor)
-			result = max(result, Damage[DamageLightAir]);
-		if (targetActorData.HavyArmor)
-			result = max(result, Damage[DamageArmoredAir]);
-		if (targetActorData.Organic)
-			result = max(result, Damage[DamageOrganicAir]);
-		if (targetActorData.Psionic)
-			result = max(result, defaultDamage);
-		if (targetActorData.Mechanic)
-			result = max(result, defaultDamage);
-		if (targetActorData.Massive)
-			result = max(result, Damage[DamageMassiveAir]);
-	}
-	return result;
+	return min;
 }
 
 bool ActorData::isAttackToTargetAllowed(const ActorData& targetGameData) const
 {
 	return (TargetGround && targetGameData.MovementGround) || (TargetAir && targetGameData.MovementAir);
+}
+
+int ActorData::getAttacksCount(const ActorData& targetGameData) const
+{
+	int res = 1;
+	if (targetGameData.MovementGround)
+	{
+		res = max(res, AttackCountGround);
+	}
+	if (targetGameData.MovementAir)
+	{
+		res = max(res, AttackCountAir);
+	}
+	return res;
+}
+
+LocalActorData::LocalActorData()
+: GameData(NULL)
+, Health(0.0f)
+, Shield(0.0f)
+, ArmorUpgrade(0.0f)
+, DamageUpgrade(0.0f)
+, ShieldUpgrade(0.0f)
+{
+}
+
+void LocalActorData::init(const ActorData* gameData)
+{
+	if (gameData)
+	{
+		GameData = gameData;
+		Health = GameData->HP;
+		Shield = GameData->shield;
+	}
+}
+
+void LocalActorData::doDamage(LocalActorData& targetGameData)
+{
+	float defaultDamage = GameData->getDefaultDamage();
+	float defaultDamageUpgradeFactor = GameData->getDefaultDamageUpgradeFactor();
+	
+	float result = defaultDamage;
+	if (targetGameData.GameData->MovementGround)
+	{
+		if (targetGameData.GameData->LightArmor)
+			result = max(result, GameData->Damage[ActorData::DamageLight] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageLight]);
+		if (targetGameData.GameData->HavyArmor)
+			result = max(result, GameData->Damage[ActorData::DamageArmored] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageArmored]);
+		if (targetGameData.GameData->Organic)
+			result = max(result, GameData->Damage[ActorData::DamageOrganic] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageOrganic]);
+		if (targetGameData.GameData->Psionic)
+			result = max(result, defaultDamage + DamageUpgrade * defaultDamageUpgradeFactor);
+		if (targetGameData.GameData->Mechanic)
+			result = max(result, defaultDamage + DamageUpgrade * defaultDamageUpgradeFactor);
+		if (targetGameData.GameData->Massive)
+			result = max(result, GameData->Damage[ActorData::DamageMassive] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageMassive]);
+		if (targetGameData.GameData->Building)
+			result = max(result, GameData->Damage[ActorData::DamageBuilding] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageBuilding]);
+	}
+	else if (targetGameData.GameData->MovementAir)
+	{
+		if (targetGameData.GameData->LightArmor)
+			result = max(result, GameData->Damage[ActorData::DamageLightAir] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageLightAir]);
+		if (targetGameData.GameData->HavyArmor)
+			result = max(result, GameData->Damage[ActorData::DamageArmoredAir] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageArmoredAir]);
+		if (targetGameData.GameData->Organic)
+			result = max(result, GameData->Damage[ActorData::DamageOrganicAir] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageOrganicAir]);
+		if (targetGameData.GameData->Psionic)
+			result = max(result, defaultDamage + DamageUpgrade * defaultDamageUpgradeFactor);
+		if (targetGameData.GameData->Mechanic)
+			result = max(result, defaultDamage + DamageUpgrade * defaultDamageUpgradeFactor);
+		if (targetGameData.GameData->Massive)
+			result = max(result, GameData->Damage[ActorData::DamageMassiveAir] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageMassiveAir]);
+	}
+	if (targetGameData.Shield > 0.0f)
+	{
+		result = max(result, GameData->Damage[ActorData::DamageShield]);
+		float shieldDamage = min(targetGameData.Shield, result);
+		targetGameData.Shield -= shieldDamage;
+		result -= shieldDamage;
+	}
+	result = max(0.0f, result - (targetGameData.GameData->armour + targetGameData.ArmorUpgrade));
+	targetGameData.Health -= result;
 }
 
 void loadActorsData(char *filaname)
@@ -88,6 +145,17 @@ void loadActorsData(char *filaname)
 		actorData->Damage[ActorData::DamageMassiveAir] = (float)atof(unit->FirstChildElement("DamageMassiveAir")->GetText());
 		actorData->Damage[ActorData::DamageShieldAir] = (float)atof(unit->FirstChildElement("DamageShieldAir")->GetText());
 		actorData->Damage[ActorData::DamageOrganicAir] = (float)atof(unit->FirstChildElement("DamageOrganicAir")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageLight] = (float)atof(unit->FirstChildElement("DamageLightUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageArmored] = (float)atof(unit->FirstChildElement("DamageArmoredUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageMassive] = (float)atof(unit->FirstChildElement("DamageMassiveUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageShield] = (float)atof(unit->FirstChildElement("DamageShieldUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageOrganic] = (float)atof(unit->FirstChildElement("DamageOrganicUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageBuilding] = (float)atof(unit->FirstChildElement("DamageBuildingUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageLightAir] = (float)atof(unit->FirstChildElement("DamageLightAirUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageArmoredAir] = (float)atof(unit->FirstChildElement("DamageArmoredAirUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageMassiveAir] = (float)atof(unit->FirstChildElement("DamageMassiveAirUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageShieldAir] = (float)atof(unit->FirstChildElement("DamageShieldAirUpgradeFactor")->GetText());
+		actorData->DamageUpgradeFactor[ActorData::DamageOrganicAir] = (float)atof(unit->FirstChildElement("DamageOrganicAirUpgradeFactor")->GetText());
 		actorData->SplashDamage = (float)atof(unit->FirstChildElement("SplashDamage")->GetText());
 		actorData->SplashDamageShield = (float)atof(unit->FirstChildElement("SplashDamageShield")->GetText());
 		actorData->SplashType = unit->FirstChildElement("SplashType")->GetText();
@@ -100,6 +168,7 @@ void loadActorsData(char *filaname)
 		actorData->mana = (float)atof(unit->FirstChildElement("mana")->GetText());
 		actorData->MoveSpeed = (float)atof(unit->FirstChildElement("MoveSpeed")->GetText());
 		actorData->UndergroundSpeed = (float)atof(unit->FirstChildElement("UndergroundSpeed")->GetText());
+		actorData->ImmediateAttack = (bool)atoi(unit->FirstChildElement("ImmediateAttack")->GetText());
 		actorData->DistanceGround = (float)atof(unit->FirstChildElement("DistanceGround")->GetText());
 		actorData->DistanceAir = (float)atof(unit->FirstChildElement("DistanceAir")->GetText());
 		actorData->AttackCountGround = atoi(unit->FirstChildElement("AttackCountGround")->GetText());

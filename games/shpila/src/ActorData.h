@@ -3,6 +3,7 @@
 
 using namespace gameplay;
 
+class LocalActorData;
 
 class ActorData
 {
@@ -31,6 +32,7 @@ public:
 	int RequireUpgrade;
 	std::string BattleUpgradeClass;
 	float Damage[DamageTypesCount];
+	float DamageUpgradeFactor[DamageTypesCount];
 	float SplashDamage;
 	float SplashDamageShield;
 	std::string SplashType;
@@ -43,6 +45,7 @@ public:
 	float mana;
 	float MoveSpeed;
 	float UndergroundSpeed;
+	bool ImmediateAttack;
 	float DistanceGround;
 	float DistanceAir;
 	int AttackCountGround;
@@ -64,8 +67,24 @@ public:
 	float GeometryRadius;
 
 	float getDefaultDamage() const;
-	float getDamage(const ActorData& targetActorData) const;
+	float getDefaultDamageUpgradeFactor() const;
 	bool isAttackToTargetAllowed(const ActorData& targetGameData) const;
+	int getAttacksCount(const ActorData& targetGameData) const;
+};
+
+class LocalActorData
+{
+public:
+	const ActorData* GameData;
+	float Health;
+	float Shield;
+	float ArmorUpgrade;
+	float DamageUpgrade;
+	float ShieldUpgrade;
+
+	LocalActorData();
+	void init(const ActorData* gameData);
+	void doDamage(LocalActorData& targetGameData);
 };
 
 void loadActorsData(char *filaname);

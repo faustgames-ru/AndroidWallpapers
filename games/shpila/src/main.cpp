@@ -38,7 +38,7 @@ static const bool EMPTY = false;
 Shpila::Shpila()
     : _font(NULL), _scene(), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _rotateX(0), _materialParameterAlpha(NULL),
-	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _fpCamera(), _freeCamera(true), _battleFieldDirection(), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
+	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _fpCamera(), _activeCamera(NULL), _activePlayerCamera(NULL), _freeCamera(true), _battleFieldDirection(), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
 	  _hud(), _totalTime(0.0), _respawnTime(0.0), _manager(), _ping(0), _netPlayerID(-1), Respawn(false), _currentPlayerIDforUI(0)
 {
     _buttonPressed = new bool[2];
@@ -87,7 +87,7 @@ void Shpila::initialize()
 		_hud.bind("Player1_New_Tempest", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Mothership", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_MothershipCore", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Show_Units_P1", Control::Listener::CLICK, ShowUnitsP1);
+		//_hud.bind("Show_Units_P1", Control::Listener::CLICK, ShowUnitsP1);
 		_hud.form()->getControl("Player1")->setVisible(false);
 		
 		_hud.form()->getControl("Tune")->setVisible(false);
@@ -118,23 +118,54 @@ void Shpila::initialize()
 		// Update the aspect ratio for our scene's camera to match the current device resolution.
 		_scene->getActiveCamera()->setAspectRatio(getAspectRatio());
 
-		//static camera
-		Vector3 cameraPosition(0.0f, 18.0f, -40.4f);
+		//start prepare cameras
 		_fpCamera.initialize(0.01f, 1000.0f);
-		_fpCamera.setPosition(cameraPosition);
-		Matrix rot;
-		Matrix::createLookAt(0.0f, 0.0f, 0.0f,
-			0.0f, -1.0f, 1.0f,
-			0.0f, 1.0f, 0.5f, &rot);
-		_fpCamera.setRotation(rot);
 		_scene->addNode(_fpCamera.getRootNode());
-
-		//setup camera
 		_fpCamera.getCamera()->setFieldOfView(FoV);
+
+		_CameraPlayer[0].initialize(0.01f, 1000.0f);
+		_scene->addNode(_CameraPlayer[0].getRootNode());
+		_CameraPlayer[0].getCamera()->setFieldOfView(FoV);
+
+		_CameraPlayer[1].initialize(0.01f, 1000.0f);
+		_scene->addNode(_CameraPlayer[1].getRootNode());
+		_CameraPlayer[1].getCamera()->setFieldOfView(FoV);
+		if (!FileSystem::fileExists("res/settings.xml"))
+		{
+			loadSetting(this, NULL);
+		}
+		else
+		{
+			//setup camera 1			
+			_fpCamera.setPosition(Vector3(-0.960945f, 15.573791f, -17.046848f));
+			Matrix rot;
+			Matrix::createLookAt(0.0f, 0.0f, 0.0f,
+				0.0f, -1.0f, 1.0f,
+				0.0f, 1.0f, 0.5f, &rot);
+			_fpCamera.setRotation(rot);
+			//setup camera 2
+			_CameraPlayer[0].setPosition(Vector3(42.202988, 15.573791f, -67.127838));
+			Matrix::createLookAt(0.0f, 0.0f, 0.0f,
+				0.0f, -1.0f, 1.0f,
+				0.0f, 1.0f, 0.5f, &rot);
+			_CameraPlayer[0].setRotation(rot);
+			//setup camera 3
+			_CameraPlayer[1].setPosition(Vector3(-42.202988, 15.573791f, 47.127838));
+			Matrix::createLookAt(0.0f, 0.0f, 0.0f,
+				0.0f, -1.0f, 1.0f,
+				0.0f, 1.0f, 0.5f, &rot);
+			_CameraPlayer[1].setRotation(rot);
+			
+		}
 		_scene->setActiveCamera(_fpCamera.getCamera());
+		_activeCamera = &_fpCamera;
+		_activePlayerCamera = &_CameraPlayer[0];
+		//finish prepare cameras
+
 		_scene->setAmbientColor(0.25f, 0.25f, 0.25f);
 
 		_manager.setScene(_scene);
+
 		loadCharacters();
 		initPlayers();
 
@@ -333,23 +364,21 @@ void Shpila::CreateUnit(Game* game, Control* control)
 	((Shpila*)game)->getActivePlayer()->CreateWarrior(character);
 }
 
-void Shpila::ShowUnitsP1(Game* game, Control* control)
+/*void Shpila::ShowUnitsP1(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
 	shpila->_hud.form()->getControl("Player1")->setVisible(!shpila->_hud.form()->getControl("Player1")->isVisible());
-}
-
-void Shpila::ShowUnitsP2(Game* game, Control* control)
-{
-	Shpila* shpila = (Shpila*)game;
-	shpila->_hud.form()->getControl("Player2")->setVisible(!shpila->_hud.form()->getControl("Player2")->isVisible());
-}
+}*/
 
 void Shpila::SwitchPlayer(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
 	if (shpila->_netPlayerID == UNASSIGNED_PLAYER_INDEX)
+	{
 		shpila->_currentPlayerIDforUI = (!strcmp(control->getTextTag(), "player1")) ? 0 : 1;
+		shpila->_activePlayerCamera = &shpila->_CameraPlayer[shpila->_currentPlayerIDforUI];
+	}
+
 }
 
 void Shpila::ShowTunes(Game* game, Control* control)
@@ -367,8 +396,8 @@ void Shpila::ShowConnection(Game* game, Control* control)
 void Shpila::CameraFoVPlus(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
-	float fov = shpila->_fpCamera.getCamera()->getFieldOfView();
-	shpila->_fpCamera.getCamera()->setFieldOfView(fov + 1.0f);
+	float fov = shpila->_activeCamera->getCamera()->getFieldOfView();
+	shpila->_activeCamera->getCamera()->setFieldOfView(fov + 1.0f);
 	char buff[100];
 	sprintf(buff, "FoV-%0.0f", fov + 1.0f);
 	((Label*)shpila->_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
@@ -376,8 +405,8 @@ void Shpila::CameraFoVPlus(Game* game, Control* control)
 void Shpila::CameraFoVMinus(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
-	float fov = shpila->_fpCamera.getCamera()->getFieldOfView();
-	shpila->_fpCamera.getCamera()->setFieldOfView(fov - 1.0f);
+	float fov = shpila->_activeCamera->getCamera()->getFieldOfView();
+	shpila->_activeCamera->getCamera()->setFieldOfView(fov - 1.0f);
 	char buff[100];
 	sprintf(buff, "FoV-%0.0f", fov - 1.0f);
 	((Label*)shpila->_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
@@ -413,18 +442,11 @@ void Shpila::Upgrade(Game* game, Control* control)
 	}
 }
 
-void Shpila::loadSetting(Game* game, Control* control)
+void loadCamera(TiXmlNode *node, TargetCamera& camera)
 {
-	Shpila* shpila = (Shpila*)game;
 	Quaternion qRotX;
 	Quaternion qRotY;
 	Vector3 pos;
-
-	TiXmlDocument doc;
-	doc.SetTabSize(8);
-	doc.LoadFile("res/settings.xml");
-	TiXmlNode *node = doc.FirstChild("camera");
-
 	qRotX.x = (float)atof(node->FirstChildElement("rx0")->GetText());
 	qRotX.y = (float)atof(node->FirstChildElement("rx1")->GetText());
 	qRotX.z = (float)atof(node->FirstChildElement("rx2")->GetText());
@@ -436,9 +458,30 @@ void Shpila::loadSetting(Game* game, Control* control)
 	pos.x = (float)atof(node->FirstChildElement("posx")->GetText());
 	pos.y = (float)atof(node->FirstChildElement("posy")->GetText());
 	pos.z = (float)atof(node->FirstChildElement("posz")->GetText());
-	shpila->_fpCamera.getRootNode()->getFirstChild()->setRotation(qRotX);
-	shpila->_fpCamera.getRootNode()->setRotation(qRotY);
-	shpila->_fpCamera.getRootNode()->setTranslation(pos);
+	camera.getRootNode()->getFirstChild()->setRotation(qRotX);
+	camera.getRootNode()->setRotation(qRotY);
+	camera.getRootNode()->setTranslation(pos);
+}
+
+void Shpila::loadSetting(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	Quaternion qRotX;
+	Quaternion qRotY;
+	Vector3 pos;
+
+	TiXmlDocument doc;
+	doc.SetTabSize(8);
+	doc.LoadFile("res/settings.xml");
+
+	TiXmlNode *node = doc.FirstChild("camera");
+	loadCamera(node, shpila->_fpCamera);
+
+	node = doc.FirstChild("cameraPlayer1");
+	loadCamera(node, shpila->_CameraPlayer[0]);
+
+	node = doc.FirstChild("cameraPlayer2");
+	loadCamera(node, shpila->_CameraPlayer[1]);
 }
 
 void AddFloatElement(TiXmlElement * rootElement, char* name, float value)
@@ -451,31 +494,44 @@ void AddFloatElement(TiXmlElement * rootElement, char* name, float value)
 	rootElement->LinkEndChild(element);
 }
 
+void saveCamera(TiXmlElement * rootElement, TargetCamera& camera)
+{
+	Quaternion qRotX = camera.getRootNode()->getFirstChild()->getRotation();
+	Quaternion qRotY = camera.getRootNode()->getRotation();
+	Vector3 pos = camera.getRootNode()->getTranslation();
+	AddFloatElement(rootElement, "rx0", qRotX.x);
+	AddFloatElement(rootElement, "rx1", qRotX.y);
+	AddFloatElement(rootElement, "rx2", qRotX.z);
+	AddFloatElement(rootElement, "rx3", qRotX.w);
+	AddFloatElement(rootElement, "ry0", qRotY.x);
+	AddFloatElement(rootElement, "ry1", qRotY.y);
+	AddFloatElement(rootElement, "ry2", qRotY.z);
+	AddFloatElement(rootElement, "ry3", qRotY.w);
+	AddFloatElement(rootElement, "posx", pos.x);
+	AddFloatElement(rootElement, "posy", pos.y);
+	AddFloatElement(rootElement, "posz", pos.z);
+}
+
 void Shpila::saveSetting(Game* game, Control* control)
 {
 	Shpila* shpila = (Shpila*)game;
-	Quaternion qRotX = shpila->_fpCamera.getRootNode()->getFirstChild()->getRotation();
-	Quaternion qRotY = shpila->_fpCamera.getRootNode()->getRotation();	
-	Vector3 pos = shpila->_fpCamera.getRootNode()->getTranslation();
 	TiXmlDocument doc;
 
 	doc.SetTabSize(8);
 	TiXmlDeclaration * decl = new TiXmlDeclaration("1.0", "", "");
-	TiXmlElement * element = new TiXmlElement("camera");
 	doc.LinkEndChild(decl);
-	doc.LinkEndChild(element);
 
-	AddFloatElement(element, "rx0", qRotX.x);
-	AddFloatElement(element, "rx1", qRotX.y);
-	AddFloatElement(element, "rx2", qRotX.z);
-	AddFloatElement(element, "rx3", qRotX.w);
-	AddFloatElement(element, "ry0", qRotY.x);
-	AddFloatElement(element, "ry1", qRotY.y);
-	AddFloatElement(element, "ry2", qRotY.z);
-	AddFloatElement(element, "ry3", qRotY.w);
-	AddFloatElement(element, "posx", pos.x);
-	AddFloatElement(element, "posy", pos.y);
-	AddFloatElement(element, "posz", pos.z);
+	TiXmlElement * element = new TiXmlElement("camera");
+	doc.LinkEndChild(element);
+	saveCamera(element, shpila->_fpCamera);
+
+	element = new TiXmlElement("cameraPlayer1");
+	doc.LinkEndChild(element);
+	saveCamera(element, shpila->_CameraPlayer[0]);
+
+	element = new TiXmlElement("cameraPlayer2");
+	doc.LinkEndChild(element);
+	saveCamera(element, shpila->_CameraPlayer[1]);
 
 	doc.SaveFile("res/settings.xml");
 }
@@ -534,17 +590,17 @@ void Shpila::update(float elapsedTime)
 			// Up and down
 			if (_moveFlags & MOVE_UP)
 			{
-				_fpCamera.moveUp(elapsedTime * UP_DOWN_SPEED / 1000.0f);
+				_activeCamera->moveUp(elapsedTime * UP_DOWN_SPEED / 1000.0f);
 			}
 			else if (_moveFlags & MOVE_DOWN)
 			{
-				_fpCamera.moveDown(elapsedTime * UP_DOWN_SPEED / 1000.0f);
+				_activeCamera->moveDown(elapsedTime * UP_DOWN_SPEED / 1000.0f);
 			}
 
 			if (!move.isZero())
 			{
-				_fpCamera.moveForward(elapsedTime * move.y / 20.0f);
-				_fpCamera.moveLeft(elapsedTime * move.x / 20.0f);
+				_activeCamera->moveForward(elapsedTime * move.y / 20.0f);
+				_activeCamera->moveLeft(elapsedTime * move.x / 20.0f);
 			}
 
 		}
@@ -605,10 +661,10 @@ void Shpila::touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contac
 							  float pitch = -MATH_DEG_TO_RAD(deltaY * 0.5f);
 							  float yaw = MATH_DEG_TO_RAD(deltaX * 0.5f);
 							  if (_freeCamera)
-								_fpCamera.rotate(yaw, pitch);
+								  _activeCamera->rotate(yaw, pitch);
 							  else
 							  {
-								  _fpCamera.setPosition(_fpCamera.getPosition() - deltaX * 0.01f * _battleFieldDirection);
+								  _activeCamera->setPosition(_activeCamera->getPosition() - deltaX * 0.07f * _battleFieldDirection);
 							  }
 							  break;
 	}
@@ -641,10 +697,24 @@ void Shpila::keyEvent(Keyboard::KeyEvent evt, int key)
 			_moveFlags |= MOVE_UP;
 			break;
 		case Keyboard::KEY_PG_UP:
-			_fpCamera.rotate(0, MATH_PIOVER4);
+			_activeCamera->rotate(0, MATH_PIOVER4);
 			break;
 		case Keyboard::KEY_PG_DOWN:
-			_fpCamera.rotate(0, -MATH_PIOVER4);
+			_activeCamera->rotate(0, -MATH_PIOVER4);
+			break;
+		case Keyboard::KEY_SPACE:
+			if (_activeCamera == &_fpCamera)
+			{
+				_scene->setActiveCamera(_activePlayerCamera->getCamera());
+				_activeCamera = _activePlayerCamera;
+				_hud.form()->getControl("Player1")->setVisible(true);
+			}
+			else
+			{
+				_scene->setActiveCamera(_fpCamera.getCamera());
+				_activeCamera = &_fpCamera;
+				_hud.form()->getControl("Player1")->setVisible(false);
+			}
 			break;
 		}
 	}
@@ -679,7 +749,7 @@ bool Shpila::mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta)
 	switch (evt)
 	{
 	case Mouse::MOUSE_WHEEL:
-		_fpCamera.moveForward(wheelDelta * MOVE_SPEED / 100.0f);
+		_activeCamera->moveForward(wheelDelta * MOVE_SPEED / 100.0f);
 		return true;
 	}
 	return false;

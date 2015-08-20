@@ -1,11 +1,11 @@
-<?xml version="1.0" encoding="Windows-1252" standalone="yes"?>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <units xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<unit>
-		<name>Çåðëèíã</name>
-		<id>Çåðëèíã</id>
+		<name>zerling</name>
+		<id>Ð—ÐµÑ€Ð»Ð¸Ð½Ð³</id>
 		<price>22</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>5</DamageLight>
 		<DamageArmored>5</DamageArmored>
 		<DamageMassive>5</DamageMassive>
@@ -17,6 +17,17 @@
 		<DamageMassiveAir>5</DamageMassiveAir>
 		<DamageShieldAir>5</DamageShieldAir>
 		<DamageOrganicAir>5</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -29,6 +40,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.95</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>1</DistanceGround>
 		<DistanceAir>1</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -50,11 +62,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ãèáëèíã</name>
-		<id>Ãèáëèíã</id>
+		<name>baneling</name>
+		<id>Ð“Ð¸Ð±Ð»Ð¸Ð½Ð³</id>
 		<price>55</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>35</DamageLight>
 		<DamageArmored>20</DamageArmored>
 		<DamageMassive>20</DamageMassive>
@@ -66,6 +78,17 @@
 		<DamageMassiveAir>20</DamageMassiveAir>
 		<DamageShieldAir>20</DamageShieldAir>
 		<DamageOrganicAir>20</DamageOrganicAir>
+		<DamageLightUpgradeFactor>2</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>2</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>2</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>2</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>2</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>2</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>2</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>2</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>2</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>2</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>2</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -78,6 +101,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.5</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>1</DistanceGround>
 		<DistanceAir>1</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -99,11 +123,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Òàðàêàí</name>
-		<id>Òàðàêàí</id>
+		<name>roach</name>
+		<id>Ð¢Ð°Ñ€Ð°ÐºÐ°Ð½</id>
 		<price>85</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>16</DamageLight>
 		<DamageArmored>16</DamageArmored>
 		<DamageMassive>16</DamageMassive>
@@ -115,6 +139,17 @@
 		<DamageMassiveAir>16</DamageMassiveAir>
 		<DamageShieldAir>16</DamageShieldAir>
 		<DamageOrganicAir>16</DamageOrganicAir>
+		<DamageLightUpgradeFactor>2</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>2</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>2</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>2</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>2</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>2</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>2</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>2</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>2</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>2</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>2</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -127,6 +162,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>4</DistanceGround>
 		<DistanceAir>4</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -148,11 +184,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ñòðåêîçà</name>
-		<id>Ñòðåêîçà</id>
+		<name>viper</name>
+		<id>Ð¡Ñ‚Ñ€ÐµÐºÐ¾Ð·Ð°</id>
 		<price>175</price>
 		<RequireUpgrade>2</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -164,6 +200,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -176,6 +223,7 @@
 		<mana>200</mana>
 		<MoveSpeed>2.95</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>0</DistanceGround>
 		<DistanceAir>0</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -197,11 +245,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ìóòàëèñê</name>
-		<id>Ìóòàëèñê</id>
+		<name>mutalisk</name>
+		<id>ÐœÑƒÑ‚Ð°Ð»Ð¸ÑÐº</id>
 		<price>100</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>9</DamageLight>
 		<DamageArmored>9</DamageArmored>
 		<DamageMassive>9</DamageMassive>
@@ -213,6 +261,17 @@
 		<DamageMassiveAir>9</DamageMassiveAir>
 		<DamageShieldAir>9</DamageShieldAir>
 		<DamageOrganicAir>9</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>2 units with fade</SplashType>
@@ -225,6 +284,7 @@
 		<mana>0</mana>
 		<MoveSpeed>4</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>3</DistanceGround>
 		<DistanceAir>3</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -246,11 +306,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Êîðàïòîð</name>
-		<id>Êîðàïòîð</id>
+		<name>corruptor</name>
+		<id>ÐšÐ¾Ñ€Ð°Ð¿Ñ‚Ð¾Ñ€</id>
 		<price>175</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>14</DamageLight>
 		<DamageArmored>14</DamageArmored>
 		<DamageMassive>20</DamageMassive>
@@ -262,6 +322,17 @@
 		<DamageMassiveAir>20</DamageMassiveAir>
 		<DamageShieldAir>14</DamageShieldAir>
 		<DamageOrganicAir>14</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -274,6 +345,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.95</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -295,11 +367,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ëþëüêåð</name>
-		<id>Ëþëüêåð</id>
+		<name>lurker</name>
+		<id>Ð›ÑŽÐ»ÑŒÐºÐµÑ€</id>
 		<price>225</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>25</DamageLight>
 		<DamageArmored>15</DamageArmored>
 		<DamageMassive>15</DamageMassive>
@@ -311,6 +383,17 @@
 		<DamageMassiveAir>15</DamageMassiveAir>
 		<DamageShieldAir>20</DamageShieldAir>
 		<DamageOrganicAir>15</DamageOrganicAir>
+		<DamageLightUpgradeFactor>3</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>3</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>3</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>3</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>3</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>3</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>3</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>3</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>3</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>3</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>3</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>trail</SplashType>
@@ -323,6 +406,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.5</MoveSpeed>
 		<UndergroundSpeed>1.5</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>7</DistanceGround>
 		<DistanceAir>7</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -344,11 +428,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Èíôåñòîð</name>
-		<id>Èíôåñòîð</id>
+		<name>infestor</name>
+		<id>Ð˜Ð½Ñ„ÐµÑÑ‚Ð¾Ñ€</id>
 		<price>250</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -360,6 +444,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -372,6 +467,7 @@
 		<mana>200</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>0</DistanceGround>
 		<DistanceAir>0</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -393,11 +489,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>çàðàæ¸ííûé òåðàí</name>
-		<id>çàðàæ¸ííûé òåðàí</id>
+		<name>infested_terran</name>
+		<id>Ð·Ð°Ñ€Ð°Ð¶Ñ‘Ð½Ð½Ñ‹Ð¹ Ñ‚ÐµÑ€Ð°Ð½</id>
 		<price>0</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>8</DamageLight>
 		<DamageArmored>8</DamageArmored>
 		<DamageMassive>8</DamageMassive>
@@ -409,6 +505,17 @@
 		<DamageMassiveAir>8</DamageMassiveAir>
 		<DamageShieldAir>8</DamageShieldAir>
 		<DamageOrganicAir>8</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -421,6 +528,7 @@
 		<mana>0</mana>
 		<MoveSpeed>0.94</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>5</DistanceGround>
 		<DistanceAir>5</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -442,11 +550,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Óëüòðàëèñê</name>
-		<id>Óëüòðàëèñê</id>
+		<name>ultralisk</name>
+		<id>Ð£Ð»ÑŒÑ‚Ñ€Ð°Ð»Ð¸ÑÐº</id>
 		<price>375</price>
 		<RequireUpgrade>2</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>35</DamageLight>
 		<DamageArmored>35</DamageArmored>
 		<DamageMassive>35</DamageMassive>
@@ -458,6 +566,17 @@
 		<DamageMassiveAir>35</DamageMassiveAir>
 		<DamageShieldAir>35</DamageShieldAir>
 		<DamageOrganicAir>35</DamageOrganicAir>
+		<DamageLightUpgradeFactor>3</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>3</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>3</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>3</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>3</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>3</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>3</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>3</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>3</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>3</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>3</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>round</SplashType>
@@ -470,6 +589,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.95</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>1</DistanceGround>
 		<DistanceAir>1</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -491,11 +611,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Áðóäëîðä</name>
-		<id>Áðóäëîðä</id>
+		<name>brood_lord</name>
+		<id>Ð‘Ñ€ÑƒÐ´Ð»Ð¾Ñ€Ð´</id>
 		<price>425</price>
 		<RequireUpgrade>2</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>20</DamageLight>
 		<DamageArmored>20</DamageArmored>
 		<DamageMassive>20</DamageMassive>
@@ -507,6 +627,17 @@
 		<DamageMassiveAir>20</DamageMassiveAir>
 		<DamageShieldAir>20</DamageShieldAir>
 		<DamageOrganicAir>20</DamageOrganicAir>
+		<DamageLightUpgradeFactor>2</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>2</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>2</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>2</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>2</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>2</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>2</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>2</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>2</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>2</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>2</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -519,6 +650,7 @@
 		<mana>0</mana>
 		<MoveSpeed>1.41</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>9.5</DistanceGround>
 		<DistanceAir>9.5</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -540,11 +672,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ñèìáèîíò</name>
-		<id>Ñèìáèîíò</id>
+		<name>broodling</name>
+		<id>Ð¡Ð¸Ð¼Ð±Ð¸Ð¾Ð½Ñ‚</id>
 		<price>0</price>
 		<RequireUpgrade>2</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>4</DamageLight>
 		<DamageArmored>4</DamageArmored>
 		<DamageMassive>4</DamageMassive>
@@ -556,6 +688,17 @@
 		<DamageMassiveAir>4</DamageMassiveAir>
 		<DamageShieldAir>4</DamageShieldAir>
 		<DamageOrganicAir>4</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -568,6 +711,7 @@
 		<mana>0</mana>
 		<MoveSpeed>3.84</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>1</DistanceGround>
 		<DistanceAir>1</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -589,11 +733,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ãëàç</name>
-		<id>Ãëàç</id>
+		<name>overseer</name>
+		<id>Ð“Ð»Ð°Ð·</id>
 		<price>125</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -605,6 +749,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -617,6 +772,7 @@
 		<mana>0</mana>
 		<MoveSpeed>1.88</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>0</DistanceGround>
 		<DistanceAir>0</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -633,16 +789,16 @@
 		<Mechanic>0</Mechanic>
 		<Massive>0</Massive>
 		<Building>0</Building>
-		<effectivity>íåâèäèìûå þíèòû</effectivity>
+		<effectivity>Ð½ÐµÐ²Ð¸Ð´Ð¸Ð¼Ñ‹Ðµ ÑŽÐ½Ð¸Ñ‚Ñ‹</effectivity>
 		<noneffectivity>6/23/49</noneffectivity>
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Êîðîëåâà</name>
-		<id>Êîðîëåâà</id>
+		<name>queen</name>
+		<id>ÐšÐ¾Ñ€Ð¾Ð»ÐµÐ²Ð°</id>
 		<price>175</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>4</DamageLight>
 		<DamageArmored>4</DamageArmored>
 		<DamageMassive>4</DamageMassive>
@@ -654,6 +810,17 @@
 		<DamageMassiveAir>9</DamageMassiveAir>
 		<DamageShieldAir>9</DamageShieldAir>
 		<DamageOrganicAir>9</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -666,6 +833,7 @@
 		<mana>200</mana>
 		<MoveSpeed>0.94</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>5</DistanceGround>
 		<DistanceAir>7</DistanceAir>
 		<AttackCountGround>2</AttackCountGround>
@@ -687,11 +855,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ãèäðàëèñê</name>
-		<id>Ãèäðàëèñê</id>
+		<name>hydralisk</name>
+		<id>Ð“Ð¸Ð´Ñ€Ð°Ð»Ð¸ÑÐº</id>
 		<price>105</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>12</DamageLight>
 		<DamageArmored>12</DamageArmored>
 		<DamageMassive>12</DamageMassive>
@@ -703,6 +871,17 @@
 		<DamageMassiveAir>12</DamageMassiveAir>
 		<DamageShieldAir>12</DamageShieldAir>
 		<DamageOrganicAir>12</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -715,6 +894,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>5</DistanceGround>
 		<DistanceAir>5</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -736,11 +916,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Çèëîò</name>
+		<name>zealot</name>
 		<id>irbaga</id>
 		<price>90</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>8</DamageLight>
 		<DamageArmored>8</DamageArmored>
 		<DamageMassive>8</DamageMassive>
@@ -752,6 +932,17 @@
 		<DamageMassiveAir>8</DamageMassiveAir>
 		<DamageShieldAir>8</DamageShieldAir>
 		<DamageOrganicAir>8</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -764,6 +955,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>1</DistanceGround>
 		<DistanceAir>1</DistanceAir>
 		<AttackCountGround>2</AttackCountGround>
@@ -785,11 +977,11 @@
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>×àñîâîé</name>
+		<name>sentry</name>
 		<id>chasovoy</id>
 		<price>125</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>6</DamageLight>
 		<DamageArmored>6</DamageArmored>
 		<DamageMassive>6</DamageMassive>
@@ -801,6 +993,17 @@
 		<DamageMassiveAir>6</DamageMassiveAir>
 		<DamageShieldAir>6</DamageShieldAir>
 		<DamageOrganicAir>6</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -813,6 +1016,7 @@
 		<mana>200</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>5</DistanceGround>
 		<DistanceAir>5</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -834,11 +1038,11 @@
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ñòàëêåð</name>
+		<name>stalker</name>
 		<id>budfoor</id>
 		<price>110</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>10</DamageLight>
 		<DamageArmored>14</DamageArmored>
 		<DamageMassive>10</DamageMassive>
@@ -850,6 +1054,17 @@
 		<DamageMassiveAir>10</DamageMassiveAir>
 		<DamageShieldAir>10</DamageShieldAir>
 		<DamageOrganicAir>10</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -862,6 +1077,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.95</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -883,11 +1099,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Äàðê òåìïëàð</name>
+		<name>dark_templar</name>
 		<id>dark</id>
 		<price>175</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>45</DamageLight>
 		<DamageArmored>45</DamageArmored>
 		<DamageMassive>45</DamageMassive>
@@ -899,6 +1115,17 @@
 		<DamageMassiveAir>45</DamageMassiveAir>
 		<DamageShieldAir>45</DamageShieldAir>
 		<DamageOrganicAir>45</DamageOrganicAir>
+		<DamageLightUpgradeFactor>5</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>5</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>5</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>5</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>5</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>5</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>5</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>5</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>5</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>5</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>5</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -911,6 +1138,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.81</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>1</DistanceGround>
 		<DistanceAir>1</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -928,15 +1156,15 @@
 		<Massive>0</Massive>
 		<Building>0</Building>
 		<effectivity>all ground units</effectivity>
-		<noneffectivity>äåòåêòîðû</noneffectivity>
+		<noneffectivity>Ð´ÐµÑ‚ÐµÐºÑ‚Ð¾Ñ€Ñ‹</noneffectivity>
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Øòîðì</name>
+		<name>high_templar</name>
 		<id>barar</id>
 		<price>275</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -948,6 +1176,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -960,6 +1199,7 @@
 		<mana>200</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>0</DistanceGround>
 		<DistanceAir>0</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -981,11 +1221,11 @@
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Àðõîíò</name>
+		<name>archon</name>
 		<id>archon</id>
 		<price>325</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>25</DamageLight>
 		<DamageArmored>25</DamageArmored>
 		<DamageMassive>25</DamageMassive>
@@ -997,6 +1237,17 @@
 		<DamageMassiveAir>25</DamageMassiveAir>
 		<DamageShieldAir>25</DamageShieldAir>
 		<DamageOrganicAir>35</DamageOrganicAir>
+		<DamageLightUpgradeFactor>3</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>3</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>3</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>3</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>3</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>3</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>3</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>3</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>3</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>3</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>3</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>round</SplashType>
@@ -1009,6 +1260,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.81</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>3</DistanceGround>
 		<DistanceAir>3</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1030,11 +1282,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Íàáëþäàòåëü</name>
+		<name>observer</name>
 		<id>observer</id>
 		<price>125</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -1046,6 +1298,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1058,6 +1321,7 @@
 		<mana>0</mana>
 		<MoveSpeed>1.88</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>0</DistanceGround>
 		<DistanceAir>0</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -1074,16 +1338,16 @@
 		<Mechanic>1</Mechanic>
 		<Massive>0</Massive>
 		<Building>0</Building>
-		<effectivity>íåâèäèìûå þíèòû</effectivity>
+		<effectivity>Ð½ÐµÐ²Ð¸Ð´Ð¸Ð¼Ñ‹Ðµ ÑŽÐ½Ð¸Ñ‚Ñ‹</effectivity>
 		<noneffectivity>unknown</noneffectivity>
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Áåññìåðòíûé</name>
+		<name>immortal</name>
 		<id>immortal</id>
 		<price>255</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>20</DamageLight>
 		<DamageArmored>50</DamageArmored>
 		<DamageMassive>20</DamageMassive>
@@ -1095,6 +1359,17 @@
 		<DamageMassiveAir>20</DamageMassiveAir>
 		<DamageShieldAir>20</DamageShieldAir>
 		<DamageOrganicAir>20</DamageOrganicAir>
+		<DamageLightUpgradeFactor>2</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>3</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>2</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>2</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>2</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>2</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>2</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>2</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>2</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>2</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>2</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1107,6 +1382,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1128,11 +1404,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Êîëîñ</name>
+		<name>colossus</name>
 		<id>colossus</id>
 		<price>460</price>
 		<RequireUpgrade>2</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>30</DamageLight>
 		<DamageArmored>30</DamageArmored>
 		<DamageMassive>30</DamageMassive>
@@ -1144,6 +1420,17 @@
 		<DamageMassiveAir>30</DamageMassiveAir>
 		<DamageShieldAir>30</DamageShieldAir>
 		<DamageOrganicAir>30</DamageOrganicAir>
+		<DamageLightUpgradeFactor>2</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>2</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>2</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>2</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>2</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>2</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>2</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>2</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>2</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>2</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>2</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>round</SplashType>
@@ -1156,6 +1443,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1177,11 +1465,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ôåíèêñ</name>
+		<name>phoenix</name>
 		<id>albiria</id>
 		<price>150</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>20</DamageLight>
 		<DamageArmored>10</DamageArmored>
 		<DamageMassive>10</DamageMassive>
@@ -1193,6 +1481,17 @@
 		<DamageMassiveAir>10</DamageMassiveAir>
 		<DamageShieldAir>10</DamageShieldAir>
 		<DamageOrganicAir>10</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1205,6 +1504,7 @@
 		<mana>200</mana>
 		<MoveSpeed>4.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>5</DistanceGround>
 		<DistanceAir>5</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1226,11 +1526,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Âîèä</name>
+		<name>void</name>
 		<id>voidray</id>
 		<price>300</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>6</DamageLight>
 		<DamageArmored>10</DamageArmored>
 		<DamageMassive>6</DamageMassive>
@@ -1242,6 +1542,17 @@
 		<DamageMassiveAir>6</DamageMassiveAir>
 		<DamageShieldAir>6</DamageShieldAir>
 		<DamageOrganicAir>6</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1254,6 +1565,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1275,11 +1587,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Àâèàíîñåö</name>
+		<name>carrier</name>
 		<id>carrier</id>
 		<price>550</price>
 		<RequireUpgrade>2</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -1291,6 +1603,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1303,6 +1626,7 @@
 		<mana>0</mana>
 		<MoveSpeed>1.88</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>8</DistanceGround>
 		<DistanceAir>8</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -1324,11 +1648,11 @@
 		<GeometryRadius>1.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Èíòåðñåïòîð</name>
+		<name>interceptor</name>
 		<id>interceptor</id>
 		<price>0</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>5</DamageLight>
 		<DamageArmored>5</DamageArmored>
 		<DamageMassive>5</DamageMassive>
@@ -1340,6 +1664,17 @@
 		<DamageMassiveAir>5</DamageMassiveAir>
 		<DamageShieldAir>5</DamageShieldAir>
 		<DamageOrganicAir>5</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1352,6 +1687,7 @@
 		<mana>0</mana>
 		<MoveSpeed>7.5</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>2</DistanceGround>
 		<DistanceAir>2</DistanceAir>
 		<AttackCountGround>2</AttackCountGround>
@@ -1373,11 +1709,11 @@
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Óðàãàí</name>
+		<name>tempest</name>
 		<id>tempest</id>
 		<price>475</price>
 		<RequireUpgrade>2</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>30</DamageLight>
 		<DamageArmored>30</DamageArmored>
 		<DamageMassive>30</DamageMassive>
@@ -1389,6 +1725,17 @@
 		<DamageMassiveAir>44</DamageMassiveAir>
 		<DamageShieldAir>30</DamageShieldAir>
 		<DamageOrganicAir>30</DamageOrganicAir>
+		<DamageLightUpgradeFactor>3</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>3</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>3</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>3</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>3</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>3</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>3</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>3</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>3</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>3</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>3</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1401,6 +1748,7 @@
 		<mana>0</mana>
 		<MoveSpeed>1.88</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>15</DistanceGround>
 		<DistanceAir>15</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1422,11 +1770,11 @@
 		<GeometryRadius>1.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ìàçåðøèï</name>
+		<name>mothership</name>
 		<id>mothership</id>
 		<price>700</price>
 		<RequireUpgrade>2</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>6</DamageLight>
 		<DamageArmored>6</DamageArmored>
 		<DamageMassive>6</DamageMassive>
@@ -1438,6 +1786,17 @@
 		<DamageMassiveAir>6</DamageMassiveAir>
 		<DamageShieldAir>6</DamageShieldAir>
 		<DamageOrganicAir>6</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1450,6 +1809,7 @@
 		<mana>200</mana>
 		<MoveSpeed>1.41</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>7</DistanceGround>
 		<DistanceAir>7</DistanceAir>
 		<AttackCountGround>6</AttackCountGround>
@@ -1471,11 +1831,11 @@
 		<GeometryRadius>1.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>ßäðî</name>
+		<name>core</name>
 		<id>mothershipcore</id>
 		<price>200</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>8</DamageLight>
 		<DamageArmored>8</DamageArmored>
 		<DamageMassive>8</DamageMassive>
@@ -1487,6 +1847,17 @@
 		<DamageMassiveAir>8</DamageMassiveAir>
 		<DamageShieldAir>8</DamageShieldAir>
 		<DamageOrganicAir>8</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1499,6 +1870,7 @@
 		<mana>200</mana>
 		<MoveSpeed>1.88</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>5</DistanceGround>
 		<DistanceAir>5</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1520,11 +1892,11 @@
 		<GeometryRadius>1.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ìàðèíåð</name>
-		<id>Ìàðèíåð</id>
+		<name>marine</name>
+		<id>ÐœÐ°Ñ€Ð¸Ð½ÐµÑ€</id>
 		<price>55</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>6</DamageLight>
 		<DamageArmored>6</DamageArmored>
 		<DamageMassive>6</DamageMassive>
@@ -1536,6 +1908,17 @@
 		<DamageMassiveAir>6</DamageMassiveAir>
 		<DamageShieldAir>6</DamageShieldAir>
 		<DamageOrganicAir>6</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1548,6 +1931,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>5</DistanceGround>
 		<DistanceAir>5</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1569,11 +1953,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ìàðîä¸ð</name>
-		<id>Ìàðîä¸ð</id>
+		<name>marauder</name>
+		<id>ÐœÐ°Ñ€Ð¾Ð´Ñ‘Ñ€</id>
 		<price>100</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>10</DamageLight>
 		<DamageArmored>20</DamageArmored>
 		<DamageMassive>10</DamageMassive>
@@ -1585,6 +1969,17 @@
 		<DamageMassiveAir>10</DamageMassiveAir>
 		<DamageShieldAir>10</DamageShieldAir>
 		<DamageOrganicAir>10</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1597,6 +1992,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1618,11 +2014,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ãîëîâîðåç</name>
-		<id>Ãîëîâîðåç</id>
+		<name>reaper</name>
+		<id>Ð“Ð¾Ð»Ð¾Ð²Ð¾Ñ€ÐµÐ·</id>
 		<price>55</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>4</DamageLight>
 		<DamageArmored>4</DamageArmored>
 		<DamageMassive>4</DamageMassive>
@@ -1634,6 +2030,17 @@
 		<DamageMassiveAir>4</DamageMassiveAir>
 		<DamageShieldAir>4</DamageShieldAir>
 		<DamageOrganicAir>4</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1646,6 +2053,7 @@
 		<mana>0</mana>
 		<MoveSpeed>3.75</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>5</DistanceGround>
 		<DistanceAir>5</DistanceAir>
 		<AttackCountGround>2</AttackCountGround>
@@ -1667,11 +2075,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ñíàéïåð</name>
-		<id>Ñíàéïåð</id>
+		<name>ghost</name>
+		<id>Ð¡Ð½Ð°Ð¹Ð¿ÐµÑ€</id>
 		<price>220</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>ïåõîòà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð¿ÐµÑ…Ð¾Ñ‚Ð°</BattleUpgradeClass>
 		<DamageLight>20</DamageLight>
 		<DamageArmored>10</DamageArmored>
 		<DamageMassive>10</DamageMassive>
@@ -1683,6 +2091,17 @@
 		<DamageMassiveAir>10</DamageMassiveAir>
 		<DamageShieldAir>10</DamageShieldAir>
 		<DamageOrganicAir>10</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1695,6 +2114,7 @@
 		<mana>200</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1716,11 +2136,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ãåëèîí</name>
-		<id>Ãåëèîí</id>
+		<name>hellion</name>
+		<id>Ð“ÐµÐ»Ð¸Ð¾Ð½</id>
 		<price>90</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>íàçåìíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð½Ð°Ð·ÐµÐ¼Ð½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -1732,6 +2152,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1744,6 +2175,7 @@
 		<mana>0</mana>
 		<MoveSpeed>0</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>0</DistanceGround>
 		<DistanceAir>0</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -1765,11 +2197,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ãåëèòðîí</name>
-		<id>Ãåëèòðîí</id>
+		<name>hellbat</name>
+		<id>Ð“ÐµÐ»Ð¸Ñ‚Ñ€Ð¾Ð½</id>
 		<price>90</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>íàçåìíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð½Ð°Ð·ÐµÐ¼Ð½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>18</DamageLight>
 		<DamageArmored>18</DamageArmored>
 		<DamageMassive>18</DamageMassive>
@@ -1781,6 +2213,17 @@
 		<DamageMassiveAir>18</DamageMassiveAir>
 		<DamageShieldAir>18</DamageShieldAir>
 		<DamageOrganicAir>18</DamageOrganicAir>
+		<DamageLightUpgradeFactor>3</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>2</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>2</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>2</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>2</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>2</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>2</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>2</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>2</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>2</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>2</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>round arc</SplashType>
@@ -1793,6 +2236,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>2</DistanceGround>
 		<DistanceAir>2</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1814,11 +2258,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ìèíà</name>
-		<id>Ìèíà</id>
+		<name>mine</name>
+		<id>ÐœÐ¸Ð½Ð°</id>
 		<price>125</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>íàçåìíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð½Ð°Ð·ÐµÐ¼Ð½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>125</DamageLight>
 		<DamageArmored>125</DamageArmored>
 		<DamageMassive>125</DamageMassive>
@@ -1830,6 +2274,17 @@
 		<DamageMassiveAir>125</DamageMassiveAir>
 		<DamageShieldAir>160</DamageShieldAir>
 		<DamageOrganicAir>125</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>40</SplashDamage>
 		<SplashDamageShield>80</SplashDamageShield>
 		<SplashType>round</SplashType>
@@ -1842,6 +2297,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.81</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>5</DistanceGround>
 		<DistanceAir>5</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1859,15 +2315,15 @@
 		<Massive>0</Massive>
 		<Building>0</Building>
 		<effectivity>41/4/28</effectivity>
-		<noneffectivity>äåòåêòîðû</noneffectivity>
+		<noneffectivity>Ð´ÐµÑ‚ÐµÐºÑ‚Ð¾Ñ€Ñ‹</noneffectivity>
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Òàíê</name>
-		<id>Òàíê</id>
+		<name>tank</name>
+		<id>Ð¢Ð°Ð½Ðº</id>
 		<price>275</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>íàçåìíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð½Ð°Ð·ÐµÐ¼Ð½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>15</DamageLight>
 		<DamageArmored>25</DamageArmored>
 		<DamageMassive>15</DamageMassive>
@@ -1879,6 +2335,17 @@
 		<DamageMassiveAir>15</DamageMassiveAir>
 		<DamageShieldAir>15</DamageShieldAir>
 		<DamageOrganicAir>15</DamageOrganicAir>
+		<DamageLightUpgradeFactor>2</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>3</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>2</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>2</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>2</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>2</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>2</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>2</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>2</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>2</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>2</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1891,6 +2358,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>7</DistanceGround>
 		<DistanceAir>7</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -1912,11 +2380,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Òîð</name>
-		<id>Òîð</id>
+		<name>tor</name>
+		<id>Ð¢Ð¾Ñ€</id>
 		<price>425</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>íàçåìíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð½Ð°Ð·ÐµÐ¼Ð½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>30</DamageLight>
 		<DamageArmored>30</DamageArmored>
 		<DamageMassive>30</DamageMassive>
@@ -1928,6 +2396,17 @@
 		<DamageMassiveAir>6</DamageMassiveAir>
 		<DamageShieldAir>6</DamageShieldAir>
 		<DamageOrganicAir>6</DamageOrganicAir>
+		<DamageLightUpgradeFactor>3</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>3</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>3</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>3</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>3</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>3</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>3</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>3</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>3</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>3</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>3</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1940,6 +2419,7 @@
 		<mana>0</mana>
 		<MoveSpeed>1.88</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>10</DistanceGround>
 		<DistanceAir>7</DistanceAir>
 		<AttackCountGround>2</AttackCountGround>
@@ -1961,11 +2441,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Âèêèíã</name>
-		<id>Âèêèíã</id>
+		<name>viking</name>
+		<id>Ð’Ð¸ÐºÐ¸Ð½Ð³</id>
 		<price>190</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>âîçäóøíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð²Ð¾Ð·Ð´ÑƒÑˆÐ½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>10</DamageLight>
 		<DamageArmored>14</DamageArmored>
 		<DamageMassive>10</DamageMassive>
@@ -1977,6 +2457,17 @@
 		<DamageMassiveAir>10</DamageMassiveAir>
 		<DamageShieldAir>10</DamageShieldAir>
 		<DamageOrganicAir>10</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -1989,6 +2480,7 @@
 		<mana>0</mana>
 		<MoveSpeed>2.75</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>9</DistanceGround>
 		<DistanceAir>9</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -2010,11 +2502,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ìåäýâàê</name>
-		<id>Ìåäýâàê</id>
+		<name>medivac</name>
+		<id>ÐœÐµÐ´ÑÐ²Ð°Ðº</id>
 		<price>110</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>âîçäóøíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð²Ð¾Ð·Ð´ÑƒÑˆÐ½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -2026,6 +2518,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -2038,6 +2541,7 @@
 		<mana>200</mana>
 		<MoveSpeed>2.5</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>0</DistanceGround>
 		<DistanceAir>0</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -2059,11 +2563,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Âîðîí</name>
-		<id>Âîðîí</id>
+		<name>raven</name>
+		<id>Ð’Ð¾Ñ€Ð¾Ð½</id>
 		<price>260</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>âîçäóøíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð²Ð¾Ð·Ð´ÑƒÑˆÐ½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -2075,6 +2579,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -2087,6 +2602,7 @@
 		<mana>200</mana>
 		<MoveSpeed>2.25</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>0</DistanceGround>
 		<DistanceAir>0</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -2108,11 +2624,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Áàíøè</name>
-		<id>Áàíøè</id>
+		<name>banshee</name>
+		<id>Ð‘Ð°Ð½ÑˆÐ¸</id>
 		<price>190</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>âîçäóøíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð²Ð¾Ð·Ð´ÑƒÑˆÐ½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>12</DamageLight>
 		<DamageArmored>12</DamageArmored>
 		<DamageMassive>12</DamageMassive>
@@ -2124,6 +2640,17 @@
 		<DamageMassiveAir>12</DamageMassiveAir>
 		<DamageShieldAir>12</DamageShieldAir>
 		<DamageOrganicAir>12</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -2136,6 +2663,7 @@
 		<mana>200</mana>
 		<MoveSpeed>2.75</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>2</AttackCountGround>
@@ -2157,11 +2685,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Áàòëêðóçåð</name>
-		<id>Áàòëêðóçåð</id>
+		<name>battlecruiser</name>
+		<id>Ð‘Ð°Ñ‚Ð»ÐºÑ€ÑƒÐ·ÐµÑ€</id>
 		<price>525</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>âîçäóøíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð²Ð¾Ð·Ð´ÑƒÑˆÐ½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>8</DamageLight>
 		<DamageArmored>8</DamageArmored>
 		<DamageMassive>8</DamageMassive>
@@ -2173,6 +2701,17 @@
 		<DamageMassiveAir>6</DamageMassiveAir>
 		<DamageShieldAir>6</DamageShieldAir>
 		<DamageOrganicAir>6</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -2185,6 +2724,7 @@
 		<mana>200</mana>
 		<MoveSpeed>1.88</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -2206,11 +2746,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Ìîäóëü òî÷å÷íîé îáîðîíû</name>
-		<id>Ìîäóëü òî÷å÷íîé îáîðîíû</id>
+		<name>point_defense_drone</name>
+		<id>ÐœÐ¾Ð´ÑƒÐ»ÑŒ Ñ‚Ð¾Ñ‡ÐµÑ‡Ð½Ð¾Ð¹ Ð¾Ð±Ð¾Ñ€Ð¾Ð½Ñ‹</id>
 		<price>0</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>âîçäóøíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð²Ð¾Ð·Ð´ÑƒÑˆÐ½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>0</DamageLight>
 		<DamageArmored>0</DamageArmored>
 		<DamageMassive>0</DamageMassive>
@@ -2222,6 +2762,17 @@
 		<DamageMassiveAir>0</DamageMassiveAir>
 		<DamageShieldAir>0</DamageShieldAir>
 		<DamageOrganicAir>0</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -2234,6 +2785,7 @@
 		<mana>200</mana>
 		<MoveSpeed>0</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>0</DistanceGround>
 		<DistanceAir>0</DistanceAir>
 		<AttackCountGround>0</AttackCountGround>
@@ -2255,11 +2807,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Àâòîòóðåëü</name>
-		<id>Àâòîòóðåëü</id>
+		<name>auto_turret</name>
+		<id>ÐÐ²Ñ‚Ð¾Ñ‚ÑƒÑ€ÐµÐ»ÑŒ</id>
 		<price>0</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>íàçåìíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð½Ð°Ð·ÐµÐ¼Ð½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>8</DamageLight>
 		<DamageArmored>8</DamageArmored>
 		<DamageMassive>8</DamageMassive>
@@ -2271,6 +2823,17 @@
 		<DamageMassiveAir>8</DamageMassiveAir>
 		<DamageShieldAir>8</DamageShieldAir>
 		<DamageOrganicAir>8</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -2283,6 +2846,7 @@
 		<mana>0</mana>
 		<MoveSpeed>0</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -2304,11 +2868,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Òàíê â îñàäå</name>
-		<id>Òàíê â îñàäå</id>
+		<name>tank_siege_mode</name>
+		<id>Ð¢Ð°Ð½Ðº Ð² Ð¾ÑÐ°Ð´Ðµ</id>
 		<price>275</price>
 		<RequireUpgrade>0</RequireUpgrade>
-		<BattleUpgradeClass>íàçåìíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð½Ð°Ð·ÐµÐ¼Ð½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>35</DamageLight>
 		<DamageArmored>50</DamageArmored>
 		<DamageMassive>35</DamageMassive>
@@ -2320,6 +2884,17 @@
 		<DamageMassiveAir>35</DamageMassiveAir>
 		<DamageShieldAir>35</DamageShieldAir>
 		<DamageOrganicAir>35</DamageOrganicAir>
+		<DamageLightUpgradeFactor>3</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>5</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>3</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>3</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>3</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>3</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>3</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>3</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>3</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>3</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>3</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>round fade</SplashType>
@@ -2332,6 +2907,7 @@
 		<mana>0</mana>
 		<MoveSpeed>0</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>13</DistanceGround>
 		<DistanceAir>13</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -2353,11 +2929,11 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Âèêèíã Íàçåìíûé</name>
-		<id>Âèêèíã Íàçåìíûé</id>
+		<name>viking_ground_mode</name>
+		<id>Ð’Ð¸ÐºÐ¸Ð½Ð³ ÐÐ°Ð·ÐµÐ¼Ð½Ñ‹Ð¹</id>
 		<price>190</price>
 		<RequireUpgrade>1</RequireUpgrade>
-		<BattleUpgradeClass>âîçäóøíàÿ òåõíèêà</BattleUpgradeClass>
+		<BattleUpgradeClass>Ð²Ð¾Ð·Ð´ÑƒÑˆÐ½Ð°Ñ Ñ‚ÐµÑ…Ð½Ð¸ÐºÐ°</BattleUpgradeClass>
 		<DamageLight>12</DamageLight>
 		<DamageArmored>12</DamageArmored>
 		<DamageMassive>12</DamageMassive>
@@ -2369,6 +2945,17 @@
 		<DamageMassiveAir>12</DamageMassiveAir>
 		<DamageShieldAir>12</DamageShieldAir>
 		<DamageOrganicAir>12</DamageOrganicAir>
+		<DamageLightUpgradeFactor>1</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>1</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>1</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>1</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>1</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>1</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>1</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>1</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>1</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>1</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>1</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -2381,6 +2968,7 @@
 		<mana>0</mana>
 		<MoveSpeed>0</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>1</ImmediateAttack>
 		<DistanceGround>6</DistanceGround>
 		<DistanceAir>6</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -2389,7 +2977,7 @@
 		<TargetGround>1</TargetGround>
 		<TargetAir>0</TargetAir>
 		<MovementGround>1</MovementGround>
-		<MovementAir>1</MovementAir>
+		<MovementAir>0</MovementAir>
 		<LightArmor>0</LightArmor>
 		<HavyArmor>1</HavyArmor>
 		<Organic>0</Organic>
@@ -2402,7 +2990,7 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Áàøíÿ</name>
+		<name>tower</name>
 		<id>tower</id>
 		<price>0</price>
 		<RequireUpgrade>0</RequireUpgrade>
@@ -2418,6 +3006,17 @@
 		<DamageMassiveAir>25</DamageMassiveAir>
 		<DamageShieldAir>25</DamageShieldAir>
 		<DamageOrganicAir>25</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -2430,6 +3029,7 @@
 		<mana>0</mana>
 		<MoveSpeed>0</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>15</DistanceGround>
 		<DistanceAir>15</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>
@@ -2451,7 +3051,7 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Áàçà</name>
+		<name>base</name>
 		<id>base</id>
 		<price>0</price>
 		<RequireUpgrade>0</RequireUpgrade>
@@ -2467,6 +3067,17 @@
 		<DamageMassiveAir>25</DamageMassiveAir>
 		<DamageShieldAir>25</DamageShieldAir>
 		<DamageOrganicAir>25</DamageOrganicAir>
+		<DamageLightUpgradeFactor>0</DamageLightUpgradeFactor>
+		<DamageArmoredUpgradeFactor>0</DamageArmoredUpgradeFactor>
+		<DamageMassiveUpgradeFactor>0</DamageMassiveUpgradeFactor>
+		<DamageShieldUpgradeFactor>0</DamageShieldUpgradeFactor>
+		<DamageOrganicUpgradeFactor>0</DamageOrganicUpgradeFactor>
+		<DamageBuildingUpgradeFactor>0</DamageBuildingUpgradeFactor>
+		<DamageLightAirUpgradeFactor>0</DamageLightAirUpgradeFactor>
+		<DamageArmoredAirUpgradeFactor>0</DamageArmoredAirUpgradeFactor>
+		<DamageMassiveAirUpgradeFactor>0</DamageMassiveAirUpgradeFactor>
+		<DamageShieldAirUpgradeFactor>0</DamageShieldAirUpgradeFactor>
+		<DamageOrganicAirUpgradeFactor>0</DamageOrganicAirUpgradeFactor>
 		<SplashDamage>0</SplashDamage>
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
@@ -2479,6 +3090,7 @@
 		<mana>0</mana>
 		<MoveSpeed>0</MoveSpeed>
 		<UndergroundSpeed>0</UndergroundSpeed>
+		<ImmediateAttack>0</ImmediateAttack>
 		<DistanceGround>15</DistanceGround>
 		<DistanceAir>15</DistanceAir>
 		<AttackCountGround>1</AttackCountGround>

@@ -6,13 +6,17 @@ BaseStaticActor::BaseStaticActor()
 
 void BaseStaticActor::damageHandler(BaseGameObject* object)
 {
-	if (object->LocalGameData.GameData->DistanceGround > 1.5)
+	int attacksCount = object->LocalGameData.GameData->getAttacksCount(*object->Target->LocalGameData.GameData);
+	for (int i = 0; i < attacksCount; i++)
 	{
-		((BaseStaticActor*)object)->rangeFire();
-	}
-	else
-	{
-		object->doDamage(object->Target);
+		if (object->LocalGameData.GameData->ImmediateAttack)
+		{
+			object->doDamage(object->Target);
+		}
+		else
+		{
+			((BaseStaticActor*)object)->rangeFire();
+		}
 	}
 }
 

@@ -29,26 +29,6 @@ void Timer::update(float time, BaseGameObject* object)
 	}
 }
 
-LocalActorData::LocalActorData()
-: GameData(NULL)
-, Health(0.0f)
-, Shield(0.0f)
-, ArmorUpgrade(0.0f)
-, DamageUpgrade(0.0f)
-, ShieldUpgrade(0.0f)
-{
-}
-
-void LocalActorData::init(const ActorData* gameData)
-{
-	if (gameData)
-	{
-		GameData = gameData;
-		Health = GameData->HP;
-		Shield = GameData->shield;
-	}
-}
-
 BaseGameObject::BaseGameObject()
 : Player(NULL)
 , Target()
@@ -94,7 +74,7 @@ void BaseGameObject::doDamage(BaseGameObject* target)
 {
 	if (target != NULL)
 	{
-		Target->LocalGameData.Health -= LocalGameData.GameData->getDamage(*target->LocalGameData.GameData);
+		LocalGameData.doDamage(target->LocalGameData);
 	}
 }
 

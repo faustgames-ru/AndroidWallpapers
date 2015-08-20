@@ -61,8 +61,7 @@ private:
 	void updateMenuButtons();
 
 	static void CreateUnit(Game* game, Control* control);
-	static void ShowUnitsP1(Game* game, Control* control);
-	static void ShowUnitsP2(Game* game, Control* control);
+	//static void ShowUnitsP1(Game* game, Control* control);
 	static void SwitchPlayer(Game* game, Control* control);
 
 	static void ShowTunes(Game* game, Control* control);
@@ -100,6 +99,9 @@ private:
     Vector2 _currentDirection;
     Gamepad* _gamepad;
 	TargetCamera _fpCamera;
+	TargetCamera _CameraPlayer[2];
+	TargetCamera* _activeCamera;
+	TargetCamera* _activePlayerCamera;
 	bool _freeCamera;
 	Vector3 _battleFieldDirection;
 	unsigned int _moveFlags;

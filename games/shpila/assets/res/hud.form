@@ -54,26 +54,7 @@ form hud
 			text = Player2
 	   }
 	}
-	
-	container menu_p1
-	{
-	   alignment = ALIGN_BOTTOM_LEFT
-	   autoWidth = false
-	   height = 170
-	   layout = LAYOUT_VERTICAL
-	   
-	   button Show_Units_P1
-	   {
-		  consumeInputEvents = true
-		  style = buttonStyle
-		  width = 90
-		  height = 35
-		  text = Units
-	   }
-	}
 
-	
-	
     container Player1
     {
         style = noBorder

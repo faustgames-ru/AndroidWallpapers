@@ -23,20 +23,6 @@ private:
 	float _startTime;
 };
 
-class LocalActorData
-{
-public:
-	const ActorData* GameData;
-	float Health;
-	float Shield;
-	float ArmorUpgrade;
-	float DamageUpgrade;
-	float ShieldUpgrade;
-
-	LocalActorData();
-	void init(const ActorData* gameData);
-};
-
 class BaseGameObject : public CLinkObject
 {
 public:
