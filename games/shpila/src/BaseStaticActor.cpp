@@ -6,6 +6,9 @@ BaseStaticActor::BaseStaticActor()
 
 void BaseStaticActor::damageHandler(BaseGameObject* object)
 {
+	if (!object->Target)
+		return;
+
 	int attacksCount = object->LocalGameData.GameData->getAttacksCount(*object->Target->LocalGameData.GameData);
 	for (int i = 0; i < attacksCount; i++)
 	{
@@ -30,7 +33,7 @@ void BaseStaticActor::rangeFire()
 {
 	if (Target != NULL)
 	{
-		BaseGameObject* bullet = _manager->createObject("bullet", massCenterPosition(), Player);
+		BaseGameObject* bullet = _manager->createObject("bullet", massCenterPosition(), Target->massCenterPosition() - massCenterPosition(), Player);
 		bullet->Target = Target;
 		bullet->LocalGameData.init(LocalGameData.GameData);
 	}

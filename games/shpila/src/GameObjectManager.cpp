@@ -156,19 +156,26 @@ void GameObjectManager::initUnits()
 	//_store->visit(this, &GameObjectManager::initializeCharacterNodeScale);	
 }
 
-BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 position, PlayerObject* player)
+BaseGameObject* GameObjectManager::createObject(const char* name, Matrix transform, PlayerObject* player)
 {
 	GP_ASSERT(_scene);
 
 	GameUnit& unit = _units[name];
 	BaseGameObject* object = unit._constructor(); 
-	Matrix translation;
-	Matrix::createTranslation(position, &translation);
-	object->init(*this, &getActorData(name), unit._node, player, translation);
+	object->init(*this, &getActorData(name), unit._node, player, transform);
 	std::vector<PlayerObject*>::iterator pl = std::find_if(Players.begin(), Players.end(), [&](PlayerObject* p){ return p->ID == player->ID; });
 	if (pl != Players.end())
 		object->ID = (*pl)->getNewObjectID();
 	return object;
+}
+
+BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 position, Vector3 forwardDirection, PlayerObject* player)
+{
+	Matrix transform, rotate;
+	transform.translate(position);
+	Matrix::createLookAt(Vector3(), forwardDirection, Vector3::unitY(), &rotate);
+	transform.rotate(rotate);
+	return createObject(name, transform, player);
 }
 
 void GameObjectManager::registerMovementController(UnitMovementBase* controller)
@@ -210,7 +217,7 @@ void GameObjectManager::interaction(BaseGameObject* object)
 	Itr<BaseGameObject> it = _objects.GetFirst();
 	while (it)
 	{
-		if (it->interactive() && (object != it))
+		if (it->interactive() && (it != object))
 		{
 			if (object->InteractionPossible(it))
 			{

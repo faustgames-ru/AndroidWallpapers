@@ -59,9 +59,9 @@ private:
     bool drawScene(Node* node, bool transparent);
 	void updateNetwork();
 	void updateMenuButtons();
+	void PlaceUnit(int x, int y);
 
 	static void CreateUnit(Game* game, Control* control);
-	//static void ShowUnitsP1(Game* game, Control* control);
 	static void SwitchPlayer(Game* game, Control* control);
 
 	static void ShowTunes(Game* game, Control* control);
@@ -115,6 +115,7 @@ private:
 	Client _client;
 	GameObjectManager _manager;
 	int _currentPlayerIDforUI;
+	std::string _CurrentCharacterName;
 public:
 	int _ping;
 	PLAYERID _netPlayerID;

@@ -1,5 +1,18 @@
 #include "Headers.h"
 
+WarriorsGrid::WarriorsGrid()
+: AxisX()
+, AxisY()
+{
+	for (int i = 0; i < CellsCountX; i++)
+	{
+		for (int j = 0; j < CellsCountY; j++)
+		{
+			Cells[i][j] = false;
+		}
+	}
+}
+
 PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection)
 : Manager(manager)
 , EnemyPlayer(NULL)
@@ -23,14 +36,14 @@ void PlayerObject::update(float time)
 	//create own nexus
 	if (_defenceBase == NULL)
 	{
-		_defenceBase = (TheBaseObject*)Manager.createObject("base", _position + 25.45f * BattleFieldDirection, this);
-		_defenceBase->SearchRadius = 10.0f;
+		_defenceBase = (TheBaseObject*)Manager.createObject("base", _position + 25.45f * BattleFieldDirection, BattleFieldDirection, this);
+		_defenceBase->SearchRadius = 20.0f;
 	}
 
 	if (_defenceTower == NULL)
 	{
-		_defenceTower = (TowerObject*)Manager.createObject("tower", _position + 45.25f * BattleFieldDirection, this);
-		_defenceTower->SearchRadius = 10.0f;
+		_defenceTower = (TowerObject*)Manager.createObject("tower", _position + 45.25f * BattleFieldDirection, BattleFieldDirection, this);
+		_defenceTower->SearchRadius = 20.0f;
 	}
 	//spawn warriors
 	_mainResourceIncreacetimer += time;
@@ -41,12 +54,13 @@ void PlayerObject::update(float time)
 	}
 }
 
-void PlayerObject::CreateWarrior(const char* name)
+void PlayerObject::CreateWarrior(const char* name, const Valuable<Vector3> position)
 {
-	const ActorData& ad = getActorData(name);
+	const ActorData& ad = getActorData(name); 
 	//if (ad.Price < MainResource)
 	{
-		BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(name, _position + Vector3(rnd(-10.0f, 10.0f), 0.0f, rnd(-10.0f, 10.0f)), this);
+		const Vector3 warriorPosition = position.defined() ? position : _position + Vector3(rnd(-10.0f, 10.0f), 0.0f, rnd(-10.0f, 10.0f));
+		BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(name, warriorPosition, BattleFieldDirection, this);
 		warrior->Holder = true;
 		warrior->HolderWarriorName = name;
 		_warriorsSpawnedCount++;

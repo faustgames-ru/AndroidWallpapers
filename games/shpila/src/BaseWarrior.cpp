@@ -58,7 +58,7 @@ void BaseWarrior::update(float time)
 		bool resp = ((Shpila*)Game::getInstance())->Respawn;
 		if (((Shpila*)Game::getInstance())->isActivePlayer(Player) && resp)
 		{
-			Player->Manager.createObject(HolderWarriorName.c_str(), position() + 15.0f * Player->BattleFieldDirection, Player);
+			Player->Manager.createObject(HolderWarriorName.c_str(), position() + 15.0f * Player->BattleFieldDirection, Player->BattleFieldDirection, Player);
 		}
 		return;
 	}

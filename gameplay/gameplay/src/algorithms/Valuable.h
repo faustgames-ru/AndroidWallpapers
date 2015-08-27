@@ -17,16 +17,20 @@ public:
 	Valuable(const T& value, bool defined = true);
 	~Valuable();
 
-	bool defined();
+	bool defined() const;
 	void reset();
-	operator T&();
+	operator T&() const;
 	T* operator ->();
 	T& operator= (T value);
 
+	static Valuable<T> Undefined;
 private:
-	T _value;
+	mutable T _value;
 	bool _defined;
 };
+
+template <typename T>
+Valuable<T> Valuable<T>::Undefined;
 
 template <typename T>
 Valuable<T>::Valuable()
@@ -55,7 +59,7 @@ Valuable<T>::~Valuable()
 }
 
 template <typename T>
-bool Valuable<T>::defined()
+bool Valuable<T>::defined() const
 {
 	return _defined;
 }
@@ -67,7 +71,7 @@ void Valuable<T>::reset()
 }
 
 template <typename T>
-Valuable<T>::operator T&()
+Valuable<T>::operator T&() const
 {
 	return _value;
 }

@@ -39,7 +39,7 @@ Shpila::Shpila()
     : _font(NULL), _scene(), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
       _animation(NULL), _rotateX(0), _materialParameterAlpha(NULL),
 	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _fpCamera(), _activeCamera(NULL), _activePlayerCamera(NULL), _freeCamera(true), _battleFieldDirection(), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
-	  _hud(), _totalTime(0.0), _respawnTime(0.0), _manager(), _ping(0), _netPlayerID(-1), Respawn(false), _currentPlayerIDforUI(0)
+	  _hud(), _totalTime(0.0), _manager(), _currentPlayerIDforUI(0), _CurrentCharacterName(), _ping(0), _netPlayerID(-1), _respawnTime(0.0), Respawn(false)
 {
     _buttonPressed = new bool[2];
 }
@@ -144,13 +144,13 @@ void Shpila::initialize()
 				0.0f, 1.0f, 0.5f, &rot);
 			_fpCamera.setRotation(rot);
 			//setup camera 2
-			_CameraPlayer[0].setPosition(Vector3(42.202988, 15.573791f, -67.127838));
+			_CameraPlayer[0].setPosition(Vector3(42.202988f, 15.573791f, -67.127838f));
 			Matrix::createLookAt(0.0f, 0.0f, 0.0f,
 				0.0f, -1.0f, 1.0f,
 				0.0f, 1.0f, 0.5f, &rot);
 			_CameraPlayer[0].setRotation(rot);
 			//setup camera 3
-			_CameraPlayer[1].setPosition(Vector3(-42.202988, 15.573791f, 47.127838));
+			_CameraPlayer[1].setPosition(Vector3(-42.202988f, 15.573791f, 47.127838f));
 			Matrix::createLookAt(0.0f, 0.0f, 0.0f,
 				0.0f, -1.0f, 1.0f,
 				0.0f, 1.0f, 0.5f, &rot);
@@ -355,20 +355,31 @@ void Shpila::updateMenuButtons()
 	}
 }
 
+void Shpila::PlaceUnit(int x, int y)
+{
+	Vector3 pointOnPlane(0, 0, 0);
+	Ray ray;
+	_activeCamera->getCamera()->pickRay(Game::getInstance()->getViewport(), x, y, &ray);
+	Vector3 normal = Vector3(0.0f, 1.0f, 0.0f);
+	const float distance = Vector3::dot(pointOnPlane, normal);
+	Plane plane(normal, -distance);
+
+	Vector3 point;
+	float collisionDistance = ray.intersects(plane);
+	if (collisionDistance != Ray::INTERSECTS_NONE)
+	{
+		point.set(ray.getOrigin() + collisionDistance*ray.getDirection());
+		getActivePlayer()->CreateWarrior(_CurrentCharacterName.c_str(), Valuable<Vector3>(point));
+	}
+}
+
 
 //shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
 
 void Shpila::CreateUnit(Game* game, Control* control)
 {
-	const char *character = control->getTextTag();
-	((Shpila*)game)->getActivePlayer()->CreateWarrior(character);
+	((Shpila*)game)->_CurrentCharacterName = control->getTextTag();
 }
-
-/*void Shpila::ShowUnitsP1(Game* game, Control* control)
-{
-	Shpila* shpila = (Shpila*)game;
-	shpila->_hud.form()->getControl("Player1")->setVisible(!shpila->_hud.form()->getControl("Player1")->isVisible());
-}*/
 
 void Shpila::SwitchPlayer(Game* game, Control* control)
 {
@@ -751,6 +762,14 @@ bool Shpila::mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta)
 	case Mouse::MOUSE_WHEEL:
 		_activeCamera->moveForward(wheelDelta * MOVE_SPEED / 100.0f);
 		return true;
+	case Mouse::MOUSE_PRESS_LEFT_BUTTON:
+		//_activeCamera->moveForward(wheelDelta * MOVE_SPEED / 100.0f);
+		if (!_CurrentCharacterName.empty())
+		{
+			PlaceUnit(x, y);
+			_CurrentCharacterName = "";
+		}
+		return false;
 	}
 	return false;
 }
