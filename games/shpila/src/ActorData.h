@@ -85,6 +85,7 @@ public:
 	LocalActorData();
 	void init(const ActorData* gameData);
 	void doDamage(LocalActorData& targetGameData);
+	bool isAttackToTargetAllowed(const LocalActorData& targetGameData) const;
 };
 
 void loadActorsData(char *filaname);

@@ -2,31 +2,22 @@
 
 BaseStaticActor::BaseStaticActor()
 : BaseGameObject()
+, _damageTimer()
 {}
 
-void BaseStaticActor::damageHandler(BaseGameObject* object)
+void BaseStaticActor::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	if (!object->Target)
-		return;
-
-	int attacksCount = object->LocalGameData.GameData->getAttacksCount(*object->Target->LocalGameData.GameData);
-	for (int i = 0; i < attacksCount; i++)
-	{
-		if (object->LocalGameData.GameData->ImmediateAttack)
-		{
-			object->doDamage(object->Target);
-		}
-		else
-		{
-			((BaseStaticActor*)object)->rangeFire();
-		}
-	}
+	BaseGameObject::init(manager, gameData, node, player, transform);
+	_damageTimer.start(LocalGameData.GameData->AttackDelayGround, LocalGameData.GameData->AttackDelayGround);
 }
 
-bool BaseStaticActor::damageEnableHandler(BaseGameObject* object)
+void BaseStaticActor::update(float time)
 {
-	return object->LocalGameData.Health > 0.0f && (object->Target != NULL) && (object->Target->LocalGameData.Health > 0.0f) && 
-		object->LocalGameData.GameData->isAttackToTargetAllowed(*object->Target->LocalGameData.GameData);
+	BaseGameObject::update(time);
+	if (_damageTimer.action(time))
+	{
+		doDamage(Target);
+	}
 }
 
 void BaseStaticActor::rangeFire()

@@ -35,6 +35,15 @@ void DeleteVectorPointers(std::vector<T> vect)
 	}
 }
 
+template<class T>
+void DeleteListPointers(std::list<T> list)
+{
+	for (std::list<T>::iterator it = list.begin(); it != list.end(); it++)
+	{
+		delete *it;
+	}
+}
+
 template<typename S, typename T>
 void DeleteMapPointers(std::map<S, T> m)
 {

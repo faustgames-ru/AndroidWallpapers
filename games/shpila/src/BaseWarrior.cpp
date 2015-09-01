@@ -7,7 +7,6 @@ const unsigned long DEFAULT_BLENDING_TIME = 150;
 BaseWarrior::BaseWarrior()
 : BaseActor()
 , _initialized(false)
-, _attack(false)
 , _dead(false)
 , _deadAltitude(0.0f)
 , _unitAnimation()
@@ -27,32 +26,29 @@ void BaseWarrior::init(GameObjectManager& manager, const ActorData* gameData, No
 {
 	BaseActor::init(manager, gameData, node, player, transform);
 	updateAnimationState();
-	addTimer(Timer(LocalGameData.GameData->AttackDelayGround, LocalGameData.GameData->AttackDelayGround, damageHandler, damageEnableHandler));
+	//createTimer(Timer(LocalGameData.GameData->AttackDelayGround, LocalGameData.GameData->AttackDelayGround, damageHandler, damageEnableHandler));
 }
 
 void BaseWarrior::interaction(BaseGameObject* object)
 {
-	if (Target != NULL)
-	{
-		if (Target->LocalGameData.Health <= 0.0f)
-			Target = NULL;
-	}
+	//collision
 	if ((LocalGameData.Health > 0.0f) && (object->LocalGameData.Health > 0.0f) && (position().distanceSquared(object->position()) < SQR(LocalGameData.GameData->GeometryRadius)))
 	{
 		Vector3 offset = (position() - object->position()) * 0.5f;
 		_node->setTranslation(_node->getTranslation() + offset);
 	}
-	float distanceToTarget = Target != NULL ? Target->position().distanceSquared(position()) : FLT_MAX;
-	if ((distanceToTarget > SQR(LocalGameData.GameData->DistanceGround)) && (object->Player->ID != Player->ID)
-		&& (object->LocalGameData.Health > 0.0f) && (LocalGameData.GameData->isAttackToTargetAllowed(*object->LocalGameData.GameData)))
+	//targeting	
+	float distanceToTarget = isAttackToTargetAllowed(Target) ? Target->position().distanceSquared(position()) : FLT_MAX;
+	float distanceToObject = object->position().distanceSquared(position());
+	if ((distanceToTarget > distanceToObject) && (distanceToTarget > SQR(LocalGameData.GameData->DistanceGround)) && (object->Player->ID != Player->ID))
 	{
-		Target = object;
+		if (isAttackToTargetAllowed(object))
+			Target = object;
 	}
 }
 
 void BaseWarrior::update(float time)
 {
-	BaseActor::update(time);
 	if (Holder)
 	{
 		bool resp = ((Shpila*)Game::getInstance())->Respawn;
@@ -76,68 +72,68 @@ void BaseWarrior::update(float time)
 		return;
 	}
 
-	BaseActor::update(time);
 	if (LocalGameData.Health <= 0.0f)
-	{	
+	{
 		switchToAnimation(UnitAnimation::Death, 1.0f, DEFAULT_BLENDING_TIME);
 		_dead = true;
 		_manager->unregisterMovementController(&_movementController);
+		return;
 	}
-	else
+
+	BaseActor::update(time);
+	
+	if (!isAttackToTargetAllowed(Target))
+		Target = Player->EnemyPlayer->getDefence();
+
+	if (Target != NULL)
 	{
-		if (Target == NULL)
-			Target = Player->EnemyPlayer->getDefence();
+		Vector3 tPos = Target->position();
+		_movementController._target = OpenSteer::Vec3(tPos.x, tPos.y, tPos.z);
 
-		if (Target != NULL)
+		_movementController.update(0.0f, time * 0.001f);
+
+		OpenSteer::Vec3 forward = _movementController.forward();
+		Matrix rot;
+		Matrix::createLookAt(0.0f, 0.0f, 0.0f, forward.x, forward.y, forward.z, 0.0f, 1.0f, 0.0f, &rot);
+		_node->setRotation(rot);
+		OpenSteer::Vec3 pos = _movementController.position();
+		_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
+
+		float radius = SQR(LocalGameData.GameData->DistanceGround + Target->LocalGameData.GameData->GeometryRadius + LocalGameData.GameData->GeometryRadius);
+		float distance = tPos.distanceSquared(position());
+		if (radius < distance)
 		{
-			Vector3 tPos = Target->position();
-			_movementController._target = OpenSteer::Vec3(tPos.x, tPos.y, tPos.z);
-
-			_movementController.update(0.0f, time * 0.001f);
-
-			OpenSteer::Vec3 forward = _movementController.forward();
-			Matrix rot;
-			Matrix::createLookAt(0.0f, 0.0f, 0.0f, forward.x, forward.y, forward.z, 0.0f, 1.0f, 0.0f, &rot);
-			_node->setRotation(rot);
-			OpenSteer::Vec3 pos = _movementController.position();
-			_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
-
-			float radius = SQR(LocalGameData.GameData->DistanceGround + Target->LocalGameData.GameData->GeometryRadius + LocalGameData.GameData->GeometryRadius);
-			float distance = tPos.distanceSquared(position());
-			if (radius < distance)
+			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
+			_movementController._applyBreakingForces = false;
+			_damageTimer.enable(false);
+		}
+		else
+		{
+			_movementController._applyBreakingForces = true;				
+			if (LocalGameData.GameData->isAttackToTargetAllowed(*Target->LocalGameData.GameData))
 			{
-				switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
-				_movementController._applyBreakingForces = false;
-				_attack = false;
+				_damageTimer.enable(true);
+				switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);
+			}
+		}
+	}
+	if (_positionOnServer.defined())
+	{
+		float minStep = time * 0.01f;
+		float sqDist = position().distanceSquared(_positionOnServer);
+		if (sqDist > 1.0f)
+			_synkPositionMode = true;
+		if (_synkPositionMode)
+		{
+			if (sqDist <= (minStep * minStep))
+			{
+				setPosition(_positionOnServer);
+				_synkPositionMode = false;
 			}
 			else
 			{
-				_movementController._applyBreakingForces = true;				
-				if (LocalGameData.GameData->isAttackToTargetAllowed(*Target->LocalGameData.GameData))
-				{
-					_attack = true;
-					switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);
-				}
-			}	
-		}
-		if (_positionOnServer.defined())
-		{
-			float minStep = time * 0.01f;
-			float sqDist = position().distanceSquared(_positionOnServer);
-			if (sqDist > 1.0f)
-				_synkPositionMode = true;
-			if (_synkPositionMode)
-			{
-				if (sqDist <= (minStep * minStep))
-				{
-					setPosition(_positionOnServer);
-					_synkPositionMode = false;
-				}
-				else
-				{
-					Vector3 dir = (Vector3(_positionOnServer) - position()) / sqrt(sqDist);
-					setPosition(position() + dir * minStep);
-				}
+				Vector3 dir = (Vector3(_positionOnServer) - position()) / sqrt(sqDist);
+				setPosition(position() + dir * minStep);
 			}
 		}
 	}
@@ -218,9 +214,4 @@ void BaseWarrior::switchToAnimation(UnitAnimation::Actions action, float repeatC
 			(*it)->_clipCurrent = clip;
 		}
 	}
-}
-
-bool BaseWarrior::damageEnableHandler(BaseGameObject* object)
-{
-	return ((BaseWarrior*)object)->_attack && !((BaseWarrior*)object)->_dead;
 }

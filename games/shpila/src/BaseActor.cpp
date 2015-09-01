@@ -9,7 +9,7 @@ BaseActor::~BaseActor(){}
 
 void BaseActor::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseGameObject::init(manager, gameData, node, player, transform);
+	BaseStaticActor::init(manager, gameData, node, player, transform);
 	manager.registerMovementController(&_movementController);
 	Vector3 pos;
 	transform.getTranslation(&pos);

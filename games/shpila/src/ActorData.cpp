@@ -117,6 +117,12 @@ void LocalActorData::doDamage(LocalActorData& targetGameData)
 	targetGameData.Health -= result;
 }
 
+bool LocalActorData::isAttackToTargetAllowed(const LocalActorData& targetGameData) const
+{
+	return (Health > 0.0f) && (targetGameData.Health > 0.0f) &&
+		GameData->isAttackToTargetAllowed(*targetGameData.GameData);
+}
+
 void loadActorsData(char *filaname)
 {
 	TiXmlDocument doc;

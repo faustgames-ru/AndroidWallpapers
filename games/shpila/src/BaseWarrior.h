@@ -54,13 +54,11 @@ public:
 
 protected:
 	bool _initialized;
-	bool _attack;
 	bool _dead;
 	float _deadAltitude;
 	std::vector<UnitAnimation*> _unitAnimation;
 	void updateAnimationState();
 	void switchToAnimation(UnitAnimation::Actions action, float repeatCount, unsigned long blendingTime);
-	static bool damageEnableHandler(BaseGameObject* object);
 };
 
 #endif

@@ -5,10 +5,11 @@ class BaseStaticActor : public BaseGameObject
 {
 public:
 	BaseStaticActor();
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
+	virtual void update(float time);
 protected:
-	static void damageHandler(BaseGameObject* object);
-	static bool damageEnableHandler(BaseGameObject* object);
-	void rangeFire();
+	virtual void rangeFire();
+	SimpleTimer _damageTimer;
 };
 
 #endif

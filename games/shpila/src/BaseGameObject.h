@@ -48,16 +48,16 @@ public:
 	virtual bool interactive();
 	virtual void update(float time);
 	virtual bool deleted();
-	virtual void doDamage(BaseGameObject* target);
-
-	void addTimer(const Timer timer);
+	virtual void doDamage(BaseGameObject* object);
+	virtual bool isAttackToTargetAllowed(BaseGameObject* object);
+	virtual void rangeFire();
 protected:
 	GameObjectManager* _manager;
 	AutoRef<Node> _node;
 	float getInteractionDistance(BaseGameObject* object);
 	Valuable<Vector3> _positionOnServer;
 	bool _synkPositionMode;
-	std::vector<Timer> _timers;
+	Timer* _FogOfWarTimer;
 };
 
 #endif

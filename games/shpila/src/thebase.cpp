@@ -15,7 +15,6 @@ void TheBaseObject::init(GameObjectManager& manager, const ActorData* gameData, 
 	BaseStaticActor::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
-	addTimer(Timer(LocalGameData.GameData->AttackDelayGround, LocalGameData.GameData->AttackDelayGround, damageHandler, damageEnableHandler));
 }
 
 void TheBaseObject::interaction(BaseGameObject* object)

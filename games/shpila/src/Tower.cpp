@@ -11,10 +11,9 @@ BaseGameObject* TowerObject::constructor()
 
 void TowerObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	BaseGameObject::init(manager, gameData, node, player, transform);
+	BaseStaticActor::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
-	addTimer(Timer(LocalGameData.GameData->AttackDelayGround, LocalGameData.GameData->AttackDelayGround, damageHandler, damageEnableHandler));
 }
 
 void TowerObject::interaction(BaseGameObject* object)
@@ -28,5 +27,5 @@ void TowerObject::interaction(BaseGameObject* object)
 
 void TowerObject::update(float time)
 {
-	BaseGameObject::update(time);
+	BaseStaticActor::update(time);
 }

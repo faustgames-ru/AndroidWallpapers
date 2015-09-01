@@ -7,6 +7,7 @@
 #include "BitStream.h"
 #include <stdlib.h> // For atoi
 #include <cstring> // For strlen
+#include <list>
 #include "Rand.h"
 #include "RakNetStatistics.h"
 #include "PacketEnumerations.h"
@@ -29,6 +30,7 @@
 #include "UnitManagement\OpenSteer.h"
 #include "UnitManagement\SimpleVehicle.h"
 #include "UnitManagement\Proximity.h"
+#include "TimeManager.h"
 #include "TargetCamera.h"
 #include "UnitMovement.h"
 #include "ActorData.h"
@@ -56,7 +58,7 @@
 
 
 
-#define TIME_SCALE 1.0f
+#define TIME_SCALE 0.7f
 
 #define COMMON_SCALE 0.1f
 #define IRBAGA_SCALE COMMON_SCALE

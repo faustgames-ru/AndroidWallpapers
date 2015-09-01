@@ -39,7 +39,11 @@ void BaseBullet::update(float time)
 		_deleted = true;
 		doDamage(Target);
 	}
-		
+}
+
+void BaseBullet::doDamage(BaseGameObject* target)
+{
+	LocalGameData.doDamage(target->LocalGameData);
 }
 
 bool BaseBullet::deleted()

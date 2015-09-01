@@ -70,25 +70,39 @@ bool BaseGameObject::deleted()
 	return false;
 }
 
-void BaseGameObject::doDamage(BaseGameObject* target)
+void BaseGameObject::doDamage(BaseGameObject* object)
 {
-	if (target != NULL)
+	if (object != NULL)
 	{
-		LocalGameData.doDamage(target->LocalGameData);
+		int attacksCount = LocalGameData.GameData->getAttacksCount(*object->LocalGameData.GameData);
+		for (int i = 0; i < attacksCount; i++)
+		{
+			if (LocalGameData.GameData->ImmediateAttack)
+			{
+				LocalGameData.doDamage(object->LocalGameData);
+			}
+			else
+			{
+				rangeFire();
+			}
+		}
 	}
 }
 
-void BaseGameObject::addTimer(const Timer timer)
+bool BaseGameObject::isAttackToTargetAllowed(BaseGameObject* object)
 {
-	_timers.push_back(timer);
+	return object == NULL ? false : LocalGameData.isAttackToTargetAllowed(object->LocalGameData);
 }
+
+void BaseGameObject::rangeFire()
+{
+
+}
+
 
 void BaseGameObject::update(float time)
 {	
-	for (std::vector<Timer>::iterator it = _timers.begin(); it != _timers.end(); it++)
-	{
-		it->update(time, this);
-	}
+
 }
 
 Node* BaseGameObject::node()
@@ -111,6 +125,7 @@ void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData,
 	Vector3 translation;
 	transform.getTranslation(&translation);
 	setPosition(translation);
+	//_FogOfWarTimer = createTimer(Timer(2.0f, 0.0f, ))
 }
 
 int BaseGameObject::ActorType() 
