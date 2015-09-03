@@ -59,6 +59,9 @@ protected:
 	std::vector<UnitAnimation*> _unitAnimation;
 	void updateAnimationState();
 	void switchToAnimation(UnitAnimation::Actions action, float repeatCount, unsigned long blendingTime);
+	void updatePositionFromServer(float time);
+	void updateAttack(float time, BaseGameObject* object);
+	void updateMoveToPoint(float time, Vector3 point);
 };
 
 #endif

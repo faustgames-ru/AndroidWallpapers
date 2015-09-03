@@ -3,13 +3,6 @@
 
 const float TIME_EPS = 0.00001f;
 
-class TimerListener
-{
-public:
-	virtual void handler() = 0;
-	virtual bool enableHandler() = 0;
-};
-
 class BaseTimer
 {
 public:
@@ -59,19 +52,6 @@ private:
 	mutable float* _valueReference;
 	float GetDeltha(float time);
 	float GetRemaidAnimValue();
-};
-
-class TimeManager
-{
-public:
-	TimeManager();
-	~TimeManager();
-	static TimeManager& instance();
-	void add(BaseTimer * timer);
-	void remove(BaseTimer * timer);
-	void update(float time);
-private:
-	std::list<BaseTimer*> _timers;
 };
 
 #endif

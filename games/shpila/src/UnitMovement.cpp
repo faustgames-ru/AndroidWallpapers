@@ -12,9 +12,9 @@ void UnitMovementBase::reset(void)
 	// size of bounding sphere, for obstacle avoidance, etc.
 	setRadius(1.5); // width = 0.7, add 0.3 margin, take half
 
-	setSpeed(0);             // speed along Forward direction.
-	setMaxForce(20.0);        // steering force is clipped to this magnitude
-	setMaxSpeed(2.25 / TIME_SCALE);        // velocity is clipped to this magnitude
+	setSpeed(0.0f);             // speed along Forward direction.
+	setMaxForce(20.0f);        // steering force is clipped to this magnitude
+	setMaxSpeed(2.25f / TIME_SCALE);        // velocity is clipped to this magnitude
 
 	// notify proximity database that our position has changed
 	proximityToken->updateForNewPosition(position());

@@ -177,6 +177,7 @@ void loadActorsData(char *filaname)
 		actorData->ImmediateAttack = (bool)atoi(unit->FirstChildElement("ImmediateAttack")->GetText());
 		actorData->DistanceGround = (float)atof(unit->FirstChildElement("DistanceGround")->GetText());
 		actorData->DistanceAir = (float)atof(unit->FirstChildElement("DistanceAir")->GetText());
+		actorData->DetectionDistance = DETECTION_DISTANCE;
 		actorData->AttackCountGround = atoi(unit->FirstChildElement("AttackCountGround")->GetText());
 		actorData->AttackCountAir = atoi(unit->FirstChildElement("AttackCountAir")->GetText());
 		actorData->Detection = (float)atof(unit->FirstChildElement("Detection")->GetText());

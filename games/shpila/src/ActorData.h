@@ -48,6 +48,7 @@ public:
 	bool ImmediateAttack;
 	float DistanceGround;
 	float DistanceAir;
+	float DetectionDistance;//!! hardcoded
 	int AttackCountGround;
 	int AttackCountAir;
 	float Detection;

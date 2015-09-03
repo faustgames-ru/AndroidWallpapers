@@ -5,12 +5,10 @@ BaseTimer::BaseTimer()
 : _ready(false)
 , _enable(true)
 {
-	//TimeManager::instance().add(this);
 }
 
 BaseTimer::~BaseTimer()
 {
-	//TimeManager::instance().remove(this);
 }
 
 void BaseTimer::update(float time)
@@ -58,7 +56,8 @@ void SimpleTimer::update(float time)//, BaseGameObject* object
 	{
 		if (_timeCounter > _time)
 		{
-			_timeCounter -= _time;
+			int nDiv = _timeCounter / _time;
+			_timeCounter -= _time * (float)nDiv;
 			_ready = true;
 		}
 	}
@@ -124,7 +123,7 @@ void AnimatedFloat::setStaticValue(float v) const
 }
 void AnimatedFloat::update(float time)
 {
-	if (fabs(_deltha) > TIME_EPS)
+	if (isEnable())
 	{
 		_value += GetDeltha(time);
 		bool outofrange = (_deltha > 0.0f) ? _value >= _valuemax : _value <= _valuemax;
@@ -157,7 +156,7 @@ bool AnimatedFloat::stoped()
 
 bool AnimatedFloat::isEnable()
 {
-	return fabs(_deltha) > TIME_EPS;
+	return (fabs(_deltha) > TIME_EPS) && _enable;
 }
 
 float AnimatedFloat::GetDeltha(float time)
@@ -168,35 +167,4 @@ float AnimatedFloat::GetDeltha(float time)
 float AnimatedFloat::GetRemaidAnimValue()
 {
 	return _valuemax - _value;
-}
-
-TimeManager::TimeManager()
-{}
-
-TimeManager::~TimeManager()
-{
-	//DeleteListPointers(_timers);
-}
-
-TimeManager& TimeManager::instance()
-{
-	static TimeManager _TimeManager;
-	return _TimeManager;
-}
-
-void TimeManager::add(BaseTimer * timer)
-{
-	_timers.push_back(timer);
-}
-void TimeManager::remove(BaseTimer * timer)
-{
-	_timers.erase(std::remove(_timers.begin(), _timers.end(), timer), _timers.end());
-}
-
-void TimeManager::update(float time)
-{
-	/*for (std::list<BaseTimer*>::iterator it = _timers.begin(); it != _timers.end(); it++)
-	{
-		(*it)->update(time);
-	}*/
 }

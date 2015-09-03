@@ -65,6 +65,15 @@ bool BaseGameObject::interactive()
 	return true;
 }
 
+bool BaseGameObject::getDetected()
+{
+	return false;
+}
+void BaseGameObject::setDetected(bool value)
+{
+
+}
+
 bool BaseGameObject::deleted()
 {
 	return false;
@@ -99,6 +108,22 @@ void BaseGameObject::rangeFire()
 
 }
 
+float BaseGameObject::getAttackDistance(BaseGameObject* object)
+{
+	if (object == NULL)
+		return 0.0f;
+	else
+		return (object->LocalGameData.GameData->MovementAir ? LocalGameData.GameData->DistanceAir : LocalGameData.GameData->DistanceGround) +
+			object->LocalGameData.GameData->GeometryRadius + LocalGameData.GameData->GeometryRadius;
+}
+
+float BaseGameObject::getDetectDistance(BaseGameObject* object)
+{
+	if (object == NULL)
+		return 0.0f;
+	else
+		return object->LocalGameData.GameData->DetectionDistance + object->LocalGameData.GameData->GeometryRadius + LocalGameData.GameData->GeometryRadius;
+}
 
 void BaseGameObject::update(float time)
 {	

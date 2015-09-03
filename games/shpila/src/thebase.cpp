@@ -19,11 +19,7 @@ void TheBaseObject::init(GameObjectManager& manager, const ActorData* gameData, 
 
 void TheBaseObject::interaction(BaseGameObject* object)
 {
-	float distance = object->position().distanceSquared(position());
-	if ((object->Player->ID != Player->ID) && (object->LocalGameData.Health > 0.0f) && (distance <= SQR(LocalGameData.GameData->DistanceGround)))
-	{
-		Target = object;
-	}
+	targeting(object);
 }
 
 void TheBaseObject::update(float time)

@@ -26,7 +26,6 @@ void BaseWarrior::init(GameObjectManager& manager, const ActorData* gameData, No
 {
 	BaseActor::init(manager, gameData, node, player, transform);
 	updateAnimationState();
-	//createTimer(Timer(LocalGameData.GameData->AttackDelayGround, LocalGameData.GameData->AttackDelayGround, damageHandler, damageEnableHandler));
 }
 
 void BaseWarrior::interaction(BaseGameObject* object)
@@ -37,14 +36,7 @@ void BaseWarrior::interaction(BaseGameObject* object)
 		Vector3 offset = (position() - object->position()) * 0.5f;
 		_node->setTranslation(_node->getTranslation() + offset);
 	}
-	//targeting	
-	float distanceToTarget = isAttackToTargetAllowed(Target) ? Target->position().distanceSquared(position()) : FLT_MAX;
-	float distanceToObject = object->position().distanceSquared(position());
-	if ((distanceToTarget > distanceToObject) && (distanceToTarget > SQR(LocalGameData.GameData->DistanceGround)) && (object->Player->ID != Player->ID))
-	{
-		if (isAttackToTargetAllowed(object))
-			Target = object;
-	}
+	targeting(object);
 }
 
 void BaseWarrior::update(float time)
@@ -80,63 +72,9 @@ void BaseWarrior::update(float time)
 		return;
 	}
 
-	BaseActor::update(time);
-	
-	if (!isAttackToTargetAllowed(Target))
-		Target = Player->EnemyPlayer->getDefence();
-
-	if (Target != NULL)
-	{
-		Vector3 tPos = Target->position();
-		_movementController._target = OpenSteer::Vec3(tPos.x, tPos.y, tPos.z);
-
-		_movementController.update(0.0f, time * 0.001f);
-
-		OpenSteer::Vec3 forward = _movementController.forward();
-		Matrix rot;
-		Matrix::createLookAt(0.0f, 0.0f, 0.0f, forward.x, forward.y, forward.z, 0.0f, 1.0f, 0.0f, &rot);
-		_node->setRotation(rot);
-		OpenSteer::Vec3 pos = _movementController.position();
-		_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
-
-		float radius = SQR(LocalGameData.GameData->DistanceGround + Target->LocalGameData.GameData->GeometryRadius + LocalGameData.GameData->GeometryRadius);
-		float distance = tPos.distanceSquared(position());
-		if (radius < distance)
-		{
-			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
-			_movementController._applyBreakingForces = false;
-			_damageTimer.enable(false);
-		}
-		else
-		{
-			_movementController._applyBreakingForces = true;				
-			if (LocalGameData.GameData->isAttackToTargetAllowed(*Target->LocalGameData.GameData))
-			{
-				_damageTimer.enable(true);
-				switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);
-			}
-		}
-	}
-	if (_positionOnServer.defined())
-	{
-		float minStep = time * 0.01f;
-		float sqDist = position().distanceSquared(_positionOnServer);
-		if (sqDist > 1.0f)
-			_synkPositionMode = true;
-		if (_synkPositionMode)
-		{
-			if (sqDist <= (minStep * minStep))
-			{
-				setPosition(_positionOnServer);
-				_synkPositionMode = false;
-			}
-			else
-			{
-				Vector3 dir = (Vector3(_positionOnServer) - position()) / sqrt(sqDist);
-				setPosition(position() + dir * minStep);
-			}
-		}
-	}
+	BaseActor::update(time);	
+	updateAttack(time, Target);
+	updatePositionFromServer(time);
 }
 
 bool BaseWarrior::deleted()
@@ -214,4 +152,93 @@ void BaseWarrior::switchToAnimation(UnitAnimation::Actions action, float repeatC
 			(*it)->_clipCurrent = clip;
 		}
 	}
+}
+
+void BaseWarrior::updatePositionFromServer(float time)
+{
+	if (_positionOnServer.defined())
+	{
+		float minStep = time * 0.01f;
+		float sqDist = position().distanceSquared(_positionOnServer);
+		if (sqDist > 1.0f)
+			_synkPositionMode = true;
+		if (_synkPositionMode)
+		{
+			if (sqDist <= (minStep * minStep))
+			{
+				setPosition(_positionOnServer);
+				_synkPositionMode = false;
+			}
+			else
+			{
+				Vector3 dir = (Vector3(_positionOnServer) - position()) / sqrt(sqDist);
+				setPosition(position() + dir * minStep);
+			}
+		}
+	}
+}
+
+void BaseWarrior::updateAttack(float time, BaseGameObject* object)
+{
+	if (!isAttackToTargetAllowed(object))
+		object = NULL;
+
+	if (object != NULL)
+	{
+		Vector3 tPos = object->position();
+		updateMoveToPoint(time, tPos);
+
+
+		float attackDistance = getAttackDistance(object);
+		float radius = SQR(attackDistance);
+		float distance = tPos.distanceSquared(position());
+		if (radius < distance)
+		{
+			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
+			_movementController._applyBreakingForces = false;
+			_damageTimer.enable(false);
+		}
+		else
+		{
+			_movementController._applyBreakingForces = true;
+			if (LocalGameData.GameData->isAttackToTargetAllowed(*object->LocalGameData.GameData))
+			{
+				_damageTimer.enable(true);
+				switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);
+			}
+		}
+	}
+	else
+	{
+		//!! move forvard
+		Vector3 dir = position() - Player->EnemyPlayer->getDefence()->position();
+		if (Player->BattleFieldDirection.dot(dir) <= 0.0f)
+		{
+			updateMoveToPoint(time, position() + Player->BattleFieldDirection * 10.0f);
+			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
+			_damageTimer.enable(false);
+			_movementController._applyBreakingForces = false;
+		}
+	}
+}
+
+void BaseWarrior::updateMoveToPoint(float time, Vector3 point)
+{
+	_movementController._target = OpenSteer::Vec3(point.x, point.y, point.z);
+	_movementController.update(0.0f, time * 0.001f);
+	OpenSteer::Vec3 forward = _movementController.forward();
+	Matrix rot;
+	//Matrix::createLookAt(0.0f, 0.0f, 0.0f, forward.x, forward.y, forward.z, 0.0f, 1.0f, 0.0f, &rot);
+	createCharacterRotationMatrix(Vector3(forward.x, forward.y, forward.z), &rot);
+	_node->setRotation(rot);
+	OpenSteer::Vec3 pos = _movementController.position();
+	_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
+
+	/*OpenSteer::Vec3 forward = _movementController.forward();
+	OpenSteer::Vec3 pos = _movementController.position();
+	Matrix transform, rotate;
+	transform.translate(Vector3(pos.x, pos.y, pos.z));
+	Matrix::createLookAt(Vector3(), Vector3(forward.x, forward.y, forward.z), Vector3::unitY(), &rotate);
+	transform.rotate(rotate);
+	_node->set(transform);*/
 }

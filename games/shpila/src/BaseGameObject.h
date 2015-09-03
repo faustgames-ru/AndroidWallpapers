@@ -46,18 +46,21 @@ public:
 	virtual void interaction(BaseGameObject* object);
 	virtual bool volumed();
 	virtual bool interactive();
+	virtual bool getDetected();
+	virtual void setDetected(bool value);
 	virtual void update(float time);
 	virtual bool deleted();
 	virtual void doDamage(BaseGameObject* object);
 	virtual bool isAttackToTargetAllowed(BaseGameObject* object);
 	virtual void rangeFire();
+	virtual float getAttackDistance(BaseGameObject* object);
+	virtual float getDetectDistance(BaseGameObject* object);
 protected:
 	GameObjectManager* _manager;
 	AutoRef<Node> _node;
 	float getInteractionDistance(BaseGameObject* object);
 	Valuable<Vector3> _positionOnServer;
 	bool _synkPositionMode;
-	Timer* _FogOfWarTimer;
 };
 
 #endif
