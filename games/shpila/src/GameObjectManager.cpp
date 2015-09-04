@@ -201,7 +201,6 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 positi
 {
 	Matrix transform, rotate;
 	transform.translate(position);
-	//Matrix::createLookAt(Vector3(), forwardDirection, Vector3::unitY(), &rotate);
 	createCharacterRotationMatrix(forwardDirection, &rotate);
 	transform.rotate(rotate);
 	return createObject(name, transform, player);

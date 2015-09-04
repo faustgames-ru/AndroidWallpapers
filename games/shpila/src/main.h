@@ -76,6 +76,8 @@ private:
 	static void loadSetting(Game* game, Control* control);
 	static void saveSetting(Game* game, Control* control);
 
+	static void PauseClick(Game* game, Control* control);	
+
     Font* _font;
 	AutoRef<Scene> _scene;
     PhysicsCharacter* _character;

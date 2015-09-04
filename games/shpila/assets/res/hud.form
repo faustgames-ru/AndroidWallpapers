@@ -268,6 +268,15 @@ form hud
 		  height = 35
 		  text = Connect
 	   }
+	   
+	   button Pause
+	   {
+		  consumeInputEvents = true
+		  style = buttonStyle
+		  width = 70
+		  height = 35
+		  text = Pause
+	   }
 	}
 	 
 	 container Connection

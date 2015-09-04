@@ -105,6 +105,8 @@ void Shpila::initialize()
 
 		_hud.bind("SettingsSave", Control::Listener::CLICK, saveSetting);
 		_hud.bind("SettingsLoad", Control::Listener::CLICK, loadSetting);
+
+		_hud.bind("Pause", Control::Listener::CLICK, PauseClick);
 			
 		char buff[100];
 		sprintf(buff, "FoV-%0.0f", FoV);
@@ -545,6 +547,14 @@ void Shpila::saveSetting(Game* game, Control* control)
 	saveCamera(element, shpila->_CameraPlayer[1]);
 
 	doc.SaveFile("res/settings.xml");
+}
+
+void Shpila::PauseClick(Game* game, Control* control)
+{
+	if (game->getState() == Game::PAUSED)
+		game->resume();
+	else
+		game->pause();
 }
 
 void Shpila::update(float elapsedTime)

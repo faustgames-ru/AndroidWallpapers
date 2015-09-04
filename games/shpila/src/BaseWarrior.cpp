@@ -185,9 +185,9 @@ void BaseWarrior::updateAttack(float time, BaseGameObject* object)
 
 	if (object != NULL)
 	{
+		_movementController.setMaxSpeed(LocalGameData.GameData->MoveSpeed / TIME_SCALE);
 		Vector3 tPos = object->position();
 		updateMoveToPoint(time, tPos);
-
 
 		float attackDistance = getAttackDistance(object);
 		float radius = SQR(attackDistance);
@@ -218,6 +218,7 @@ void BaseWarrior::updateAttack(float time, BaseGameObject* object)
 			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
 			_damageTimer.enable(false);
 			_movementController._applyBreakingForces = false;
+			_movementController.setMaxSpeed(2.25f / TIME_SCALE);
 		}
 	}
 }
@@ -228,17 +229,8 @@ void BaseWarrior::updateMoveToPoint(float time, Vector3 point)
 	_movementController.update(0.0f, time * 0.001f);
 	OpenSteer::Vec3 forward = _movementController.forward();
 	Matrix rot;
-	//Matrix::createLookAt(0.0f, 0.0f, 0.0f, forward.x, forward.y, forward.z, 0.0f, 1.0f, 0.0f, &rot);
 	createCharacterRotationMatrix(Vector3(forward.x, forward.y, forward.z), &rot);
 	_node->setRotation(rot);
 	OpenSteer::Vec3 pos = _movementController.position();
 	_node->setTranslation(Vector3(pos.x, pos.y, pos.z));
-
-	/*OpenSteer::Vec3 forward = _movementController.forward();
-	OpenSteer::Vec3 pos = _movementController.position();
-	Matrix transform, rotate;
-	transform.translate(Vector3(pos.x, pos.y, pos.z));
-	Matrix::createLookAt(Vector3(), Vector3(forward.x, forward.y, forward.z), Vector3::unitY(), &rotate);
-	transform.rotate(rotate);
-	_node->set(transform);*/
 }
