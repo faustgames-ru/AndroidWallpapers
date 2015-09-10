@@ -14,6 +14,18 @@ class Keyboard
 
 public:
 
+	enum KeyState
+	{
+		KEY_STATE_PRESS = 1,
+		KEY_STATE_PRESSED = 2,
+		KEY_STATE_RELEASE = 4,
+		KEY_STATE_RELEASED = 8,
+		KEY_STATE_CLICK = 16,
+		KEY_STATE_CLICK_SET = KEY_STATE_PRESS | KEY_STATE_CLICK,
+		KEY_STATE_PRESS_SET = KEY_STATE_PRESS | KEY_STATE_PRESSED | KEY_STATE_CLICK,
+		KEY_STATE_RELEASE_SET = KEY_STATE_RELEASE | KEY_STATE_RELEASED,
+	};
+
     /**
      * The keyboard event.
      */
@@ -30,6 +42,11 @@ public:
     enum Key
     {
         KEY_NONE              = 0,
+		//fake mouse buttons values
+		KEY_MOUSE_LEFT		  = 0x0001,
+		KEY_MOUSE_RIGHT		  = 0x0002,
+		KEY_MOUSE_MIDDLE	  = 0x0003,
+		//
         KEY_PAUSE             = 0x0013,
         KEY_SCROLL_LOCK       = 0x1014,
         KEY_PRINT             = 0x1061,

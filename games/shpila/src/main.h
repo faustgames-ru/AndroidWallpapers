@@ -4,6 +4,26 @@
 #include "Headers.h"
 using namespace gameplay;
 
+
+class Actions
+{
+public:
+	enum Action
+	{
+		MOVE_FORWARD,
+		MOVE_BACKWARD,
+		MOVE_LEFT,
+		MOVE_RIGHT,
+		MOVE_UP,
+		MOVE_DOWN,
+		SWITCH_CAMERA,
+		PLACE_UNIT,
+		ALT,
+		SHIFT,
+		CTRL,
+	};
+};
+
 /**
  * This is a mesh demo game for rendering Mesh.
  */
@@ -54,12 +74,20 @@ private:
 	void initializeSolarSystem();
 	void loadCharacters();
 	void initPlayers();
-	void updatePlayers(float time);
     void drawSplash(void* param);
     bool drawScene(Node* node, bool transparent);
+	//---update parts
+	void updatePlayers(float time);
 	void updateNetwork();
 	void updateMenuButtons();
+	void updateActions(float elapsedTime);
+	void updateKeyStates();
+	//---
 	void PlaceUnit(int x, int y);
+	void loadActionMap();
+	Keyboard::KeyState getActionState(Actions::Action action);
+	void setKeyState(int key, bool pressed);
+	
 
 	static void CreateUnit(Game* game, Control* control);
 	static void SwitchPlayer(Game* game, Control* control);
@@ -80,40 +108,27 @@ private:
 
     Font* _font;
 	AutoRef<Scene> _scene;
-    PhysicsCharacter* _character;
-    Node* _characterNode;
-    Node* _characterMeshNode;
-    Node* _characterShadowNode;
-    Node* _basketballNode;
-    float _floorLevel;
-    Animation* _animation;
-    int _rotateX;
     MaterialParameter* _materialParameterAlpha;
-    unsigned int _keyFlags;
     bool _physicsDebug;
     bool _wireframe;
-    Vector3 _oldBallPosition;
-    bool _hasBall;
-    bool _applyKick;
-    bool _kicking;
-    float _kickDelay;
-    bool* _buttonPressed;
-    Vector2 _currentDirection;
-    Gamepad* _gamepad;
+	float _cameraVelocityFactor;
+	std::map<Actions::Action, Keyboard::Key> _actionsMap;
+	std::map<Keyboard::Key, Keyboard::KeyState> _keyMap;
+	int _mouseX;
+	int _mouseY;
+	int _wheelDelta;
 	TargetCamera _fpCamera;
 	TargetCamera _CameraPlayer[2];
 	TargetCamera* _activeCamera;
 	TargetCamera* _activePlayerCamera;
 	bool _freeCamera;
-	Vector3 _battleFieldDirection;
-	unsigned int _moveFlags;
+	Vector3 _battleFieldDirection;	
 	int _prevX;
 	int _prevY;
 	Node* _particleEmitterSunNode;
 	Node* _particleEmitterStarsNode;
 	GameHUD _hud;
-	double _totalTime;
-	
+	double _totalTime;	
 	Client _client;
 	GameObjectManager _manager;
 	int _currentPlayerIDforUI;

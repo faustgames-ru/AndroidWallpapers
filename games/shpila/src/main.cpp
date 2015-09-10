@@ -23,12 +23,11 @@ Shpila game;
 
 #define RESPAWN_TIME 30000.0f
 
-static const unsigned int MOVE_FORWARD = 1;
-static const unsigned int MOVE_BACKWARD = 2;
-static const unsigned int MOVE_LEFT = 4;
-static const unsigned int MOVE_RIGHT = 8;
-static const unsigned int MOVE_UP = 16;
-static const unsigned int MOVE_DOWN = 32;
+
+static const unsigned int KEY_ALT = 1;
+static const unsigned int KEY_CTRL = 2;
+static const unsigned int MOVE_SHIFT = 4;
+
 
 static const float MOVE_SPEED = 15.0f;
 static const float UP_DOWN_SPEED = 10.0f;
@@ -36,12 +35,33 @@ static const float UP_DOWN_SPEED = 10.0f;
 static const bool EMPTY = false;
 
 Shpila::Shpila()
-    : _font(NULL), _scene(), _character(NULL), _characterNode(NULL), _characterMeshNode(NULL), _characterShadowNode(NULL), _basketballNode(NULL),
-      _animation(NULL), _rotateX(0), _materialParameterAlpha(NULL),
-	  _keyFlags(0), _physicsDebug(false), _wireframe(false), _hasBall(false), _applyKick(false), _gamepad(NULL), _fpCamera(), _activeCamera(NULL), _activePlayerCamera(NULL), _freeCamera(true), _battleFieldDirection(), _particleEmitterSunNode(NULL), _particleEmitterStarsNode(NULL),
-	  _hud(), _totalTime(0.0), _manager(), _currentPlayerIDforUI(0), _CurrentCharacterName(), _ping(0), _netPlayerID(-1), _respawnTime(0.0), Respawn(false)
+: _font(NULL)
+, _scene()
+, _physicsDebug(false)
+, _wireframe(false)
+, _cameraVelocityFactor(1.0f)
+, _actionsMap()
+, _keyMap()
+, _mouseX(0)
+, _mouseY(0)
+, _wheelDelta(0)
+, _fpCamera()
+, _activeCamera(NULL)
+, _activePlayerCamera(NULL)
+, _freeCamera(true)
+, _battleFieldDirection()
+, _particleEmitterSunNode(NULL)
+, _particleEmitterStarsNode(NULL)
+, _hud()
+, _totalTime(0.0)
+, _manager()
+, _currentPlayerIDforUI(0)
+, _CurrentCharacterName()
+, _ping(0)
+, _netPlayerID(-1)
+, _respawnTime(0.0)
+, Respawn(false)
 {
-    _buttonPressed = new bool[2];
 }
 
 void Shpila::restoreDeviceObjects()
@@ -132,7 +152,7 @@ void Shpila::initialize()
 		_CameraPlayer[1].initialize(0.01f, 1000.0f);
 		_scene->addNode(_CameraPlayer[1].getRootNode());
 		_CameraPlayer[1].getCamera()->setFieldOfView(FoV);
-		if (!FileSystem::fileExists("res/settings.xml"))
+		if (FileSystem::fileExists("res/settings.xml"))
 		{
 			loadSetting(this, NULL);
 		}
@@ -170,11 +190,10 @@ void Shpila::initialize()
 
 		loadCharacters();
 		initPlayers();
+		loadActionMap();
 
 		// Initialize scene.
 		_scene->visit(this, &Shpila::initializeNodeMaterials);
-
-		_gamepad = getGamepad(0);
 
 		OpenSteer::OpenSteerManager::initialize();
 	}
@@ -285,12 +304,18 @@ void Shpila::updatePlayers(float time)
 	}
 }
 
+void Shpila::updateNetwork()
+{
+	_client.Update(0);
+	if (_netPlayerID != UNASSIGNED_PLAYER_INDEX)
+		_currentPlayerIDforUI = _netPlayerID;
+}
+
 void Shpila::finalize()
 {
 	_hud.finalize(this);
 	SAFE_RELEASE(_scene);
     SAFE_RELEASE(_font);
-    SAFE_DELETE_ARRAY(_buttonPressed);
 	freedActorsData();
 }
 
@@ -357,6 +382,102 @@ void Shpila::updateMenuButtons()
 	}
 }
 
+void Shpila::updateActions(float elapsedTime)
+{	
+	Vector2 move;
+	// Forward motion
+	if (getActionState(Actions::MOVE_FORWARD) & Keyboard::KEY_STATE_PRESS_SET)
+	{
+		move.y = 1;
+	}
+	else if (getActionState(Actions::MOVE_BACKWARD) & Keyboard::KEY_STATE_PRESS_SET)
+	{
+		move.y = -1;
+	}
+	// Strafing
+	if (getActionState(Actions::MOVE_LEFT) & Keyboard::KEY_STATE_PRESS_SET)
+	{
+		move.x = -1;
+	}
+	else if (getActionState(Actions::MOVE_RIGHT) & Keyboard::KEY_STATE_PRESS_SET)
+	{
+		move.x = 1;
+	}
+	move.normalize();
+	if (!move.isZero())
+	{
+		_activeCamera->moveForward(_cameraVelocityFactor * elapsedTime * move.y / 20.0f);
+		_activeCamera->moveLeft(_cameraVelocityFactor * elapsedTime * move.x / 20.0f);
+	}
+
+	// Up and down
+	if (getActionState(Actions::MOVE_UP) & Keyboard::KEY_STATE_PRESS_SET)
+	{
+		_activeCamera->moveUp(_cameraVelocityFactor * elapsedTime * UP_DOWN_SPEED / 1000.0f);
+	}
+	else if (getActionState(Actions::MOVE_DOWN) & Keyboard::KEY_STATE_PRESS_SET)
+	{
+		_activeCamera->moveDown(_cameraVelocityFactor * elapsedTime * UP_DOWN_SPEED / 1000.0f);
+	}
+
+	if (getActionState(Actions::SWITCH_CAMERA) & Keyboard::KEY_STATE_CLICK_SET)
+	{
+		if (_activeCamera == &_fpCamera)
+		{
+			_scene->setActiveCamera(_activePlayerCamera->getCamera());
+			_activeCamera = _activePlayerCamera;
+			_hud.form()->getControl("Player1")->setVisible(true);
+		}
+		else
+		{
+			_scene->setActiveCamera(_fpCamera.getCamera());
+			_activeCamera = &_fpCamera;
+			_hud.form()->getControl("Player1")->setVisible(false);
+		}
+	}
+
+	if (getActionState(Actions::SHIFT) & Keyboard::KEY_STATE_PRESS_SET)
+	{
+		_cameraVelocityFactor += (float)_wheelDelta / 100.0f;
+		if (_cameraVelocityFactor < 0.05f)
+			_cameraVelocityFactor = 0.05f;
+		if (_cameraVelocityFactor > 5.0f)
+			_cameraVelocityFactor = 5.0f;
+	}
+	else
+	{
+		float fov = _activeCamera->getCamera()->getFieldOfView();
+		_activeCamera->getCamera()->setFieldOfView(fov + (float)_wheelDelta / 5.0f);
+		_wheelDelta = 0;
+	}
+
+	if (getActionState(Actions::PLACE_UNIT) & Keyboard::KEY_STATE_CLICK_SET)
+	{
+		if (!_CurrentCharacterName.empty())
+		{
+			PlaceUnit(_mouseX, _mouseY);
+			_CurrentCharacterName = "";
+		}
+	}
+}
+
+void Shpila::updateKeyStates()
+{
+	for (std::map<Keyboard::Key, Keyboard::KeyState>::iterator it = _keyMap.begin(); it != _keyMap.end(); it++)
+	{
+		switch (it->second)
+		{
+		case Keyboard::KEY_STATE_PRESS:
+			it->second = Keyboard::KEY_STATE_PRESSED;
+			break;
+		case Keyboard::KEY_STATE_CLICK:
+		case Keyboard::KEY_STATE_RELEASE:
+			it->second = Keyboard::KEY_STATE_RELEASED;
+			break;
+		}
+	}
+}
+
 void Shpila::PlaceUnit(int x, int y)
 {
 	Vector3 pointOnPlane(0, 0, 0);
@@ -372,6 +493,44 @@ void Shpila::PlaceUnit(int x, int y)
 	{
 		point.set(ray.getOrigin() + collisionDistance*ray.getDirection());
 		getActivePlayer()->CreateWarrior(_CurrentCharacterName.c_str(), Valuable<Vector3>(point));
+	}
+}
+
+void Shpila::loadActionMap()
+{
+	_actionsMap[Actions::MOVE_FORWARD] = Keyboard::KEY_W;
+	_actionsMap[Actions::MOVE_BACKWARD] = Keyboard::KEY_S;
+	_actionsMap[Actions::MOVE_LEFT] = Keyboard::KEY_A;
+	_actionsMap[Actions::MOVE_RIGHT] = Keyboard::KEY_D;
+	_actionsMap[Actions::MOVE_UP] = Keyboard::KEY_E;
+	_actionsMap[Actions::MOVE_DOWN] = Keyboard::KEY_Q;
+	_actionsMap[Actions::SWITCH_CAMERA] = Keyboard::KEY_SPACE;	
+	_actionsMap[Actions::PLACE_UNIT] = Keyboard::KEY_MOUSE_LEFT;
+	_actionsMap[Actions::ALT] = Keyboard::KEY_ALT;
+	_actionsMap[Actions::SHIFT] = Keyboard::KEY_SHIFT;
+	_actionsMap[Actions::CTRL] = Keyboard::KEY_CTRL;
+
+	for (std::map<Actions::Action, Keyboard::Key>::iterator it = _actionsMap.begin(); it != _actionsMap.end(); it++)
+	{
+		_keyMap[it->second] = Keyboard::KEY_STATE_RELEASED;
+	}
+}
+
+Keyboard::KeyState Shpila::getActionState(Actions::Action action)
+{
+	return _keyMap[_actionsMap[action]];
+}
+
+void Shpila::setKeyState(int key, bool pressed)
+{
+	if (pressed)
+		_keyMap[(Keyboard::Key)key] = Keyboard::KEY_STATE_PRESS;
+	else
+	{
+		if (_keyMap[(Keyboard::Key)key] == Keyboard::KEY_STATE_PRESS)
+			_keyMap[(Keyboard::Key)key] = Keyboard::KEY_STATE_CLICK;
+		else
+			_keyMap[(Keyboard::Key)key] = Keyboard::KEY_STATE_RELEASE;
 	}
 }
 
@@ -474,6 +633,7 @@ void loadCamera(TiXmlNode *node, TargetCamera& camera)
 	camera.getRootNode()->getFirstChild()->setRotation(qRotX);
 	camera.getRootNode()->setRotation(qRotY);
 	camera.getRootNode()->setTranslation(pos);
+	camera.getCamera()->setFieldOfView((float)atof(node->FirstChildElement("fov")->GetText()));
 }
 
 void Shpila::loadSetting(Game* game, Control* control)
@@ -523,6 +683,7 @@ void saveCamera(TiXmlElement * rootElement, TargetCamera& camera)
 	AddFloatElement(rootElement, "posx", pos.x);
 	AddFloatElement(rootElement, "posy", pos.y);
 	AddFloatElement(rootElement, "posz", pos.z);
+	AddFloatElement(rootElement, "fov", camera.getCamera()->getFieldOfView());
 }
 
 void Shpila::saveSetting(Game* game, Control* control)
@@ -570,64 +731,21 @@ void Shpila::update(float elapsedTime)
 		}
 		OpenSteer::OpenSteerManager::update(_totalTime, elapsedTime);
 		updatePlayers(elapsedTime);
-
 		Respawn = false;
 
-		/*ParticleEmitter* emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterSunNode->getDrawable());
-		if (emitter)
-			emitter->update(elapsedTime);
-		ParticleEmitter* emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterStarsNode->getDrawable());
-		if (emitter)
-			emitter->update(elapsedTime);*/
-		_client.Update(0);
-		if (_netPlayerID != UNASSIGNED_PLAYER_INDEX)
-			_currentPlayerIDforUI = _netPlayerID;
-
+		updateNetwork();
 		updateMenuButtons();
-
-		Vector2 move;
-		if (_moveFlags != 0)
-		{
-			// Forward motion
-			if (_moveFlags & MOVE_FORWARD)
-			{
-				move.y = 1;
-			}
-			else if (_moveFlags & MOVE_BACKWARD)
-			{
-				move.y = -1;
-			}
-			// Strafing
-			if (_moveFlags & MOVE_LEFT)
-			{
-				move.x = -1;
-			}
-			else if (_moveFlags & MOVE_RIGHT)
-			{
-				move.x = 1;
-			}
-			move.normalize();
-
-			// Up and down
-			if (_moveFlags & MOVE_UP)
-			{
-				_activeCamera->moveUp(elapsedTime * UP_DOWN_SPEED / 1000.0f);
-			}
-			else if (_moveFlags & MOVE_DOWN)
-			{
-				_activeCamera->moveDown(elapsedTime * UP_DOWN_SPEED / 1000.0f);
-			}
-
-			if (!move.isZero())
-			{
-				_activeCamera->moveForward(elapsedTime * move.y / 20.0f);
-				_activeCamera->moveLeft(elapsedTime * move.x / 20.0f);
-			}
-
-		}
-
+		updateActions(elapsedTime);
+		updateKeyStates();
 	}
 }
+
+/*ParticleEmitter* emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterSunNode->getDrawable());
+if (emitter)
+emitter->update(elapsedTime);
+ParticleEmitter* emitter = dynamic_cast<ParticleEmitter*>(_particleEmitterStarsNode->getDrawable());
+if (emitter)
+emitter->update(elapsedTime);*/
 
 void Shpila::render(float elapsedTime)
 {
@@ -645,7 +763,7 @@ void Shpila::render(float elapsedTime)
 		//if (_physicsDebug)
 		//    getPhysicsController()->drawDebug(_scene->getActiveCamera()->getViewProjectionMatrix());*/
 
-		/*_gamepad->draw();
+		/*
 
 		// Draw FPS
 		_font->start();
@@ -675,93 +793,33 @@ void Shpila::touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contac
 		break;
 	case Touch::TOUCH_MOVE:
 	{
-							  int deltaX = x - _prevX;
-							  int deltaY = y - _prevY;
-							  _prevX = x;
-							  _prevY = y;
-							  float pitch = -MATH_DEG_TO_RAD(deltaY * 0.5f);
-							  float yaw = MATH_DEG_TO_RAD(deltaX * 0.5f);
-							  if (_freeCamera)
-								  _activeCamera->rotate(yaw, pitch);
-							  else
-							  {
-								  _activeCamera->setPosition(_activeCamera->getPosition() - deltaX * 0.07f * _battleFieldDirection);
-							  }
-							  break;
+		int deltaX = x - _prevX;
+		int deltaY = y - _prevY;
+		_prevX = x;
+		_prevY = y;
+		float pitch = -MATH_DEG_TO_RAD(deltaY * 0.5f);
+		float yaw = MATH_DEG_TO_RAD(deltaX * 0.5f);
+		if (_freeCamera)
+			_activeCamera->rotate(yaw, pitch);
+		else
+		{
+			_activeCamera->setPosition(_activeCamera->getPosition() - deltaX * 0.07f * _battleFieldDirection);
+		}
+		break;
 	}
 	};
 }
 
 void Shpila::keyEvent(Keyboard::KeyEvent evt, int key)
-{
-	if (evt == Keyboard::KEY_PRESS)
+{	
+	switch (evt)
 	{
-		switch (key)
-		{
-		case Keyboard::KEY_W:
-			_moveFlags |= MOVE_FORWARD;
-			break;
-		case Keyboard::KEY_S:
-			_moveFlags |= MOVE_BACKWARD;
-			break;
-		case Keyboard::KEY_A:
-			_moveFlags |= MOVE_LEFT;
-			break;
-		case Keyboard::KEY_D:
-			_moveFlags |= MOVE_RIGHT;
-			break;
-
-		case Keyboard::KEY_Q:
-			_moveFlags |= MOVE_DOWN;
-			break;
-		case Keyboard::KEY_E:
-			_moveFlags |= MOVE_UP;
-			break;
-		case Keyboard::KEY_PG_UP:
-			_activeCamera->rotate(0, MATH_PIOVER4);
-			break;
-		case Keyboard::KEY_PG_DOWN:
-			_activeCamera->rotate(0, -MATH_PIOVER4);
-			break;
-		case Keyboard::KEY_SPACE:
-			if (_activeCamera == &_fpCamera)
-			{
-				_scene->setActiveCamera(_activePlayerCamera->getCamera());
-				_activeCamera = _activePlayerCamera;
-				_hud.form()->getControl("Player1")->setVisible(true);
-			}
-			else
-			{
-				_scene->setActiveCamera(_fpCamera.getCamera());
-				_activeCamera = &_fpCamera;
-				_hud.form()->getControl("Player1")->setVisible(false);
-			}
-			break;
-		}
-	}
-	else if (evt == Keyboard::KEY_RELEASE)
-	{
-		switch (key)
-		{
-		case Keyboard::KEY_W:
-			_moveFlags &= ~MOVE_FORWARD;
-			break;
-		case Keyboard::KEY_S:
-			_moveFlags &= ~MOVE_BACKWARD;
-			break;
-		case Keyboard::KEY_A:
-			_moveFlags &= ~MOVE_LEFT;
-			break;
-		case Keyboard::KEY_D:
-			_moveFlags &= ~MOVE_RIGHT;
-			break;
-		case Keyboard::KEY_Q:
-			_moveFlags &= ~MOVE_DOWN;
-			break;
-		case Keyboard::KEY_E:
-			_moveFlags &= ~MOVE_UP;
-			break;
-		}
+	case Keyboard::KEY_PRESS:
+		setKeyState(key, true);
+		break;
+	case Keyboard::KEY_RELEASE:
+		setKeyState(key, false);
+		break;
 	}
 }
 
@@ -770,16 +828,33 @@ bool Shpila::mouseEvent(Mouse::MouseEvent evt, int x, int y, int wheelDelta)
 	switch (evt)
 	{
 	case Mouse::MOUSE_WHEEL:
-		_activeCamera->moveForward(wheelDelta * MOVE_SPEED / 100.0f);
+		_wheelDelta += wheelDelta;
 		return true;
-	case Mouse::MOUSE_PRESS_LEFT_BUTTON:
-		//_activeCamera->moveForward(wheelDelta * MOVE_SPEED / 100.0f);
-		if (!_CurrentCharacterName.empty())
-		{
-			PlaceUnit(x, y);
-			_CurrentCharacterName = "";
-		}
+	case Mouse::MOUSE_MOVE:
+		_mouseX = x;
+		_mouseY = y;
 		return false;
+	//left mouse button
+	case Mouse::MOUSE_PRESS_LEFT_BUTTON:
+		setKeyState(Keyboard::KEY_MOUSE_LEFT, true);
+		return false;
+	case Mouse::MOUSE_RELEASE_LEFT_BUTTON:
+		setKeyState(Keyboard::KEY_MOUSE_LEFT, false);
+		return true;
+	//right mouse button
+	case Mouse::MOUSE_PRESS_RIGHT_BUTTON:
+		setKeyState(Keyboard::KEY_MOUSE_RIGHT, true);
+		return false;
+	case Mouse::MOUSE_RELEASE_RIGHT_BUTTON:
+		setKeyState(Keyboard::KEY_MOUSE_RIGHT, false);
+		return true;
+	//middle mouse button
+	case Mouse::MOUSE_PRESS_MIDDLE_BUTTON:
+		setKeyState(Keyboard::KEY_MOUSE_MIDDLE, true);
+		return false;
+	case Mouse::MOUSE_RELEASE_MIDDLE_BUTTON:
+		setKeyState(Keyboard::KEY_MOUSE_MIDDLE, false);
+		return true;
 	}
 	return false;
 }

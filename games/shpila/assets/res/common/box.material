@@ -27,118 +27,6 @@ material texturedUnlit
     }
 }
 
-material texturedSpecular
-{
-    technique
-    {
-        pass
-        {
-            vertexShader = res/shaders/textured.vert
-            fragmentShader = res/shaders/textured.frag
-			defines = SPECULAR;DIRECTIONAL_LIGHT_COUNT 1
-
-            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
-            u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
-            u_worldViewMatrix = WORLD_VIEW_MATRIX
-            u_cameraPosition = CAMERA_VIEW_POSITION
-            u_ambientColor = SCENE_AMBIENT_COLOR
-            u_specularExponent = 50
-
-            sampler u_diffuseTexture
-            {
-                mipmap = true
-                wrapS = CLAMP
-                wrapT = CLAMP
-                minFilter = LINEAR_MIPMAP_LINEAR
-                magFilter = LINEAR
-            }
-
-            renderState
-            {
-                cullFace = true
-                depthTest = true
-            }
-        }
-    }
-}
-
-material texturedTransparent
-{
-    technique
-    {
-        pass
-        {
-            vertexShader = res/shaders/textured.vert
-            fragmentShader = res/shaders/textured.frag
-			
-			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
-            u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
-            u_worldViewMatrix = WORLD_VIEW_MATRIX
-            
-            sampler u_diffuseTexture
-            {
-                mipmap = true
-                wrapS = CLAMP
-                wrapT = CLAMP
-                minFilter = LINEAR_MIPMAP_LINEAR
-                magFilter = LINEAR
-            }
-
-            renderState
-            {
-                cullFace = true
-                depthTest = true
-	            blend = true
-                blendSrc = SRC_ALPHA
-                blendDst = ONE_MINUS_SRC_ALPHA
-            }
-        }
-    }
-}
-
-material texturedBumped
-{
-    technique
-    {
-        pass
-        {
-            // shaders
-            vertexShader = res/shaders/textured-bumped.vert
-            fragmentShader = res/shaders/textured-bumped.frag
-			
-			u_worldViewMatrix = WORLD_VIEW_MATRIX
-			u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
-			u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
-
-            // samplers
-            sampler u_diffuseTexture
-            {
-                mipmap = true
-                wrapS = REPEAT
-                wrapT = REPEAT
-                minFilter = NEAREST_MIPMAP_LINEAR
-                magFilter = LINEAR
-            }
-			
-			sampler u_normalmapTexture
-            {
-                mipmap = true
-                wrapS = REPEAT
-                wrapT = REPEAT
-                minFilter = NEAREST_MIPMAP_LINEAR
-                magFilter = LINEAR
-            }
-
-            // render state
-            renderState
-            {
-                cullFace = true
-                depthTest = true
-            }
-        }
-    }
-}
-
 material colored
 {
     technique
@@ -147,10 +35,13 @@ material colored
         {
             vertexShader = res/shaders/colored.vert
             fragmentShader = res/shaders/colored.frag
-            defines = DIRECTIONAL_LIGHT_COUNT 1
+            defines = MODULATE_COLOR;LIGHTING;DIRECTIONAL_LIGHT_COUNT 1
 
             u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
             u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+			
+			u_lightColor = 1.0, 1.0, 1.0
+			u_lightDirection = 1.0, 1.0, -1.0
             
             renderState
             {
@@ -161,104 +52,23 @@ material colored
     }
 }
 
-material spaceskyboxBK : texturedUnlit
+material coloredUnlit
 {
-	technique
+    technique
     {
         pass
         {
-            sampler u_diffuseTexture
+            vertexShader = res/shaders/colored-unlit.vert
+            fragmentShader = res/shaders/colored-unlit.frag
+			defines = MODULATE_COLOR
+
+            u_worldViewProjectionMatrix = WORLD_VIEW_PROJECTION_MATRIX
+            u_inverseTransposeWorldViewMatrix = INVERSE_TRANSPOSE_WORLD_VIEW_MATRIX
+            
+            renderState
             {
-                path = @spaceskyboxBK 
-            }
-			renderState
-            {
-                cullFace = false
-            }
-        }
-    }
-}
-material spaceskyboxDN : texturedUnlit
-{
-	technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @spaceskyboxDN 
-            }
-			renderState
-            {
-                cullFace = false
-            }
-        }
-    }
-}
-material spaceskyboxFT : texturedUnlit
-{
-	technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @spaceskyboxFT 
-            }
-			renderState
-            {
-                cullFace = false
-            }
-        }
-    }
-}
-material spaceskyboxLF : texturedUnlit
-{
-	technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @spaceskyboxLF 
-            }
-			renderState
-            {
-                cullFace = false
-            }
-        }
-    }
-}
-material spaceskyboxRT : texturedUnlit
-{
-	technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @spaceskyboxRT 
-            }
-			renderState
-            {
-                cullFace = false
-            }
-        }
-    }
-}
-material spaceskyboxUP : texturedUnlit
-{
-	technique
-    {
-        pass
-        {
-            sampler u_diffuseTexture
-            {
-                path = @spaceskyboxUP 
-            }
-			renderState
-            {
-                cullFace = false
+                cullFace = true
+                depthTest = true
             }
         }
     }
@@ -278,55 +88,98 @@ material mtGround : texturedUnlit
     }
 }
 
-material skinedmesh : texturedTransparent
+material mtGroundGreen1 : colored
 {
-    technique
+	technique
     {
         pass
         {
-			//;DIRECTIONAL_LIGHT_COUNT 1
-            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
-            u_matrixPalette = MATRIX_PALETTE
-            u_modulateAlpha = 1.0
+			u_modulateColor = 1.0, 1.0, 1.0, 1.0
+			u_diffuseColor = 0.24, 0.84, 0.19, 1.0
         }
     }
 }
 
-material skinedmeshcolored : colored
+material mtGroundGreen2 : colored
 {
-    technique
+	technique
     {
         pass
         {
-            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
-            u_matrixPalette = MATRIX_PALETTE
-            u_modulateAlpha = 1.0
+			u_modulateColor = 1.0, 1.0, 1.0, 1.0
+			u_diffuseColor = 0.325, 0.776, 0.325, 1.0
         }
     }
 }
 
-material skinedmeshbumped : texturedBumped
+material mtGroundWhite1 : colored
 {
-    technique
+	technique
     {
         pass
         {
-            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
-            u_matrixPalette = MATRIX_PALETTE
-            u_modulateAlpha = 1.0
+			u_modulateColor = 1.0, 1.0, 1.0, 1.0
+			u_diffuseColor = 0.84, 0.776, 0.65, 1.0
         }
     }
 }
 
-material skinedmeshunlit : texturedUnlit
+material mtGroundGreen3 : colored
 {
-    technique
+	technique
     {
         pass
         {
-            defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
-            u_matrixPalette = MATRIX_PALETTE
-            u_modulateAlpha = 1.0
+			u_modulateColor = 1.0, 1.0, 1.0, 1.0
+			u_diffuseColor = 0.44, 0.82, 0.1, 1.0
+        }
+    }
+}
+
+material mtGroundLightBrown : colored
+{
+	technique
+    {
+        pass
+        {
+			u_modulateColor = 1.0, 1.0, 1.0, 1.0
+			u_diffuseColor = 0.615, 0.396, 0.274, 1.0
+        }
+    }
+}
+
+material mtGroundWhite2 : colored
+{
+	technique
+    {
+        pass
+        {
+			u_modulateColor = 1.0, 1.0, 1.0, 1.0
+			u_diffuseColor = 0.9, 0.82, 0.6, 1.0
+        }
+    }
+}
+
+material mtGroundDarkBrown : colored
+{
+	technique
+    {
+        pass
+        {
+			u_modulateColor = 1.0, 1.0, 1.0, 1.0
+			u_diffuseColor = 0.46, 0.23, 0.1, 1.0
+        }
+    }
+}
+
+material mtGroundDirtGreen : colored
+{
+	technique
+    {
+        pass
+        {
+			u_modulateColor = 1.0, 1.0, 1.0, 1.0
+			u_diffuseColor =0.2, 0.2, 0.058, 1.0
         }
     }
 }
