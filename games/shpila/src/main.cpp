@@ -300,6 +300,8 @@ void Shpila::updatePlayers(float time)
 {
 	for (std::vector<PlayerObject*>::iterator it = _manager.Players.begin(); it != _manager.Players.end(); ++it)
 	{
+		const Vector3 pos = ProjectToZeroPlane(_activeCamera->getCamera(), _mouseX, _mouseY);
+		(*it)->mousOver(pos);
 		(*it)->update(time);
 	}
 }
@@ -455,7 +457,7 @@ void Shpila::updateActions(float elapsedTime)
 	{
 		if (!_CurrentCharacterName.empty())
 		{
-			PlaceUnit(_mouseX, _mouseY);
+			if (PlaceUnit(_mouseX, _mouseY))
 			_CurrentCharacterName = "";
 		}
 	}
@@ -478,22 +480,10 @@ void Shpila::updateKeyStates()
 	}
 }
 
-void Shpila::PlaceUnit(int x, int y)
+bool Shpila::PlaceUnit(int x, int y)
 {
-	Vector3 pointOnPlane(0, 0, 0);
-	Ray ray;
-	_activeCamera->getCamera()->pickRay(Game::getInstance()->getViewport(), x, y, &ray);
-	Vector3 normal = Vector3(0.0f, 1.0f, 0.0f);
-	const float distance = Vector3::dot(pointOnPlane, normal);
-	Plane plane(normal, -distance);
-
-	Vector3 point;
-	float collisionDistance = ray.intersects(plane);
-	if (collisionDistance != Ray::INTERSECTS_NONE)
-	{
-		point.set(ray.getOrigin() + collisionDistance*ray.getDirection());
-		getActivePlayer()->CreateWarrior(_CurrentCharacterName.c_str(), Valuable<Vector3>(point));
-	}
+	//Valuable<Vector3>(ProjectToZeroPlane(_activeCamera->getCamera(), x, y))
+	return getActivePlayer()->CreateWarrior(_CurrentCharacterName.c_str());
 }
 
 void Shpila::loadActionMap()
@@ -532,6 +522,26 @@ void Shpila::setKeyState(int key, bool pressed)
 		else
 			_keyMap[(Keyboard::Key)key] = Keyboard::KEY_STATE_RELEASE;
 	}
+}
+
+const Vector3 Shpila::ProjectToZeroPlane(Camera* camera, int x, int y)
+{
+	Vector3 pointOnPlane(0, 0, 0);
+	Ray ray;
+	camera->pickRay(Game::getInstance()->getViewport(), x, y, &ray);
+	Vector3 normal = Vector3(0.0f, 1.0f, 0.0f);
+	const float distance = Vector3::dot(pointOnPlane, normal);
+	Plane plane(normal, -distance);
+
+	Vector3 point;
+	float collisionDistance = ray.intersects(plane);
+	if (collisionDistance != Ray::INTERSECTS_NONE)
+	{
+		point.set(ray.getOrigin() + collisionDistance*ray.getDirection());
+		return point;
+	}
+	else
+		return Vector3::zero();
 }
 
 
@@ -757,6 +767,11 @@ void Shpila::render(float elapsedTime)
 		// Draw our scene, with separate passes for opaque and transparent objects.
 		_scene->visit(this, &Shpila::drawScene, false);
 		_scene->visit(this, &Shpila::drawScene, true);
+
+		for (std::vector<PlayerObject*>::iterator it = _manager.Players.begin(); it != _manager.Players.end(); ++it)
+		{
+			(*it)->render();
+		}
 
 		_hud.render(this, elapsedTime);
 		// Draw physics debug

@@ -83,11 +83,12 @@ private:
 	void updateActions(float elapsedTime);
 	void updateKeyStates();
 	//---
-	void PlaceUnit(int x, int y);
+	bool PlaceUnit(int x, int y);
 	void loadActionMap();
 	Keyboard::KeyState getActionState(Actions::Action action);
 	void setKeyState(int key, bool pressed);
 	
+	static const Vector3 ProjectToZeroPlane(Camera* camera, int x, int y);
 
 	static void CreateUnit(Game* game, Control* control);
 	static void SwitchPlayer(Game* game, Control* control);
