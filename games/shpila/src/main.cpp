@@ -56,7 +56,6 @@ Shpila::Shpila()
 , _totalTime(0.0)
 , _manager()
 , _currentPlayerIDforUI(0)
-, _CurrentCharacterName()
 , _ping(0)
 , _netPlayerID(-1)
 , _respawnTime(0.0)
@@ -454,12 +453,8 @@ void Shpila::updateActions(float elapsedTime)
 	}
 
 	if (getActionState(Actions::PLACE_UNIT) & Keyboard::KEY_STATE_CLICK_SET)
-	{
-		if (!_CurrentCharacterName.empty())
-		{
-			if (PlaceUnit(_mouseX, _mouseY))
-			_CurrentCharacterName = "";
-		}
+	{		
+		PlaceUnit(_mouseX, _mouseY);
 	}
 }
 
@@ -483,7 +478,7 @@ void Shpila::updateKeyStates()
 bool Shpila::PlaceUnit(int x, int y)
 {
 	//Valuable<Vector3>(ProjectToZeroPlane(_activeCamera->getCamera(), x, y))
-	return getActivePlayer()->CreateWarrior(_CurrentCharacterName.c_str());
+	return getActivePlayer()->CreateWarrior();
 }
 
 void Shpila::loadActionMap()
@@ -549,7 +544,7 @@ const Vector3 Shpila::ProjectToZeroPlane(Camera* camera, int x, int y)
 
 void Shpila::CreateUnit(Game* game, Control* control)
 {
-	((Shpila*)game)->_CurrentCharacterName = control->getTextTag();
+	((Shpila*)game)->getActivePlayer()->setCreateWarior(control->getTextTag());
 }
 
 void Shpila::SwitchPlayer(Game* game, Control* control)

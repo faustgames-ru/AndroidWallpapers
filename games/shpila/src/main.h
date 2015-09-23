@@ -133,7 +133,6 @@ private:
 	Client _client;
 	GameObjectManager _manager;
 	int _currentPlayerIDforUI;
-	std::string _CurrentCharacterName;
 public:
 	int _ping;
 	PLAYERID _netPlayerID;

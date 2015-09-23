@@ -11,15 +11,15 @@ WarriorsGrid::WarriorsGrid()
 , _centerPos()
 , _cornerPos()
 , _mouseInGrid(false)
-, _gridPosX(0)
-, _gridPosZ(0)
+, _cell(0, 0)
+, _mousePos()
 {
 	for (int i = 0; i < CellsCountX; i++)
 	{
-		for (int j = 0; j < CellsCountY; j++)
+		for (int j = 0; j < CellsCountZ; j++)
 		{
-			Cells[i][j][0] = false;
-			Cells[i][j][1] = false;
+			Cells[i][j] = false;
+			Cells[i][j] = false;
 		}
 	}
 }
@@ -37,63 +37,140 @@ void WarriorsGrid::init()
 
 	_factor = sqrt(2.0f);
 	_centerPos = Position + Vector3(0.0f, 0.1f, 0.0f);
-	_cornerPos = _centerPos - AxisX * _factor * 0.5f * (float)CellsCountX - AxisZ * _factor * 0.5f * (float)CellsCountY;
+	_cornerPos = _centerPos - AxisX * _factor * 0.5f * (float)CellsCountX - AxisZ * _factor * 0.25f * (float)CellsCountZ;
 }
 
 void WarriorsGrid::mousOver(const Vector3 mousePos)
 {
+	_mousePos = mousePos;
 	Vector3 dir = mousePos - _cornerPos;
 	Vector3 localdir = Vector3(dir.dot(AxisX), 0.0, dir.dot(AxisZ));
-	_mouseInGrid = (localdir.x >= 0.0f) && (localdir.x <= _factor * (float)CellsCountX) && (localdir.z >= 0.0f) && (localdir.z <= _factor * (float)CellsCountY);
-	_gridPosX = (0.5f + localdir.x) / _factor;
-	_gridPosZ = (0.5f + localdir.z) / _factor;
-	int halfX = (int)((0.5f + localdir.x) / (0.5f * _factor));
-	int halfZ = (int)((0.5f + localdir.z) / (0.5f * _factor));
-	_gridPosX_ = ((halfX % 2) != 0) && ((halfZ % 2) != 0) ? 1 : 0;
+	_mouseInGrid = (localdir.x >= 0.0f) && (localdir.x <= _factor * (float)CellsCountX) && (localdir.z >= 0.0f) && (localdir.z <= 0.5f * _factor * (float)CellsCountZ);
+	_cell = worldToGrid(mousePos);
 }
 
-bool WarriorsGrid::isPlaceFree()
+bool WarriorsGrid::isPlaceFree(int radius)
 {
-	return !Cells[_gridPosX][_gridPosZ][_gridPosX_];
+	bool res = true;
+	switch (radius)//!!
+	{
+	case 3:
+		res = res && !getCell(worldToGrid(_mousePos + Vector3::unitX()));
+		res = res && !getCell(worldToGrid(_mousePos + Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(_mousePos + Vector3::unitX() + Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(_mousePos - Vector3::unitX() + Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(_mousePos + Vector3::unitX() - Vector3::unitZ()));
+	case 2:
+		res = res && !getCell(worldToGrid(_mousePos - Vector3::unitX()));
+		res = res && !getCell(worldToGrid(_mousePos - Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(_mousePos - Vector3::unitX() - Vector3::unitZ()));
+	case 1:
+		res = res && !getCell(_cell);
+	}
+	return res;
 }
 
-const Vector3 WarriorsGrid::getPlacePosition()
+const Vector3 WarriorsGrid::getPlacePosition(const int radius)
 {
-	Vector3 position = _cornerPos + AxisX * _factor * (float)_gridPosX + AxisZ * _factor * (float)_gridPosZ;
-	if (_gridPosX_ > 0)
-		position = position + _factor * 0.5f * AxisX + _factor * 0.5f * AxisZ;
+	Vector3 position = _cornerPos + AxisX * _factor * ((float)(_cell.PosZ % 2) * 0.5f + (float)_cell.PosX) + 0.5f * AxisZ * _factor * (float)_cell.PosZ;
+	if (radius == 2)//!!
+	{
+		position = position - _factor * 0.5f * AxisX;
+	}
 	return position;
 }
 
-void WarriorsGrid::markUnitPlace()
+void WarriorsGrid::markUnitPlace(const int radius)
 {
-	Cells[_gridPosX][_gridPosZ][_gridPosX_] = true;
+	GridCell cell(0, 0);
+	switch (radius)//!!
+	{
+	case 3:
+		setCell(worldToGrid(_mousePos + Vector3::unitX()), true);
+		setCell(worldToGrid(_mousePos + Vector3::unitZ()), true);
+		setCell(worldToGrid(_mousePos + Vector3::unitX() + Vector3::unitZ()), true);
+		setCell(worldToGrid(_mousePos - Vector3::unitX() + Vector3::unitZ()), true);
+		setCell(worldToGrid(_mousePos + Vector3::unitX() - Vector3::unitZ()), true);
+	case 2:
+		setCell(worldToGrid(_mousePos - Vector3::unitX()), true);
+		setCell(worldToGrid(_mousePos - Vector3::unitZ()), true);
+		setCell(worldToGrid(_mousePos - Vector3::unitX() - Vector3::unitZ()), true);
+	case 1:
+		setCell(_cell, true);
+	}
+	
 }
 
-void WarriorsGrid::render(const Matrix matrix)
+void WarriorsGrid::render(const Matrix matrix, int radius)
 {
 	_spriteBatch->start();
 	_spriteBatch->setProjectionMatrix(matrix);
-	_spriteBatch->draw(_centerPos, AxisX, AxisZ, _factor * (float)CellsCountX, _factor * (float)CellsCountY, 0, 0, 1, 1, Vector4(1, 1, 1, 1), Vector2::zero(), 0);	
-	Vector3 quadPos = _cornerPos;
-	Vector4 color;
-	for (int i = 0; i < CellsCountX; i++)
+	_spriteBatch->draw(_centerPos, AxisX, AxisZ, _factor * (float)CellsCountX, 0.5f * _factor * (float)CellsCountZ, 0, 0, 1, 1, Vector4(1, 1, 1, 1), Vector2::zero(), 0);
+	if (radius != 0)
 	{
-		for (int j = 0; j < CellsCountY; j++)
+		Vector3 quadPos = _cornerPos;
+		Vector4 color;
+		for (int i = 0; i < CellsCountX; i++)
 		{
-			quadPos = _cornerPos + AxisX * _factor * (float)i + AxisZ * _factor * (float)j;
-			color = Cells[i][j][0] ? Vector4(1, 0, 0, 1) : Vector4(1, 1, 1, 1);
-			_spriteBatch->draw(quadPos, Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
-			quadPos = quadPos + _factor * 0.5f * AxisX + _factor * 0.5f * AxisZ;
-			color = Cells[i][j][1] ? Vector4(1, 0, 0, 1) : Vector4(1, 1, 1, 1);
-			_spriteBatch->draw(quadPos, Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+			for (int j = 0; j < CellsCountZ; j++)
+			{
+				if ((j % 2) != 0)
+					quadPos = _cornerPos + AxisX * _factor * (0.5f + (float)i) + 0.5f * AxisZ * _factor * (float)j;
+				else
+					quadPos = _cornerPos + AxisX * _factor * (float)i + 0.5f * AxisZ * _factor * (float)j;
+				color = Cells[i][j] ? Vector4(0, 1, 0, 1) : Vector4(1, 1, 1, 0.25);
+				_spriteBatch->draw(quadPos, Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+			}
+		}
+		if (_mouseInGrid)
+		{
+			switch (radius)//!!
+			{
+			case 3:
+				color = getCell(worldToGrid(_mousePos + Vector3::unitX())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
+				_spriteBatch->draw(getPlacePosition(1) + Vector3::unitX(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				color = getCell(worldToGrid(_mousePos + Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
+				_spriteBatch->draw(getPlacePosition(1) + Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				color = getCell(worldToGrid(_mousePos + Vector3::unitX() + Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
+				_spriteBatch->draw(getPlacePosition(1) + Vector3::unitX() + Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				color = getCell(worldToGrid(_mousePos - Vector3::unitX() + Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
+				_spriteBatch->draw(getPlacePosition(1) - Vector3::unitX() + Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				color = getCell(worldToGrid(_mousePos + Vector3::unitX() - Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
+				_spriteBatch->draw(getPlacePosition(1) + Vector3::unitX() - Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+			case 2:
+				color = getCell(worldToGrid(_mousePos - Vector3::unitX())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
+				_spriteBatch->draw(getPlacePosition(1) - Vector3::unitX(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				color = getCell(worldToGrid(_mousePos - Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
+				_spriteBatch->draw(getPlacePosition(1) - Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				color = getCell(worldToGrid(_mousePos - Vector3::unitX() - Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
+				_spriteBatch->draw(getPlacePosition(1) - Vector3::unitX() - Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+			case 1:
+				color = getCell(_cell) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
+				_spriteBatch->draw(getPlacePosition(1), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+			}
 		}
 	}
-	if (_mouseInGrid)
-	{
-		_spriteBatch->draw(getPlacePosition(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, Vector4(1, 0, 0, 1), Vector2::zero(), 0);
-	}	
 	_spriteBatch->finish();
+}
+
+const GridCell WarriorsGrid::worldToGrid(const Vector3 point)
+{
+	GridCell res(0, 0);
+	Vector3 dir = point - _cornerPos;
+	Vector3 localdir = Vector3(dir.dot(AxisX), 0.0, dir.dot(AxisZ));
+	res.PosZ = (localdir.z) / (0.5f *_factor);
+	res.PosX = (localdir.x - (res.PosZ % 2) * 0.5f * _factor) / (_factor);
+	return res;
+}
+
+bool WarriorsGrid::getCell(GridCell cell)
+{
+	return Cells[cell.PosX][cell.PosZ];
+}
+
+void WarriorsGrid::setCell(GridCell cell, bool value)
+{
+	Cells[cell.PosX][cell.PosZ] = value;
 }
 
 PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection)
@@ -111,6 +188,7 @@ PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position,
 , _newObjectID(0)
 , _mainResourceIncreacetimer(0.0f)
 , _grid()
+, _CurrentCharacterName()
 {
 	_grid.AxisX = Vector3(BattleFieldDirection.z, BattleFieldDirection.y, -BattleFieldDirection.x);
 	_grid.AxisZ = BattleFieldDirection;
@@ -142,23 +220,32 @@ void PlayerObject::update(float time)
 	}
 }
 
-bool PlayerObject::CreateWarrior(const char* name, const Valuable<Vector3> position)
+void PlayerObject::setCreateWarior(const char* name)
 {
+	_CurrentCharacterName = name;
+}
+
+bool PlayerObject::CreateWarrior(const Valuable<Vector3> position)
+{
+	if (_CurrentCharacterName.empty())
+		return false;
+	
 	bool res = false;
-	const ActorData& ad = getActorData(name); 
+	const ActorData& ad = getActorData(_CurrentCharacterName.c_str());
 	//if (ad.Price < MainResource)
 	{
-		res = _grid.isPlaceFree();
+		res = _grid.isPlaceFree(ad.CellsRadius());
 		if (res)
 		{
 			//const Vector3 warriorPosition = position.defined() ? position : _position + Vector3(rnd(-10.0f, 10.0f), 0.0f, rnd(-10.0f, 10.0f));
-			const Vector3 warriorPosition = position.defined() ? position : _grid.getPlacePosition();
-			_grid.markUnitPlace();
-			BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(name, warriorPosition, BattleFieldDirection, this);
+			const Vector3 warriorPosition = position.defined() ? position : _grid.getPlacePosition(ad.CellsRadius());
+			_grid.markUnitPlace(ad.CellsRadius());
+			BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(_CurrentCharacterName.c_str(), warriorPosition, BattleFieldDirection, this);
 			warrior->Holder = true;
-			warrior->HolderWarriorName = name;
+			warrior->HolderWarriorName = _CurrentCharacterName.c_str();
 			_warriorsSpawnedCount++;
 			MainResource -= ad.Price;
+			_CurrentCharacterName = "";
 		}
 	}
 	return res;
@@ -181,5 +268,6 @@ void PlayerObject::mousOver(const Vector3 mousePos)
 
 void PlayerObject::render()
 {
-	_grid.render(Manager.scene()->getActiveCamera()->getViewProjectionMatrix());
+	int radius = !_CurrentCharacterName.empty() ? getActorData(_CurrentCharacterName.c_str()).CellsRadius() : 0;
+	_grid.render(Manager.scene()->getActiveCamera()->getViewProjectionMatrix(), radius);
 }

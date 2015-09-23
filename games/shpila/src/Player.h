@@ -6,11 +6,22 @@ using namespace gameplay;
 class GameObjectManager;
 class HiddenObject;
 
+class GridCell
+{
+public:
+	GridCell(int posX, int posZ)
+	: PosX(posX)
+	, PosZ(posZ)
+	{}
+	int PosX;
+	int PosZ;
+};
+
 class WarriorsGrid
 {
 public:
 	static const int CellsCountX = 18;
-	static const int CellsCountY = 12;
+	static const int CellsCountZ = 12 * 2;
 
 	WarriorsGrid();
 	~WarriorsGrid();
@@ -20,20 +31,22 @@ public:
 
 	void init();
 	void mousOver(const Vector3 mousePos);
-	bool isPlaceFree();
-	const Vector3 getPlacePosition();
-	void markUnitPlace();
-	void render(const Matrix matrix);
+	bool isPlaceFree(int radius);
+	const Vector3 getPlacePosition(const int radius);
+	void markUnitPlace(const int radius);
+	void render(const Matrix matrix, int radius);
 private:
-	bool Cells[CellsCountX][CellsCountY][2];
+	const GridCell worldToGrid(const Vector3 point);
+	bool getCell(GridCell cell);
+	void setCell(GridCell cell, bool value);
+	bool Cells[CellsCountX][CellsCountZ];
 	SpriteBatch* _spriteBatch;
 	float _factor;
 	Vector3 _centerPos;
 	Vector3 _cornerPos;
 	bool _mouseInGrid;
-	int _gridPosX;
-	int _gridPosX_;
-	int _gridPosZ;
+	GridCell _cell;
+	Vector3 _mousePos;
 };
 
 class PlayerObject
@@ -48,7 +61,8 @@ public:
 	int MainResource;
 	PlayerObject(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection);
 	void update(float time);
-	bool CreateWarrior(const char* name, const Valuable<Vector3> position = Valuable<Vector3>::Undefined);
+	void setCreateWarior(const char* name);
+	bool CreateWarrior(const Valuable<Vector3> position = Valuable<Vector3>::Undefined);
 	int getNewObjectID();
 	BaseStaticActor* getDefence();
 	void mousOver(const Vector3 mousePos);
@@ -61,6 +75,7 @@ private:
 	int _newObjectID;
 	float _mainResourceIncreacetimer;
 	WarriorsGrid _grid;
+	std::string _CurrentCharacterName;
 };
 
 #endif

@@ -71,6 +71,7 @@ public:
 	float getDefaultDamageUpgradeFactor() const;
 	bool isAttackToTargetAllowed(const ActorData& targetGameData) const;
 	int getAttacksCount(const ActorData& targetGameData) const;
+	int CellsRadius() const;
 };
 
 class LocalActorData

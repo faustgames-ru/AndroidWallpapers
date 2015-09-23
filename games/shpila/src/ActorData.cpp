@@ -48,6 +48,11 @@ int ActorData::getAttacksCount(const ActorData& targetGameData) const
 	return res;
 }
 
+int ActorData::CellsRadius() const
+{
+	return GeometryRadius / 0.5f;//!!
+}
+
 LocalActorData::LocalActorData()
 : GameData(NULL)
 , Health(0.0f)
