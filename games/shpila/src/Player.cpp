@@ -158,8 +158,8 @@ const GridCell WarriorsGrid::worldToGrid(const Vector3 point)
 	GridCell res(0, 0);
 	Vector3 dir = point - _cornerPos;
 	Vector3 localdir = Vector3(dir.dot(AxisX), 0.0, dir.dot(AxisZ));
-	res.PosZ = (localdir.z) / (0.5f *_factor);
-	res.PosX = (localdir.x - (res.PosZ % 2) * 0.5f * _factor) / (_factor);
+	res.PosZ = (localdir.z + 0.25f * _factor) / (0.5f *_factor);
+	res.PosX = (localdir.x + 0.5f * _factor - (res.PosZ % 2) * 0.5f * _factor) / (_factor);
 	return res;
 }
 
