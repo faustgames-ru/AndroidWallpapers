@@ -17,6 +17,8 @@ static std::vector<Font*> __fontCache;
 
 static Effect* __fontEffect = NULL;
 
+static const int  SPACE_ADVANCE = 7;
+
 Font::Font() :
     _format(BITMAP), _style(PLAIN), _size(0), _spacing(0.0f), _glyphs(NULL), _glyphCount(0), _texture(NULL), _batch(NULL), _cutoffParam(NULL)
 {
@@ -294,7 +296,7 @@ void Font::drawText(const char* text, int x, int y, const Vector4& color, unsign
                 switch (delimiter)
                 {
                 case ' ':
-                    xPos += _glyphs[0].advance;
+					xPos += SPACE_ADVANCE;// _glyphs[0].advance;
                     break;
                 case '\r':
                 case '\n':
@@ -302,7 +304,7 @@ void Font::drawText(const char* text, int x, int y, const Vector4& color, unsign
                     xPos = x;
                     break;
                 case '\t':
-                    xPos += _glyphs[0].advance * 4;
+					xPos += SPACE_ADVANCE * 4;// _glyphs[0].advance * 4;
                     break;
                 case 0:
                     done = true;
@@ -345,7 +347,7 @@ void Font::drawText(const char* text, int x, int y, const Vector4& color, unsign
             switch (c)
             {
             case ' ':
-                xPos += _glyphs[0].advance;
+				xPos += SPACE_ADVANCE;// _glyphs[0].advance;
                 break;
             case '\r':
             case '\n':
@@ -353,7 +355,7 @@ void Font::drawText(const char* text, int x, int y, const Vector4& color, unsign
                 xPos = x;
                 break;
             case '\t':
-                xPos += _glyphs[0].advance * 4;
+				xPos += SPACE_ADVANCE * 4;// _glyphs[0].advance * 4;
                 break;
             default:
                 int index = c - 32; // HACK for ASCII
@@ -731,7 +733,7 @@ void Font::measureText(const char* text, const Rectangle& clip, unsigned int siz
                 switch (delimiter)
                 {
                     case ' ':
-                        delimWidth += _glyphs[0].advance;
+						delimWidth += SPACE_ADVANCE;// _glyphs[0].advance;
                         break;
                     case '\r':
                     case '\n':
@@ -767,7 +769,7 @@ void Font::measureText(const char* text, const Rectangle& clip, unsigned int siz
                         delimWidth = 0;
                         break;
                     case '\t':
-                        delimWidth += _glyphs[0].advance * 4;
+						delimWidth += SPACE_ADVANCE * 4;// _glyphs[0].advance * 4;
                         break;
                     case 0:
                         reachedEOF = true;
@@ -1067,7 +1069,7 @@ void Font::getMeasurementInfo(const char* text, const Rectangle& area, unsigned 
                     switch (delimiter)
                     {
                         case ' ':
-                            delimWidth += _glyphs[0].advance;
+							delimWidth += SPACE_ADVANCE;// _glyphs[0].advance;
                             lineLength++;
                             break;
                         case '\r':
@@ -1084,7 +1086,7 @@ void Font::getMeasurementInfo(const char* text, const Rectangle& area, unsigned 
                             delimWidth = 0;
                             break;
                         case '\t':
-                            delimWidth += _glyphs[0].advance * 4;
+							delimWidth += SPACE_ADVANCE * 4;// _glyphs[0].advance * 4;
                             lineLength++;
                             break;
                         case 0:
@@ -1207,6 +1209,15 @@ float Font::getCharacterSpacing() const
 void Font::setCharacterSpacing(float spacing)
 {
     _spacing = spacing;
+}
+
+void Font::setCharacterAdvance(char c, int advance)
+{
+	for (size_t i = 0, count = _sizes.size(); i < count; ++i)
+	{
+		_sizes[i]->_glyphs[c - 32].advance = advance;
+	}
+	_glyphs[c - 32].advance = advance;
 }
 
 int Font::getIndexAtLocation(const char* text, const Rectangle& area, unsigned int size, const Vector2& inLocation, Vector2* outLocation,
@@ -1484,10 +1495,10 @@ unsigned int Font::getTokenWidth(const char* token, unsigned int length, unsigne
         switch (c)
         {
         case ' ':
-            tokenWidth += _glyphs[0].advance;
+			tokenWidth += SPACE_ADVANCE;// _glyphs[0].advance;
             break;
         case '\t':
-            tokenWidth += _glyphs[0].advance * 4;
+			tokenWidth += SPACE_ADVANCE * 4;// _glyphs[0].advance * 4;
             break;
         default:
             int glyphIndex = c - 32;
@@ -1558,7 +1569,7 @@ int Font::handleDelimiters(const char** token, const unsigned int size, const in
         switch (delimiter)
         {
             case ' ':
-                *xPos += _glyphs[0].advance;
+				*xPos += SPACE_ADVANCE;// _glyphs[0].advance;
                 (*lineLength)++;
                 if (charIndex)
                 {
@@ -1590,7 +1601,7 @@ int Font::handleDelimiters(const char** token, const unsigned int size, const in
                 }
                 break;
             case '\t':
-                *xPos += _glyphs[0].advance * 4;
+				*xPos += SPACE_ADVANCE * 4;// _glyphs[0].advance * 4;
                 (*lineLength)++;
                 if (charIndex)
                 {

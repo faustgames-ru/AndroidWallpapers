@@ -178,7 +178,7 @@ void CoreWarrior::init(GameObjectManager& manager, const ActorData* gameData, No
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
 	SearchRadius = 20.0f;
-	_altitude = 3.75f;
+	_altitude = AIR_UNITS_ALTITUDE;
 }
 
 void CoreWarrior::update(float time)

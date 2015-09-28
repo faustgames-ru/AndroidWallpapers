@@ -208,6 +208,14 @@ public:
      */
     void setCharacterSpacing(float spacing);
 
+	/**
+	* Sets the additional character spacing for given character.
+	*
+	*
+	*
+	*/
+	void setCharacterAdvance(char c, int advance);
+
     /**
      * Get an character index into a string corresponding to the character nearest the given location within the clip region.
      */

@@ -137,7 +137,7 @@ theme sceneSettings
             skin = mainNormal
             imageList = normalImages
 
-            font = res/font.gpb
+            font = res/ui/arial.gpb
             textColor = #eeeeeeff
             textAlignment = ALIGN_VCENTER_HCENTER
         }
@@ -171,7 +171,7 @@ theme sceneSettings
 
         stateNormal
         {
-            font = res/font.gpb
+            font = res/ui/arial.gpb
         }
         stateDisabled
         {
@@ -415,7 +415,7 @@ theme sceneSettings
         stateNormal
         {
             imageList = normalImages
-            font = res/font.gpb
+            font = res/ui/arial.gpb
             textColor = #eeeeeeff
             textAlignment = ALIGN_VCENTER_HCENTER
         }
@@ -436,14 +436,14 @@ theme sceneSettings
     {
         stateNormal
         {
-            font = res/font20.gpb
+            font = res/ui/arial.gpb
             fontSize = 20
             textAlignment = ALIGN_VCENTER_LEFT
         }
 
         stateActive
         {
-            font = res/font20.gpb
+            font = res/ui/arial.gpb
             fontSize = 20
             textAlignment = ALIGN_VCENTER_LEFT
         }
@@ -461,14 +461,14 @@ theme sceneSettings
     {
         stateNormal
         {
-            font = res/font20.gpb
+            font = res/ui/arial.gpb
             fontSize = 20
             textAlignment = ALIGN_VCENTER_LEFT
         }
 
         stateActive
         {
-            font = res/font20.gpb
+            font = res/ui/arial.gpb
             fontSize = 20
             textAlignment = ALIGN_VCENTER_LEFT
         }
@@ -479,7 +479,7 @@ theme sceneSettings
         stateNormal
         {
             skin = formEntry
-            font = res/font20.gpb
+            font = res/ui/arial.gpb
             fontSize = 16
             textAlignment = ALIGN_TOP_LEFT
         }
@@ -487,7 +487,7 @@ theme sceneSettings
         stateFocus
         {
             skin = formFocus
-            font = res/font20.gpb
+            font = res/ui/arial.gpb
             fontSize = 16
         }
     }
@@ -504,7 +504,7 @@ theme sceneSettings
         stateNormal
         {
             textColor = #ffffffff
-            font = res/font20.gpb
+            font = res/ui/arial.gpb
             textAlignment = ALIGN_TOP_LEFT
         }
 

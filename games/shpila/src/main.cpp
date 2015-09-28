@@ -87,6 +87,7 @@ void Shpila::initialize()
 
 		// Load the font.
 		_font = Font::create("res/ui/arial.gpb");
+		_font->setCharacterAdvance(' ', 1);
 
 		const float FoV = 60.0f;
 
@@ -121,9 +122,12 @@ void Shpila::initialize()
 
 		_hud.bind("UpgradeLevel1", Control::Listener::CLICK, Upgrade);
 		_hud.bind("UpgradeLevel2", Control::Listener::CLICK, Upgrade);
+		_hud.bind("extractor", Control::Listener::CLICK, AddExtractor);
+		
 
 		_hud.bind("SettingsSave", Control::Listener::CLICK, saveSetting);
 		_hud.bind("SettingsLoad", Control::Listener::CLICK, loadSetting);
+		_hud.bind("AddEnergy", Control::Listener::CLICK, AddEnergy);
 
 		_hud.bind("Pause", Control::Listener::CLICK, PauseClick);
 			
@@ -288,9 +292,11 @@ void Shpila::initPlayers()
 	pl1->EnemyPlayer = pl2;
 	pl1->MainResource = 600;
 	pl1->ID = 0;
+	pl1->BattleFieldMidPoint = Vector3::zero();
 	pl2->EnemyPlayer = pl1;
 	pl2->MainResource = 600;	
 	pl2->ID = 1;
+	pl2->BattleFieldMidPoint = Vector3::zero();
 	_manager.Players.push_back(pl1);
 	_manager.Players.push_back(pl2);
 }
@@ -344,13 +350,24 @@ void Shpila::updateMenuButtons()
 	((Label*)_hud.form()->getControl("PingLabel"))->setText(buff);
 
 	char buff2[100];
-	sprintf(buff2, "Energy-%d", _manager.Players[0]->MainResource);
+	sprintf(buff2, "Energy-%d", getActivePlayer()->MainResource);
 	((Label*)_hud.form()->getControl("mainresource"))->setText(buff2);
 
 	char buff3[100];
 	int rTime = (RESPAWN_TIME - _respawnTime) / 1000.0f;
-	sprintf(buff3, "Time-%d", rTime);
+	sprintf(buff3, "Time - %d", rTime);
 	((Label*)_hud.form()->getControl("timetospawn"))->setText(buff3);
+
+	char buff4[100];
+	sprintf(buff4, "2 + %d%%", getActivePlayer()->getAdditionalResourceIncreasePercent());
+	((Label*)_hud.form()->getControl("mainresourceinc"))->setText(buff4);
+	
+	char buff5[100];
+	sprintf(buff5, "extractor building: %d", getActivePlayer()->getExtractorBuildingTime());
+	Label* lb = ((Label*)_hud.form()->getControl("extractorbuildtimer"));
+	lb->setText(buff5);
+	lb->setVisible(getActivePlayer()->isExtractorBuilding());
+	
 
 	PlayerObject * player = _manager.Players[_currentPlayerIDforUI];
 	Container* container = (Container*)_hud.form()->getControl("units1_column1");
@@ -454,8 +471,14 @@ void Shpila::updateActions(float elapsedTime)
 
 	if (getActionState(Actions::PLACE_UNIT) & Keyboard::KEY_STATE_CLICK_SET)
 	{		
-		PlaceUnit(_mouseX, _mouseY);
+		PlaceUnit(_mouseX, _mouseY, getActionState(Actions::SHIFT) & Keyboard::KEY_STATE_PRESS_SET);
 	}
+
+	if ((getActionState(Actions::CANCEL_PLACE_UNIT) & Keyboard::KEY_STATE_CLICK_SET) || (getActionState(Actions::ESC) & Keyboard::KEY_STATE_CLICK_SET))
+	{
+		getActivePlayer()->CancelCreateWarrior();
+	}
+	
 }
 
 void Shpila::updateKeyStates()
@@ -475,10 +498,10 @@ void Shpila::updateKeyStates()
 	}
 }
 
-bool Shpila::PlaceUnit(int x, int y)
+bool Shpila::PlaceUnit(int x, int y, bool continuous)
 {
 	//Valuable<Vector3>(ProjectToZeroPlane(_activeCamera->getCamera(), x, y))
-	return getActivePlayer()->CreateWarrior();
+	return getActivePlayer()->CreateWarrior(continuous);
 }
 
 void Shpila::loadActionMap()
@@ -491,9 +514,11 @@ void Shpila::loadActionMap()
 	_actionsMap[Actions::MOVE_DOWN] = Keyboard::KEY_Q;
 	_actionsMap[Actions::SWITCH_CAMERA] = Keyboard::KEY_SPACE;	
 	_actionsMap[Actions::PLACE_UNIT] = Keyboard::KEY_MOUSE_LEFT;
+	_actionsMap[Actions::CANCEL_PLACE_UNIT] = Keyboard::KEY_MOUSE_RIGHT;	
 	_actionsMap[Actions::ALT] = Keyboard::KEY_ALT;
 	_actionsMap[Actions::SHIFT] = Keyboard::KEY_SHIFT;
 	_actionsMap[Actions::CTRL] = Keyboard::KEY_CTRL;
+	_actionsMap[Actions::ESC] = Keyboard::KEY_ESCAPE;
 
 	for (std::map<Actions::Action, Keyboard::Key>::iterator it = _actionsMap.begin(); it != _actionsMap.end(); it++)
 	{
@@ -619,6 +644,12 @@ void Shpila::Upgrade(Game* game, Control* control)
 	}
 }
 
+void Shpila::AddExtractor(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->getActivePlayer()->addExtractor();
+}
+
 void loadCamera(TiXmlNode *node, TargetCamera& camera)
 {
 	Quaternion qRotX;
@@ -713,6 +744,12 @@ void Shpila::saveSetting(Game* game, Control* control)
 	saveCamera(element, shpila->_CameraPlayer[1]);
 
 	doc.SaveFile("res/settings.xml");
+}
+
+void Shpila::AddEnergy(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->getActivePlayer()->MainResource += 1000;
 }
 
 void Shpila::PauseClick(Game* game, Control* control)

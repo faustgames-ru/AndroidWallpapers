@@ -24,7 +24,21 @@ form hud
 		   size = 120, 35
 		   text = res
 	   }
+	   label mainresourceinc
+	   {
+		   x=200	
+		   style = title
+		   size = 120, 35
+		   text = inc
+	   }
 	   
+	   label extractorbuildtimer
+	   {
+		   x=300	
+		   style = title
+		   size = 150, 35
+		   text = extime
+	   }
 	}
 	
 	container players
@@ -61,10 +75,68 @@ form hud
         alignment = ALIGN_BOTTOM_LEFT
 		layout = LAYOUT_ABSOLUTE
         width = 1920
-		height = 101
+		height = 216
         autoHeight = false
         scrollBarsAutoHide = false
         consumeInputEvents = false
+		
+		container upgrades_amu
+		{
+			height = 101
+			layout = LAYOUT_FLOW
+			autoWidth = true
+			consumeInputEvents = false
+			y=0
+			
+			button extractor
+			{
+				consumeInputEvents = true
+				style = buttonStyle
+				width = 85
+				height = 101
+				text = Extractor
+			}
+			button armor_ground
+			{
+				consumeInputEvents = true
+				style = buttonStyle
+				width = 85
+				height = 101
+				text = Armor Ground
+			}
+			button armor_air
+			{
+				consumeInputEvents = true
+				style = buttonStyle
+				width = 85
+				height = 101
+				text = Armor Air
+			}
+			button weapon_ground
+			{
+				consumeInputEvents = true
+				style = buttonStyle
+				width = 85
+				height = 101
+				text = Weapon Ground
+			}
+			button weapon_air
+			{
+				consumeInputEvents = true
+				style = buttonStyle
+				width = 85
+				height = 101
+				text = Weapon Air
+			}
+			button upgrade_zealot
+			{
+				consumeInputEvents = true
+				style = buttonStyle
+				width = 85
+				height = 101
+				text = Upgrade Zealot
+			}
+		}
 
         container units1_column1
         {
@@ -74,6 +146,7 @@ form hud
            height = 101
            layout = LAYOUT_FLOW
 		   consumeInputEvents = false
+		   y = 115
 
            button Player1_New_Irbaga
            {
@@ -440,5 +513,23 @@ form hud
               text = Save
            }
         }
+		container Cheats
+        {
+			alignment = ALIGN_TOP_LEFT
+			autoWidth = false
+			width = 70
+			height = 120
+			layout = LAYOUT_VERTICAL
+			consumeInputEvents = false
+			
+			button AddEnergy
+			{
+				consumeInputEvents = true
+				style = buttonStyle
+				width = 60
+				height = 35
+				text = +1000
+            }
+		}
 	}
 }

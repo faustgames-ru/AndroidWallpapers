@@ -57,6 +57,7 @@ protected:
 	bool _dead;
 	float _deadAltitude;
 	std::vector<UnitAnimation*> _unitAnimation;
+	void updateMidLineState();
 	void updateAnimationState();
 	void switchToAnimation(UnitAnimation::Actions action, float repeatCount, unsigned long blendingTime);
 	void updatePositionFromServer(float time);

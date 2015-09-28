@@ -49,6 +49,7 @@ private:
 	Vector3 _mousePos;
 };
 
+//players union
 class PlayerObject
 {
 public:
@@ -58,13 +59,21 @@ public:
 	int ID;
 	int UprgadeLevel;
 	Vector3 BattleFieldDirection;
+	Vector3 BattleFieldMidPoint;
+	int UnitsOverMidLineCount;
 	int MainResource;
 	PlayerObject(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection);
 	void update(float time);
 	void setCreateWarior(const char* name);
-	bool CreateWarrior(const Valuable<Vector3> position = Valuable<Vector3>::Undefined);
+	bool CreateWarrior(bool continuous, const Valuable<Vector3> position = Valuable<Vector3>::Undefined);
+	void CancelCreateWarrior();
+	void addExtractor();
 	int getNewObjectID();
 	BaseStaticActor* getDefence();
+	Vector3 getPosition();
+	int getAdditionalResourceIncreasePercent();
+	int getExtractorBuildingTime();
+	bool isExtractorBuilding();
 	void mousOver(const Vector3 mousePos);
 	void render();
 private:
@@ -73,9 +82,13 @@ private:
 	Vector3 _position;
 	int _warriorsSpawnedCount;
 	int _newObjectID;
-	float _mainResourceIncreacetimer;
-	WarriorsGrid _grid;
+	SimpleTimer _mainResourceIncreaceTimer;
+	SimpleTimer _ExtractorBuildTimer;
+	WarriorsGrid _gridGround;
+	WarriorsGrid _gridAir;
 	std::string _CurrentCharacterName;
+	bool _controlMid;
+	int _extractorsCount;
 };
 
 #endif

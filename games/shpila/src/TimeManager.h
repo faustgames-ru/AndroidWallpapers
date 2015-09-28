@@ -9,7 +9,9 @@ public:
 	BaseTimer();
 	~BaseTimer();
 	virtual void update(float time);
+	virtual float getTime();
 	bool action(float time);
+	bool enabled();
 	void enable(bool isEnable);
 protected:
 	bool _ready;
@@ -22,7 +24,8 @@ class SimpleTimer : public BaseTimer
 public:
 	SimpleTimer();
 	void start(float time, float startTime);
-	void update(float time);
+	virtual void update(float time);
+	virtual float getTime();
 private:
 	float _time;
 	float _timeCounter;

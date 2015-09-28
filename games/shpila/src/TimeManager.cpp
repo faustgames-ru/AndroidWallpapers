@@ -16,12 +16,22 @@ void BaseTimer::update(float time)
 
 }
 
+float BaseTimer::getTime()
+{
+	return 0.0f;
+}
+
 bool BaseTimer::action(float time)
 {
 	update(time);
 	bool ready = _ready;
 	_ready = false;
 	return ready;
+}
+
+bool BaseTimer::enabled()
+{
+	return _enable;
 }
 
 void BaseTimer::enable(bool isEnable)
@@ -61,6 +71,11 @@ void SimpleTimer::update(float time)//, BaseGameObject* object
 			_ready = true;
 		}
 	}
+}
+
+float SimpleTimer::getTime()
+{
+	return _timeCounter;
 }
 
 //AnimatedFloat

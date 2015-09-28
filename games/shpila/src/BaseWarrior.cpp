@@ -72,7 +72,8 @@ void BaseWarrior::update(float time)
 		return;
 	}
 
-	BaseActor::update(time);	
+	BaseActor::update(time);
+	updateMidLineState();
 	updateAttack(time, Target);
 	updatePositionFromServer(time);
 }
@@ -108,6 +109,13 @@ void BaseWarrior::disappearing(float time)
 
 //_node->setTranslation(_node->getTranslation() + targetDir * MOVE_FACTOR * time);
 //_movementController.applySteeringForce(OpenSteer::Vec3(targetDir.x, targetDir.y, targetDir.z) * MOVE_FACTOR, time * 0.001f);
+
+void BaseWarrior::updateMidLineState()
+{
+	float dot = Vector3(Player->getPosition() - Player->BattleFieldMidPoint).dot(position() - Player->BattleFieldMidPoint);
+	if (dot < 0.0f)
+		Player->UnitsOverMidLineCount++;
+}
 
 void BaseWarrior::updateAnimationState()
 {

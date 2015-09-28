@@ -18,9 +18,11 @@ public:
 		MOVE_DOWN,
 		SWITCH_CAMERA,
 		PLACE_UNIT,
+		CANCEL_PLACE_UNIT,
 		ALT,
 		SHIFT,
 		CTRL,
+		ESC,
 	};
 };
 
@@ -83,7 +85,7 @@ private:
 	void updateActions(float elapsedTime);
 	void updateKeyStates();
 	//---
-	bool PlaceUnit(int x, int y);
+	bool PlaceUnit(int x, int y, bool continuous);
 	void loadActionMap();
 	Keyboard::KeyState getActionState(Actions::Action action);
 	void setKeyState(int key, bool pressed);
@@ -101,11 +103,14 @@ private:
 	static void SetCameraLocked(Game* game, Control* control);
 	static void ConnectToServer(Game* game, Control* control);
 	static void Upgrade(Game* game, Control* control);
+	static void AddExtractor(Game* game, Control* control);
 
 	static void loadSetting(Game* game, Control* control);
 	static void saveSetting(Game* game, Control* control);
+	static void AddEnergy(Game* game, Control* control);
+	
 
-	static void PauseClick(Game* game, Control* control);	
+	static void PauseClick(Game* game, Control* control);
 
     Font* _font;
 	AutoRef<Scene> _scene;
