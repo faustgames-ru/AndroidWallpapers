@@ -14,7 +14,8 @@ void UnitMovementBase::reset(void)
 
 	setSpeed(0.0f);             // speed along Forward direction.
 	setMaxForce(20.0f);        // steering force is clipped to this magnitude
-	setMaxSpeed(2.25f / TIME_SCALE);        // velocity is clipped to this magnitude
+	setAcceleration(DEFAULT_UNIT_AXELERATION);
+	setMaxSpeed(DEFAULT_MOVEMENT_SPEED / TIME_SCALE);        // velocity is clipped to this magnitude
 
 	// notify proximity database that our position has changed
 	proximityToken->updateForNewPosition(position());

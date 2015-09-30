@@ -140,6 +140,11 @@ namespace OpenSteer {
         float maxForce (void) const {return _maxForce;}
         float setMaxForce (float mf) {return _maxForce = mf;}
 
+		// get/set acceleration
+		float acceleration(void) const { return _acceleration; }
+		float setAcceleration(float ac) { return _acceleration = ac; }
+		
+
         // get/set maxSpeed
         float maxSpeed (void) const {return _maxSpeed;}
         float setMaxSpeed (float ms) {return _maxSpeed = ms;}
@@ -231,6 +236,8 @@ namespace OpenSteer {
 
         float _maxSpeed;   // the maximum speed this vehicle is allowed to move
                            // (velocity is clipped to this magnitude)
+
+		float _acceleration;   //acceleration factor
 
         float _curvature;
         Vec3 _lastForward;

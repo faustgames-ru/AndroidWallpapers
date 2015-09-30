@@ -6,6 +6,23 @@ using namespace gameplay;
 class GameObjectManager;
 class HiddenObject;
 
+class Upgrades
+{
+public:
+	enum Values
+	{
+		BaseLevel,
+		Shield,
+		GroundAttack,
+		AirAttack,
+		GroundArmor,
+		AirArmor,
+		ZealotUpgrade,
+
+		Last
+	};
+};
+
 class GridCell
 {
 public:
@@ -57,17 +74,20 @@ public:
 	PlayerObject* EnemyPlayer;
 	bool AutoPlay;
 	int ID;
-	int UprgadeLevel;
+	//int UprgadeLevel;
 	Vector3 BattleFieldDirection;
 	Vector3 BattleFieldMidPoint;
 	int UnitsOverMidLineCount;
 	int MainResource;
+
 	PlayerObject(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection);
 	void update(float time);
 	void setCreateWarior(const char* name);
 	bool CreateWarrior(bool continuous, const Valuable<Vector3> position = Valuable<Vector3>::Undefined);
 	void CancelCreateWarrior();
 	void addExtractor();
+	int getUpgrade(Upgrades::Values upgrade);
+	bool setUpgrade(Upgrades::Values upgrade, int value);
 	int getNewObjectID();
 	BaseStaticActor* getDefence();
 	Vector3 getPosition();
@@ -89,6 +109,9 @@ private:
 	std::string _CurrentCharacterName;
 	bool _controlMid;
 	int _extractorsCount;
+	std::map<Upgrades::Values, int> _upgrade;
 };
+
+void initUpgradeParams();
 
 #endif

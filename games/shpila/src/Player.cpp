@@ -3,6 +3,18 @@
 #define SPRITE_VSH "res/shaders/sprite.vert"
 #define SPRITE_FSH "res/shaders/sprite.frag"
 
+std::map<Upgrades::Values, int> __upgradePrice;
+std::map<Upgrades::Values, int> __upgradeMaxLevel;
+
+void initUpgradeParams()
+{
+	__upgradePrice[Upgrades::BaseLevel] = BASE_LEVEL_UPGRADE_PRICE;
+	__upgradePrice[Upgrades::ZealotUpgrade] = ZEALOT_UPGRADE_PRICE;
+
+	__upgradeMaxLevel[Upgrades::BaseLevel] = 2;
+	__upgradeMaxLevel[Upgrades::ZealotUpgrade] = 1;
+}
+
 WarriorsGrid::WarriorsGrid()
 : AxisX()
 , AxisZ()
@@ -180,11 +192,12 @@ PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position,
 , EnemyPlayer(NULL)
 , AutoPlay(false)
 , ID(id)
-, UprgadeLevel(0)
+//, UprgadeLevel(0)
 , BattleFieldDirection(battleFieldDirection)
 , BattleFieldMidPoint()
 , UnitsOverMidLineCount(0)
 , MainResource(0)
+, _upgrade()
 , _defenceTower()
 , _defenceBase()
 , _position(position)
@@ -198,6 +211,9 @@ PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position,
 , _controlMid(false)
 , _extractorsCount(0)
 {
+	for (int i = Upgrades::BaseLevel; i < Upgrades::Last; i++)
+		_upgrade[(Upgrades::Values)i] = 0;
+
 	_gridGround.AxisX = Vector3(BattleFieldDirection.z, BattleFieldDirection.y, -BattleFieldDirection.x);
 	_gridGround.AxisZ = BattleFieldDirection;
 	_gridGround.Position = _position;
@@ -290,6 +306,21 @@ void PlayerObject::addExtractor()
 		_ExtractorBuildTimer.enable(true);
 		_mainResourceIncreaceTimer.enable(false);
 	}
+}
+
+int PlayerObject::getUpgrade(Upgrades::Values upgrade)
+{
+	return _upgrade[upgrade];
+}
+bool PlayerObject::setUpgrade(Upgrades::Values upgrade, int value)
+{
+	bool res = (_upgrade[upgrade] < __upgradeMaxLevel[upgrade]) && (__upgradePrice[upgrade] < MainResource);
+	if (res)
+	{
+		MainResource -= __upgradePrice[upgrade];
+		_upgrade[upgrade] = value;
+	}
+	return res;
 }
 
 int PlayerObject::getNewObjectID()

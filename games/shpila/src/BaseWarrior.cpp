@@ -74,8 +74,17 @@ void BaseWarrior::update(float time)
 
 	BaseActor::update(time);
 	updateMidLineState();
+	updateMovementSpeed(time);
 	updateAttack(time, Target);
 	updatePositionFromServer(time);
+}
+
+void BaseWarrior::updateMovementSpeed(float time)
+{
+	if (Target != NULL)
+		_movementController.setMaxSpeed(LocalGameData.GameData->MoveSpeed / TIME_SCALE);
+	else
+		_movementController.setMaxSpeed(DEFAULT_MOVEMENT_SPEED / TIME_SCALE);
 }
 
 bool BaseWarrior::deleted()
@@ -193,7 +202,6 @@ void BaseWarrior::updateAttack(float time, BaseGameObject* object)
 
 	if (object != NULL)
 	{
-		_movementController.setMaxSpeed(LocalGameData.GameData->MoveSpeed / TIME_SCALE);
 		Vector3 tPos = object->position();
 		updateMoveToPoint(time, tPos);
 
@@ -226,7 +234,6 @@ void BaseWarrior::updateAttack(float time, BaseGameObject* object)
 			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
 			_damageTimer.enable(false);
 			_movementController._applyBreakingForces = false;
-			_movementController.setMaxSpeed(2.25f / TIME_SCALE);
 		}
 	}
 }

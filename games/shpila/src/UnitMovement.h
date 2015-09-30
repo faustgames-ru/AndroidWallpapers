@@ -88,7 +88,7 @@ public:
 			proximityToken->findNeighbors(position(), maxRadius, neighbors);
 
 			//if (leakThrough < frandom01())
-			collisionAvoidance = steerToAvoidNeighbors(caLeadTime, neighbors) * 10.0f;
+			collisionAvoidance = steerToAvoidNeighbors(caLeadTime, neighbors) * acceleration();
 
 			// if collision avoidance is needed, do it
 			if (collisionAvoidance != Vec3::zero)
@@ -97,7 +97,7 @@ public:
 			}
 			else
 			{
-				steeringForce += steerForSeek(_target) * 10.0f;
+				steeringForce += steerForSeek(_target) * acceleration();
 			}
 		}
 

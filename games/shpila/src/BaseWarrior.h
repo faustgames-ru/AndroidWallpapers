@@ -49,6 +49,7 @@ public:
 	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
+	virtual void updateMovementSpeed(float time);
 	virtual bool deleted();
 	virtual void disappearing(float time);
 

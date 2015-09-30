@@ -130,6 +130,7 @@ form hud
 			}
 			button upgrade_zealot
 			{
+				textTag = ZealotUpgrade
 				consumeInputEvents = true
 				style = buttonStyle
 				width = 85
@@ -295,19 +296,21 @@ form hud
 			
 			button UpgradeLevel1
 			{
-			  consumeInputEvents = true
-			  style = buttonStyleUpgrade1
-			  width = 75
-			  height = 101
-			  text = Upgrade1
+				textTag = BaseLevel
+				consumeInputEvents = true
+				style = buttonStyleUpgrade1
+				width = 75
+				height = 101
+				text = Upgrade1
 			}
 			button UpgradeLevel2
 			{
-			  consumeInputEvents = true
-			  style = buttonStyleUpgrade2
-			  width = 75
-			  height = 101
-			  text = Upgrade2
+				textTag = BaseLevel
+				consumeInputEvents = true
+				style = buttonStyleUpgrade2
+				width = 75
+				height = 101
+				text = Upgrade2
 			}
 		}
 	}

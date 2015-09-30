@@ -119,10 +119,11 @@ void Shpila::initialize()
 		_hud.bind("ApplyConnection", Control::Listener::CLICK, ConnectToServer);
 		_hud.bind("SwitchToPlayer1", Control::Listener::CLICK, SwitchPlayer);
 		_hud.bind("SwitchToPlayer2", Control::Listener::CLICK, SwitchPlayer);
-
 		_hud.bind("UpgradeLevel1", Control::Listener::CLICK, Upgrade);
 		_hud.bind("UpgradeLevel2", Control::Listener::CLICK, Upgrade);
+		_hud.bind("upgrade_zealot", Control::Listener::CLICK, Upgrade);
 		_hud.bind("extractor", Control::Listener::CLICK, AddExtractor);
+		
 		
 
 		_hud.bind("SettingsSave", Control::Listener::CLICK, saveSetting);
@@ -194,6 +195,8 @@ void Shpila::initialize()
 		loadCharacters();
 		initPlayers();
 		loadActionMap();
+
+		initUpgradeParams();
 
 		// Initialize scene.
 		_scene->visit(this, &Shpila::initializeNodeMaterials);
@@ -369,14 +372,14 @@ void Shpila::updateMenuButtons()
 	lb->setVisible(getActivePlayer()->isExtractorBuilding());
 	
 
-	PlayerObject * player = _manager.Players[_currentPlayerIDforUI];
+	PlayerObject * player = getActivePlayer();
 	Container* container = (Container*)_hud.form()->getControl("units1_column1");
 	const std::vector<Control*>& controls = container->getControls();
 	int firstInvesible = -1;
 	for (int i = 0; i < (int)controls.size(); i++)
 	{
 		const ActorData& aData = getActorData(controls[i]->getTextTag());
-		bool vis = aData.RequireUpgrade <= player->UprgadeLevel;
+		bool vis = aData.RequireUpgrade <= player->getUpgrade(Upgrades::BaseLevel);
 		controls[i]->setVisible(vis);
 		if ((!vis) && (firstInvesible == -1))
 		{
@@ -388,9 +391,9 @@ void Shpila::updateMenuButtons()
 	Control* buttonUpgrade2 = _hud.form()->getControl("UpgradeLevel2");
 	if (firstInvesible != -1)
 	{
-		buttonUpgrade1->setVisible(player->UprgadeLevel == 0);
+		buttonUpgrade1->setVisible(player->getUpgrade(Upgrades::BaseLevel) == 0);
 		buttonUpgrade1->setPosition(controls[firstInvesible]->getX(), controls[firstInvesible]->getY());
-		buttonUpgrade2->setVisible(player->UprgadeLevel == 1);
+		buttonUpgrade2->setVisible(player->getUpgrade(Upgrades::BaseLevel) == 1);
 		buttonUpgrade2->setPosition(controls[firstInvesible]->getX(), controls[firstInvesible]->getY());
 	}
 	else
@@ -636,11 +639,24 @@ void Shpila::ConnectToServer(Game* game, Control* control)
 
 void Shpila::Upgrade(Game* game, Control* control)
 {
+	const char* BASE_LEVEL = "BaseLevel";
+	const char* ZEALOT_UPGRADE = "ZealotUpgrade";
+	
+
 	Shpila* shpila = (Shpila*)game;
-	int ul = shpila->_manager.Players[shpila->_currentPlayerIDforUI]->UprgadeLevel;
-	if (ul < 2)
+	const char* tag = control->getTextTag();
+
+	if (!strcmp(tag, BASE_LEVEL))
 	{
-		shpila->_manager.Players[shpila->_currentPlayerIDforUI]->UprgadeLevel += 1;
+		int ul = shpila->getActivePlayer()->getUpgrade(Upgrades::BaseLevel);
+		if (ul < 2)
+		{
+			shpila->getActivePlayer()->setUpgrade(Upgrades::BaseLevel, ul + 1);
+		}
+	}
+	else if (!strcmp(tag, ZEALOT_UPGRADE))
+	{
+		shpila->getActivePlayer()->setUpgrade(Upgrades::ZealotUpgrade, 1);
 	}
 }
 
