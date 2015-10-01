@@ -181,199 +181,220 @@ void Properties::readProperties(Stream* stream)
         }
         else if (strncmp(line, "//", 2) != 0)
         {
-            // If an '=' appears on this line, parse it as a name/value pair.
-            // Note: strchr() has to be called before strtok(), or a backup of line has to be kept.
-            rc = strchr(line, '=');
-            if (rc != NULL)
-            {
-                // First token should be the property name.
-                name = strtok(line, "=");
-                if (name == NULL)
-                {
-                    GP_ERROR("Error parsing properties file: attribute without name.");
-                    return;
-                }
+			if (line[0] == '#')
+			{
+				std::string gridcommand = strtok(line, " ");
+				if (!strcmp(gridcommand.c_str(), "#include"))
+				{
+					std::string fileString = strtok(NULL, "\r\t\n");
+					std::unique_ptr<Stream> stream(FileSystem::open(fileString.c_str()));
+					if (stream.get() == NULL)
+					{
+						GP_WARN("Failed to open file '%s'.", fileString.c_str());
+						return;
+					}
+					Properties* filespace = new Properties(stream.get());
+					filespace->resolveInheritance();
+					stream->close();
+					_namespaces.push_back(filespace);
+				}				
+			}
+			else
+			{
+				// If an '=' appears on this line, parse it as a name/value pair.
+				// Note: strchr() has to be called before strtok(), or a backup of line has to be kept.
+				rc = strchr(line, '=');
+				if (rc != NULL)
+				{
+					// First token should be the property name.
+					name = strtok(line, "=");
+					if (name == NULL)
+					{
+						GP_ERROR("Error parsing properties file: attribute without name.");
+						return;
+					}
 
-                // Remove white-space from name.
-                name = trimWhiteSpace(name);
+					// Remove white-space from name.
+					name = trimWhiteSpace(name);
 
-                // Scan for next token, the property's value.
-                value = strtok(NULL, "");
-                if (value == NULL)
-                {
-                    GP_ERROR("Error parsing properties file: attribute with name ('%s') but no value.", name);
-                    return;
-                }
+					// Scan for next token, the property's value.
+					value = strtok(NULL, "");
+					if (value == NULL)
+					{
+						GP_ERROR("Error parsing properties file: attribute with name ('%s') but no value.", name);
+						return;
+					}
 
-                // Remove white-space from value.
-                value = trimWhiteSpace(value);
+					// Remove white-space from value.
+					value = trimWhiteSpace(value);
 
-                // Is this a variable assignment?
-                if (isVariable(name, variable, 256))
-                {
-                    setVariable(variable, value);
-                }
-                else
-                {
-                    // Normal name/value pair
-                    _properties.push_back(Property(name, value));
-                }
-            }
-            else
-            {
-                parentID = NULL;
+					// Is this a variable assignment?
+					if (isVariable(name, variable, 256))
+					{
+						setVariable(variable, value);
+					}
+					else
+					{
+						// Normal name/value pair
+						_properties.push_back(Property(name, value));
+					}
+				}
+				else
+				{
+					parentID = NULL;
 
-                // Get the last character on the line (ignoring whitespace).
-                const char* lineEnd = trimWhiteSpace(line) + (strlen(trimWhiteSpace(line)) - 1);
+					// Get the last character on the line (ignoring whitespace).
+					const char* lineEnd = trimWhiteSpace(line) + (strlen(trimWhiteSpace(line)) - 1);
 
-                // This line might begin or end a namespace,
-                // or it might be a key/value pair without '='.
+					// This line might begin or end a namespace,
+					// or it might be a key/value pair without '='.
 
-                // Check for '{' on same line.
-                rc = strchr(line, '{');
+					// Check for '{' on same line.
+					rc = strchr(line, '{');
 
-                // Check for inheritance: ':'
-                rcc = strchr(line, ':');
+					// Check for inheritance: ':'
+					rcc = strchr(line, ':');
 
-                // Check for '}' on same line.
-                rccc = strchr(line, '}');
-            
-                // Get the name of the namespace.
-                name = strtok(line, " \t\n{");
-                name = trimWhiteSpace(name);
-                if (name == NULL)
-                {
-                    GP_ERROR("Error parsing properties file: failed to determine a valid token for line '%s'.", line);
-                    return;
-                }
-                else if (name[0] == '}')
-                {
-                    // End of namespace.
-                    return;
-                }
+					// Check for '}' on same line.
+					rccc = strchr(line, '}');
 
-                // Get its ID if it has one.
-                value = strtok(NULL, ":{");
-                value = trimWhiteSpace(value);
+					// Get the name of the namespace.
+					name = strtok(line, " \t\n{");
+					name = trimWhiteSpace(name);
+					if (name == NULL)
+					{
+						GP_ERROR("Error parsing properties file: failed to determine a valid token for line '%s'.", line);
+						return;
+					}
+					else if (name[0] == '}')
+					{
+						// End of namespace.
+						return;
+					}
 
-                // Get its parent ID if it has one.
-                if (rcc != NULL)
-                {
-                    parentID = strtok(NULL, "{");
-                    parentID = trimWhiteSpace(parentID);
-                }
+					// Get its ID if it has one.
+					value = strtok(NULL, ":{");
+					value = trimWhiteSpace(value);
 
-                if (value != NULL && value[0] == '{')
-                {
-                    // If the namespace ends on this line, seek back to right before the '}' character.
-                    if (rccc && rccc == lineEnd)
-                    {
-                        if (stream->seek(-1, SEEK_CUR) == false)
-                        {
-                            GP_ERROR("Failed to seek back to before a '}' character in properties file.");
-                            return;
-                        }
-                        while (readChar(stream) != '}')
-                        {
-                            if (stream->seek(-2, SEEK_CUR) == false)
-                            {
-                                GP_ERROR("Failed to seek back to before a '}' character in properties file.");
-                                return;
-                            }
-                        }
-                        if (stream->seek(-1, SEEK_CUR) == false)
-                        {
-                            GP_ERROR("Failed to seek back to before a '}' character in properties file.");
-                            return;
-                        }
-                    }
+					// Get its parent ID if it has one.
+					if (rcc != NULL)
+					{
+						parentID = strtok(NULL, "{");
+						parentID = trimWhiteSpace(parentID);
+					}
 
-                    // New namespace without an ID.
-                    Properties* space = new Properties(stream, name, NULL, parentID, this);
-                    _namespaces.push_back(space);
+					if (value != NULL && value[0] == '{')
+					{
+						// If the namespace ends on this line, seek back to right before the '}' character.
+						if (rccc && rccc == lineEnd)
+						{
+							if (stream->seek(-1, SEEK_CUR) == false)
+							{
+								GP_ERROR("Failed to seek back to before a '}' character in properties file.");
+								return;
+							}
+							while (readChar(stream) != '}')
+							{
+								if (stream->seek(-2, SEEK_CUR) == false)
+								{
+									GP_ERROR("Failed to seek back to before a '}' character in properties file.");
+									return;
+								}
+							}
+							if (stream->seek(-1, SEEK_CUR) == false)
+							{
+								GP_ERROR("Failed to seek back to before a '}' character in properties file.");
+								return;
+							}
+						}
 
-                    // If the namespace ends on this line, seek to right after the '}' character.
-                    if (rccc && rccc == lineEnd)
-                    {
-                        if (stream->seek(1, SEEK_CUR) == false)
-                        {
-                            GP_ERROR("Failed to seek to immediately after a '}' character in properties file.");
-                            return;
-                        }
-                    }
-                }
-                else
-                {
-                    // If '{' appears on the same line.
-                    if (rc != NULL)
-                    {
-                        // If the namespace ends on this line, seek back to right before the '}' character.
-                        if (rccc && rccc == lineEnd)
-                        {
-                            if (stream->seek(-1, SEEK_CUR) == false)
-                            {
-                                GP_ERROR("Failed to seek back to before a '}' character in properties file.");
-                                return;
-                            }
-                            while (readChar(stream) != '}')
-                            {
-                                if (stream->seek(-2, SEEK_CUR) == false)
-                                {
-                                    GP_ERROR("Failed to seek back to before a '}' character in properties file.");
-                                    return;
-                                }
-                            }
-                            if (stream->seek(-1, SEEK_CUR) == false)
-                            {
-                                GP_ERROR("Failed to seek back to before a '}' character in properties file.");
-                                return;
-                            }
-                        }
+						// New namespace without an ID.
+						Properties* space = new Properties(stream, name, NULL, parentID, this);
+						_namespaces.push_back(space);
 
-                        // Create new namespace.
-                        Properties* space = new Properties(stream, name, value, parentID, this);
-                        _namespaces.push_back(space);
+						// If the namespace ends on this line, seek to right after the '}' character.
+						if (rccc && rccc == lineEnd)
+						{
+							if (stream->seek(1, SEEK_CUR) == false)
+							{
+								GP_ERROR("Failed to seek to immediately after a '}' character in properties file.");
+								return;
+							}
+						}
+					}
+					else
+					{
+						// If '{' appears on the same line.
+						if (rc != NULL)
+						{
+							// If the namespace ends on this line, seek back to right before the '}' character.
+							if (rccc && rccc == lineEnd)
+							{
+								if (stream->seek(-1, SEEK_CUR) == false)
+								{
+									GP_ERROR("Failed to seek back to before a '}' character in properties file.");
+									return;
+								}
+								while (readChar(stream) != '}')
+								{
+									if (stream->seek(-2, SEEK_CUR) == false)
+									{
+										GP_ERROR("Failed to seek back to before a '}' character in properties file.");
+										return;
+									}
+								}
+								if (stream->seek(-1, SEEK_CUR) == false)
+								{
+									GP_ERROR("Failed to seek back to before a '}' character in properties file.");
+									return;
+								}
+							}
 
-                        // If the namespace ends on this line, seek to right after the '}' character.
-                        if (rccc && rccc == lineEnd)
-                        {
-                            if (stream->seek(1, SEEK_CUR) == false)
-                            {
-                                GP_ERROR("Failed to seek to immediately after a '}' character in properties file.");
-                                return;
-                            }
-                        }
-                    }
-                    else
-                    {
-                        // Find out if the next line starts with "{"
-                        skipWhiteSpace(stream);
-                        c = readChar(stream);
-                        if (c == '{')
-                        {
-                            // Create new namespace.
-                            Properties* space = new Properties(stream, name, value, parentID, this);
-                            _namespaces.push_back(space);
-                        }
-                        else
-                        {
-                            // Back up from fgetc()
-                            if (stream->seek(-1, SEEK_CUR) == false)
-                                GP_ERROR("Failed to seek backwards a single character after testing if the next line starts with '{'.");
+							// Create new namespace.
+							Properties* space = new Properties(stream, name, value, parentID, this);
+							_namespaces.push_back(space);
 
-                            // Store "name value" as a name/value pair, or even just "name".
-                            if (value != NULL)
-                            {
-                                _properties.push_back(Property(name, value));
-                            }
-                            else
-                            {
-                                _properties.push_back(Property(name, ""));
-                            }
-                        }
-                    }
-                }
-            }
+							// If the namespace ends on this line, seek to right after the '}' character.
+							if (rccc && rccc == lineEnd)
+							{
+								if (stream->seek(1, SEEK_CUR) == false)
+								{
+									GP_ERROR("Failed to seek to immediately after a '}' character in properties file.");
+									return;
+								}
+							}
+						}
+						else
+						{
+							// Find out if the next line starts with "{"
+							skipWhiteSpace(stream);
+							c = readChar(stream);
+							if (c == '{')
+							{
+								// Create new namespace.
+								Properties* space = new Properties(stream, name, value, parentID, this);
+								_namespaces.push_back(space);
+							}
+							else
+							{
+								// Back up from fgetc()
+								if (stream->seek(-1, SEEK_CUR) == false)
+									GP_ERROR("Failed to seek backwards a single character after testing if the next line starts with '{'.");
+
+								// Store "name value" as a name/value pair, or even just "name".
+								if (value != NULL)
+								{
+									_properties.push_back(Property(name, value));
+								}
+								else
+								{
+									_properties.push_back(Property(name, ""));
+								}
+							}
+						}
+					}
+				}
+			}
         }
     }
 }
