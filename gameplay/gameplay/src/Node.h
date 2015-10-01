@@ -61,6 +61,16 @@ public:
         JOINT
     };
 
+	enum AxisOrientation
+	{
+		PositiveX,
+		NegativeX,
+		PositiveY,
+		NegativeY,
+		PositiveZ,
+		NegativeZ
+	};
+
     /**
      * Creates a new node with the specified ID.
      *
@@ -362,6 +372,11 @@ public:
      * @return The view space translation vector.
      */
     Vector3 getTranslationView() const;
+
+	/**
+	* set axises for each orientation side
+	*/
+	void setOrientationAxises(AxisOrientation forward, AxisOrientation right, AxisOrientation up);
 
     /**
      * Returns the forward vector of the Node in world space.
@@ -683,6 +698,9 @@ protected:
      */
     void setBoundsDirty();
 
+
+	Vector3 getAxisOrientedSideWorldVector(AxisOrientation orientation) const;
+
 private:
 
     /**
@@ -737,6 +755,10 @@ protected:
     mutable BoundingSphere _bounds;
     /** The dirty bits used for optimization. */
     mutable int _dirtyBits;
+
+	AxisOrientation _orientationForward;
+	AxisOrientation _orientationRight;
+	AxisOrientation _orientationUp;
 };
 
 /**

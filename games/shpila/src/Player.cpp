@@ -10,9 +10,11 @@ void initUpgradeParams()
 {
 	__upgradePrice[Upgrades::BaseLevel] = BASE_LEVEL_UPGRADE_PRICE;
 	__upgradePrice[Upgrades::ZealotUpgrade] = ZEALOT_UPGRADE_PRICE;
-
+	__upgradePrice[Upgrades::StalkerUpgrade] = STALKER_UPGRADE_PRICE;
+	
 	__upgradeMaxLevel[Upgrades::BaseLevel] = 2;
 	__upgradeMaxLevel[Upgrades::ZealotUpgrade] = 1;
+	__upgradeMaxLevel[Upgrades::StalkerUpgrade] = 1;
 }
 
 WarriorsGrid::WarriorsGrid()

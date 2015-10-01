@@ -122,6 +122,8 @@ void Shpila::initialize()
 		_hud.bind("UpgradeLevel1", Control::Listener::CLICK, Upgrade);
 		_hud.bind("UpgradeLevel2", Control::Listener::CLICK, Upgrade);
 		_hud.bind("upgrade_zealot", Control::Listener::CLICK, Upgrade);
+		_hud.bind("upgrade_stalker", Control::Listener::CLICK, Upgrade);
+		
 		_hud.bind("extractor", Control::Listener::CLICK, AddExtractor);
 		
 		
@@ -641,6 +643,7 @@ void Shpila::Upgrade(Game* game, Control* control)
 {
 	const char* BASE_LEVEL = "BaseLevel";
 	const char* ZEALOT_UPGRADE = "ZealotUpgrade";
+	const char* STALKER_UPGRADE = "StalkerUpgrade";
 	
 
 	Shpila* shpila = (Shpila*)game;
@@ -657,6 +660,10 @@ void Shpila::Upgrade(Game* game, Control* control)
 	else if (!strcmp(tag, ZEALOT_UPGRADE))
 	{
 		shpila->getActivePlayer()->setUpgrade(Upgrades::ZealotUpgrade, 1);
+	}
+	else if (!strcmp(tag, STALKER_UPGRADE))
+	{
+		shpila->getActivePlayer()->setUpgrade(Upgrades::StalkerUpgrade, 1);
 	}
 }
 

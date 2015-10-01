@@ -18,6 +18,8 @@ void BaseStaticActor::update(float time)
 	if (_damageTimer.action(time))
 	{
 		doDamage(Target);
+		if (Target && (Target->LocalGameData.Health <= 0.0f))
+			Target = NULL;
 	}
 }
 

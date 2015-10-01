@@ -144,6 +144,7 @@ void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData,
 	if (node)
 	{
 		_node.newRef(node->clone());
+		_node->setOrientationAxises(Node::PositiveX, Node::PositiveZ, Node::PositiveY);
 		_node->set(transform);
 		manager.registerSceneNode(_node);
 	}

@@ -137,6 +137,15 @@ form hud
 				height = 101
 				text = Upgrade Zealot
 			}
+			button upgrade_stalker
+			{
+				textTag = StalkerUpgrade
+				consumeInputEvents = true
+				style = buttonStyle
+				width = 85
+				height = 101
+				text = Upgrade Stalker
+			}
 		}
 
         container units1_column1

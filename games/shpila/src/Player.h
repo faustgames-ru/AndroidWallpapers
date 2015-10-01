@@ -18,6 +18,7 @@ public:
 		GroundArmor,
 		AirArmor,
 		ZealotUpgrade,
+		StalkerUpgrade,
 
 		Last
 	};

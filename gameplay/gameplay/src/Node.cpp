@@ -27,6 +27,9 @@ Node::Node(const char* id)
     : _scene(NULL), _firstChild(NULL), _nextSibling(NULL), _prevSibling(NULL), _parent(NULL), _childCount(0), _enabled(true), _tags(NULL),
     _drawable(NULL), _camera(NULL), _light(NULL), _audioSource(NULL), _collisionObject(NULL), _agent(NULL), _userObject(NULL),
       _dirtyBits(NODE_DIRTY_ALL)
+	, _orientationForward(NegativeZ)
+	, _orientationRight(PositiveX)
+	, _orientationUp(PositiveY)
 {
     GP_REGISTER_SCRIPT_EVENTS();
     if (id)
@@ -563,33 +566,33 @@ Vector3 Node::getTranslationView() const
     return translation;
 }
 
+void Node::setOrientationAxises(AxisOrientation forward, AxisOrientation right, AxisOrientation up)
+{
+	_orientationForward = forward;
+	_orientationRight = right;
+	_orientationUp = up;
+}
+
 Vector3 Node::getForwardVectorWorld() const
 {
-    Vector3 vector;
-    getWorldMatrix().getForwardVector(&vector);
-    return vector;
+	return getAxisOrientedSideWorldVector(_orientationForward);
 }
 
 Vector3 Node::getForwardVectorView() const
 {
-    Vector3 vector;
-    getWorldMatrix().getForwardVector(&vector);
+	Vector3 vector = getForwardVectorWorld();
     getViewMatrix().transformVector(&vector);
     return vector;
 }
 
 Vector3 Node::getRightVectorWorld() const
 {
-    Vector3 vector;
-    getWorldMatrix().getRightVector(&vector);
-    return vector;
+	return getAxisOrientedSideWorldVector(_orientationRight);
 }
 
 Vector3 Node::getUpVectorWorld() const
 {
-    Vector3 vector;
-    getWorldMatrix().getUpVector(&vector);
-    return vector;
+	return getAxisOrientedSideWorldVector(_orientationUp);
 }
 
 Vector3 Node::getActiveCameraTranslationWorld() const
@@ -668,6 +671,35 @@ void Node::setBoundsDirty()
     // Mark our parent bounds as dirty as well
     if (_parent)
         _parent->setBoundsDirty();
+}
+
+Vector3 Node::getAxisOrientedSideWorldVector(AxisOrientation orientation) const
+{
+	Vector3 vector;
+	switch (_orientationForward)
+	{
+	case gameplay::Node::PositiveX:
+		getWorldMatrix().getRightVector(&vector);
+		break;
+	case gameplay::Node::NegativeX:
+		getWorldMatrix().getLeftVector(&vector);
+		break;
+	case gameplay::Node::PositiveY:
+		getWorldMatrix().getUpVector(&vector);
+		break;
+	case gameplay::Node::NegativeY:
+		getWorldMatrix().getDownVector(&vector);
+		break;
+	case gameplay::Node::PositiveZ:
+		getWorldMatrix().getBackVector(&vector);
+		break;
+	case gameplay::Node::NegativeZ:
+		getWorldMatrix().getForwardVector(&vector);
+		break;
+	default:
+		break;
+	}
+	return vector;
 }
 
 Animation* Node::getAnimation(const char* id) const
