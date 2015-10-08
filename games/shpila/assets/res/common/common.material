@@ -194,7 +194,6 @@ material skinedmesh : texturedTransparent
         {
             defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
             u_matrixPalette = MATRIX_PALETTE
-            u_modulateAlpha = 1.0
         }
     }
 }
@@ -207,7 +206,6 @@ material skinedmeshcolored : colored
         {
             defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
             u_matrixPalette = MATRIX_PALETTE
-            u_modulateAlpha = 1.0
         }
     }
 }
@@ -220,7 +218,6 @@ material skinedmeshbumped : texturedBumped
         {
             defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
             u_matrixPalette = MATRIX_PALETTE
-            u_modulateAlpha = 1.0
         }
     }
 }
@@ -233,7 +230,6 @@ material skinedmeshunlit : texturedUnlit
         {
             defines = SKINNING;BATCHING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
             u_matrixPalette = MATRIX_PALETTE
-            u_modulateAlpha = 1.0
         }
     }
 }

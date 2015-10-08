@@ -32,11 +32,21 @@ public:
 	bool Holder;
 	float SearchRadius;
 	LocalActorData LocalGameData;
+	std::string TypeName;
+	bool UsedForIllusion;
+
 	BaseGameObject();
 	~BaseGameObject();
 	bool InteractionPossible(BaseGameObject* object);
 	Node* node();
+	void attachNode(const char* nodeName, Node* node);
+	bool getAura(Aura::Value aura);
+	void setAura(Aura::Value aura, bool enabled);
+	//return true if distance less value
+	void updateMaterials(char* materialsFilename);
+	void setTransparency(float transparency);
 
+	static BaseGameObject* constructor();
 	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual int ActorType();
 	virtual const Vector3 position();
@@ -46,6 +56,7 @@ public:
 	virtual void interaction(BaseGameObject* object);
 	virtual bool volumed();
 	virtual bool interactive();
+	virtual bool illusionable();//can be used for create illusions
 	virtual bool getDetected();
 	virtual void setDetected(bool value);
 	virtual void update(float time);
@@ -55,6 +66,11 @@ public:
 	virtual void rangeFire();
 	virtual float getAttackDistance(BaseGameObject* object);
 	virtual float getDetectDistance(BaseGameObject* object);
+	virtual float getTargetingDistance(BaseGameObject* object);
+	virtual bool checkDistanceToObject(BaseGameObject* object, float value);
+	virtual bool checTargetingkDistanceToObject(BaseGameObject* object);
+	virtual bool friendly(BaseGameObject* object);
+
 protected:
 	GameObjectManager* _manager;
 	AutoRef<Node> _node;

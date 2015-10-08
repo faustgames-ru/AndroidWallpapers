@@ -1,0 +1,24 @@
+#include res/common/common.material
+
+//MODULATE_ALPHA
+
+material mtSourceBig : texturedTransparent
+{
+    technique
+    {
+        pass
+        {			
+            sampler u_diffuseTexture
+            {
+                path = @shield
+            }
+			defines = MODULATE_ALPHA;SOFT_TRANSPARENT_EDGES;DIRECTIONAL_LIGHT_COUNT 1
+			u_modulateAlpha = 1.0
+			renderState
+            {
+                depthWrite = false
+            }
+			
+        }
+    }
+}

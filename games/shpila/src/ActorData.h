@@ -74,20 +74,50 @@ public:
 	int CellsRadius() const;
 };
 
+class Aura
+{
+public:
+	enum Value
+	{
+		GuardianShield,
+
+		Last
+	};
+};
+
+class AuraState
+{
+public:
+	enum Value
+	{
+		Intensify,
+		Attenuate,
+		Disabled,
+
+		Last
+	};
+};
+
 class LocalActorData
 {
 public:
 	const ActorData* GameData;
 	float Health;
 	float Shield;
+	float Mana;
 	float ArmorUpgrade;
 	float DamageUpgrade;
 	float ShieldUpgrade;
+	bool Illusion;
 
 	LocalActorData();
 	void init(const ActorData* gameData);
 	void doDamage(LocalActorData& targetGameData);
 	bool isAttackToTargetAllowed(const LocalActorData& targetGameData) const;
+	bool getAura(Aura::Value aura);
+	void setAura(Aura::Value aura, bool enabled);
+private:
+	std::map<Aura::Value, AuraState::Value> _auras;
 };
 
 void loadActorsData(char *filaname);

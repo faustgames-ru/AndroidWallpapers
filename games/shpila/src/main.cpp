@@ -231,37 +231,6 @@ void Shpila::initializeMaterial(Scene* scene, Node* node, Material* material)
 	_manager.initializeMaterial(node, material);
 }
 
-void Shpila::initializeAsteroids()
-{
-	//gameplay-encoder.exe -g HIKCharacterNode_Boy_Reference animations -g greenchair2 chairanimations boyscene.fbx boyscene.gpb
-	//gameplay-encoder.exe -g root animations asteroidstest.fbx asteroidstest.gpb
-	Node* node = _scene->findNode("sphere");
-	Animation* animation = node->getAnimation("animations");
-	if (animation)
-	{
-		animation->createClips("res/common/asteroidstest.animation");
-		AnimationClip* clip = animation->getClip("idle");
-		clip->setSpeed(1.0f);
-		clip->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
-		clip->play();
-	}
-}
-
-void Shpila::initializeSolarSystem()
-{	
-	//gameplay-encoder.exe -tb solarsystem -g root animations solarsystem.fbx solarsystem.gpb
-	Node* node = _scene->findNode("solarsystem");
-	Animation* animation = node->getAnimation("animations");
-	if (animation)
-	{
-		animation->createClips("res/common/solarsystem.animation");
-		AnimationClip* clip = animation->getClip("idle");
-		clip->setSpeed(1.0f);
-		clip->setRepeatCount(AnimationClip::REPEAT_INDEFINITE);
-		clip->play();
-	}
-}
-
 void Shpila::loadCharacters()
 {
 	loadActorsData("res/units.xml");
@@ -284,6 +253,8 @@ void Shpila::loadCharacters()
 	_manager.addUnit("res/common/SourceSmall.scene", "tower", TowerObject::constructor);
 	_manager.addUnit("res/common/SourceBig.scene", "base", TheBaseObject::constructor);
 	_manager.addUnit("res/common/bullet.scene", "bullet", BaseBullet::constructor);
+	_manager.addUnit("res/common/shieldaura.scene", "shieldaura", BaseGameObject::constructor);
+	_manager.addUnit("res/common/timewarp.scene", "timewarp", TimeWarpObject::constructor);
 	_manager.initUnits();
 }
 

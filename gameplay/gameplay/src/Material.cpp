@@ -10,8 +10,10 @@
 namespace gameplay
 {
 
-Material::Material() :
-    _currentTechnique(NULL)
+Material::Material()
+: _currentTechnique(NULL)
+, _techniques()
+, _name()
 {
 }
 
@@ -62,6 +64,8 @@ Material* Material::create(Properties* materialProperties, PassCallback callback
 
     // Create new material from the file passed in.
     Material* material = new Material();
+
+	material->setName(materialProperties->getId());
 
     // Load uniform value parameters for this material.
     loadRenderState(material, materialProperties);
@@ -190,9 +194,21 @@ void Material::setNodeBinding(Node* node)
     }
 }
 
+const char* Material::getName()
+{
+	return _name.c_str();
+}
+
+void Material::setName(const char* name)
+{
+	_name = name;
+}
+
 Material* Material::clone(NodeCloneContext &context) const
 {
     Material* material = new Material();
+
+	material->setName(_name.c_str());
     RenderState::cloneInto(material, context);
 
     for (std::vector<Technique*>::const_iterator it = _techniques.begin(); it != _techniques.end(); ++it)

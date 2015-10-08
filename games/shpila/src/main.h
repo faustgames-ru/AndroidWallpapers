@@ -72,8 +72,6 @@ protected:
 private:
     
     void initializeMaterial(Scene* scene, Node* node, Material* material);
-	void initializeAsteroids();
-	void initializeSolarSystem();
 	void loadCharacters();
 	void initPlayers();
     void drawSplash(void* param);

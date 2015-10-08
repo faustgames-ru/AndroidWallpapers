@@ -268,6 +268,9 @@
     <ClCompile Include="src\TimeManager.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\TimeWarpObject.cpp">
+      <Filter>src\GameObjects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -629,6 +632,9 @@
     </ClInclude>
     <ClInclude Include="src\TimeManager.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\TimeWarpObject.h">
+      <Filter>src\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

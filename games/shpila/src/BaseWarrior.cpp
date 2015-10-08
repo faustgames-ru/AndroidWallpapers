@@ -10,6 +10,7 @@ BaseWarrior::BaseWarrior()
 , _dead(false)
 , _deadAltitude(0.0f)
 , _unitAnimation()
+, _illusionTimer()
 {}
 
 BaseWarrior::~BaseWarrior()
@@ -22,14 +23,27 @@ BaseGameObject* BaseWarrior::constructor()
 	return new BaseWarrior();
 }
 
+void BaseWarrior::makeIllusion()
+{
+	LocalGameData.Illusion = true;
+	_illusionTimer.start(CHASOVOY_ILLUSION_LIFE_TIME, 0.0f);
+}
+
 void BaseWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
 	BaseActor::init(manager, gameData, node, player, transform);
 	updateAnimationState();
+	_illusionTimer.enable(false);
+}
+
+bool BaseWarrior::illusionable()
+{
+	return !UsedForIllusion && !LocalGameData.Illusion && (LocalGameData.Health > 0.0f);
 }
 
 void BaseWarrior::interaction(BaseGameObject* object)
 {
+	BaseActor::interaction(object);
 	//collision
 	if ((LocalGameData.Health > 0.0f) && (object->LocalGameData.Health > 0.0f) && (position().distanceSquared(object->position()) < SQR(LocalGameData.GameData->GeometryRadius)))
 	{
@@ -46,7 +60,7 @@ void BaseWarrior::update(float time)
 		bool resp = ((Shpila*)Game::getInstance())->Respawn;
 		if (((Shpila*)Game::getInstance())->isActivePlayer(Player) && resp)
 		{
-			Player->Manager.createObject(HolderWarriorName.c_str(), position() + 15.0f * Player->BattleFieldDirection, Player->BattleFieldDirection, Player);
+			Player->Manager.createObject(TypeName.c_str(), position() + 15.0f * Player->BattleFieldDirection, Player->BattleFieldDirection, Player);
 		}
 		return;
 	}
@@ -77,6 +91,12 @@ void BaseWarrior::update(float time)
 	updateMovementSpeed(time);
 	updateAttack(time, Target);
 	updatePositionFromServer(time);
+
+	if (_illusionTimer.enabled() && _illusionTimer.action(time))
+	{
+		_deadAltitude = -3.0f;
+		_illusionTimer.enable(false);
+	}
 }
 
 void BaseWarrior::updateMovementSpeed(float time)
@@ -89,7 +109,7 @@ void BaseWarrior::updateMovementSpeed(float time)
 
 bool BaseWarrior::deleted()
 {
-	return _deadAltitude < -3.0f;
+	return _deadAltitude <= -3.0f;
 }
 
 void BaseWarrior::disappearing(float time)

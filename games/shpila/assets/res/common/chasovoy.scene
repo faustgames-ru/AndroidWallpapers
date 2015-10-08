@@ -7,7 +7,6 @@ scene
         tags
         {
             dynamic
-			transparent
         }
     }
 

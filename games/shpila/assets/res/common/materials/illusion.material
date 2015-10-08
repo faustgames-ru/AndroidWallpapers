@@ -1,0 +1,43 @@
+#include res/common/common.material
+
+material mtSmall : skinedmesh
+{
+    technique
+    {
+        pass
+        {			
+            sampler u_diffuseTexture
+            {
+                path = @3-1
+            }
+        }
+    }
+}
+
+material mtMedium : skinedmesh
+{
+    technique
+    {
+        pass
+        {			
+            sampler u_diffuseTexture
+            {
+                path = @3-2 
+            }
+        }
+    }
+}
+
+material mtLarge : skinedmesh
+{
+    technique
+    {
+        pass
+        {			
+            sampler u_diffuseTexture
+            {
+                path = @3-3 
+            }
+        }
+    }
+}

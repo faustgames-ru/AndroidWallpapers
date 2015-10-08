@@ -85,9 +85,12 @@ public:
 	static BaseGameObject* constructor();
 	CoreWarrior();
 	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
+	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
 protected:
 	float _altitude;
+private:
+	SimpleTimer _abilityTimer;
 };
 
 #endif

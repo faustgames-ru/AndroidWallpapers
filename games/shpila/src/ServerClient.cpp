@@ -305,7 +305,6 @@ void Client::Packet_ActorSync(Packet *p)
 			BaseWarrior* warrior = (BaseWarrior*)_manager->createObject(name, actorSyncData.pos, _manager->Players[playerID]->BattleFieldDirection, _manager->Players[playerID]);
 			warrior->ID = actorSyncData.actorID;
 			warrior->Holder = actorSyncData.holder;
-			warrior->HolderWarriorName = name;
 		}
 	}
 	//

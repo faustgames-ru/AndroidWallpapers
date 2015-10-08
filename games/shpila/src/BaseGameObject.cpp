@@ -34,13 +34,16 @@ BaseGameObject::BaseGameObject()
 , Target()
 , ID(0)
 , Holder(false)
-, SearchRadius(0.0f)
+, SearchRadius(15.0f)
 , LocalGameData()
+, TypeName()
+, UsedForIllusion(false)
 , _manager(NULL)
 , _node()
 , _positionOnServer()
 , _synkPositionMode(false)
-{}
+{
+}
 
 BaseGameObject::~BaseGameObject()
 {
@@ -63,6 +66,11 @@ bool BaseGameObject::volumed()
 bool BaseGameObject::interactive()
 {
 	return true;
+}
+
+bool BaseGameObject::illusionable()
+{
+	return false;
 }
 
 bool BaseGameObject::getDetected()
@@ -125,14 +133,104 @@ float BaseGameObject::getDetectDistance(BaseGameObject* object)
 		return object->LocalGameData.GameData->DetectionDistance + object->LocalGameData.GameData->GeometryRadius + LocalGameData.GameData->GeometryRadius;
 }
 
-void BaseGameObject::update(float time)
-{	
+float BaseGameObject::getTargetingDistance(BaseGameObject* object)
+{
+	return object->getDetected() ? max(getDetectDistance(object), getAttackDistance(object)) : getDetectDistance(object);
+}
 
+bool BaseGameObject::checkDistanceToObject(BaseGameObject* object, float value)
+{
+	if (object == NULL)
+		return 0.0f;
+	else
+		return position().distanceSquared(object->position()) < SQR(value + LocalGameData.GameData->GeometryRadius + object->LocalGameData.GameData->GeometryRadius);
+}
+
+bool BaseGameObject::checTargetingkDistanceToObject(BaseGameObject* object)
+{
+	if (object == NULL)
+		return 0.0f;
+	else
+	{
+		float value = (object->LocalGameData.GameData->MovementAir ? LocalGameData.GameData->DistanceAir : LocalGameData.GameData->DistanceGround);
+		value = max(value, object->LocalGameData.GameData->DetectionDistance);
+		return position().distanceSquared(object->position()) < SQR(value + LocalGameData.GameData->GeometryRadius + object->LocalGameData.GameData->GeometryRadius);
+	}
+}
+
+bool BaseGameObject::friendly(BaseGameObject* object)
+{
+	return Player->ID == object->Player->ID;
+}
+
+void BaseGameObject::update(float time)
+{
+	for (int i = 0; i < (int)Aura::Last; i++)
+	{
+		setAura((Aura::Value)i, false);
+	}
 }
 
 Node* BaseGameObject::node()
 {
 	return _node;
+}
+
+void BaseGameObject::attachNode(const char* nodeName, Node* node)
+{
+	if (nodeName == NULL)
+	{
+		_node->addChild(node);
+	}
+}
+
+bool BaseGameObject::getAura(Aura::Value aura)
+{
+	return LocalGameData.getAura(aura);
+}
+void BaseGameObject::setAura(Aura::Value aura, bool enabled)
+{
+	LocalGameData.setAura(aura, enabled);
+}
+
+void BaseGameObject::updateMaterials(char* materialsFilename)
+{
+	Model* model = dynamic_cast<Model*>(_node->getDrawable());
+	if (model)
+	{
+		for (int i = 0; i < (int)model->getMeshPartCount(); i++)
+		{
+			Material *mat = model->getMaterial(i);
+			std::string materialPath = materialsFilename;
+			materialPath.append("#");
+			materialPath.append(mat->getName());
+			Material* material = Material::create(materialPath.c_str());
+			if (material)
+			{
+				int partIndex = model->getMesh()->getPartCount() > 0 ? i : -1;
+				model->setMaterial(material, partIndex);
+				SAFE_RELEASE(material);
+			}
+		}
+	}
+}
+
+void BaseGameObject::setTransparency(float transparency)
+{
+	Model* model = dynamic_cast<Model*>(_node->getFirstChild()->getDrawable());
+	if (model)
+	{
+		for (int i = 0; i < (int)model->getMeshPartCount(); i++)
+		{
+			Material *mat = model->getMaterial(i);
+			mat->getParameter("u_modulateAlpha")->setFloat(transparency);
+		}
+	}
+}
+
+BaseGameObject* BaseGameObject::constructor()
+{
+	return new BaseGameObject();
 }
 
 void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)

@@ -15,7 +15,6 @@ void DarkWarrior::init(GameObjectManager& manager, const ActorData* gameData, No
 	float scale = COMMON_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -33,7 +32,6 @@ void ArchonWarrior::init(GameObjectManager& manager, const ActorData* gameData, 
 	float scale = COMMON_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -51,7 +49,6 @@ void ObserverWarrior::init(GameObjectManager& manager, const ActorData* gameData
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -69,7 +66,6 @@ void ImmortalWarrior::init(GameObjectManager& manager, const ActorData* gameData
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -86,7 +82,6 @@ void ColossusWarrior::init(GameObjectManager& manager, const ActorData* gameData
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -103,7 +98,6 @@ void VoidRayWarrior::init(GameObjectManager& manager, const ActorData* gameData,
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -120,7 +114,6 @@ void CarrierWarrior::init(GameObjectManager& manager, const ActorData* gameData,
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -137,7 +130,6 @@ void TempestWarrior::init(GameObjectManager& manager, const ActorData* gameData,
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -156,7 +148,6 @@ void MothershipWarrior::init(GameObjectManager& manager, const ActorData* gameDa
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -177,8 +168,17 @@ void CoreWarrior::init(GameObjectManager& manager, const ActorData* gameData, No
 	float scale = COMMON_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 	_altitude = AIR_UNITS_ALTITUDE;
+}
+
+void CoreWarrior::interaction(BaseGameObject* object)
+{
+	BaseWarrior::interaction(object);
+	
+	if (!friendly(object) && checTargetingkDistanceToObject(object))
+	{
+
+	}
 }
 
 void CoreWarrior::update(float time)
@@ -190,4 +190,6 @@ void CoreWarrior::update(float time)
 	}
 	OpenSteer::Vec3 pos = _movementController.position();
 	_node->setTranslation(Vector3(pos.x, pos.y + _altitude, pos.z));
+
+
 }

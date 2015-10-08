@@ -148,6 +148,9 @@ public:
      */
     void setNodeBinding(Node* node);
 
+	const char* getName();
+
+	void setName(const char* name);
 private:
 
     /**
@@ -197,6 +200,7 @@ private:
 
     Technique* _currentTechnique;
     std::vector<Technique*> _techniques;
+	std::string _name;
 };
 
 }

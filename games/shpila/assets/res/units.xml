@@ -1024,8 +1024,8 @@
 		<Detection>0</Detection>
 		<TargetGround>1</TargetGround>
 		<TargetAir>1</TargetAir>
-		<MovementGround>0</MovementGround>
-		<MovementAir>1</MovementAir>
+		<MovementGround>1</MovementGround>
+		<MovementAir>0</MovementAir>
 		<LightArmor>1</LightArmor>
 		<HavyArmor>0</HavyArmor>
 		<Organic>0</Organic>

@@ -41,12 +41,13 @@ public:
 class BaseWarrior : public BaseActor
 {
 public:
-	//int Price;
-	std::string HolderWarriorName;
 	BaseWarrior();
 	~BaseWarrior();
 	static BaseGameObject* constructor();
+	void makeIllusion();
+
 	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
+	virtual bool illusionable();
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
 	virtual void updateMovementSpeed(float time);
@@ -57,6 +58,7 @@ protected:
 	bool _initialized;
 	bool _dead;
 	float _deadAltitude;
+	SimpleTimer _illusionTimer;
 	std::vector<UnitAnimation*> _unitAnimation;
 	void updateMidLineState();
 	void updateAnimationState();

@@ -237,13 +237,11 @@ void PlayerObject::update(float time)
 	if (_defenceBase == NULL)
 	{
 		_defenceBase = (TheBaseObject*)Manager.createObject("base", _position + 25.45f * BattleFieldDirection, BattleFieldDirection, this);
-		_defenceBase->SearchRadius = 20.0f;
 	}
 
 	if (_defenceTower == NULL)
 	{
 		_defenceTower = (TowerObject*)Manager.createObject("tower", _position + 45.25f * BattleFieldDirection, BattleFieldDirection, this);
-		_defenceTower->SearchRadius = 20.0f;
 	}
 	if (_mainResourceIncreaceTimer.action(time))
 		MainResource += 2;
@@ -281,7 +279,6 @@ bool PlayerObject::CreateWarrior(bool continuous, const Valuable<Vector3> positi
 			_grid.markUnitPlace(ad.CellsRadius());
 			BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(_CurrentCharacterName.c_str(), warriorPosition, BattleFieldDirection, this);
 			warrior->Holder = true;
-			warrior->HolderWarriorName = _CurrentCharacterName.c_str();
 			_warriorsSpawnedCount++;
 			MainResource -= ad.Price;
 			if (!continuous)

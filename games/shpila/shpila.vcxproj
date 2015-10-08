@@ -416,6 +416,7 @@
     <ClCompile Include="src\ServerClient.cpp" />
     <ClCompile Include="src\thebase.cpp" />
     <ClCompile Include="src\TimeManager.cpp" />
+    <ClCompile Include="src\TimeWarpObject.cpp" />
     <ClCompile Include="src\Tower.cpp" />
     <ClCompile Include="src\UnitMovement.cpp" />
     <ClCompile Include="src\StarsParticles.cpp" />
@@ -540,6 +541,7 @@
     <ClInclude Include="src\TargetCamera.h" />
     <ClInclude Include="src\thebase.h" />
     <ClInclude Include="src\TimeManager.h" />
+    <ClInclude Include="src\TimeWarpObject.h" />
     <ClInclude Include="src\Tower.h" />
     <ClInclude Include="src\UnitMovement.h" />
     <ClInclude Include="src\Warriors.h" />

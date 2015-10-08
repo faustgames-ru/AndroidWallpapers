@@ -179,6 +179,7 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Matrix transfo
 
 	GameUnit& unit = _units[name];
 	BaseGameObject* object = unit._constructor(); 
+	object->TypeName = name;
 	object->init(*this, &getActorData(name), unit._node, player, transform);
 	std::vector<PlayerObject*>::iterator pl = std::find_if(Players.begin(), Players.end(), [&](PlayerObject* p){ return p->ID == player->ID; });
 	if (pl != Players.end())
@@ -193,6 +194,15 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 positi
 	createCharacterRotationMatrix(forwardDirection, &rotate);
 	transform.rotate(rotate);
 	return createObject(name, transform, player);
+}
+
+void GameObjectManager::AttachUnitModel(const char* unitName, BaseGameObject* object, const char* nodeName)
+{
+	GameUnit& unit = _units[unitName];
+	if (unit._node)
+	{
+		object->attachNode(nodeName, unit._node->getFirstChild()->clone());
+	}
 }
 
 void GameObjectManager::registerMovementController(UnitMovementBase* controller)

@@ -50,9 +50,9 @@ void BaseStaticActor::targeting(BaseGameObject* object)
 	float distanceToTarget = isAttackToTargetAllowed(Target) ? Target->position().distanceSquared(position()) : FLT_MAX;
 	float distanceToObject = object->position().distanceSquared(position());
 	float attackDistance = getAttackDistance(object);
-	float detectionDistance = object->getDetected() ? max(getDetectDistance(object), attackDistance) : getDetectDistance(object);
-	bool detected = distanceToObject < SQR(detectionDistance);
-	if (detected && (distanceToTarget > distanceToObject) && (distanceToTarget > SQR(attackDistance)) && (object->Player->ID != Player->ID))
+	float targetingDistance = object->getTargetingDistance(object);
+	bool detected = distanceToObject < SQR(targetingDistance);
+	if (detected && (distanceToTarget > distanceToObject) && (distanceToTarget > SQR(attackDistance)) && !friendly(object))
 	{
 		if (isAttackToTargetAllowed(object))
 		{

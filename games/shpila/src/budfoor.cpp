@@ -15,7 +15,6 @@ void BudfoorWarrior::init(GameObjectManager& manager, const ActorData* gameData,
 	float scale = BUDFOOR_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 	_blinkAbilityColdDownTimer.enable(false);
 }
 

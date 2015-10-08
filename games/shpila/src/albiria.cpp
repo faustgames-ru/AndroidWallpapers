@@ -18,7 +18,6 @@ void AlbiriaWarrior::init(GameObjectManager& manager, const ActorData* gameData,
 	float scale = ALBIRIA_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 	_altitude = 3.75f;
 
 	if (_unitAnimation.size() > 0)

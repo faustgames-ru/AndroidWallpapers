@@ -57,10 +57,17 @@ LocalActorData::LocalActorData()
 : GameData(NULL)
 , Health(0.0f)
 , Shield(0.0f)
+, Mana(0.0f)
 , ArmorUpgrade(0.0f)
 , DamageUpgrade(0.0f)
 , ShieldUpgrade(0.0f)
+, _auras()
+, Illusion(false)
 {
+	for (int i = 0; i < (int)Aura::Last; i++)
+	{
+		_auras[(Aura::Value)i] = AuraState::Disabled;
+	}
 }
 
 void LocalActorData::init(const ActorData* gameData)
@@ -70,11 +77,15 @@ void LocalActorData::init(const ActorData* gameData)
 		GameData = gameData;
 		Health = GameData->HP;
 		Shield = GameData->shield;
+		Mana = GameData->mana;
 	}
 }
 
 void LocalActorData::doDamage(LocalActorData& targetGameData)
 {
+	if (Illusion)
+		return;
+
 	float defaultDamage = GameData->getDefaultDamage();
 	float defaultDamageUpgradeFactor = GameData->getDefaultDamageUpgradeFactor();
 	
@@ -111,9 +122,19 @@ void LocalActorData::doDamage(LocalActorData& targetGameData)
 		if (targetGameData.GameData->Massive)
 			result = max(result, GameData->Damage[ActorData::DamageMassiveAir] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageMassiveAir]);
 	}
+
 	if (targetGameData.Shield > 0.0f)
 	{
 		result = max(result, GameData->Damage[ActorData::DamageShield]);
+	}		
+
+	if (targetGameData.getAura(Aura::GuardianShield) && (!GameData->ImmediateAttack))
+	{
+		result -= min(result, CHASOVOY_GUARDIANSHIELD_AURA_ADSORBE_DAMAGE);
+	}
+
+	if (targetGameData.Shield > 0.0f)
+	{
 		float shieldDamage = min(targetGameData.Shield, result);
 		targetGameData.Shield -= shieldDamage;
 		result -= shieldDamage;
@@ -126,6 +147,23 @@ bool LocalActorData::isAttackToTargetAllowed(const LocalActorData& targetGameDat
 {
 	return (Health > 0.0f) && (targetGameData.Health > 0.0f) &&
 		GameData->isAttackToTargetAllowed(*targetGameData.GameData);
+}
+
+bool LocalActorData::getAura(Aura::Value aura)
+{
+	return _auras[aura] != AuraState::Disabled;
+}
+void LocalActorData::setAura(Aura::Value aura, bool enabled)
+{
+	if (enabled)
+		_auras[aura] = AuraState::Intensify;
+	else
+	{
+		if (_auras[aura] == AuraState::Intensify)
+			_auras[aura] = AuraState::Attenuate;
+		else
+			_auras[aura] = AuraState::Disabled;
+	}
 }
 
 void loadActorsData(char *filaname)

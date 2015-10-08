@@ -1,14 +1,6 @@
 scene
 {
-    path = res/common/default/bullet.gpb
-	
-	 node bullet
-    {
-        tags
-        {
-            dynamic
-        }
-    }
+    path = res/common/default/shieldaura.gpb
 
     physics
     {

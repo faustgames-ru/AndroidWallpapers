@@ -10,7 +10,6 @@ void IrbagaWarrior::init(GameObjectManager& manager, const ActorData* gameData, 
 	float scale = IRBAGA_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
-	SearchRadius = 20.0f;
 	_chargeAbilityTimer.enable(false);
 	_chargeAbilityColdDownTimer.enable(false);
 }
@@ -27,8 +26,7 @@ void IrbagaWarrior::updateMovementSpeed(float time)
 	{
 		if (Player->getUpgrade(Upgrades::ZealotUpgrade) && !_chargeAbilityColdDownTimer.enabled())
 		{
-			float sqDiet = Target->position().distanceSquared(position());
-			if (sqDiet < SQR(ZEALOT_CHARGE_DISTANCE + Target->LocalGameData.GameData->GeometryRadius + LocalGameData.GameData->GeometryRadius))
+			if (checkDistanceToObject(Target, ZEALOT_CHARGE_DISTANCE))
 			{
 				_chargeAbilityTimer.start(ZEALOT_CHARGE_TIME, 0.0f);
 				_chargeAbilityTimer.enable(true);
