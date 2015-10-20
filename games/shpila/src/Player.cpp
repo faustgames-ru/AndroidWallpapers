@@ -18,8 +18,10 @@ void initUpgradeParams()
 }
 
 WarriorsGrid::WarriorsGrid()
-: AxisX()
+: Position()
+, AxisX()
 , AxisZ()
+, Air(false)
 , _spriteBatch(NULL)
 , _factor(1.0f)
 , _centerPos()
@@ -134,8 +136,7 @@ void WarriorsGrid::render(const Matrix matrix, int radius)
 					quadPos = _cornerPos + AxisX * _factor * (0.5f + (float)i) + 0.5f * AxisZ * _factor * (float)j;
 				else
 					quadPos = _cornerPos + AxisX * _factor * (float)i + 0.5f * AxisZ * _factor * (float)j;
-				color = Cells[i][j] ? Vector4(0, 1, 0, 1) : Vector4(1, 1, 1, 0.25);
-				_spriteBatch->draw(quadPos, Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				drawCell(quadPos, Cells[i][j] ? Selected : Free, Air);
 			}
 		}
 		if (_mouseInGrid)
@@ -143,26 +144,17 @@ void WarriorsGrid::render(const Matrix matrix, int radius)
 			switch (radius)//!!
 			{
 			case 3:
-				color = getCell(worldToGrid(_mousePos + Vector3::unitX())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
-				_spriteBatch->draw(getPlacePosition(1) + Vector3::unitX(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
-				color = getCell(worldToGrid(_mousePos + Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
-				_spriteBatch->draw(getPlacePosition(1) + Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
-				color = getCell(worldToGrid(_mousePos + Vector3::unitX() + Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
-				_spriteBatch->draw(getPlacePosition(1) + Vector3::unitX() + Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
-				color = getCell(worldToGrid(_mousePos - Vector3::unitX() + Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
-				_spriteBatch->draw(getPlacePosition(1) - Vector3::unitX() + Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
-				color = getCell(worldToGrid(_mousePos + Vector3::unitX() - Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
-				_spriteBatch->draw(getPlacePosition(1) + Vector3::unitX() - Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				drawCell(getPlacePosition(1) + Vector3::unitX(), getCell(worldToGrid(_mousePos + Vector3::unitX())) ? Occupied : Selected, Air);
+				drawCell(getPlacePosition(1) + Vector3::unitZ(), getCell(worldToGrid(_mousePos + Vector3::unitZ())) ? Occupied : Selected, Air);
+				drawCell(getPlacePosition(1) + Vector3::unitX() + Vector3::unitZ(), getCell(worldToGrid(_mousePos + Vector3::unitX() + Vector3::unitZ())) ? Occupied : Selected, Air);
+				drawCell(getPlacePosition(1) - Vector3::unitX() + Vector3::unitZ(), getCell(worldToGrid(_mousePos - Vector3::unitX() + Vector3::unitZ())) ? Occupied : Selected, Air);
+				drawCell(getPlacePosition(1) + Vector3::unitX() - Vector3::unitZ(), getCell(worldToGrid(_mousePos + Vector3::unitX() - Vector3::unitZ())) ? Occupied : Selected, Air);
 			case 2:
-				color = getCell(worldToGrid(_mousePos - Vector3::unitX())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
-				_spriteBatch->draw(getPlacePosition(1) - Vector3::unitX(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
-				color = getCell(worldToGrid(_mousePos - Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
-				_spriteBatch->draw(getPlacePosition(1) - Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
-				color = getCell(worldToGrid(_mousePos - Vector3::unitX() - Vector3::unitZ())) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
-				_spriteBatch->draw(getPlacePosition(1) - Vector3::unitX() - Vector3::unitZ(), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				drawCell(getPlacePosition(1) - Vector3::unitX(), getCell(worldToGrid(_mousePos - Vector3::unitX())) ? Occupied : Selected, Air);
+				drawCell(getPlacePosition(1) - Vector3::unitZ(), getCell(worldToGrid(_mousePos - Vector3::unitZ())) ? Occupied : Selected, Air);
+				drawCell(getPlacePosition(1) - Vector3::unitX() - Vector3::unitZ(), getCell(worldToGrid(_mousePos - Vector3::unitX() - Vector3::unitZ())) ? Occupied : Selected, Air);
 			case 1:
-				color = getCell(_cell) ? Vector4(1, 0, 0, 1) : Vector4(0, 1, 0, 1);
-				_spriteBatch->draw(getPlacePosition(1), Vector3::unitX(), Vector3::unitZ(), 0.9f, 0.9f, 0, 0, 1, 1, color, Vector2::zero(), 0);
+				drawCell(getPlacePosition(1), getCell(_cell) ? Occupied : Selected, Air);
 			}
 		}	
 	_spriteBatch->finish();
@@ -187,6 +179,30 @@ bool WarriorsGrid::getCell(GridCell cell)
 void WarriorsGrid::setCell(GridCell cell, bool value)
 {
 	Cells[cell.PosX][cell.PosZ] = value;
+}
+
+void WarriorsGrid::drawCell(Vector3 position, CellState state, bool air)
+{
+	Vector4 color = Vector4(1, 1, 1, 1);
+	Vector4 tex;
+	tex.y = air ? 0.5f : 0.0f;
+	tex.w = air ? 1.0f : 0.5f;
+	switch (state)
+	{
+	case Free:
+		tex.x = 0.0f;
+		tex.z = 0.25f;
+		break;
+	case Selected:
+		tex.x = 0.25f;
+		tex.z = 0.5f;
+		break;
+	case Occupied:
+		tex.x = 0.5f;
+		tex.z = 0.75f;
+		break;
+	}
+	_spriteBatch->draw(position, Vector3::unitX(), Vector3::unitZ(), 1.0f, 1.0f, tex.x, tex.y, tex.z, tex.w, color, Vector2::zero(), 0);
 }
 
 PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection)
@@ -224,6 +240,7 @@ PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position,
 	_gridAir.AxisX = Vector3(BattleFieldDirection.z, BattleFieldDirection.y, -BattleFieldDirection.x);
 	_gridAir.AxisZ = BattleFieldDirection;
 	_gridAir.Position = _position + Vector3(0.0f, AIR_UNITS_ALTITUDE, 0.0f);
+	_gridAir.Air = true;
 	_gridAir.init();
 	
 	_mainResourceIncreaceTimer.start(1000.0f, 0.0f);

@@ -38,6 +38,12 @@ public:
 class WarriorsGrid
 {
 public:
+	enum CellState
+	{
+		Free,
+		Selected,
+		Occupied
+	};
 	static const int CellsCountX = 18;
 	static const int CellsCountZ = 12 * 2;
 
@@ -46,6 +52,7 @@ public:
 	Vector3 Position;
 	Vector3 AxisX;
 	Vector3 AxisZ;
+	bool Air;
 
 	void init();
 	void mousOver(const Vector3 mousePos);
@@ -57,6 +64,7 @@ private:
 	const GridCell worldToGrid(const Vector3 point);
 	bool getCell(GridCell cell);
 	void setCell(GridCell cell, bool value);
+	void drawCell(Vector3 position, CellState state, bool air);
 	bool Cells[CellsCountX][CellsCountZ];
 	SpriteBatch* _spriteBatch;
 	float _factor;

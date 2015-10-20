@@ -164,6 +164,7 @@
       <DisableLanguageExtensions>
       </DisableLanguageExtensions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <StructMemberAlignment>1Byte</StructMemberAlignment>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

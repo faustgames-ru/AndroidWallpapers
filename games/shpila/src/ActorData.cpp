@@ -3,6 +3,51 @@
 
 std::vector<ActorData*> ActorsData;
 
+ActorData::ActorData()
+: ActorType(0)
+, Caption()
+, Name()
+, Price(0)
+, RequireUpgrade(0)
+, BattleUpgradeClass()
+, SplashDamage(0.0f)
+, SplashDamageShield(0.0f)
+, SplashType()
+, DistanceSplash()
+, AttackDelayAir(0.0f)
+, AttackDelayGround(0.0f)
+, armour(0.0f)
+, shield(0.0f)
+, HP(0.0f)
+, mana(0.0f)
+, MoveSpeed(0.0f)
+, UndergroundSpeed(0.0f)
+, ImmediateAttack(true)
+, DistanceGround(0.0f)
+, DistanceAir(0.0f)
+, DetectionDistance(0.0f)
+, AttackCountGround(0)
+, AttackCountAir(0)
+, Detection(0.0f)
+, TargetGround(true)
+, TargetAir(false)
+, MovementGround(true)
+, MovementAir(false)
+, LightArmor(false)
+, HavyArmor(false)
+, Organic(false)
+, Psionic(false)
+, Mechanic(false)
+, Massive(false)
+, Building(false)
+, effectivity()
+, noneffectivity()
+, GeometryRadius(0.0f)
+{
+	memset(Damage, 0, sizeof(Damage));
+	memset(DamageUpgradeFactor, 0, sizeof(DamageUpgradeFactor));
+}
+
 float ActorData::getDefaultDamage() const
 {
 	float min = 1e20f;

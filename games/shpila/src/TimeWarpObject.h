@@ -8,7 +8,11 @@ public:
 	static BaseGameObject* constructor();
 	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual bool interactive();
+	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);
+	virtual bool deleted();
+private:
+	SimpleTimer _lifeTimer;
 };
 
 #endif

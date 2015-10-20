@@ -8,6 +8,7 @@ class BaseGameObject;
 class BoomerangBullet : public BaseBullet
 {
 public:
+	static BaseGameObject* constructor();
 	virtual void update(float time);
 };
 

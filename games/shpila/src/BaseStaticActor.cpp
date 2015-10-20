@@ -15,7 +15,7 @@ void BaseStaticActor::init(GameObjectManager& manager, const ActorData* gameData
 void BaseStaticActor::update(float time)
 {
 	BaseGameObject::update(time);
-	if (_damageTimer.action(time))
+	if (_damageTimer.enabled() && _damageTimer.action(time))
 	{
 		doDamage(Target);
 		if (Target && (Target->LocalGameData.Health <= 0.0f))
@@ -33,6 +33,11 @@ void BaseStaticActor::setDetected(bool value)
 		_fogOfWarTimer.start(0.0f, 2.0f, 1.0f, false, true);
 	else
 		_fogOfWarTimer.enable(false);
+}
+
+void BaseStaticActor::attackEnable(bool value)
+{
+	_damageTimer.enable(value);
 }
 
 void BaseStaticActor::rangeFire()

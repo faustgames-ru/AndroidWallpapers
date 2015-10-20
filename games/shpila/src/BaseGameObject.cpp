@@ -143,10 +143,10 @@ bool BaseGameObject::checkDistanceToObject(BaseGameObject* object, float value)
 	if (object == NULL)
 		return 0.0f;
 	else
-		return position().distanceSquared(object->position()) < SQR(value + LocalGameData.GameData->GeometryRadius + object->LocalGameData.GameData->GeometryRadius);
+		return Vector2(position().x, position().z).distanceSquared(Vector2(object->position().x, object->position().z)) < SQR(value + LocalGameData.GameData->GeometryRadius + object->LocalGameData.GameData->GeometryRadius);
 }
 
-bool BaseGameObject::checTargetingkDistanceToObject(BaseGameObject* object)
+bool BaseGameObject::checkTargetingDistanceToObject(BaseGameObject* object)
 {
 	if (object == NULL)
 		return 0.0f;
@@ -154,7 +154,7 @@ bool BaseGameObject::checTargetingkDistanceToObject(BaseGameObject* object)
 	{
 		float value = (object->LocalGameData.GameData->MovementAir ? LocalGameData.GameData->DistanceAir : LocalGameData.GameData->DistanceGround);
 		value = max(value, object->LocalGameData.GameData->DetectionDistance);
-		return position().distanceSquared(object->position()) < SQR(value + LocalGameData.GameData->GeometryRadius + object->LocalGameData.GameData->GeometryRadius);
+		return Vector2(position().x, position().z).distanceSquared(Vector2(object->position().x, object->position().z)) < SQR(value + LocalGameData.GameData->GeometryRadius + object->LocalGameData.GameData->GeometryRadius);
 	}
 }
 

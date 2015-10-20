@@ -59,9 +59,10 @@ AnimationClip::~AnimationClip()
 }
 
 AnimationClip::ListenerEvent::ListenerEvent(Listener* listener, unsigned long eventTime)
+: _listener(listener)
+, _eventTime(eventTime)
 {
-    _listener = listener;
-    _eventTime = eventTime;
+    
 }
 
 AnimationClip::ListenerEvent::~ListenerEvent()

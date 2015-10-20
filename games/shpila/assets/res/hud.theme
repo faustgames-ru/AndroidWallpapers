@@ -269,6 +269,36 @@ theme sceneSettings
         region = 1550, 0, 75, 101
     }
 	
+	skin skinButtonZealotCharge : mainNormal
+    {
+        region = 1625, 0, 75, 101
+    }
+	
+	skin skinButtonExtractor : mainNormal
+    {
+        region = 1700, 0, 75, 101
+    }
+	
+	skin skinButtonArmorAir : mainNormal
+    {
+        region = 1775, 0, 75, 101
+    }
+	
+	skin skinButtonArmorGround : mainNormal
+    {
+        region = 1850, 0, 75, 101
+    }
+	
+	skin skinButtonAttackAir : mainNormal
+    {
+        region = 1925, 0, 75, 101
+    }
+	
+	skin skinButtonAttackGround : mainNormal
+    {
+        region = 200, 101, 75, 101
+    }
+	
 	style buttonStyleZealot : basic
     {
         stateNormal
@@ -402,6 +432,54 @@ theme sceneSettings
         stateNormal
         {
             skin = skinButtonUpgrade2
+		}
+    }
+	
+	style buttonStyleZealotCharge : basic
+    {
+        stateNormal
+        {
+            skin = skinButtonZealotCharge
+		}
+    }
+	
+	style buttonStyleExtractor : basic
+    {
+        stateNormal
+        {
+            skin = skinButtonExtractor
+		}
+    }
+	
+	style buttonStyleArmorAir : basic
+    {
+        stateNormal
+        {
+            skin = skinButtonArmorAir
+		}
+    }
+	
+	style buttonStyleArmorGround : basic
+    {
+        stateNormal
+        {
+            skin = skinButtonArmorGround
+		}
+    }
+	
+	style buttonStyleAttackAir : basic
+    {
+        stateNormal
+        {
+            skin = skinButtonAttackAir
+		}
+    }
+	
+	style buttonStyleAttackGround : basic
+    {
+        stateNormal
+        {
+            skin = skinButtonAttackGround
 		}
     }
 

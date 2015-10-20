@@ -78,7 +78,7 @@ form hud
 		height = 216
         autoHeight = false
         scrollBarsAutoHide = false
-        consumeInputEvents = false
+        consumeInputEvents = false		
 		
 		container upgrades_amu
 		{
@@ -91,7 +91,7 @@ form hud
 			button extractor
 			{
 				consumeInputEvents = true
-				style = buttonStyle
+				style = buttonStyleExtractor
 				width = 85
 				height = 101
 				text = Extractor
@@ -99,7 +99,7 @@ form hud
 			button armor_ground
 			{
 				consumeInputEvents = true
-				style = buttonStyle
+				style = buttonStyleArmorGround
 				width = 85
 				height = 101
 				text = Armor Ground
@@ -107,7 +107,7 @@ form hud
 			button armor_air
 			{
 				consumeInputEvents = true
-				style = buttonStyle
+				style = buttonStyleArmorAir
 				width = 85
 				height = 101
 				text = Armor Air
@@ -115,7 +115,7 @@ form hud
 			button weapon_ground
 			{
 				consumeInputEvents = true
-				style = buttonStyle
+				style = buttonStyleAttackGround
 				width = 85
 				height = 101
 				text = Weapon Ground
@@ -123,7 +123,7 @@ form hud
 			button weapon_air
 			{
 				consumeInputEvents = true
-				style = buttonStyle
+				style = buttonStyleAttackAir
 				width = 85
 				height = 101
 				text = Weapon Air
@@ -132,7 +132,7 @@ form hud
 			{
 				textTag = ZealotUpgrade
 				consumeInputEvents = true
-				style = buttonStyle
+				style = buttonStyleZealotCharge
 				width = 85
 				height = 101
 				text = Upgrade Zealot

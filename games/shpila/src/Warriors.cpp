@@ -169,15 +169,21 @@ void CoreWarrior::init(GameObjectManager& manager, const ActorData* gameData, No
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
 	_altitude = AIR_UNITS_ALTITUDE;
+	_abilityTimer.enable(false);
 }
 
 void CoreWarrior::interaction(BaseGameObject* object)
 {
 	BaseWarrior::interaction(object);
 	
-	if (!friendly(object) && checTargetingkDistanceToObject(object))
+	if (!friendly(object) && checkDistanceToObject(object, CORE_TIME_WARP_ABILITY_RANGE))
 	{
-
+		if (!_abilityTimer.enabled())
+		{
+			Player->Manager.createObject("timewarp", object->position(), Player->BattleFieldDirection, Player);
+			_abilityTimer.start(CORE_TIME_WARP_ABILITY_COLDDOWN, 0.0f);
+			_abilityTimer.enable(true);
+		}
 	}
 }
 
@@ -191,5 +197,9 @@ void CoreWarrior::update(float time)
 	OpenSteer::Vec3 pos = _movementController.position();
 	_node->setTranslation(Vector3(pos.x, pos.y + _altitude, pos.z));
 
+	if (_abilityTimer.action(time))
+	{
+		_abilityTimer.enable(false);
+	}
 
 }

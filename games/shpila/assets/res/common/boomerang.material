@@ -1,0 +1,19 @@
+#include res/common/common.material
+
+material mtWeapon : texturedUnlit
+{
+    technique
+    {
+        pass
+        {			
+            sampler u_diffuseTexture
+            {
+                path = @bullet
+            }
+			renderState
+            {
+                cullFace = false
+            }
+        }
+    }
+}

@@ -68,7 +68,7 @@ public:
 	virtual float getDetectDistance(BaseGameObject* object);
 	virtual float getTargetingDistance(BaseGameObject* object);
 	virtual bool checkDistanceToObject(BaseGameObject* object, float value);
-	virtual bool checTargetingkDistanceToObject(BaseGameObject* object);
+	virtual bool checkTargetingDistanceToObject(BaseGameObject* object);
 	virtual bool friendly(BaseGameObject* object);
 
 protected:

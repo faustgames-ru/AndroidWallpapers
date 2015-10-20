@@ -48,7 +48,7 @@ Shpila::Shpila()
 , _fpCamera()
 , _activeCamera(NULL)
 , _activePlayerCamera(NULL)
-, _freeCamera(true)
+, _freeCamera(false)
 , _battleFieldDirection()
 , _particleEmitterSunNode(NULL)
 , _particleEmitterStarsNode(NULL)
@@ -235,9 +235,9 @@ void Shpila::loadCharacters()
 {
 	loadActorsData("res/units.xml");
 
-	_manager.addUnit("res/common/irbaga.scene", "irbaga", IrbagaWarrior::constructor);
 	_manager.addUnit("res/common/chasovoy.scene", "chasovoy", ChasovoyWarrior::constructor);
-	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor);
+	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor); 	
+	_manager.addUnit("res/common/irbaga.scene", "irbaga", IrbagaWarrior::constructor);		
 	_manager.addUnit("res/common/dark.scene", "dark", DarkWarrior::constructor);
 	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
 	_manager.addUnit("res/common/archon.scene", "archon", ArchonWarrior::constructor);
@@ -255,6 +255,7 @@ void Shpila::loadCharacters()
 	_manager.addUnit("res/common/bullet.scene", "bullet", BaseBullet::constructor);
 	_manager.addUnit("res/common/shieldaura.scene", "shieldaura", BaseGameObject::constructor);
 	_manager.addUnit("res/common/timewarp.scene", "timewarp", TimeWarpObject::constructor);
+	_manager.addUnit("res/common/boomerang.scene", "boomerang", BoomerangBullet::constructor);
 	_manager.initUnits();
 }
 

@@ -9,6 +9,7 @@ public:
 	virtual void update(float time);
 	virtual bool getDetected();
 	virtual void setDetected(bool value);
+	virtual void attackEnable(bool value);
 protected:
 	virtual void rangeFire();
 	virtual void targeting(BaseGameObject* object);

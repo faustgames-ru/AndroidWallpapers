@@ -204,7 +204,7 @@ material skinedmeshcolored : colored
     {
         pass
         {
-            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
+            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
             u_matrixPalette = MATRIX_PALETTE
         }
     }
@@ -216,7 +216,7 @@ material skinedmeshbumped : texturedBumped
     {
         pass
         {
-            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;POINT_LIGHT
+            defines = SKINNING;SKINNING_JOINT_COUNT 31;MODULATE_ALPHA;DIRECTIONAL_LIGHT_COUNT 1
             u_matrixPalette = MATRIX_PALETTE
         }
     }

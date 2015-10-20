@@ -101,10 +101,11 @@ void BaseWarrior::update(float time)
 
 void BaseWarrior::updateMovementSpeed(float time)
 {
-	if (Target != NULL)
-		_movementController.setMaxSpeed(LocalGameData.GameData->MoveSpeed / TIME_SCALE);
-	else
-		_movementController.setMaxSpeed(DEFAULT_MOVEMENT_SPEED / TIME_SCALE);
+	float speed = ((Target != NULL) ? LocalGameData.GameData->MoveSpeed : DEFAULT_MOVEMENT_SPEED) / TIME_SCALE * 
+		(getAura(Aura::TimeWarpSlow) ? CORE_TIME_WARP_SPEED_FACTOR : 1.0f);
+	_movementController.setMaxSpeed(speed);	
+	_movementController.setSpeed(min(_movementController.speed(), _movementController.maxSpeed()));
+	_movementController.setAcceleration(DEFAULT_UNIT_AXELERATION);
 }
 
 bool BaseWarrior::deleted()
@@ -232,14 +233,14 @@ void BaseWarrior::updateAttack(float time, BaseGameObject* object)
 		{
 			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
 			_movementController._applyBreakingForces = false;
-			_damageTimer.enable(false);
+			attackEnable(false);
 		}
 		else
 		{
 			_movementController._applyBreakingForces = true;
 			if (LocalGameData.GameData->isAttackToTargetAllowed(*object->LocalGameData.GameData))
 			{
-				_damageTimer.enable(true);
+				attackEnable(true);
 				switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);
 			}
 		}
@@ -252,7 +253,7 @@ void BaseWarrior::updateAttack(float time, BaseGameObject* object)
 		{
 			updateMoveToPoint(time, position() + Player->BattleFieldDirection * 10.0f);
 			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
-			_damageTimer.enable(false);
+			attackEnable(false);
 			_movementController._applyBreakingForces = false;
 		}
 	}

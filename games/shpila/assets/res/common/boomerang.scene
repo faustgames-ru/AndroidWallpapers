@@ -1,14 +1,6 @@
 scene
 {
-    path = res/common/budfoor.gpb
-	
-	node character
-    {
-        tags
-        {
-            dynamic
-        }
-    }
+    path = res/common/boomerang.gpb
 	
 	node obj_weapon
     {

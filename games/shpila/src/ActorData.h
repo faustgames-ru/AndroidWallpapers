@@ -67,6 +67,8 @@ public:
 	std::string noneffectivity;
 	float GeometryRadius;
 
+	ActorData();
+
 	float getDefaultDamage() const;
 	float getDefaultDamageUpgradeFactor() const;
 	bool isAttackToTargetAllowed(const ActorData& targetGameData) const;
@@ -80,7 +82,7 @@ public:
 	enum Value
 	{
 		GuardianShield,
-
+		TimeWarpSlow,
 		Last
 	};
 };

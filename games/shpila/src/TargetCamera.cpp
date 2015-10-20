@@ -49,7 +49,6 @@ const Matrix TargetCamera::getTransform()
 {
 	Matrix res;
 	_pitchNode->getRotation(&res);
-	//res.translate(_rootNode->getTranslation());
 	res.m[12] = _rootNode->getTranslation().x;
 	res.m[13] = _rootNode->getTranslation().y;
 	res.m[14] = _rootNode->getTranslation().z;
