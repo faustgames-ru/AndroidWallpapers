@@ -24,6 +24,31 @@ public:
 	};
 };
 
+class UpgradePrice
+{
+public:
+	UpgradePrice(){ Value[0] = Value[1] = Value[2] = 0; }
+	UpgradePrice(int v1){ Value[0] = Value[1] = Value[2] = v1;}
+	UpgradePrice(int v1, int v2){ Value[0] = v1; Value[1] = Value[2] = v2; }
+	UpgradePrice(int v1, int v2, int v3){ Value[0] = v1; Value[1] = v2; Value[2] = v3; }
+	int Value[3];
+};
+
+class PlayerObject;
+
+class UpgradesData
+{
+public:
+	UpgradesData(PlayerObject &player);
+
+	int getUpgrade(Upgrades::Values upgrade) const;
+	bool setUpgrade(Upgrades::Values upgrade, int value);
+	bool incUpgrade(Upgrades::Values upgrade);
+private:
+	mutable std::map<Upgrades::Values, int> _upgrade;
+	PlayerObject &_player;
+};
+
 class GridCell
 {
 public:
@@ -91,13 +116,13 @@ public:
 
 	PlayerObject(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection);
 	void update(float time);
-	void setCreateWarior(const char* name);
+	void setCreateWariorName(const char* name);
+	const std::string getCreateWariorName();
 	bool CreateWarrior(bool continuous, const Valuable<Vector3> position = Valuable<Vector3>::Undefined);
 	void CancelCreateWarrior();
 	void addExtractor();
-	int getUpgrade(Upgrades::Values upgrade);
-	bool setUpgrade(Upgrades::Values upgrade, int value);
 	int getNewObjectID();
+	UpgradesData* upgrades();
 	BaseStaticActor* getDefence();
 	Vector3 getPosition();
 	int getAdditionalResourceIncreasePercent();
@@ -118,7 +143,7 @@ private:
 	std::string _CurrentCharacterName;
 	bool _controlMid;
 	int _extractorsCount;
-	std::map<Upgrades::Values, int> _upgrade;
+	UpgradesData _upgradesData;
 };
 
 void initUpgradeParams();

@@ -23,6 +23,7 @@ class GameObjectManager : public PlugIn
 {
 public:
 	std::vector<PlayerObject*> Players;
+	CLink<BaseGameObject> Selected;
 
 	GameObjectManager();
 	void setScene(Scene* scene);
@@ -34,7 +35,7 @@ public:
 	void initUnits();
 	BaseGameObject* createObject(const char* name, Matrix transform, PlayerObject* player);
 	BaseGameObject* createObject(const char* name, Vector3 position, Vector3 forwardDirection, PlayerObject* player);
-	void AttachUnitModel(const char* unitName, BaseGameObject* object, const char* nodeName);
+	Node* AttachUnitModel(const char* unitName, BaseGameObject* object, const char* nodeName);
 	void registerMovementController(UnitMovementBase* controller);
 	void unregisterMovementController(UnitMovementBase* controller);
 	void registerObject(BaseGameObject* object);

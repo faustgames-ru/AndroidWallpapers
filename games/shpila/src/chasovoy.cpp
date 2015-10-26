@@ -17,8 +17,7 @@ void ChasovoyWarrior::init(GameObjectManager& manager, const ActorData* gameData
 	float scale = CHASOVOY_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
-	manager.AttachUnitModel("shieldaura", this, NULL);
-	_auranode = _node->getFirstChild()->getNextSibling();
+	_auranode = manager.AttachUnitModel("shieldaura", this, NULL);
 	_auranode->setTag("transparent");
 	_auranode->setEnabled(false);
 	SearchRadius = 30.0f;

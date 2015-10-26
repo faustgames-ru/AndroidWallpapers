@@ -237,7 +237,7 @@ void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData,
 {
 	_manager = &manager;
 	Player = player;
-	LocalGameData.init(gameData);
+	LocalGameData.init(gameData, Player->upgrades());
 	manager.registerObject(this);
 	if (node)
 	{

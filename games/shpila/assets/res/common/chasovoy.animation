@@ -1,33 +1,33 @@
 animation animations
 {
-    frameCount = 132
+    frameCount = 175
 	clip attack
     {
 		speed = 1
-        begin = 41
-        end = 81
+        begin = 35
+        end = 70
         repeatCount = INDEFINITE
     }
 	
 	clip death
     {
-        begin = 81
-        end = 81
+        begin = 130
+        end = 175
         repeatCount = 1
     }
 	
 	clip run
     {
-		speed = 0.5
+		speed = 1
         begin = 0
-        end = 40
+        end = 30
         repeatCount = INDEFINITE
     }
 	
 	clip dead
     {
-        begin = 81
-        end = 81
+        begin = 175
+        end = 175
         repeatCount = INDEFINITE
     }
 }

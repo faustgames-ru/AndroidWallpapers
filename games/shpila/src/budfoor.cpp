@@ -16,7 +16,7 @@ void BudfoorWarrior::init(GameObjectManager& manager, const ActorData* gameData,
 {
 	float scale = BUDFOOR_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
-	_node->setScale(scale, scale, scale);
+	_node->setScale(scale * 1.25f, scale, scale * 1.25f);
 	_blinkAbilityColdDownTimer.enable(false);
 
 	if (_unitAnimation.size() > 0)
@@ -31,7 +31,7 @@ void BudfoorWarrior::update(float time)
 {
 	BaseWarrior::update(time);
 
-	if (Player->getUpgrade(Upgrades::StalkerUpgrade) && !_blinkAbilityColdDownTimer.enabled())
+	if (Player->upgrades()->getUpgrade(Upgrades::StalkerUpgrade) && !_blinkAbilityColdDownTimer.enabled())
 	{
 		if (Target && (Target->position().distanceSquared(position()) < SQR(STALKER_BLINK_DISTANCE)))
 		{
@@ -81,7 +81,7 @@ void BudfoorWarrior::rangeFire()
 	mRes.getTranslation(&trn);
 	BoomerangBullet* bullet = (BoomerangBullet*)_manager->createObject("boomerang", trn, _node->getForwardVectorWorld().normalize(), Player);
 	bullet->Target = Target;
-	bullet->LocalGameData.init(LocalGameData.GameData);
+	bullet->LocalGameData.init(LocalGameData.GameData, LocalGameData.Upgrades);
 }
 
 void BudfoorWarrior::attackEnable(bool value)

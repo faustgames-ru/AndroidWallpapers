@@ -46,7 +46,7 @@ void BaseStaticActor::rangeFire()
 	{
 		BaseGameObject* bullet = _manager->createObject("bullet", massCenterPosition(), Target->massCenterPosition() - massCenterPosition(), Player);
 		bullet->Target = Target;
-		bullet->LocalGameData.init(LocalGameData.GameData);
+		bullet->LocalGameData.init(LocalGameData.GameData, LocalGameData.Upgrades);
 	}
 }
 

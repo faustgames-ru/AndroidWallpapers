@@ -3,7 +3,7 @@
 #define SPRITE_VSH "res/shaders/sprite.vert"
 #define SPRITE_FSH "res/shaders/sprite.frag"
 
-std::map<Upgrades::Values, int> __upgradePrice;
+std::map<Upgrades::Values, UpgradePrice> __upgradePrice;
 std::map<Upgrades::Values, int> __upgradeMaxLevel;
 
 void initUpgradeParams()
@@ -11,10 +11,48 @@ void initUpgradeParams()
 	__upgradePrice[Upgrades::BaseLevel] = BASE_LEVEL_UPGRADE_PRICE;
 	__upgradePrice[Upgrades::ZealotUpgrade] = ZEALOT_UPGRADE_PRICE;
 	__upgradePrice[Upgrades::StalkerUpgrade] = STALKER_UPGRADE_PRICE;
+	__upgradePrice[Upgrades::Shield] = SHIELD_UPGRADE_PRICE;
+	__upgradePrice[Upgrades::GroundAttack] = GROUNDATTACK_UPGRADE_PRICE;
+	__upgradePrice[Upgrades::AirAttack] = AIRATTACK_UPGRADE_PRICE;
+	__upgradePrice[Upgrades::GroundArmor] = GROUNDARMOR_UPGRADE_PRICE;
+	__upgradePrice[Upgrades::AirArmor] = AIRARMOR_UPGRADE_PRICE;
 	
 	__upgradeMaxLevel[Upgrades::BaseLevel] = 2;
 	__upgradeMaxLevel[Upgrades::ZealotUpgrade] = 1;
 	__upgradeMaxLevel[Upgrades::StalkerUpgrade] = 1;
+	__upgradeMaxLevel[Upgrades::Shield] = 3;
+	__upgradeMaxLevel[Upgrades::GroundAttack] = 3;
+	__upgradeMaxLevel[Upgrades::AirAttack] = 3;
+	__upgradeMaxLevel[Upgrades::GroundArmor] = 3;
+	__upgradeMaxLevel[Upgrades::AirArmor] = 3;
+}
+
+UpgradesData::UpgradesData(PlayerObject &player)
+: _upgrade()
+, _player(player)
+{
+	for (int i = Upgrades::BaseLevel; i < Upgrades::Last; i++)
+		_upgrade[(Upgrades::Values)i] = 0;
+}
+
+int UpgradesData::getUpgrade(Upgrades::Values upgrade) const
+{
+	return _upgrade[upgrade];
+}
+bool UpgradesData::setUpgrade(Upgrades::Values upgrade, int value)
+{
+	bool res = (_upgrade[upgrade] < __upgradeMaxLevel[upgrade]) && (__upgradePrice[upgrade].Value[_upgrade[upgrade]] < _player.MainResource);
+	if (res)
+	{
+		_player.MainResource -= __upgradePrice[upgrade].Value[_upgrade[upgrade]];
+		_upgrade[upgrade] = value;
+	}
+	return res;
+}
+
+bool UpgradesData::incUpgrade(Upgrades::Values upgrade)
+{	
+	return setUpgrade(upgrade, getUpgrade(upgrade) + 1);
 }
 
 WarriorsGrid::WarriorsGrid()
@@ -215,7 +253,7 @@ PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position,
 , BattleFieldMidPoint()
 , UnitsOverMidLineCount(0)
 , MainResource(0)
-, _upgrade()
+, _upgradesData(*this)
 , _defenceTower()
 , _defenceBase()
 , _position(position)
@@ -229,8 +267,7 @@ PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position,
 , _controlMid(false)
 , _extractorsCount(0)
 {
-	for (int i = Upgrades::BaseLevel; i < Upgrades::Last; i++)
-		_upgrade[(Upgrades::Values)i] = 0;
+	
 
 	_gridGround.AxisX = Vector3(BattleFieldDirection.z, BattleFieldDirection.y, -BattleFieldDirection.x);
 	_gridGround.AxisZ = BattleFieldDirection;
@@ -274,9 +311,14 @@ void PlayerObject::update(float time)
 	UnitsOverMidLineCount = 0;
 }
 
-void PlayerObject::setCreateWarior(const char* name)
+void PlayerObject::setCreateWariorName(const char* name)
 {
 	_CurrentCharacterName = name;
+}
+
+const std::string PlayerObject::getCreateWariorName()
+{
+	return _CurrentCharacterName;
 }
 
 bool PlayerObject::CreateWarrior(bool continuous, const Valuable<Vector3> position)
@@ -324,24 +366,14 @@ void PlayerObject::addExtractor()
 	}
 }
 
-int PlayerObject::getUpgrade(Upgrades::Values upgrade)
-{
-	return _upgrade[upgrade];
-}
-bool PlayerObject::setUpgrade(Upgrades::Values upgrade, int value)
-{
-	bool res = (_upgrade[upgrade] < __upgradeMaxLevel[upgrade]) && (__upgradePrice[upgrade] < MainResource);
-	if (res)
-	{
-		MainResource -= __upgradePrice[upgrade];
-		_upgrade[upgrade] = value;
-	}
-	return res;
-}
-
 int PlayerObject::getNewObjectID()
 {
 	return _newObjectID++;
+}
+
+UpgradesData* PlayerObject::upgrades()
+{
+	return &_upgradesData;
 }
 
 BaseStaticActor* PlayerObject::getDefence()

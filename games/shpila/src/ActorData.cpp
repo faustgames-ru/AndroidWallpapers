@@ -100,12 +100,13 @@ int ActorData::CellsRadius() const
 
 LocalActorData::LocalActorData()
 : GameData(NULL)
+, Upgrades(NULL)
 , Health(0.0f)
 , Shield(0.0f)
 , Mana(0.0f)
-, ArmorUpgrade(0.0f)
+/*, ArmorUpgrade(0.0f)
 , DamageUpgrade(0.0f)
-, ShieldUpgrade(0.0f)
+, ShieldUpgrade(0.0f)*/
 , _auras()
 , Illusion(false)
 {
@@ -115,11 +116,12 @@ LocalActorData::LocalActorData()
 	}
 }
 
-void LocalActorData::init(const ActorData* gameData)
+void LocalActorData::init(const ActorData* gameData, const UpgradesData *upgrades)
 {
 	if (gameData)
 	{
 		GameData = gameData;
+		Upgrades = upgrades;
 		Health = GameData->HP;
 		Shield = GameData->shield;
 		Mana = GameData->mana;
@@ -137,35 +139,37 @@ void LocalActorData::doDamage(LocalActorData& targetGameData)
 	float result = defaultDamage;
 	if (targetGameData.GameData->MovementGround)
 	{
+		float damageUpgrade = (float)Upgrades->getUpgrade(Upgrades::GroundAttack);
 		if (targetGameData.GameData->LightArmor)
-			result = max(result, GameData->Damage[ActorData::DamageLight] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageLight]);
+			result = max(result, GameData->Damage[ActorData::DamageLight] + damageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageLight]);
 		if (targetGameData.GameData->HavyArmor)
-			result = max(result, GameData->Damage[ActorData::DamageArmored] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageArmored]);
+			result = max(result, GameData->Damage[ActorData::DamageArmored] + damageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageArmored]);
 		if (targetGameData.GameData->Organic)
-			result = max(result, GameData->Damage[ActorData::DamageOrganic] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageOrganic]);
+			result = max(result, GameData->Damage[ActorData::DamageOrganic] + damageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageOrganic]);
 		if (targetGameData.GameData->Psionic)
-			result = max(result, defaultDamage + DamageUpgrade * defaultDamageUpgradeFactor);
+			result = max(result, defaultDamage + damageUpgrade * defaultDamageUpgradeFactor);
 		if (targetGameData.GameData->Mechanic)
-			result = max(result, defaultDamage + DamageUpgrade * defaultDamageUpgradeFactor);
+			result = max(result, defaultDamage + damageUpgrade * defaultDamageUpgradeFactor);
 		if (targetGameData.GameData->Massive)
-			result = max(result, GameData->Damage[ActorData::DamageMassive] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageMassive]);
+			result = max(result, GameData->Damage[ActorData::DamageMassive] + damageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageMassive]);
 		if (targetGameData.GameData->Building)
-			result = max(result, GameData->Damage[ActorData::DamageBuilding] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageBuilding]);
+			result = max(result, GameData->Damage[ActorData::DamageBuilding] + damageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageBuilding]);
 	}
 	else if (targetGameData.GameData->MovementAir)
 	{
+		float damageUpgrade = (float)Upgrades->getUpgrade(Upgrades::AirAttack);
 		if (targetGameData.GameData->LightArmor)
-			result = max(result, GameData->Damage[ActorData::DamageLightAir] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageLightAir]);
+			result = max(result, GameData->Damage[ActorData::DamageLightAir] + damageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageLightAir]);
 		if (targetGameData.GameData->HavyArmor)
-			result = max(result, GameData->Damage[ActorData::DamageArmoredAir] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageArmoredAir]);
+			result = max(result, GameData->Damage[ActorData::DamageArmoredAir] + damageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageArmoredAir]);
 		if (targetGameData.GameData->Organic)
-			result = max(result, GameData->Damage[ActorData::DamageOrganicAir] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageOrganicAir]);
+			result = max(result, GameData->Damage[ActorData::DamageOrganicAir] + damageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageOrganicAir]);
 		if (targetGameData.GameData->Psionic)
-			result = max(result, defaultDamage + DamageUpgrade * defaultDamageUpgradeFactor);
+			result = max(result, defaultDamage + damageUpgrade * defaultDamageUpgradeFactor);
 		if (targetGameData.GameData->Mechanic)
-			result = max(result, defaultDamage + DamageUpgrade * defaultDamageUpgradeFactor);
+			result = max(result, defaultDamage + damageUpgrade * defaultDamageUpgradeFactor);
 		if (targetGameData.GameData->Massive)
-			result = max(result, GameData->Damage[ActorData::DamageMassiveAir] + DamageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageMassiveAir]);
+			result = max(result, GameData->Damage[ActorData::DamageMassiveAir] + damageUpgrade * GameData->DamageUpgradeFactor[ActorData::DamageMassiveAir]);
 	}
 
 	if (targetGameData.Shield > 0.0f)
@@ -180,11 +184,12 @@ void LocalActorData::doDamage(LocalActorData& targetGameData)
 
 	if (targetGameData.Shield > 0.0f)
 	{
-		float shieldDamage = min(targetGameData.Shield, result);
+		float shieldDamage = min(targetGameData.Shield + targetGameData.Upgrades->getUpgrade(Upgrades::Shield), result);
 		targetGameData.Shield -= shieldDamage;
 		result -= shieldDamage;
 	}
-	result = max(0.0f, result - (targetGameData.GameData->armour + targetGameData.ArmorUpgrade));
+	float targetArmorUpgrade = targetGameData.GameData->MovementGround ? targetGameData.Upgrades->getUpgrade(Upgrades::GroundArmor) : targetGameData.Upgrades->getUpgrade(Upgrades::AirArmor);
+	result = max(0.0f, result - (targetGameData.GameData->armour + targetArmorUpgrade));
 	targetGameData.Health -= result;
 }
 

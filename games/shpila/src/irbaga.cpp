@@ -16,7 +16,7 @@ void IrbagaWarrior::init(GameObjectManager& manager, const ActorData* gameData, 
 
 void IrbagaWarrior::updateMovementSpeed(float time)
 {
-	if ((Target != NULL) && Player->getUpgrade(Upgrades::ZealotUpgrade) && 
+	if ((Target != NULL) && Player->upgrades()->getUpgrade(Upgrades::ZealotUpgrade) &&
 		!_chargeAbilityColdDownTimer.enabled() && checkDistanceToObject(Target, ZEALOT_CHARGE_DISTANCE))
 	{
 		_chargeAbilityTimer.start(ZEALOT_CHARGE_TIME, 0.0f);

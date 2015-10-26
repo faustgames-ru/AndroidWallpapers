@@ -4,6 +4,7 @@
 using namespace gameplay;
 
 class LocalActorData;
+class UpgradesData;
 
 class ActorData
 {
@@ -104,16 +105,17 @@ class LocalActorData
 {
 public:
 	const ActorData* GameData;
+	const UpgradesData *Upgrades;
 	float Health;
 	float Shield;
 	float Mana;
-	float ArmorUpgrade;
+	/*float ArmorUpgrade;
 	float DamageUpgrade;
-	float ShieldUpgrade;
+	float ShieldUpgrade;*/
 	bool Illusion;
 
 	LocalActorData();
-	void init(const ActorData* gameData);
+	void init(const ActorData* gameData, const UpgradesData *upgrades);
 	void doDamage(LocalActorData& targetGameData);
 	bool isAttackToTargetAllowed(const LocalActorData& targetGameData) const;
 	bool getAura(Aura::Value aura);

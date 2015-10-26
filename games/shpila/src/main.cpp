@@ -60,6 +60,7 @@ Shpila::Shpila()
 , _netPlayerID(-1)
 , _respawnTime(0.0)
 , Respawn(false)
+, _HPBarsSpriteBatch(NULL)
 {
 }
 
@@ -200,6 +201,10 @@ void Shpila::initialize()
 
 		initUpgradeParams();
 
+		_HPBarsSpriteBatch = SpriteBatch::create("res\\png\\hpbars.png");
+		_HPBarsSpriteBatch->getStateBlock()->setDepthWrite(false);
+		_HPBarsSpriteBatch->getStateBlock()->setDepthTest(true);
+
 		// Initialize scene.
 		_scene->visit(this, &Shpila::initializeNodeMaterials);
 
@@ -320,6 +325,28 @@ bool Shpila::drawScene(Node* node, bool transparent)
     return true;
 }
 
+bool Shpila::drawHPBars(const Matrix matrix)
+{
+	_HPBarsSpriteBatch->start();
+	_HPBarsSpriteBatch->setProjectionMatrix(matrix);
+
+	Itr<BaseGameObject> it = _manager.objects();
+	while (it)
+	{
+		if (it->interactive() && !it->Holder && (it->LocalGameData.Health > 0.0f))
+		{
+			float healthFactor = 1.0f - ((it->LocalGameData.Health + it->LocalGameData.Shield) / (it->LocalGameData.GameData->HP + it->LocalGameData.GameData->shield));
+			healthFactor = 0.5f * min(1.0f, max(0.0f, healthFactor));
+			_HPBarsSpriteBatch->draw(it->position() + Vector3(0.0f, 2.3f, 0.0f), 
+				1.2f, 0.08f, 0.5f + healthFactor, 0.5f + healthFactor, 0.0f + healthFactor, 0.0f + healthFactor, Vector4::one(), Vector2::zero(), 0, true);
+		}
+		++it;
+	}
+
+	_HPBarsSpriteBatch->finish();
+	return true;
+}
+
 void Shpila::updateMenuButtons()
 {
 	char buff[100];
@@ -344,6 +371,38 @@ void Shpila::updateMenuButtons()
 	Label* lb = ((Label*)_hud.form()->getControl("extractorbuildtimer"));
 	lb->setText(buff5);
 	lb->setVisible(getActivePlayer()->isExtractorBuilding());
+
+	Label *lbName = ((Label*)_hud.form()->getControl("UnitNameText"));
+	Label *lbHealth = ((Label*)_hud.form()->getControl("UnitHealthText"));
+	Label *lbShield = ((Label*)_hud.form()->getControl("UnitShieldText"));
+	Label *lbMana = ((Label*)_hud.form()->getControl("UnitManaText"));
+	Label *lbMoveSpeed = ((Label*)_hud.form()->getControl("UnitMoveSpeedText"));
+	Label *lbAttackSpeed = ((Label*)_hud.form()->getControl("UnitAttackSpeedText"));
+	Label *lbAttackDamage = ((Label*)_hud.form()->getControl("UnitAttackDamageText"));
+	
+	if (_manager.Selected)
+	{
+		lbName->setText(_manager.Selected->LocalGameData.GameData->Caption.c_str());
+		lbHealth->setText(format("%d : %d", (int)_manager.Selected->LocalGameData.Health, (int)_manager.Selected->LocalGameData.GameData->HP));
+		lbShield->setText(format("%d : %d", (int)_manager.Selected->LocalGameData.Shield, (int)_manager.Selected->LocalGameData.GameData->shield));
+		lbMana->setText(format("%d : %d", (int)_manager.Selected->LocalGameData.Mana, (int)_manager.Selected->LocalGameData.GameData->mana));
+		lbMoveSpeed->setText(format("%.2f", _manager.Selected->LocalGameData.GameData->MoveSpeed));
+		lbAttackSpeed->setText(format("%.2f / %.2f", _manager.Selected->LocalGameData.GameData->AttackDelayGround / 1000.0f / TIME_SCALE,
+			_manager.Selected->LocalGameData.GameData->AttackDelayAir / 1000.0f / TIME_SCALE));
+		lbAttackDamage->setText(format("%d", (int)_manager.Selected->LocalGameData.GameData->getDefaultDamage()));
+	}
+		
+	else
+	{
+		lbName->setText("");
+		lbHealth->setText("");
+		lbShield->setText("");
+		lbMana->setText("");
+		lbMoveSpeed->setText("");
+		lbAttackSpeed->setText("");
+		lbAttackDamage->setText("");
+	}
+	
 	
 
 	PlayerObject * player = getActivePlayer();
@@ -353,7 +412,7 @@ void Shpila::updateMenuButtons()
 	for (int i = 0; i < (int)controls.size(); i++)
 	{
 		const ActorData& aData = getActorData(controls[i]->getTextTag());
-		bool vis = aData.RequireUpgrade <= player->getUpgrade(Upgrades::BaseLevel);
+		bool vis = aData.RequireUpgrade <= player->upgrades()->getUpgrade(Upgrades::BaseLevel);
 		controls[i]->setVisible(vis);
 		if ((!vis) && (firstInvesible == -1))
 		{
@@ -365,9 +424,9 @@ void Shpila::updateMenuButtons()
 	Control* buttonUpgrade2 = _hud.form()->getControl("UpgradeLevel2");
 	if (firstInvesible != -1)
 	{
-		buttonUpgrade1->setVisible(player->getUpgrade(Upgrades::BaseLevel) == 0);
+		buttonUpgrade1->setVisible(player->upgrades()->getUpgrade(Upgrades::BaseLevel) == 0);
 		buttonUpgrade1->setPosition(controls[firstInvesible]->getX(), controls[firstInvesible]->getY());
-		buttonUpgrade2->setVisible(player->getUpgrade(Upgrades::BaseLevel) == 1);
+		buttonUpgrade2->setVisible(player->upgrades()->getUpgrade(Upgrades::BaseLevel) == 1);
 		buttonUpgrade2->setPosition(controls[firstInvesible]->getX(), controls[firstInvesible]->getY());
 	}
 	else
@@ -422,12 +481,15 @@ void Shpila::updateActions(float elapsedTime)
 			_scene->setActiveCamera(_activePlayerCamera->getCamera());
 			_activeCamera = _activePlayerCamera;
 			_hud.form()->getControl("Player1")->setVisible(true);
+			_hud.form()->getControl("UnitInfo")->setVisible(false);
+			
 		}
 		else
 		{
 			_scene->setActiveCamera(_fpCamera.getCamera());
 			_activeCamera = &_fpCamera;
 			_hud.form()->getControl("Player1")->setVisible(false);
+			_hud.form()->getControl("UnitInfo")->setVisible(true);
 		}
 	}
 
@@ -447,12 +509,16 @@ void Shpila::updateActions(float elapsedTime)
 	}
 
 	if (getActionState(Actions::PLACE_UNIT) & Keyboard::KEY_STATE_CLICK_SET)
-	{		
-		PlaceUnit(_mouseX, _mouseY, getActionState(Actions::SHIFT) & Keyboard::KEY_STATE_PRESS_SET);
+	{
+		if (!getActivePlayer()->getCreateWariorName().empty())
+			PlaceUnit(_mouseX, _mouseY, getActionState(Actions::SHIFT) & Keyboard::KEY_STATE_PRESS_SET);
+		else
+			selectUnit();
 	}
 
 	if ((getActionState(Actions::CANCEL_PLACE_UNIT) & Keyboard::KEY_STATE_CLICK_SET) || (getActionState(Actions::ESC) & Keyboard::KEY_STATE_CLICK_SET))
 	{
+		_manager.Selected = NULL;
 		getActivePlayer()->CancelCreateWarrior();
 	}
 	
@@ -503,6 +569,22 @@ void Shpila::loadActionMap()
 	}
 }
 
+void Shpila::selectUnit()
+{
+	Itr<BaseGameObject> it = _manager.objects();
+	while (it)
+	{
+		if (it->interactive())
+		{
+			if (ProjectRayIntersectSphere(_activeCamera->getCamera(), _mouseX, _mouseY, it->position(), it->LocalGameData.GameData->GeometryRadius))
+			{
+				_manager.Selected = it;
+			}
+		}
+		++it;
+	}
+}
+
 Keyboard::KeyState Shpila::getActionState(Actions::Action action)
 {
 	return _keyMap[_actionsMap[action]];
@@ -521,12 +603,10 @@ void Shpila::setKeyState(int key, bool pressed)
 	}
 }
 
-const Vector3 Shpila::ProjectToZeroPlane(Camera* camera, int x, int y)
+const Vector3 Shpila::ProjectToPlane(Camera* camera, int x, int y, Vector3 normal, Vector3 pointOnPlane)
 {
-	Vector3 pointOnPlane(0, 0, 0);
 	Ray ray;
 	camera->pickRay(Game::getInstance()->getViewport(), x, y, &ray);
-	Vector3 normal = Vector3(0.0f, 1.0f, 0.0f);
 	const float distance = Vector3::dot(pointOnPlane, normal);
 	Plane plane(normal, -distance);
 
@@ -541,12 +621,32 @@ const Vector3 Shpila::ProjectToZeroPlane(Camera* camera, int x, int y)
 		return Vector3::zero();
 }
 
+const Vector3 Shpila::ProjectToZeroPlane(Camera* camera, int x, int y)
+{
+	return ProjectToPlane(camera, x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f));
+}
+
+bool Shpila::ProjectRayIntersectSphere(Camera* camera, int x, int y, Vector3 point, float radiusSquared)
+{
+	const Vector3 p = ProjectToPlane(camera, x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f));
+	return p.distanceSquared(point) <= radiusSquared;
+}
+
+const char* Shpila::format(char* fstr, ...)
+{
+	static char buf[256];
+	va_list argptr;
+	va_start(argptr, fstr);
+	vsnprintf(buf, 256, fstr, argptr);
+	va_end(argptr);	
+	return &buf[0];
+}
 
 //shpila->_manager.Players[1]->CreateWarrior(names[(int)min(2.0f, rnd(0.0f, 3.0f))].c_str());
 
 void Shpila::CreateUnit(Game* game, Control* control)
 {
-	((Shpila*)game)->getActivePlayer()->setCreateWarior(control->getTextTag());
+	((Shpila*)game)->getActivePlayer()->setCreateWariorName(control->getTextTag());
 }
 
 void Shpila::SwitchPlayer(Game* game, Control* control)
@@ -616,26 +716,46 @@ void Shpila::Upgrade(Game* game, Control* control)
 	const char* BASE_LEVEL = "BaseLevel";
 	const char* ZEALOT_UPGRADE = "ZealotUpgrade";
 	const char* STALKER_UPGRADE = "StalkerUpgrade";
-	
+	const char* SHIELD_UPGRADE = "ShieldUpgrade";
+	const char* GROUND_ATTACK_UPGRADE = "GroundAttackUpgrade";
+	const char* AIR_ATTACK_UPGRADE = "AirAttackUpgrade";
+	const char* GROUND_ARMOR_UPGRADE = "GroundArmorUpgrade";
+	const char* AIR_ARMOR_UPGRADE = "AirArmorUpgrade";
 
 	Shpila* shpila = (Shpila*)game;
 	const char* tag = control->getTextTag();
 
 	if (!strcmp(tag, BASE_LEVEL))
 	{
-		int ul = shpila->getActivePlayer()->getUpgrade(Upgrades::BaseLevel);
-		if (ul < 2)
-		{
-			shpila->getActivePlayer()->setUpgrade(Upgrades::BaseLevel, ul + 1);
-		}
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::BaseLevel);
 	}
 	else if (!strcmp(tag, ZEALOT_UPGRADE))
 	{
-		shpila->getActivePlayer()->setUpgrade(Upgrades::ZealotUpgrade, 1);
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::ZealotUpgrade);
 	}
 	else if (!strcmp(tag, STALKER_UPGRADE))
 	{
-		shpila->getActivePlayer()->setUpgrade(Upgrades::StalkerUpgrade, 1);
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::StalkerUpgrade);
+	}
+	else if (!strcmp(tag, SHIELD_UPGRADE))
+	{
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::Shield);
+	}
+	else if (!strcmp(tag, GROUND_ATTACK_UPGRADE))
+	{
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::GroundAttack);
+	}
+	else if (!strcmp(tag, AIR_ATTACK_UPGRADE))
+	{
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::AirAttack);
+	}
+	else if (!strcmp(tag, GROUND_ARMOR_UPGRADE))
+	{
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::GroundArmor);
+	}
+	else if (!strcmp(tag, AIR_ARMOR_UPGRADE))
+	{
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::AirArmor);
 	}
 }
 
@@ -800,6 +920,8 @@ void Shpila::render(float elapsedTime)
 			(*it)->render();
 		}
 
+		drawHPBars(_manager.scene()->getActiveCamera()->getViewProjectionMatrix());
+
 		_hud.render(this, elapsedTime);
 		// Draw physics debug
 		//if (_physicsDebug)
@@ -821,11 +943,11 @@ void Shpila::touchEvent(Touch::TouchEvent evt, int x, int y, unsigned int contac
 	switch (evt)
 	{
 	case Touch::TOUCH_PRESS:
-		if (x < 75 && y < 50)
+		/*if (x < 75 && y < 50)
 		{
 			// Toggle Vsync if the user touches the top left corner
 			setVsync(!isVsync());
-		}
+		}*/
 		_prevX = x;
 		_prevY = y;
 		break;

@@ -76,6 +76,7 @@ private:
 	void initPlayers();
     void drawSplash(void* param);
     bool drawScene(Node* node, bool transparent);
+	bool drawHPBars(const Matrix matrix);
 	//---update parts
 	void updatePlayers(float time);
 	void updateNetwork();
@@ -85,10 +86,15 @@ private:
 	//---
 	bool PlaceUnit(int x, int y, bool continuous);
 	void loadActionMap();
+	void selectUnit();
 	Keyboard::KeyState getActionState(Actions::Action action);
 	void setKeyState(int key, bool pressed);
 	
+	static const Vector3 ProjectToPlane(Camera* camera, int x, int y, Vector3 normal, Vector3 pointOnPlane);
 	static const Vector3 ProjectToZeroPlane(Camera* camera, int x, int y);
+	static bool ProjectRayIntersectSphere(Camera* camera, int x, int y, Vector3 point, float radiusSquared);
+
+	static const char* format(char* fstr, ...);
 
 	static void CreateUnit(Game* game, Control* control);
 	static void SwitchPlayer(Game* game, Control* control);
@@ -136,6 +142,7 @@ private:
 	Client _client;
 	GameObjectManager _manager;
 	int _currentPlayerIDforUI;
+	SpriteBatch* _HPBarsSpriteBatch;
 public:
 	int _ping;
 	PLAYERID _netPlayerID;

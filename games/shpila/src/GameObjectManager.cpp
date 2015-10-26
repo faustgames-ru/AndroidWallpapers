@@ -30,6 +30,7 @@ void createCharacterRotationMatrix(Vector3 forward, Matrix* rotation)
 
 GameObjectManager::GameObjectManager()
 : Players()
+, Selected()
 , _scene()
 , _units()
 , _objects()
@@ -196,13 +197,16 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Vector3 positi
 	return createObject(name, transform, player);
 }
 
-void GameObjectManager::AttachUnitModel(const char* unitName, BaseGameObject* object, const char* nodeName)
+Node* GameObjectManager::AttachUnitModel(const char* unitName, BaseGameObject* object, const char* nodeName)
 {
 	GameUnit& unit = _units[unitName];
+	Node *res = NULL;
 	if (unit._node)
 	{
-		object->attachNode(nodeName, unit._node->getFirstChild()->clone());
+		res = unit._node->getFirstChild()->clone();
+		object->attachNode(nodeName, res);
 	}
+	return res;
 }
 
 void GameObjectManager::registerMovementController(UnitMovementBase* controller)

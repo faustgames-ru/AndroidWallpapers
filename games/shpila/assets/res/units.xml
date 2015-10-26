@@ -3021,8 +3021,8 @@
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
 		<DistanceSplash>0</DistanceSplash>
-		<AttackDelayAir>0.5</AttackDelayAir>
-		<AttackDelayGround>0.5</AttackDelayGround>
+		<AttackDelayAir>0.19</AttackDelayAir>
+		<AttackDelayGround>0.19</AttackDelayGround>
 		<armour>0</armour>
 		<shield>0</shield>
 		<HP>1000</HP>
@@ -3082,8 +3082,8 @@
 		<SplashDamageShield>0</SplashDamageShield>
 		<SplashType>none</SplashType>
 		<DistanceSplash>0</DistanceSplash>
-		<AttackDelayAir>0.5</AttackDelayAir>
-		<AttackDelayGround>0.5</AttackDelayGround>
+		<AttackDelayAir>0.19</AttackDelayAir>
+		<AttackDelayGround>0.19</AttackDelayGround>
 		<armour>0</armour>
 		<shield>0</shield>
 		<HP>2000</HP>
