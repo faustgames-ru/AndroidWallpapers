@@ -106,7 +106,6 @@ void Shpila::initialize()
 		_hud.bind("Player1_New_VoidRay", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Carrier", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Tempest", Control::Listener::CLICK, CreateUnit); 
-		_hud.bind("Player1_New_Mothership", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_MothershipCore", Control::Listener::CLICK, CreateUnit);
 		//_hud.bind("Show_Units_P1", Control::Listener::CLICK, ShowUnitsP1);
 		_hud.form()->getControl("Player1")->setVisible(false);

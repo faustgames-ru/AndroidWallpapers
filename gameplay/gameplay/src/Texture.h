@@ -245,6 +245,19 @@ public:
      */
     void setData(const unsigned char* data);
 
+	//Allocate and fill texture pixels data. Use freeTextureData when finish work with pixels data or data will be free after delete texture object
+	unsigned char* getTextureData();
+	//Create texture pixels data
+	unsigned char* createTextureData();
+	//full update texture data
+	void updateTextureData(Format format, unsigned int width, unsigned int height, unsigned char* data);
+	//update texture top mipmap level data
+	void updateTextureSubData(int xoffset, int yoffset, int width, int height, unsigned char* data);
+	//
+	unsigned int getTexturePixel(int index);
+	//
+	static unsigned int getTextureDataPixel(int index, Texture::Format format, unsigned char* data);
+
     /**
      * Returns the path that the texture was originally loaded from (if applicable).
      *

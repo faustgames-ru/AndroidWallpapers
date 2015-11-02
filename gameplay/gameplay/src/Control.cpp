@@ -9,7 +9,7 @@ namespace gameplay
 
 Control::Control()
 : _id(""), _textTag(""), _boundsBits(0), _dirtyBits(DIRTY_BOUNDS | DIRTY_STATE), _consumeInputEvents(true), _alignment(ALIGN_TOP_LEFT),
-    _autoSize(AUTO_SIZE_BOTH), _listeners(NULL), _style(NULL), _visible(true), _opacity(0.0f), _zIndex(-1),
+_autoSize(AUTO_SIZE_BOTH), _listeners(NULL), _style(NULL), _visible(true), _opacity(0.0f), _zIndex(-1),
     _contactIndex(INVALID_CONTACT_INDEX), _focusIndex(-1), _canFocus(false), _state(NORMAL), _parent(NULL), _styleOverridden(false), _skin(NULL)
 {
     GP_REGISTER_SCRIPT_EVENTS();
@@ -100,6 +100,13 @@ void Control::initialize(const char* typeName, Theme::Style* style, Properties* 
 		if (properties->exists("textTag"))
 			_textTag = properties->getString("textTag");
 
+		if (properties->exists("region"))
+		{
+			Vector4 regionVector;
+			properties->getVector4("region", &regionVector);
+			setSkinRegion(Rectangle(regionVector.x, regionVector.y, regionVector.z, regionVector.w));
+		}
+
 		// Properties not defined by the style.
 		const char* alignmentString = properties->getString("alignment");
 		_alignment = getAlignment(alignmentString);
@@ -177,16 +184,24 @@ void Control::initialize(const char* typeName, Theme::Style* style, Properties* 
         // Parse the auto-size mode for the control (this overrides explicit sizes and legacy autoWidth/autoHeight)
         _autoSize = parseAutoSize(properties->getString("autoSize"));
 
+		if (properties->exists("eventPadding"))
+		{
+			properties->getVector4("eventPadding", &_eventPadding);
+		}
+		
+
         // If there is are simple padding or margin variables, parse them
         if (properties->exists("padding"))
         {
-            float pad = properties->getFloat("padding");
-            setPadding(pad, pad, pad, pad);
+			Vector4 pad;
+			properties->getVector4("padding", &pad);
+			setPadding(pad.x, pad.y, pad.z, pad.w);
         }
         if (properties->exists("margin"))
         {
-            float margin = properties->getFloat("margin");
-            setPadding(margin, margin, margin, margin);
+			Vector4 margin;
+			properties->getVector4("margin", &margin);
+			setMargin(margin.x, margin.y, margin.z, margin.w);
         }
 
 		if (properties->exists("enabled"))
@@ -1879,6 +1894,29 @@ bool Control::parseCoordPair(const char* s, float* v1, float* v2, bool* v1Percen
     *v1 = parseCoord(v1Str.c_str(), v1Percentage);
     *v2 = parseCoord(v2Str.c_str(), v2Percentage);
     return true;
+}
+
+const Rectangle Control::getEventBounds()
+{
+	return Rectangle(_absoluteClipBounds.x + _eventPadding.x, _absoluteClipBounds.y + _eventPadding.y, _absoluteClipBounds.width - _eventPadding.z, _absoluteClipBounds.height - _eventPadding.w);
+}
+
+bool Control::contains(int x, int y)
+{
+	bool res = getEventBounds().contains(x, y);
+	if (res)
+	{		
+		const Rectangle rect = getSkinRegion();
+		int px = x - _absoluteClipBounds.left();
+		int py = y - _absoluteClipBounds.top();
+		px = px / _absoluteClipBounds.width * rect.width + rect.left();
+		py = py / _absoluteClipBounds.height * rect.height + rect.top();
+		Texture *tex = _style->getTheme()->_texture;
+		int color = tex->getTexturePixel(px + (tex->getHeight() - 1 - py) * tex->getWidth());
+		int a = (color >> 24) & 0xff;
+		res = res && (a > 50.0f);
+	}
+	return res;
 }
 
 }

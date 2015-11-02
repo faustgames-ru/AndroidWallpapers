@@ -194,7 +194,7 @@ form hud
         alignment = ALIGN_BOTTOM_LEFT
 		layout = LAYOUT_ABSOLUTE
         width = 1920
-		height = 216
+		height = 297
         autoHeight = false
         scrollBarsAutoHide = false
         consumeInputEvents = false		
@@ -210,7 +210,8 @@ form hud
 			button extractor
 			{
 				consumeInputEvents = true
-				style = buttonStyleExtractor
+				style = buttonStyle
+				region = 1700, 0, 75, 101
 				width = 85
 				height = 101
 				text = Extractor
@@ -219,7 +220,8 @@ form hud
 			{
 				textTag = GroundArmorUpgrade
 				consumeInputEvents = true
-				style = buttonStyleArmorGround
+				style = buttonStyle
+				region = 1850, 0, 75, 101
 				width = 85
 				height = 101
 				text = Armor Ground
@@ -228,7 +230,8 @@ form hud
 			{
 				textTag = AirArmorUpgrade
 				consumeInputEvents = true
-				style = buttonStyleArmorAir
+				style = buttonStyle
+				region = 1775, 0, 75, 101
 				width = 85
 				height = 101
 				text = Armor Air
@@ -237,7 +240,8 @@ form hud
 			{
 				textTag = GroundAttackUpgrade
 				consumeInputEvents = true
-				style = buttonStyleAttackGround
+				style = buttonStyle
+				region = 200, 101, 75, 101
 				width = 85
 				height = 101
 				text = Weapon Ground
@@ -246,7 +250,8 @@ form hud
 			{
 				textTag = AirAttackUpgrade
 				consumeInputEvents = true
-				style = buttonStyleAttackAir
+				style = buttonStyle
+				region = 1925, 0, 75, 101
 				width = 85
 				height = 101
 				text = Weapon Air
@@ -255,7 +260,8 @@ form hud
 			{
 				textTag = ZealotUpgrade
 				consumeInputEvents = true
-				style = buttonStyleZealotCharge
+				style = buttonStyle
+				region = 1625, 0, 75, 101
 				width = 85
 				height = 101
 				text = Upgrade Zealot
@@ -273,149 +279,172 @@ form hud
 
         container units1_column1
         {
-		   textTag = units_p1
-           alignment = ALIGN_TOP_LEFT
-           autoWidth = true
-           height = 101
-           layout = LAYOUT_FLOW
-		   consumeInputEvents = false
-		   y = 115
+			textTag = units_p1
+			alignment = ALIGN_TOP_LEFT
+			autoWidth = true
+			height = 196
+			layout = LAYOUT_ABSOLUTE
+			consumeInputEvents = false
+			y = 115
 
-           button Player1_New_Irbaga
-           {
-			  textTag = irbaga
-              consumeInputEvents = true
-              style = buttonStyleZealot
-              width = 85
-              height = 101
-              text = Irbaga
-           }
-		   button Player1_New_Budfoor
-           {
-			  textTag = budfoor
-              consumeInputEvents = true
-              style = buttonStyleStalker
-              width = 85
-              height = 101
-              text = Budfoor
-           }
-		   button Player1_New_Chasovoy
-           {
-		      textTag = chasovoy
-              consumeInputEvents = true
-              style = buttonStyleShasovoy
-              width = 85
-              height = 101
-              text = Chasovoy
-           }
-		   button Player1_New_MothershipCore
-           {
-		      textTag = mothershipcore
-              consumeInputEvents = true
-              style = buttonStyleCore
-              width = 85
-              height = 101
-              text = Core
-           }
-		   button Player1_New_Archon
-           {
+			button Player1_New_Irbaga
+			{
+				x = 170
+				textTag = irbaga
+				consumeInputEvents = true
+				style = buttonStyle
+				eventPadding = 25, 0, 25, 0
+				region = 1852, 331, 196, 196
+				width = 196
+				height = 196
+				text = Irbaga
+			}
+			button Player1_New_Budfoor
+			{
+				x = 295
+				textTag = budfoor
+				consumeInputEvents = true
+				style = buttonStyle
+				eventPadding = 35, 0, 25, 0
+				region = 1446, 331, 196, 196
+				width = 196
+				height = 196
+				text = Budfoor
+			}
+			button Player1_New_Chasovoy
+			{
+				x = 420
+				textTag = chasovoy
+				consumeInputEvents = true
+				style = buttonStyle
+				eventPadding = 25, 0, 25, 0
+				region = 1068, 331, 196, 196
+				width = 196
+				height = 196
+				text = Chasovoy
+			}
+			button Player1_New_MothershipCore
+			{
+			  x = 545
+			  textTag = mothershipcore
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  eventPadding = 25, 0, 25, 0
+			  region = 1264, 331, 196, 196
+			  width = 196
+			  height = 196
+			  text = Core
+			}
+			button Player1_New_Archon
+			{
+			  x = 670
 			  textTag = archon
-              consumeInputEvents = true
-              style = buttonStyleArchon
-              width = 85
-              height = 101
-              text = Archon
-           }
-		   button Player1_New_Immortal
-           {
-		      textTag = immortal
-              consumeInputEvents = true
-              style = buttonStyleImmortal
-              width = 85
-              height = 101
-              text = Immortal
-           }
-		   button Player1_New_VoidRay
-           {
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 540, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = Archon
+			}
+			button Player1_New_Immortal
+			{
+			  x = 795
+			  textTag = immortal
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 625, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = Immortal
+			}
+			button Player1_New_VoidRay
+			{
+			  x = 920
 			  textTag = voidray
-              consumeInputEvents = true
-              style = buttonStyleVoidRay
-              width = 85
-              height = 101
-              text = VoidRay
-           }
-		   button Player1_New_Dark
-           {
-		      textTag = dark
-              consumeInputEvents = true
-              style = buttonStyleDarkTemplar
-              width = 85
-              height = 101
-              text = Dark
-           }		   
-		   button Player1_New_Observer
-           {
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 710, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = VoidRay
+			}
+			button Player1_New_Dark
+			{
+			  x = 1045
+			  textTag = dark
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 795, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = Dark
+			}		   
+			button Player1_New_Observer
+			{
+			  x = 1170
 			  textTag = observer
-              consumeInputEvents = true
-              style = buttonStyleObserver
-              width = 85
-              height = 101
-              text = Observer
-           }
-		   button Player1_New_Albiria
-           {
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 880, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = Observer
+			}
+			button Player1_New_Albiria
+			{
+			  x = 1295
 			  textTag = albiria
-              consumeInputEvents = true
-              style = buttonStylePhoenix
-              width = 85
-              height = 101
-              text = Albiria
-           }
-		   button Player1_New_Barar
-           {
-		      textTag = barar
-              consumeInputEvents = true
-              style = buttonStyleHighTemplar
-              width = 85
-              height = 101
-              text = Barar
-           }
-		   button Player1_New_Carrier
-           {
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 965, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = Albiria
+			}
+			button Player1_New_Barar
+			{
+			  x = 1420
+			  textTag = barar
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 1050, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = Barar
+			}
+			button Player1_New_Carrier
+			{
+			  x = 1545
 			  textTag = carrier
-              consumeInputEvents = true
-              style = buttonStyleCarrier
-              width = 85
-              height = 101
-              text = Carrier
-           }
-		   button Player1_New_Colossus
-           {
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 1135, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = Carrier
+			}
+			button Player1_New_Colossus
+			{
+			  x = 1670
 			  textTag = colossus
-              consumeInputEvents = true
-              style = buttonStyleColossus
-              width = 85
-              height = 101
-              text = Colossus
-           }
-		   button Player1_New_Mothership
-           {
-			  textTag = mothership
-              consumeInputEvents = true
-              style = buttonStyleMathership
-              width = 85
-              height = 101
-              text = Mothership
-           }
-		   button Player1_New_Tempest
-           {
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 1220, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = Colossus
+			}
+			button Player1_New_Tempest
+			{
+			  x = 1795
 			  textTag = tempest
-              consumeInputEvents = true
-              style = buttonStyleTempest
-              width = 85
-              height = 101
-              text = Tempest
-           }
+			  consumeInputEvents = true
+			  style = buttonStyle
+			  region = 1390, 0, 85, 101
+			  width = 196
+			  height = 196
+			  text = Tempest
+			}
         }
 		
 		container UpgradeButtons
@@ -430,7 +459,8 @@ form hud
 			{
 				textTag = BaseLevel
 				consumeInputEvents = true
-				style = buttonStyleUpgrade1
+				style = buttonStyle
+				region = 1475, 0, 75, 101
 				width = 75
 				height = 101
 				text = Upgrade1
@@ -439,7 +469,8 @@ form hud
 			{
 				textTag = BaseLevel
 				consumeInputEvents = true
-				style = buttonStyleUpgrade2
+				style = buttonStyle
+				region = 1550, 0, 75, 101
 				width = 75
 				height = 101
 				text = Upgrade2

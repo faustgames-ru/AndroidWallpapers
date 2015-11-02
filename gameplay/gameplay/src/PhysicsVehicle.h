@@ -16,7 +16,6 @@ class PhysicsVehicleWheel;
  * to it all of the properties of a rigid body such as shape, mass, friction,
  * etc which correspond to the vehicle body:
  *
- * @see http://gameplay3d.github.io/GamePlay/docs/file-formats.html#wiki-Collision_Objects
  */
 class PhysicsVehicle : public PhysicsCollisionObject
 {

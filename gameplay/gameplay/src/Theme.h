@@ -21,7 +21,6 @@ namespace gameplay
  * A Style describes the border, margin, and padding of a Control, what images, skins, and cursors
  * are associated with a Control, and Font properties to apply to a Control's text.
  *
- * @see http://gameplay3d.github.io/GamePlay/docs/file-formats.html#wiki-Theme
  */
 class Theme: public Ref
 {
@@ -182,7 +181,7 @@ public:
 
         ~ThemeImage();
 
-        static ThemeImage* create(float tw, float th, Properties* properties, const Vector4& defaultColor);
+		static ThemeImage* create(float tw, float th, Properties* properties, const Vector4& defaultColor, const Vector2& regionOffset);
 
         std::string _id;
         UVs _uvs;
@@ -270,6 +269,7 @@ private:
         std::string _id;
         std::vector<ThemeImage*> _images;
         Vector4 _color;
+		Vector2 _offset;
     };
 
     /**

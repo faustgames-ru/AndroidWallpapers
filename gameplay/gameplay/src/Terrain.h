@@ -79,7 +79,6 @@ class TerrainAutoBindingResolver;
  * approaches. In practice, the skirts are often not noticeable at all unless the LOD variation
  * is very large and the terrain is excessively hilly on the edge of a LOD transition.
  *
- * @see http://gameplay3d.github.io/GamePlay/docs/file-formats.html#wiki-Terrain
  */
 class Terrain : public Ref, public Drawable, private Transform::Listener
 {

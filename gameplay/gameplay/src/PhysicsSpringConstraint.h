@@ -12,7 +12,6 @@ namespace gameplay
  * where the spring strength and damping can be set
  * for all six degrees of freedom.
  *
- * @see http://gameplay3d.github.io/GamePlay/docs/file-formats.html#wiki-Constraints
  */
 class PhysicsSpringConstraint : public PhysicsGenericConstraint
 {

@@ -21,7 +21,6 @@ class Form;
 /**
  * Defines the base class for all controls.
  *
- * @see http://gameplay3d.github.io/GamePlay/docs/file-formats.html#wiki-UI_Forms
  */
 class Control : public Ref, public AnimationTarget, public ScriptTarget
 {
@@ -1362,6 +1361,10 @@ protected:
      */
     static bool parseCoordPair(const char* s, float* v1, float* v2, bool* v1Percentage, bool* v2Percentage);
 
+	const Rectangle getEventBounds();
+
+	bool contains(int x, int y);
+
     /** 
      * The Control's ID.
      */ 
@@ -1411,6 +1414,11 @@ protected:
      * Absolute bounds of content area (i.e. without border and padding), after clipping.
      */
     Rectangle _viewportClipBounds;
+
+	/**
+	* Padding for calc control contains. Used with _absoluteClipBounds
+	*/
+	Vector4 _eventPadding;
 
     /**
      * Control dirty bits.

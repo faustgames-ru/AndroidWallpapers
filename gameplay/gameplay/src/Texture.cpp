@@ -53,7 +53,7 @@ static Texture::Type __currentTextureType = Texture::TEXTURE_2D;
 
 Texture::Texture() : _handle(0), _format(UNKNOWN), _type((Texture::Type)0), _width(0), _height(0), _mipmapped(false), _cached(false), _compressed(false),
     _wrapS(Texture::REPEAT), _wrapT(Texture::REPEAT), _wrapR(Texture::REPEAT), _minFilter(Texture::NEAREST_MIPMAP_LINEAR), _magFilter(Texture::LINEAR), _PNGimage(NULL),
-_textureData(NULL), _generateMipmaps(false)
+	_textureData(NULL), _generateMipmaps(false)
 {
 }
 
@@ -74,8 +74,15 @@ Texture::~Texture()
             __textureCache.erase(itr);
         }
     }
-	SAFE_RELEASE(_PNGimage);
-	SAFE_DELETE_ARRAY(_textureData);
+	if (_PNGimage != NULL)
+	{
+		SAFE_RELEASE(_PNGimage);
+	}
+	else
+	{
+		SAFE_DELETE_ARRAY(_textureData);
+	}
+		
 }
 
 Texture* Texture::create(const char* path, bool generateMipmaps)
@@ -175,9 +182,9 @@ Texture* Texture::create(Format format, unsigned int width, unsigned int height,
 	texture->_minFilter = generateMipmaps ? NEAREST_MIPMAP_LINEAR : LINEAR;
 	texture->_PNGimage = image;
 	texture->_PNGimage->addRef();
+	texture->_textureData = texture->_PNGimage->getData();
 	texture->_generateMipmaps = generateMipmaps;
-	texture->restoreDeviceObject();
-
+	texture->restoreDeviceObject();	
     return texture;
 }
 
@@ -250,9 +257,7 @@ void Texture::restoreDeviceObject()
 	if (_generateMipmaps && glGenerateMipmap == NULL)
 		GL_ASSERT(glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
 #endif
-	if (_PNGimage != NULL)
-		GL_ASSERT(glTexImage2D(GL_TEXTURE_2D, 0, (GLenum)_format, _width, _height, 0, (GLenum)_format, GL_UNSIGNED_BYTE, _PNGimage->getData()));
-	else if (_textureData != NULL)
+	if (_textureData != NULL)
 	{
 		if (_type == Texture::TEXTURE_2D)
 		{
@@ -335,6 +340,91 @@ void Texture::setData(const unsigned char* data)
 
     // Restore the texture id
     GL_ASSERT( glBindTexture((GLenum)__currentTextureType, __currentTextureId) );
+}
+
+unsigned char* Texture::getTextureData()
+{
+	if (_textureData != NULL)
+		return _textureData;
+#ifdef WIN32
+	GLint width, height, internalFormat;
+	glBindTexture(GL_TEXTURE_2D, _handle);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_COMPONENTS, &internalFormat);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &width);
+	glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &height);
+
+	GLint numBytes = 0;
+
+	switch (internalFormat)
+	{
+	case GL_RGB:
+		numBytes = width * height * 3;
+
+		break;
+	case GL_RGBA:
+		numBytes = width * height * 4;
+		break;
+	default: // unsupported type (or you can put some code to support more formats if you need)
+		break;
+	}
+
+	if (numBytes)
+	{
+		_textureData = (unsigned char*)malloc(numBytes); // allocate image data into RAM
+		glGetTexImage(GL_TEXTURE_2D, 0, internalFormat, GL_UNSIGNED_BYTE, _textureData);
+	}
+#endif
+	return _textureData;
+}
+
+void Texture::updateTextureData(Format format, unsigned int width, unsigned int height, unsigned char* data)
+{
+	_format = format;
+	_width = width;
+	_height = height;
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, _handle));
+	GL_ASSERT(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+	GL_ASSERT(glTexImage2D(GL_TEXTURE_2D, 0, (GLenum)format, width, height, 0, (GLenum)format, GL_UNSIGNED_BYTE, data));
+}
+
+void Texture::updateTextureSubData(int xoffset, int yoffset, int width, int height, unsigned char* data)
+{
+	GL_ASSERT(glBindTexture(GL_TEXTURE_2D, _handle));
+	GL_ASSERT(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+	GL_ASSERT(glTexSubImage2D(GL_TEXTURE_2D, 0, xoffset, yoffset, width, height, GL_RGBA, GL_UNSIGNED_BYTE, data));//_format
+}
+
+unsigned int Texture::getTexturePixel(int index)
+{
+	return getTextureDataPixel(index, _format, _textureData);
+}
+
+unsigned int Texture::getTextureDataPixel(int index, Texture::Format format, unsigned char* data)
+{
+	if (data)
+	{
+		switch (format)
+		{
+		case RGB:
+		{
+					static unsigned char bytes[4];
+					bytes[0] = 0;
+					bytes[1] = data[index * 3];
+					bytes[2] = data[index * 3 + 1]; 
+					bytes[3] = data[index * 3 + 2];
+					return (int)bytes;
+		}
+		case RGBA:
+		{
+					 return ((int*)data)[index];
+		}
+		default:
+		{
+				   return 0;
+		}
+		}
+	}
+	return 0;
 }
 
 // Computes the size of a PVRTC data chunk for a mipmap level of the given size.

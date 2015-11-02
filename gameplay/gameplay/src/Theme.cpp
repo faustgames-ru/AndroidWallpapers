@@ -155,7 +155,7 @@ Theme* Theme::create(const char* url)
             
         if (strcmpnocase(spacename, "image") == 0)
         {
-            theme->_images.push_back(ThemeImage::create(tw, th, space, Vector4::one()));
+			theme->_images.push_back(ThemeImage::create(tw, th, space, Vector4::one(), Vector2::zero()));
         }
         else if (strcmpnocase(spacename, "imageList") == 0)
         {
@@ -177,9 +177,15 @@ Theme* Theme::create(const char* url)
                 }
             }
 
+			Vector2 regionOffset(0.0f, 0.0f);
+			if (space->exists("regionOffset"))
+			{
+				space->getVector2("regionOffset", &regionOffset);
+			}
+
             Vector4 regionVector;
             space->getVector4("region", &regionVector);
-            const Rectangle region(regionVector.x, regionVector.y, regionVector.z, regionVector.w);
+			const Rectangle region(regionVector.x + regionOffset.x, regionVector.y + regionOffset.y, regionVector.z, regionVector.w);
 
             Vector4 color(1, 1, 1, 1);
             if (space->exists("color"))
@@ -593,13 +599,13 @@ Theme::ThemeImage::~ThemeImage()
 {
 }
 
-Theme::ThemeImage* Theme::ThemeImage::create(float tw, float th, Properties* properties, const Vector4& defaultColor)
+Theme::ThemeImage* Theme::ThemeImage::create(float tw, float th, Properties* properties, const Vector4& defaultColor, const Vector2& regionOffset)
 {
     GP_ASSERT(properties);
 
     Vector4 regionVector;                
     properties->getVector4("region", &regionVector);
-    const Rectangle region(regionVector.x, regionVector.y, regionVector.z, regionVector.w);
+	const Rectangle region(regionVector.x + regionOffset.x, regionVector.y + regionOffset.y, regionVector.z, regionVector.w);
 
     Vector4 color;
     if (properties->exists("color"))
@@ -644,12 +650,16 @@ const Vector4& Theme::ThemeImage::getColor() const
 /********************
  * Theme::ImageList *
  ********************/
-Theme::ImageList::ImageList(const Vector4& color) : _color(color)
+Theme::ImageList::ImageList(const Vector4& color) 
+: _color(color)
+, _offset()
 {
 }
 
 Theme::ImageList::ImageList(const ImageList& copy)
-    : _id(copy._id), _color(copy._color)
+: _id(copy._id)
+, _color(copy._color)
+, _offset()
 {
     std::vector<ThemeImage*>::const_iterator it;
     for (it = copy._images.begin(); it != copy._images.end(); ++it)
@@ -680,7 +690,14 @@ Theme::ImageList* Theme::ImageList::create(float tw, float th, Properties* prope
         properties->getColor("color", &color);
     }
 
+	Vector2 regionOffset(0.0f, 0.0f);
+	if (properties->exists("regionOffset"))
+	{
+		properties->getVector2("regionOffset", &regionOffset);
+	}
+
     ImageList* imageList = new ImageList(color);
+	imageList->_offset = regionOffset;
 
     const char* id = properties->getId();
     if (id)
@@ -691,7 +708,7 @@ Theme::ImageList* Theme::ImageList::create(float tw, float th, Properties* prope
     Properties* space = properties->getNextNamespace();
     while (space != NULL)
     {
-        ThemeImage* image = ThemeImage::create(tw, th, space, color);
+		ThemeImage* image = ThemeImage::create(tw, th, space, color, regionOffset);
         GP_ASSERT(image);
         imageList->_images.push_back(image);
         space = properties->getNextNamespace();
@@ -765,6 +782,7 @@ const Rectangle& Theme::Skin::getRegion() const
 
 void Theme::Skin::setRegion(const Rectangle& region, float tw, float th)
 {
+	_region = region;
     // Can calculate all measurements in advance.
     float leftEdge = region.x * tw;
     float rightEdge = (region.x + region.width) * tw;

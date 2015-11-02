@@ -359,7 +359,7 @@ Control* Form::findInputControl(int* x, int* y, bool focus, unsigned int contact
 
         // If the form consumes input events and the point intersects the form,
         // don't traverse other forms below it.
-        if (form->_consumeInputEvents && form->_absoluteClipBounds.contains(formX, formY))
+		if (form->_consumeInputEvents && form->contains(formX, formY))
             return NULL;
     }
 
@@ -377,7 +377,7 @@ Control* Form::findInputControl(Control* control, int x, int y, bool focus, unsi
     // does the control support the specified input state?
     if (control->_consumeInputEvents && (!focus || control->canFocus()))
     {
-        if (control->_absoluteClipBounds.contains(x, y))
+		if (control->contains(x, y))
             result = control;
     }
 
@@ -487,7 +487,7 @@ Control* Form::handlePointerPressRelease(int* x, int* y, bool pressed, unsigned 
 
             // If the release event was received on the same control that was
             // originally pressed, fire a click event
-            if (active->_absoluteClipBounds.contains(newX, newY))
+			if (active->contains(newX, newY))
             {
                 if (!active->_parent || !active->_parent->isScrolling())
                 {

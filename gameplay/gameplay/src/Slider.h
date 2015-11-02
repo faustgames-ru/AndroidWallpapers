@@ -15,7 +15,6 @@ namespace gameplay
  *
  * A slider consists of a marker (grabber) that can slide along a track between two end-caps.
  * 
- * @see http://gameplay3d.github.io/GamePlay/docs/file-formats.html#wiki-UI_Forms
  */
 class Slider : public Label
 {
