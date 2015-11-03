@@ -366,6 +366,11 @@ void PlayerObject::addExtractor()
 	}
 }
 
+bool PlayerObject::defited()
+{
+	return getDefence()->LocalGameData.Health <= 0.0f;
+}
+
 int PlayerObject::getNewObjectID()
 {
 	return _newObjectID++;

@@ -1,6 +1,6 @@
 scene
 {
-    path = res/common/default/largeair.gpb
+    path = res/common/core.gpb
 
     node Large
     {

@@ -108,6 +108,7 @@ private:
 	static void ConnectToServer(Game* game, Control* control);
 	static void Upgrade(Game* game, Control* control);
 	static void AddExtractor(Game* game, Control* control);
+	static void CloseGame(Game* game, Control* control);
 
 	static void loadSetting(Game* game, Control* control);
 	static void saveSetting(Game* game, Control* control);

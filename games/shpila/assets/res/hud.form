@@ -517,8 +517,38 @@ form hud
 		  text = Pause
 	   }
 	}
-	 
-	 container Connection
+	
+	container GameOver
+    {
+		style = noBorder
+        alignment = ALIGN_VCENTER_HCENTER
+        width = 250
+		height = 20
+		autoWidth = false
+        autoHeight = false
+        scrollBarsAutoHide = false
+		layout = LAYOUT_FLOW
+        consumeInputEvents = false
+		   
+		label GameOverText
+		{
+			alignment = ALIGN_VCENTER_LEFT
+			style = title
+			size = 150, 25
+			text = GameOver
+		}
+		   
+		button GameOverButton
+		{
+			consumeInputEvents = true
+			style = buttonStyle
+			width = 70
+			height = 35
+			text = Ok
+		}
+	}
+	
+	container Connection
     {
 		style = noBorder
         alignment = ALIGN_VCENTER_HCENTER

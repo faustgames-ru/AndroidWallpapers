@@ -121,6 +121,7 @@ public:
 	bool CreateWarrior(bool continuous, const Valuable<Vector3> position = Valuable<Vector3>::Undefined);
 	void CancelCreateWarrior();
 	void addExtractor();
+	bool defited();
 	int getNewObjectID();
 	UpgradesData* upgrades();
 	BaseStaticActor* getDefence();

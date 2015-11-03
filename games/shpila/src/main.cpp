@@ -125,6 +125,7 @@ void Shpila::initialize()
 		_hud.bind("upgrade_stalker", Control::Listener::CLICK, Upgrade);
 		
 		_hud.bind("extractor", Control::Listener::CLICK, AddExtractor);
+		_hud.bind("GameOverButton", Control::Listener::CLICK, CloseGame);
 		
 		
 
@@ -139,6 +140,9 @@ void Shpila::initialize()
 		((Label*)_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
 		_hud.bind("CameraFree", Control::Listener::CLICK, SetCameraFree);
 		_hud.bind("CameraLocked", Control::Listener::CLICK, SetCameraLocked);		
+
+		_hud.form()->getControl("GameOver")->setVisible(false);
+		
 
 		// Load scene.
 		_scene = Scene::load("res/common/box.scene");
@@ -764,6 +768,13 @@ void Shpila::AddExtractor(Game* game, Control* control)
 	shpila->getActivePlayer()->addExtractor();
 }
 
+void Shpila::CloseGame(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	game->exit();
+}
+
+
 void loadCamera(TiXmlNode *node, TargetCamera& camera)
 {
 	Quaternion qRotX;
@@ -893,6 +904,20 @@ void Shpila::update(float elapsedTime)
 		updateMenuButtons();
 		updateActions(elapsedTime);
 		updateKeyStates();
+
+		if (getState() != Game::PAUSED)
+		{
+			bool gameover = false;
+			for (std::vector<PlayerObject*>::iterator it = _manager.Players.begin(); it != _manager.Players.end(); ++it)
+			{
+				gameover = gameover || (*it)->defited();
+			}
+			if (gameover)
+			{
+				_hud.form()->getControl("GameOver")->setVisible(true);
+				pause();
+			}			
+		}
 	}
 }
 
