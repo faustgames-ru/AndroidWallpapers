@@ -87,7 +87,7 @@ form hud
 	    }
 		label UnitNameText
 	    {
-			x=100
+			x=120
 			style = title
 			size = 150, 35
 			text = UnitNameText
@@ -102,7 +102,7 @@ form hud
 	    }
 		label UnitHealthText
 	    {
-			x=100
+			x=120
 			y=25
 			style = title
 			size = 150, 35
@@ -118,7 +118,7 @@ form hud
 	    }
 		label UnitShieldText
 	    {
-			x=100
+			x=120
 			y=50
 			style = title
 			size = 150, 35
@@ -134,7 +134,7 @@ form hud
 	    }
 		label UnitManaText
 	    {
-			x=100
+			x=120
 			y=75
 			style = title
 			size = 150, 35
@@ -150,7 +150,7 @@ form hud
 	    }
 		label UnitMoveSpeedText
 	    {
-			x=100
+			x=120
 			y=100
 			style = title
 			size = 150, 35
@@ -166,7 +166,7 @@ form hud
 	    }
 		label UnitAttackSpeedText
 	    {
-			x=100
+			x=120
 			y=125
 			style = title
 			size = 150, 35
@@ -177,15 +177,63 @@ form hud
 			y=150
 			style = title
 			size = 150, 35
-			text = AttackDamage
+			text = Attack Damage
 	    }
 		label UnitAttackDamageText
 	    {
-			x=100
+			x=120
 			y=150
 			style = title
 			size = 150, 35
 			text = AttackDamageText
+	    }
+		label UnitAttackUpgrade
+	    {
+			x=200
+			y=0
+			style = title
+			size = 150, 35
+			text = Attack Upgrade
+	    }
+		label UnitAttackUpgradeText
+	    {
+			x=320
+			y=0
+			style = title
+			size = 150, 35
+			text = AttackUpgradeText
+	    }
+		label UnitArmorUpgrade
+	    {
+			x=200
+			y=25
+			style = title
+			size = 150, 35
+			text = Armor Upgrade
+	    }
+		label UnitArmorUpgradeText
+	    {
+			x=320
+			y=25
+			style = title
+			size = 150, 35
+			text = ArmorUpgradeText
+	    }
+		label UnitShieldUpgrade
+	    {
+			x=200
+			y=50
+			style = title
+			size = 150, 35
+			text = Shield Upgrade
+	    }
+		label UnitShieldUpgradeText
+	    {
+			x=320
+			y=50
+			style = title
+			size = 150, 35
+			text = ShieldUpgradeText
 	    }
 	}
     container Player1
@@ -199,80 +247,124 @@ form hud
         scrollBarsAutoHide = false
         consumeInputEvents = false		
 		
+		container HomeSubPagesButtons
+		{
+			height = 101
+			layout = LAYOUT_VERTICAL
+			autoWidth = true
+			consumeInputEvents = false
+			y=115
+			
+			button Player1UnitsButton
+			{
+				x = 10
+				consumeInputEvents = true
+				style = HomeSubPagesButtonStyle
+				image = units
+				width = 151
+				height = 42
+				text = units
+			}
+			
+			button Player1UpgradesButton
+			{
+				x = 10
+				y = 62
+				consumeInputEvents = true
+				style = HomeSubPagesButtonStyle
+				image = upgrades
+				width = 151
+				height = 42
+				text = upgrades
+			}
+		}
+		
 		container upgrades_amu
 		{
 			height = 101
 			layout = LAYOUT_FLOW
 			autoWidth = true
 			consumeInputEvents = false
-			y=0
+			x = 200
+			y = 175
 			
 			button extractor
 			{
 				consumeInputEvents = true
-				style = buttonStyle
-				region = 1700, 0, 75, 101
-				width = 85
-				height = 101
+				style = UpgradesButtonsButtonStyle
+				image = extractor
+				width = 97
+				height = 77
 				text = Extractor
+			}
+			button ShieldUpgrade
+			{
+				textTag = ShieldUpgrade
+				consumeInputEvents = true
+				style = UpgradesButtonsButtonStyle
+				image = shield
+				width = 97
+				height = 77
+				text = Shield
 			}
 			button armor_ground
 			{
 				textTag = GroundArmorUpgrade
 				consumeInputEvents = true
-				style = buttonStyle
-				region = 1850, 0, 75, 101
-				width = 85
-				height = 101
+				style = UpgradesButtonsButtonStyle
+				image = armor_ground
+				width = 97
+				height = 77
 				text = Armor Ground
 			}
 			button armor_air
 			{
 				textTag = AirArmorUpgrade
 				consumeInputEvents = true
-				style = buttonStyle
-				region = 1775, 0, 75, 101
-				width = 85
-				height = 101
+				style = UpgradesButtonsButtonStyle
+				image = armor_air
+				width = 97
+				height = 77
 				text = Armor Air
 			}
 			button weapon_ground
 			{
 				textTag = GroundAttackUpgrade
 				consumeInputEvents = true
-				style = buttonStyle
-				region = 200, 101, 75, 101
-				width = 85
-				height = 101
+				style = UpgradesButtonsButtonStyle
+				image = weapon_ground
+				width = 97
+				height = 77
 				text = Weapon Ground
 			}
 			button weapon_air
 			{
 				textTag = AirAttackUpgrade
 				consumeInputEvents = true
-				style = buttonStyle
-				region = 1925, 0, 75, 101
-				width = 85
-				height = 101
+				style = UpgradesButtonsButtonStyle
+				image = weapon_air
+				width = 97
+				height = 77
 				text = Weapon Air
 			}
 			button upgrade_zealot
 			{
 				textTag = ZealotUpgrade
 				consumeInputEvents = true
-				style = buttonStyle
-				region = 1625, 0, 75, 101
-				width = 85
-				height = 101
+				style = UpgradesButtonsButtonStyle
+				image = upgrade_zealot
+				width = 97
+				height = 77
 				text = Upgrade Zealot
 			}
 			button upgrade_stalker
 			{
 				textTag = StalkerUpgrade
 				consumeInputEvents = true
-				style = buttonStyle
-				width = 85
-				height = 101
+				style = UpgradesButtonsButtonStyle
+				image = upgrade_stalker
+				width = 97
+				height = 77
 				text = Upgrade Stalker
 			}
 		}
@@ -286,7 +378,7 @@ form hud
 			layout = LAYOUT_ABSOLUTE
 			consumeInputEvents = false
 			y = 115
-
+			
 			button Player1_New_Irbaga
 			{
 				x = 170
@@ -445,22 +537,14 @@ form hud
 			  height = 196
 			  text = Tempest
 			}
-        }
-		
-		container UpgradeButtons
-		{
-			layout = LAYOUT_ABSOLUTE
-			alignment = ALIGN_BOTTOM_LEFT
-			width = 1920
-			height = 116
-			consumeInputEvents = false
+			
 			
 			button UpgradeLevel1
 			{
 				textTag = BaseLevel
 				consumeInputEvents = true
 				style = buttonStyle
-				region = 1475, 0, 75, 101
+				region = 0, 0, 74, 84
 				width = 75
 				height = 101
 				text = Upgrade1
@@ -470,12 +554,12 @@ form hud
 				textTag = BaseLevel
 				consumeInputEvents = true
 				style = buttonStyle
-				region = 1550, 0, 75, 101
+				region = 0, 84, 74, 84
 				width = 75
 				height = 101
 				text = Upgrade2
 			}
-		}
+        }
 	}
 	 
 	container Tools

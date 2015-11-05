@@ -109,6 +109,8 @@ private:
 	static void Upgrade(Game* game, Control* control);
 	static void AddExtractor(Game* game, Control* control);
 	static void CloseGame(Game* game, Control* control);
+	static void ShowUnitsPage(Game* game, Control* control);
+	static void ShowUpgradesPage(Game* game, Control* control);
 
 	static void loadSetting(Game* game, Control* control);
 	static void saveSetting(Game* game, Control* control);

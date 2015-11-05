@@ -109,6 +109,9 @@ void Shpila::initialize()
 		_hud.bind("Player1_New_MothershipCore", Control::Listener::CLICK, CreateUnit);
 		//_hud.bind("Show_Units_P1", Control::Listener::CLICK, ShowUnitsP1);
 		_hud.form()->getControl("Player1")->setVisible(false);
+		_hud.form()->getControl("upgrades_amu")->setVisible(false);
+		_hud.form()->getControl("units1_column1")->setEnabled(true);
+		_hud.form()->getControl("units1_column1")->setOpacity(1.0f);
 		
 		_hud.form()->getControl("Tune")->setVisible(false);
 		_hud.form()->getControl("Connection")->setVisible(false);
@@ -123,12 +126,19 @@ void Shpila::initialize()
 		_hud.bind("UpgradeLevel2", Control::Listener::CLICK, Upgrade);
 		_hud.bind("upgrade_zealot", Control::Listener::CLICK, Upgrade);
 		_hud.bind("upgrade_stalker", Control::Listener::CLICK, Upgrade);
+		_hud.bind("ShieldUpgrade", Control::Listener::CLICK, Upgrade);
+		_hud.bind("armor_ground", Control::Listener::CLICK, Upgrade);
+		_hud.bind("armor_air", Control::Listener::CLICK, Upgrade);
+		_hud.bind("weapon_ground", Control::Listener::CLICK, Upgrade);
+		_hud.bind("weapon_air", Control::Listener::CLICK, Upgrade);
+		
 		
 		_hud.bind("extractor", Control::Listener::CLICK, AddExtractor);
 		_hud.bind("GameOverButton", Control::Listener::CLICK, CloseGame);
-		
-		
 
+		_hud.bind("Player1UnitsButton", Control::Listener::CLICK, ShowUnitsPage);
+		_hud.bind("Player1UpgradesButton", Control::Listener::CLICK, ShowUpgradesPage);
+		
 		_hud.bind("SettingsSave", Control::Listener::CLICK, saveSetting);
 		_hud.bind("SettingsLoad", Control::Listener::CLICK, loadSetting);
 		_hud.bind("AddEnergy", Control::Listener::CLICK, AddEnergy);
@@ -382,6 +392,9 @@ void Shpila::updateMenuButtons()
 	Label *lbMoveSpeed = ((Label*)_hud.form()->getControl("UnitMoveSpeedText"));
 	Label *lbAttackSpeed = ((Label*)_hud.form()->getControl("UnitAttackSpeedText"));
 	Label *lbAttackDamage = ((Label*)_hud.form()->getControl("UnitAttackDamageText"));
+	Label *lbAttackUpgrade = ((Label*)_hud.form()->getControl("UnitAttackUpgradeText"));
+	Label *lbArmorUpgrade = ((Label*)_hud.form()->getControl("UnitArmorUpgradeText"));
+	Label *lbShieldUpgrade = ((Label*)_hud.form()->getControl("UnitShieldUpgradeText"));
 	
 	if (_manager.Selected)
 	{
@@ -393,6 +406,15 @@ void Shpila::updateMenuButtons()
 		lbAttackSpeed->setText(format("%.2f / %.2f", _manager.Selected->LocalGameData.GameData->AttackDelayGround / 1000.0f / TIME_SCALE,
 			_manager.Selected->LocalGameData.GameData->AttackDelayAir / 1000.0f / TIME_SCALE));
 		lbAttackDamage->setText(format("%d", (int)_manager.Selected->LocalGameData.GameData->getDefaultDamage()));
+		if (_manager.Selected->LocalGameData.GameData->MovementGround)
+			lbAttackUpgrade->setText(format("%d", (int)_manager.Selected->LocalGameData.Upgrades->getUpgrade(Upgrades::GroundAttack)));
+		else
+			lbAttackUpgrade->setText(format("%d", (int)_manager.Selected->LocalGameData.Upgrades->getUpgrade(Upgrades::AirAttack)));
+		if (_manager.Selected->LocalGameData.GameData->MovementGround)
+			lbArmorUpgrade->setText(format("%d", (int)_manager.Selected->LocalGameData.Upgrades->getUpgrade(Upgrades::GroundArmor)));
+		else
+			lbArmorUpgrade->setText(format("%d", (int)_manager.Selected->LocalGameData.Upgrades->getUpgrade(Upgrades::AirArmor)));
+		lbShieldUpgrade->setText(format("%d", (int)_manager.Selected->LocalGameData.Upgrades->getUpgrade(Upgrades::Shield)));
 	}
 		
 	else
@@ -404,6 +426,9 @@ void Shpila::updateMenuButtons()
 		lbMoveSpeed->setText("");
 		lbAttackSpeed->setText("");
 		lbAttackDamage->setText("");
+		lbAttackUpgrade->setText("");
+		lbArmorUpgrade->setText("");
+		lbShieldUpgrade->setText("");
 	}
 	
 	
@@ -428,9 +453,9 @@ void Shpila::updateMenuButtons()
 	if (firstInvesible != -1)
 	{
 		buttonUpgrade1->setVisible(player->upgrades()->getUpgrade(Upgrades::BaseLevel) == 0);
-		buttonUpgrade1->setPosition(controls[firstInvesible]->getX(), controls[firstInvesible]->getY());
+		buttonUpgrade1->setPosition(controls[firstInvesible]->getX() + 20, controls[firstInvesible]->getY() + 90);
 		buttonUpgrade2->setVisible(player->upgrades()->getUpgrade(Upgrades::BaseLevel) == 1);
-		buttonUpgrade2->setPosition(controls[firstInvesible]->getX(), controls[firstInvesible]->getY());
+		buttonUpgrade2->setPosition(controls[firstInvesible]->getX() + 20 , controls[firstInvesible]->getY() + 90);
 	}
 	else
 	{
@@ -724,6 +749,7 @@ void Shpila::Upgrade(Game* game, Control* control)
 	const char* AIR_ATTACK_UPGRADE = "AirAttackUpgrade";
 	const char* GROUND_ARMOR_UPGRADE = "GroundArmorUpgrade";
 	const char* AIR_ARMOR_UPGRADE = "AirArmorUpgrade";
+	
 
 	Shpila* shpila = (Shpila*)game;
 	const char* tag = control->getTextTag();
@@ -774,6 +800,24 @@ void Shpila::CloseGame(Game* game, Control* control)
 	game->exit();
 }
 
+void Shpila::ShowUnitsPage(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_hud.form()->getControl("upgrades_amu")->setVisible(false);
+	shpila->_hud.form()->getControl("upgrades_amu")->setZIndex(0);
+	shpila->_hud.form()->getControl("units1_column1")->setEnabled(true);
+	shpila->_hud.form()->getControl("units1_column1")->setOpacity(1.0f);
+	shpila->_hud.form()->getControl("units1_column1")->setZIndex(1);
+}
+void Shpila::ShowUpgradesPage(Game* game, Control* control)
+{
+	Shpila* shpila = (Shpila*)game;
+	shpila->_hud.form()->getControl("upgrades_amu")->setVisible(true);
+	shpila->_hud.form()->getControl("upgrades_amu")->setZIndex(1);
+	shpila->_hud.form()->getControl("units1_column1")->setEnabled(false);
+	shpila->_hud.form()->getControl("units1_column1")->setOpacity(0.3f);
+	shpila->_hud.form()->getControl("units1_column1")->setZIndex(0);
+}
 
 void loadCamera(TiXmlNode *node, TargetCamera& camera)
 {

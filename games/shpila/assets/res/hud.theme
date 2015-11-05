@@ -94,8 +94,68 @@ theme sceneSettings
             region = 127, 91, 46, 46
         }
     }
+	
+	imageList HomeSubPagesButtons
+    {
+        color = #ffffffff
+		regionOffset = 198, 130
 
-    skin mainNormal
+        image units
+        {
+            region = 0, 0, 151, 42
+        }
+
+        image upgrades
+        {
+            region = 151, 0, 151, 42
+        }
+    }
+	
+	imageList UpgradesButtons
+    {
+        color = #ffffffff
+		regionOffset = 302, 0
+
+        image extractor
+        {
+            region = 0, 0, 97, 77
+        }
+		image shield
+        {
+            region = 1164, 0, 97, 77
+        }
+        image armor_ground
+        {
+            region = 1358, 0, 97, 77
+        }
+		image armor_air
+        {
+            region = 1552, 0, 97, 77
+        }
+		image weapon_ground
+        {
+            region =  1261, 0, 97, 77
+        }
+		image weapon_air
+        {
+            region = 1455, 0, 97, 77
+        }
+		image upgrade_zealot
+        {
+            region = 970, 0, 97, 77
+        }
+		image upgrade_stalker
+        {
+            region = 873, 0, 97, 77
+        }
+    }
+
+	skin BaseControls
+	{
+		regionOffset = 1877, 797
+	}
+	
+    skin mainNormal : BaseControls
     {
         border
         {
@@ -105,7 +165,6 @@ theme sceneSettings
             bottom = 10
         }
         
-		regionOffset = 1877, 797
         region = 1, 1, 74, 74
         color = #666666ff
     }
@@ -115,7 +174,7 @@ theme sceneSettings
         color = #ffffffff
     }
 
-    skin formEntry
+    skin formEntry : BaseControls
     {
         border
         {
@@ -124,6 +183,7 @@ theme sceneSettings
             top = 2
             bottom = 2
         }
+		
         region = 20, 20, 10, 10
         color = #4A8799ff
     }
@@ -184,6 +244,21 @@ theme sceneSettings
         stateActive
         {
             skin = mainActive
+        }
+    }
+	
+	style HomeSubPagesButtonStyle : buttonStyle
+    {
+        stateNormal
+        {
+            imageList = HomeSubPagesButtons
+        }
+    }
+	style UpgradesButtonsButtonStyle : buttonStyle
+    {
+        stateNormal
+        {
+            imageList = UpgradesButtons
         }
     }
 

@@ -107,6 +107,15 @@ void Control::initialize(const char* typeName, Theme::Style* style, Properties* 
 			setSkinRegion(Rectangle(regionVector.x, regionVector.y, regionVector.z, regionVector.w));
 		}
 
+		if (properties->exists("image"))
+		{
+			Vector4 regionVector;
+			const char *imagName = properties->getString("image");
+			Theme::ThemeImage * image = getImage(imagName, Control::State::NORMAL);
+			if (image)
+				setSkinRegion(image->getRegion());
+		}
+
 		// Properties not defined by the style.
 		const char* alignmentString = properties->getString("alignment");
 		_alignment = getAlignment(alignmentString);
