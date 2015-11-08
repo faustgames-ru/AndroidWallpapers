@@ -1,9 +1,9 @@
-#ifndef IRBAGA_H_
-#define IRBAGA_H_
+#ifndef WUKA_H_
+#define WUKA_H_
 
 using namespace gameplay;
 
-class IrbagaWarrior : public BaseWarrior
+class WukaWarrior : public BaseWarrior
 {
 public:
 	static BaseGameObject* constructor();

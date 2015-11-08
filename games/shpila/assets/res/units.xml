@@ -916,8 +916,8 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>zealot</name>
-		<id>irbaga</id>
+		<name>Wuka</name>
+		<id>wuka</id>
 		<price>90</price>
 		<RequireUpgrade>0</RequireUpgrade>
 		<BattleUpgradeClass>пехота</BattleUpgradeClass>
@@ -1038,8 +1038,8 @@
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>stalker</name>
-		<id>budfoor</id>
+		<name>Lamaki</name>
+		<id>lamaki</id>
 		<price>110</price>
 		<RequireUpgrade>0</RequireUpgrade>
 		<BattleUpgradeClass>пехота</BattleUpgradeClass>

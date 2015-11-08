@@ -1,20 +1,20 @@
-#ifndef BUDFOOR_H_
-#define BUDFOOR_H_
+#ifndef LAMAKI_H_
+#define LAMAKI_H_
 
 using namespace gameplay;
 
-class BudfoorWarrior : public BaseWarrior
+class LamakiWarrior : public BaseWarrior
 {
 public:
 	class FireListener : public AnimationClip::Listener
 	{
 	public:
-		BudfoorWarrior& _owner;
-		FireListener(BudfoorWarrior& owner) : _owner(owner){}
+		LamakiWarrior& _owner;
+		FireListener(LamakiWarrior& owner) : _owner(owner){}
 		void animationEvent(AnimationClip* clip, EventType type) { _owner.fire(); }
 	};
 
-	BudfoorWarrior();
+	LamakiWarrior();
 	static BaseGameObject* constructor();
 	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual void update(float time);

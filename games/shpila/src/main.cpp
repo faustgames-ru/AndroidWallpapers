@@ -93,9 +93,9 @@ void Shpila::initialize()
 		const float FoV = 60.0f;
 
 		_hud.initialize(this, _scene);
-		_hud.bind("Player1_New_Irbaga", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player1_New_Wuka", Control::Listener::CLICK, CreateUnit);
 		_hud.bind("Player1_New_Chasovoy", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player1_New_Budfoor", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player1_New_Lamaki", Control::Listener::CLICK, CreateUnit);
 		_hud.bind("Player1_New_Dark", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Barar", Control::Listener::CLICK, CreateUnit);
 		_hud.bind("Player1_New_Archon", Control::Listener::CLICK, CreateUnit); 
@@ -124,8 +124,8 @@ void Shpila::initialize()
 		_hud.bind("SwitchToPlayer2", Control::Listener::CLICK, SwitchPlayer);
 		_hud.bind("UpgradeLevel1", Control::Listener::CLICK, Upgrade);
 		_hud.bind("UpgradeLevel2", Control::Listener::CLICK, Upgrade);
-		_hud.bind("upgrade_zealot", Control::Listener::CLICK, Upgrade);
-		_hud.bind("upgrade_stalker", Control::Listener::CLICK, Upgrade);
+		_hud.bind("upgrade_wuka", Control::Listener::CLICK, Upgrade);
+		_hud.bind("upgrade_lamaki", Control::Listener::CLICK, Upgrade);
 		_hud.bind("ShieldUpgrade", Control::Listener::CLICK, Upgrade);
 		_hud.bind("armor_ground", Control::Listener::CLICK, Upgrade);
 		_hud.bind("armor_air", Control::Listener::CLICK, Upgrade);
@@ -254,8 +254,8 @@ void Shpila::loadCharacters()
 	loadActorsData("res/units.xml");
 
 	_manager.addUnit("res/common/chasovoy.scene", "chasovoy", ChasovoyWarrior::constructor);
-	_manager.addUnit("res/common/budfoor.scene", "budfoor", BudfoorWarrior::constructor); 	
-	_manager.addUnit("res/common/irbaga.scene", "irbaga", IrbagaWarrior::constructor);		
+	_manager.addUnit("res/common/lamaki.scene", "lamaki", LamakiWarrior::constructor);
+	_manager.addUnit("res/common/wuka.scene", "wuka", WukaWarrior::constructor);
 	_manager.addUnit("res/common/dark.scene", "dark", DarkWarrior::constructor);
 	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
 	_manager.addUnit("res/common/archon.scene", "archon", ArchonWarrior::constructor);
@@ -742,8 +742,8 @@ void Shpila::ConnectToServer(Game* game, Control* control)
 void Shpila::Upgrade(Game* game, Control* control)
 {
 	const char* BASE_LEVEL = "BaseLevel";
-	const char* ZEALOT_UPGRADE = "ZealotUpgrade";
-	const char* STALKER_UPGRADE = "StalkerUpgrade";
+	const char* WUKA_UPGRADE = "WukaUpgrade";
+	const char* LAMAKI_UPGRADE = "LamakiUpgrade";
 	const char* SHIELD_UPGRADE = "ShieldUpgrade";
 	const char* GROUND_ATTACK_UPGRADE = "GroundAttackUpgrade";
 	const char* AIR_ATTACK_UPGRADE = "AirAttackUpgrade";
@@ -758,13 +758,13 @@ void Shpila::Upgrade(Game* game, Control* control)
 	{
 		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::BaseLevel);
 	}
-	else if (!strcmp(tag, ZEALOT_UPGRADE))
+	else if (!strcmp(tag, WUKA_UPGRADE))
 	{
-		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::ZealotUpgrade);
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::WukaUpgrade);
 	}
-	else if (!strcmp(tag, STALKER_UPGRADE))
+	else if (!strcmp(tag, LAMAKI_UPGRADE))
 	{
-		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::StalkerUpgrade);
+		shpila->getActivePlayer()->upgrades()->incUpgrade(Upgrades::LamakiUpgrade);
 	}
 	else if (!strcmp(tag, SHIELD_UPGRADE))
 	{

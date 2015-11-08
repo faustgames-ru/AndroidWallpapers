@@ -1,8 +1,16 @@
 scene
 {
-    path = res/common/irbaga.gpb
-
-    node character
+    path = res/common/lamaki.gpb
+	
+	node character
+    {
+        tags
+        {
+            dynamic
+        }
+    }
+	
+	node obj_weapon
     {
         tags
         {

@@ -1,16 +1,8 @@
 scene
 {
-    path = res/common/budfoor.gpb
-	
-	node character
-    {
-        tags
-        {
-            dynamic
-        }
-    }
-	
-	node obj_weapon
+    path = res/common/wuka.gpb
+
+    node character
     {
         tags
         {

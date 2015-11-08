@@ -9,8 +9,8 @@ std::map<Upgrades::Values, int> __upgradeMaxLevel;
 void initUpgradeParams()
 {
 	__upgradePrice[Upgrades::BaseLevel] = BASE_LEVEL_UPGRADE_PRICE;
-	__upgradePrice[Upgrades::ZealotUpgrade] = ZEALOT_UPGRADE_PRICE;
-	__upgradePrice[Upgrades::StalkerUpgrade] = STALKER_UPGRADE_PRICE;
+	__upgradePrice[Upgrades::WukaUpgrade] = WUKA_UPGRADE_PRICE;
+	__upgradePrice[Upgrades::LamakiUpgrade] = LAMAKI_UPGRADE_PRICE;
 	__upgradePrice[Upgrades::Shield] = SHIELD_UPGRADE_PRICE;
 	__upgradePrice[Upgrades::GroundAttack] = GROUNDATTACK_UPGRADE_PRICE;
 	__upgradePrice[Upgrades::AirAttack] = AIRATTACK_UPGRADE_PRICE;
@@ -18,8 +18,8 @@ void initUpgradeParams()
 	__upgradePrice[Upgrades::AirArmor] = AIRARMOR_UPGRADE_PRICE;
 	
 	__upgradeMaxLevel[Upgrades::BaseLevel] = 2;
-	__upgradeMaxLevel[Upgrades::ZealotUpgrade] = 1;
-	__upgradeMaxLevel[Upgrades::StalkerUpgrade] = 1;
+	__upgradeMaxLevel[Upgrades::WukaUpgrade] = 1;
+	__upgradeMaxLevel[Upgrades::LamakiUpgrade] = 1;
 	__upgradeMaxLevel[Upgrades::Shield] = 3;
 	__upgradeMaxLevel[Upgrades::GroundAttack] = 3;
 	__upgradeMaxLevel[Upgrades::AirAttack] = 3;

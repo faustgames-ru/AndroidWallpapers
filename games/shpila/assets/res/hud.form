@@ -347,25 +347,25 @@ form hud
 				height = 77
 				text = Weapon Air
 			}
-			button upgrade_zealot
+			button upgrade_wuka
 			{
-				textTag = ZealotUpgrade
+				textTag = WukaUpgrade
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
-				image = upgrade_zealot
+				image = upgrade_wuka
 				width = 97
 				height = 77
-				text = Upgrade Zealot
+				text = Upgrade Wuka
 			}
-			button upgrade_stalker
+			button upgrade_lamaki
 			{
-				textTag = StalkerUpgrade
+				textTag = LamakiUpgrade
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
-				image = upgrade_stalker
+				image = upgrade_lamaki
 				width = 97
 				height = 77
-				text = Upgrade Stalker
+				text = Upgrade Lamaki
 			}
 		}
 
@@ -379,29 +379,29 @@ form hud
 			consumeInputEvents = false
 			y = 115
 			
-			button Player1_New_Irbaga
+			button Player1_New_Wuka
 			{
 				x = 170
-				textTag = irbaga
+				textTag = wuka
 				consumeInputEvents = true
 				style = buttonStyle
 				eventPadding = 25, 0, 25, 0
 				region = 1852, 331, 196, 196
 				width = 196
 				height = 196
-				text = Irbaga
+				text = Wuka
 			}
-			button Player1_New_Budfoor
+			button Player1_New_Lamaki
 			{
 				x = 295
-				textTag = budfoor
+				textTag = lamaki
 				consumeInputEvents = true
 				style = buttonStyle
 				eventPadding = 35, 0, 25, 0
 				region = 1446, 331, 196, 196
 				width = 196
 				height = 196
-				text = Budfoor
+				text = Lamaki
 			}
 			button Player1_New_Chasovoy
 			{

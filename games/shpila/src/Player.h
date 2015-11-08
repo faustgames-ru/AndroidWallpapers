@@ -17,8 +17,8 @@ public:
 		AirAttack,
 		GroundArmor,
 		AirArmor,
-		ZealotUpgrade,
-		StalkerUpgrade,
+		WukaUpgrade,
+		LamakiUpgrade,
 
 		Last
 	};

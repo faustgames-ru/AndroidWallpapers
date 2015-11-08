@@ -140,11 +140,11 @@ theme sceneSettings
         {
             region = 1455, 0, 97, 77
         }
-		image upgrade_zealot
+		image upgrade_wuka
         {
             region = 970, 0, 97, 77
         }
-		image upgrade_stalker
+		image upgrade_lamaki
         {
             region = 873, 0, 97, 77
         }

@@ -85,12 +85,6 @@
     <ClCompile Include="src\barar.cpp">
       <Filter>src\GameObjects\Warriors</Filter>
     </ClCompile>
-    <ClCompile Include="src\budfoor.cpp">
-      <Filter>src\GameObjects\Warriors</Filter>
-    </ClCompile>
-    <ClCompile Include="src\irbaga.cpp">
-      <Filter>src\GameObjects\Warriors</Filter>
-    </ClCompile>
     <ClCompile Include="src\albiria.cpp">
       <Filter>src\GameObjects\Warriors</Filter>
     </ClCompile>
@@ -271,6 +265,12 @@
     <ClCompile Include="src\TimeWarpObject.cpp">
       <Filter>src\GameObjects</Filter>
     </ClCompile>
+    <ClCompile Include="src\wuka.cpp">
+      <Filter>src\GameObjects\Warriors</Filter>
+    </ClCompile>
+    <ClCompile Include="src\lamaki.cpp">
+      <Filter>src\GameObjects\Warriors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -310,12 +310,6 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\barar.h">
-      <Filter>src\GameObjects\Warriors</Filter>
-    </ClInclude>
-    <ClInclude Include="src\budfoor.h">
-      <Filter>src\GameObjects\Warriors</Filter>
-    </ClInclude>
-    <ClInclude Include="src\irbaga.h">
       <Filter>src\GameObjects\Warriors</Filter>
     </ClInclude>
     <ClInclude Include="src\albiria.h">
@@ -635,6 +629,12 @@
     </ClInclude>
     <ClInclude Include="src\TimeWarpObject.h">
       <Filter>src\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="src\wuka.h">
+      <Filter>src\GameObjects\Warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\lamaki.h">
+      <Filter>src\GameObjects\Warriors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

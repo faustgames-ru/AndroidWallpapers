@@ -1,20 +1,20 @@
 #include "Headers.h"
 
-BudfoorWarrior::BudfoorWarrior()
+LamakiWarrior::LamakiWarrior()
 : BaseWarrior()
 , _blinkAbilityColdDownTimer()
 , _fireListener(*this)
 , _attackClip()
 {}
 
-BaseGameObject* BudfoorWarrior::constructor()
+BaseGameObject* LamakiWarrior::constructor()
 {
-	return new BudfoorWarrior();
+	return new LamakiWarrior();
 }
 
-void BudfoorWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void LamakiWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	float scale = BUDFOOR_SCALE;
+	float scale = LAMAKI_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale * 1.25f, scale, scale * 1.25f);
 	_blinkAbilityColdDownTimer.enable(false);
@@ -27,19 +27,19 @@ void BudfoorWarrior::init(GameObjectManager& manager, const ActorData* gameData,
 	_damageTimer.enable(false);
 }
 
-void BudfoorWarrior::update(float time)
+void LamakiWarrior::update(float time)
 {
 	BaseWarrior::update(time);
 
-	if (Player->upgrades()->getUpgrade(Upgrades::StalkerUpgrade) && !_blinkAbilityColdDownTimer.enabled())
+	if (Player->upgrades()->getUpgrade(Upgrades::LamakiUpgrade) && !_blinkAbilityColdDownTimer.enabled())
 	{
-		if (Target && (Target->position().distanceSquared(position()) < SQR(STALKER_BLINK_DISTANCE)))
+		if (Target && (Target->position().distanceSquared(position()) < SQR(LAMAKI_BLINK_DISTANCE)))
 		{
-			if (LocalGameData.Health <= ((LocalGameData.GameData->HP + LocalGameData.GameData->shield) * STALKER_BLINK_MIN_HEALTH_PERCENT))
+			if (LocalGameData.Health <= ((LocalGameData.GameData->HP + LocalGameData.GameData->shield) * LAMAKI_BLINK_MIN_HEALTH_PERCENT))
 			{
-				setPosition(position() - _node->getForwardVectorWorld().normalize() * STALKER_BLINK_DISTANCE);
+				setPosition(position() - _node->getForwardVectorWorld().normalize() * LAMAKI_BLINK_DISTANCE);
 				_blinkAbilityColdDownTimer.enable(true);
-				_blinkAbilityColdDownTimer.start(STALKER_BLINK_COLDDOWN, 0.0f);				
+				_blinkAbilityColdDownTimer.start(LAMAKI_BLINK_COLDDOWN, 0.0f);
 			}
 		}
 	}
@@ -65,7 +65,7 @@ void BudfoorWarrior::update(float time)
 	}
 }
 
-void BudfoorWarrior::rangeFire()
+void LamakiWarrior::rangeFire()
 {
 	Node* holder = _node->findNode("weapon");
 
@@ -84,12 +84,12 @@ void BudfoorWarrior::rangeFire()
 	bullet->LocalGameData.init(LocalGameData.GameData, LocalGameData.Upgrades);
 }
 
-void BudfoorWarrior::attackEnable(bool value)
+void LamakiWarrior::attackEnable(bool value)
 {
 
 }
 
-void BudfoorWarrior::fire()
+void LamakiWarrior::fire()
 {
 	doDamage(Target);
 }
