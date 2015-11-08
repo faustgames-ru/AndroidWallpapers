@@ -179,7 +179,7 @@ void LocalActorData::doDamage(LocalActorData& targetGameData)
 
 	if (targetGameData.getAura(Aura::GuardianShield) && (!GameData->ImmediateAttack))
 	{
-		result -= min(result, CHASOVOY_GUARDIANSHIELD_AURA_ADSORBE_DAMAGE);
+		result -= min(result, JEATS_GUARDIANSHIELD_AURA_ADSORBE_DAMAGE);
 	}
 
 	if (targetGameData.Shield > 0.0f)

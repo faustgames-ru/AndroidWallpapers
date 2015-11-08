@@ -977,8 +977,8 @@
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>sentry</name>
-		<id>chasovoy</id>
+		<name>Jeats</name>
+		<id>jeats</id>
 		<price>125</price>
 		<RequireUpgrade>0</RequireUpgrade>
 		<BattleUpgradeClass>пехота</BattleUpgradeClass>
@@ -1831,8 +1831,8 @@
 		<GeometryRadius>1.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>core</name>
-		<id>mothershipcore</id>
+		<name>Qbi</name>
+		<id>qbi</id>
 		<price>200</price>
 		<RequireUpgrade>0</RequireUpgrade>
 		<BattleUpgradeClass>пехота</BattleUpgradeClass>

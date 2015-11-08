@@ -10,7 +10,7 @@ animation animations
 	
 	clip death
     {
-        begin = 51
+        begin = 50
         end = 90
         repeatCount = 1
     }
@@ -18,7 +18,7 @@ animation animations
 	clip run
     {
         begin = 30
-        end = 45
+        end = 46
         repeatCount = INDEFINITE
     }
 	

@@ -1,6 +1,6 @@
 scene
 {
-    path = res/common/core.gpb
+    path = res/common/qbi.gpb
 
     node Large
     {

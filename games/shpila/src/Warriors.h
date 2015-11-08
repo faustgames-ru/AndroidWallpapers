@@ -78,12 +78,12 @@ public:
 	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 };
 
-class CoreWarrior : public BaseWarrior
+class QbiWarrior : public BaseWarrior
 {
 public:
 	
 	static BaseGameObject* constructor();
-	CoreWarrior();
+	QbiWarrior();
 	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);

@@ -1,6 +1,6 @@
 animation animations
 {
-    frameCount = 106
+    frameCount = 85
 	
 	clip attack
     {
@@ -11,22 +11,22 @@ animation animations
 	
 	clip death
     {
-        begin = 75
-        end = 106
+        begin = 30
+        end = 60
         repeatCount = 1
     }
 	
 	clip run
     {
-        begin = 30
-        end = 70
+        begin = 65
+        end = 85
         repeatCount = INDEFINITE
     }
 	
 	clip dead
     {
-        begin = 106
-        end = 106
+        begin = 60
+        end = 60
         repeatCount = INDEFINITE
     }
 }

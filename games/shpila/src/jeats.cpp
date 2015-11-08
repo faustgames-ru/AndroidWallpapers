@@ -1,6 +1,6 @@
 #include "Headers.h"
 
-ChasovoyWarrior::ChasovoyWarrior()
+JeatsWarrior::JeatsWarrior()
 : BaseWarrior()
 , _guardianShieldTimer()
 , _hallucinationTimer()
@@ -8,13 +8,13 @@ ChasovoyWarrior::ChasovoyWarrior()
 , _allowCreateIllusions(false)
 {}
 
-BaseGameObject* ChasovoyWarrior::constructor()
+BaseGameObject* JeatsWarrior::constructor()
 {
-	return new ChasovoyWarrior();
+	return new JeatsWarrior();
 }
-void ChasovoyWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void JeatsWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
-	float scale = CHASOVOY_SCALE;
+	float scale = JEATS_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
 	_auranode = manager.AttachUnitModel("shieldaura", this, NULL);
@@ -25,7 +25,7 @@ void ChasovoyWarrior::init(GameObjectManager& manager, const ActorData* gameData
 	_hallucinationTimer.enable(false);
 }
 
-void ChasovoyWarrior::update(float time)
+void JeatsWarrior::update(float time)
 {
 	BaseWarrior::update(time);
 	if (_hallucinationTimer.action(time))
@@ -40,7 +40,7 @@ void ChasovoyWarrior::update(float time)
 	}
 }
 
-void ChasovoyWarrior::interaction(BaseGameObject* object)
+void JeatsWarrior::interaction(BaseGameObject* object)
 {
 	BaseWarrior::interaction(object);
 	if (!friendly(object))
@@ -49,11 +49,11 @@ void ChasovoyWarrior::interaction(BaseGameObject* object)
 		{
 			if (LocalGameData.Mana >= LocalGameData.GameData->mana)
 			{
-				if (object->position().distanceSquared(position()) <= SQR(CHASOVOY_USE_HALLUCINATION_DISTANCE))
+				if (object->position().distanceSquared(position()) <= SQR(JEATS_USE_HALLUCINATION_DISTANCE))
 				{
 					_hallucinationTimer.enable(true);
-					_hallucinationTimer.start(CHASOVOY_HALLUCINATION_TIME, 0.0f);
-					LocalGameData.Mana -= CHASOVOY_HALLUCINATION_MANA_COST;
+					_hallucinationTimer.start(JEATS_HALLUCINATION_TIME, 0.0f);
+					LocalGameData.Mana -= JEATS_HALLUCINATION_MANA_COST;
 					_allowCreateIllusions = true;
 				}
 			}
@@ -62,11 +62,11 @@ void ChasovoyWarrior::interaction(BaseGameObject* object)
 		{
 			if (LocalGameData.Mana >= (0.5f * LocalGameData.GameData->mana))
 			{
-				if (object->position().distanceSquared(position()) <= SQR(CHASOVOY_USE_GUARDIANSHIELD_DISTANCE))
+				if (object->position().distanceSquared(position()) <= SQR(JEATS_USE_GUARDIANSHIELD_DISTANCE))
 				{
 					_guardianShieldTimer.enable(true);
-					_guardianShieldTimer.start(CHASOVOY_GUARDIANSHIELD_TIME, 0.0f);
-					LocalGameData.Mana -= CHASOVOY_GUARDIANSHIELD_MANA_COST;
+					_guardianShieldTimer.start(JEATS_GUARDIANSHIELD_TIME, 0.0f);
+					LocalGameData.Mana -= JEATS_GUARDIANSHIELD_MANA_COST;
 					_auranode->setEnabled(true);
 				}
 			}
@@ -77,7 +77,7 @@ void ChasovoyWarrior::interaction(BaseGameObject* object)
 	{
 		if (_guardianShieldTimer.enabled())
 		{
-			if (checkDistanceToObject(object, CHASOVOY_GUARDIANSHIELD_AURA_DISTANCE))
+			if (checkDistanceToObject(object, JEATS_GUARDIANSHIELD_AURA_DISTANCE))
 			{
 				object->setAura(Aura::GuardianShield, true);
 			}				

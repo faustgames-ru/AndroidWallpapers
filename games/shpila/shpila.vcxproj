@@ -405,7 +405,7 @@
     <ClCompile Include="src\BaseWarrior.cpp" />
     <ClCompile Include="src\BoomerangBullet.cpp" />
     <ClCompile Include="src\lamaki.cpp" />
-    <ClCompile Include="src\chasovoy.cpp" />
+    <ClCompile Include="src\jeats.cpp" />
     <ClCompile Include="src\FirstPersonCamera.cpp" />
     <ClCompile Include="src\GameHUD.cpp" />
     <ClCompile Include="src\GameObjectManager.cpp" />
@@ -527,7 +527,7 @@
     <ClInclude Include="src\BaseWarrior.h" />
     <ClInclude Include="src\BoomerangBullet.h" />
     <ClInclude Include="src\lamaki.h" />
-    <ClInclude Include="src\chasovoy.h" />
+    <ClInclude Include="src\jeats.h" />
     <ClInclude Include="src\FirstPersonCamera.h" />
     <ClInclude Include="src\GameHUD.h" />
     <ClInclude Include="src\GameObjectManager.h" />

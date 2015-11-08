@@ -403,29 +403,29 @@ form hud
 				height = 196
 				text = Lamaki
 			}
-			button Player1_New_Chasovoy
+			button Player1_New_Jeats
 			{
 				x = 420
-				textTag = chasovoy
+				textTag = jeats
 				consumeInputEvents = true
 				style = buttonStyle
 				eventPadding = 25, 0, 25, 0
 				region = 1068, 331, 196, 196
 				width = 196
 				height = 196
-				text = Chasovoy
+				text = jeats
 			}
-			button Player1_New_MothershipCore
+			button Player1_New_Qbi
 			{
 			  x = 545
-			  textTag = mothershipcore
+			  textTag = qbi
 			  consumeInputEvents = true
 			  style = buttonStyle
 			  eventPadding = 25, 0, 25, 0
 			  region = 1264, 331, 196, 196
 			  width = 196
 			  height = 196
-			  text = Core
+			  text = Qbi
 			}
 			button Player1_New_Archon
 			{

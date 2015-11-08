@@ -14,7 +14,7 @@ void TimeWarpObject::init(GameObjectManager& manager, const ActorData* gameData,
 	BaseGameObject::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
 	_lifeTimer.enable(true);
-	_lifeTimer.start(CORE_TIME_WARP_LIFE_TIME, 0.0f);
+	_lifeTimer.start(QBI_TIME_WARP_LIFE_TIME, 0.0f);
 }
 bool TimeWarpObject::interactive() 
 {
@@ -24,7 +24,7 @@ bool TimeWarpObject::interactive()
 void TimeWarpObject::interaction(BaseGameObject* object)
 {
 	BaseGameObject::interaction(object);
-	if (!friendly(object) && checkDistanceToObject(object, CORE_TIME_WARP_RADIUS))
+	if (!friendly(object) && checkDistanceToObject(object, QBI_TIME_WARP_RADIUS))
 	{
 		object->setAura(Aura::TimeWarpSlow, true);
 	}

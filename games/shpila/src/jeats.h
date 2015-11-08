@@ -1,12 +1,12 @@
-#ifndef CHASOVOY_H_
-#define CHASOVOY_H_
+#ifndef JEATS_H_
+#define JEATS_H_
 
 using namespace gameplay;
 
-class ChasovoyWarrior : public BaseWarrior
+class JeatsWarrior : public BaseWarrior
 {
 public:
-	ChasovoyWarrior();
+	JeatsWarrior();
 	static BaseGameObject* constructor();
 	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
 	virtual void update(float time);

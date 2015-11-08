@@ -94,7 +94,7 @@ void Shpila::initialize()
 
 		_hud.initialize(this, _scene);
 		_hud.bind("Player1_New_Wuka", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player1_New_Chasovoy", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player1_New_Jeats", Control::Listener::CLICK, CreateUnit);
 		_hud.bind("Player1_New_Lamaki", Control::Listener::CLICK, CreateUnit);
 		_hud.bind("Player1_New_Dark", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Barar", Control::Listener::CLICK, CreateUnit);
@@ -106,7 +106,7 @@ void Shpila::initialize()
 		_hud.bind("Player1_New_VoidRay", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Carrier", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Tempest", Control::Listener::CLICK, CreateUnit); 
-		_hud.bind("Player1_New_MothershipCore", Control::Listener::CLICK, CreateUnit);
+		_hud.bind("Player1_New_Qbi", Control::Listener::CLICK, CreateUnit);
 		//_hud.bind("Show_Units_P1", Control::Listener::CLICK, ShowUnitsP1);
 		_hud.form()->getControl("Player1")->setVisible(false);
 		_hud.form()->getControl("upgrades_amu")->setVisible(false);
@@ -253,9 +253,10 @@ void Shpila::loadCharacters()
 {
 	loadActorsData("res/units.xml");
 
-	_manager.addUnit("res/common/chasovoy.scene", "chasovoy", ChasovoyWarrior::constructor);
-	_manager.addUnit("res/common/lamaki.scene", "lamaki", LamakiWarrior::constructor);
 	_manager.addUnit("res/common/wuka.scene", "wuka", WukaWarrior::constructor);
+	_manager.addUnit("res/common/lamaki.scene", "lamaki", LamakiWarrior::constructor);
+	_manager.addUnit("res/common/jeats.scene", "jeats", JeatsWarrior::constructor);
+	_manager.addUnit("res/common/qbi.scene", "qbi", QbiWarrior::constructor);
 	_manager.addUnit("res/common/dark.scene", "dark", DarkWarrior::constructor);
 	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
 	_manager.addUnit("res/common/archon.scene", "archon", ArchonWarrior::constructor);
@@ -267,7 +268,6 @@ void Shpila::loadCharacters()
 	_manager.addUnit("res/common/carrier.scene", "carrier", CarrierWarrior::constructor);
 	_manager.addUnit("res/common/tempest.scene", "tempest", TempestWarrior::constructor);
 	_manager.addUnit("res/common/mothership.scene", "mothership", MothershipWarrior::constructor);
-	_manager.addUnit("res/common/mothershipcore.scene", "mothershipcore", CoreWarrior::constructor);
 	_manager.addUnit("res/common/SourceSmall.scene", "tower", TowerObject::constructor);
 	_manager.addUnit("res/common/SourceBig.scene", "base", TheBaseObject::constructor);
 	_manager.addUnit("res/common/bullet.scene", "bullet", BaseBullet::constructor);

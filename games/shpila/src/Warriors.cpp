@@ -152,18 +152,18 @@ void MothershipWarrior::init(GameObjectManager& manager, const ActorData* gameDa
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-BaseGameObject* CoreWarrior::constructor()
+BaseGameObject* QbiWarrior::constructor()
 {
-	return new CoreWarrior();
+	return new QbiWarrior();
 }
 
-CoreWarrior::CoreWarrior()
+QbiWarrior::QbiWarrior()
 : BaseWarrior()
 , _altitude(0.0f)
 {
 }
 
-void CoreWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void QbiWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
 {
 	float scale = COMMON_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
@@ -172,22 +172,22 @@ void CoreWarrior::init(GameObjectManager& manager, const ActorData* gameData, No
 	_abilityTimer.enable(false);
 }
 
-void CoreWarrior::interaction(BaseGameObject* object)
+void QbiWarrior::interaction(BaseGameObject* object)
 {
 	BaseWarrior::interaction(object);
 	
-	if (!friendly(object) && checkDistanceToObject(object, CORE_TIME_WARP_ABILITY_RANGE))
+	if (!friendly(object) && checkDistanceToObject(object, QBI_TIME_WARP_ABILITY_RANGE))
 	{
 		if (!_abilityTimer.enabled())
 		{
 			Player->Manager.createObject("timewarp", object->position(), Player->BattleFieldDirection, Player);
-			_abilityTimer.start(CORE_TIME_WARP_ABILITY_COLDDOWN, 0.0f);
+			_abilityTimer.start(QBI_TIME_WARP_ABILITY_COLDDOWN, 0.0f);
 			_abilityTimer.enable(true);
 		}
 	}
 }
 
-void CoreWarrior::update(float time)
+void QbiWarrior::update(float time)
 {
 	BaseWarrior::update(time);
 	if (_dead)

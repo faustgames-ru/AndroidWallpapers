@@ -26,7 +26,7 @@ BaseGameObject* BaseWarrior::constructor()
 void BaseWarrior::makeIllusion()
 {
 	LocalGameData.Illusion = true;
-	_illusionTimer.start(CHASOVOY_ILLUSION_LIFE_TIME, 0.0f);
+	_illusionTimer.start(JEATS_ILLUSION_LIFE_TIME, 0.0f);
 }
 
 void BaseWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
@@ -102,7 +102,7 @@ void BaseWarrior::update(float time)
 void BaseWarrior::updateMovementSpeed(float time)
 {
 	float speed = ((Target != NULL) ? LocalGameData.GameData->MoveSpeed : DEFAULT_MOVEMENT_SPEED) / TIME_SCALE * 
-		(getAura(Aura::TimeWarpSlow) ? CORE_TIME_WARP_SPEED_FACTOR : 1.0f);
+		(getAura(Aura::TimeWarpSlow) ? QBI_TIME_WARP_SPEED_FACTOR : 1.0f);
 	_movementController.setMaxSpeed(speed);	
 	_movementController.setSpeed(min(_movementController.speed(), _movementController.maxSpeed()));
 	_movementController.setAcceleration(DEFAULT_UNIT_AXELERATION);

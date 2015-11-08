@@ -1,6 +1,6 @@
 scene
 {
-    path = res/common/chasovoy.gpb
+    path = res/common/jeats.gpb
 
     node Small
     {
