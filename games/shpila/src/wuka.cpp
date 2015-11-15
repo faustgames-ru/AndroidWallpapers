@@ -5,13 +5,14 @@ BaseGameObject* WukaWarrior::constructor()
 	return new WukaWarrior();
 }
 
-void WukaWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void WukaWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	float scale = WUKA_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
 	_chargeAbilityTimer.enable(false);
 	_chargeAbilityColdDownTimer.enable(false);
+	Target.subscribe(this, &WukaWarrior::targetChange);
 }
 
 void WukaWarrior::updateMovementSpeed(float time)
@@ -36,4 +37,15 @@ void WukaWarrior::updateMovementSpeed(float time)
 	{
 		BaseWarrior::updateMovementSpeed(time);
 	}
+}
+
+void WukaWarrior::doDamage(BaseGameObject* object)
+{
+	_chargeAbilityTimer.enable(false);
+	BaseWarrior::doDamage(object);
+}
+
+void WukaWarrior::targetChange()
+{
+	_chargeAbilityTimer.enable(false);
 }

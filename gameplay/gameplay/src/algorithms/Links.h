@@ -198,6 +198,7 @@ public:
 	CLink& operator= (CLink& other) { if (*this != other) { m_Object.Clear(); m_Object.Add(other.m_Object.GetFirst()); } return *this; };
 	bool operator== (T* other) { return m_Object.GetFirst() == other; }
 	CLink(CLink& src) { m_Object.Clear(); m_Object.Add(src.m_Object.GetFirst()); };
+	CLink(T* other) { m_Object.Clear(); m_Object.Add(other); };
 	CLink() : m_Object() {};
 	~CLink() {};
 protected:
@@ -217,6 +218,55 @@ public:
 	void newRef(T* other){ if (_object != other) { SAFE_RELEASE(_object); _object = other; }};
 private:
 	T* _object;
+};
+
+class MethodSubscribingBase : public Ref
+{
+	friend class Parameter;
+public:
+	virtual void update(){}
+protected:
+	MethodSubscribingBase(){};
+	virtual ~MethodSubscribingBase(){}
+};
+
+template <class ClassType, class ParameterType>
+class SimpleMethodSubscribing : public MethodSubscribingBase
+{
+	typedef ParameterType(ClassType::*ValueMethod)();
+public:
+	SimpleMethodSubscribing(ClassType* instance, ValueMethod valueMethod)
+		: _instance(instance)
+		, _valueMethod(valueMethod){}
+	virtual void update(){ (_instance->*_valueMethod)(); }
+private:
+	ClassType* _instance;
+	ValueMethod _valueMethod;
+};
+
+template <class T>
+class Subscribable : public CLink<T>
+{
+public:
+	Subscribable()
+		: _method(NULL)
+	{}
+
+	template <class ClassType, class ParameterType>
+	void subscribe(ClassType* classInstance, ParameterType(ClassType::*valueMethod)()){ _method = new SimpleMethodSubscribing<ClassType, ParameterType>(classInstance, valueMethod); }
+	Subscribable& operator= (T* other) { if (m_Object.GetFirst() != other) { m_Object.Clear(); m_Object.Add(other); if (_method) _method->update(); } return *this; };
+	Subscribable& operator= (Subscribable& other) { if (*this != other) { m_Object.Clear(); m_Object.Add(other.m_Object.GetFirst()); if (_method) _method->update(); } return *this; };
+	Subscribable(Subscribable& src)
+		: CLink(src)
+		, _method(NULL)
+	{};
+	Subscribable(T* other)
+		: CLink(other)
+		, _method(NULL)
+	{};
+
+private:
+	MethodSubscribingBase* _method;
 };
 
 class CLinkListImpl;

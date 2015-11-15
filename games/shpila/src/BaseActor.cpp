@@ -7,7 +7,7 @@ BaseActor::BaseActor()
 
 BaseActor::~BaseActor(){}
 
-void BaseActor::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void BaseActor::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseStaticActor::init(manager, gameData, node, player, transform);
 	manager.registerMovementController(&_movementController);

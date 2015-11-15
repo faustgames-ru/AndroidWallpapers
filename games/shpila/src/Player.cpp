@@ -211,7 +211,10 @@ const GridCell WarriorsGrid::worldToGrid(const Vector3 point)
 
 bool WarriorsGrid::getCell(GridCell cell)
 {
-	return Cells[cell.PosX][cell.PosZ];
+	if ((cell.PosX < 0) || (cell.PosX >= CellsCountX) || (cell.PosZ < 0) || (cell.PosZ >= CellsCountZ))
+		return true;
+	else
+		return Cells[cell.PosX][cell.PosZ];
 }
 
 void WarriorsGrid::setCell(GridCell cell, bool value)
@@ -267,8 +270,6 @@ PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position,
 , _controlMid(false)
 , _extractorsCount(0)
 {
-	
-
 	_gridGround.AxisX = Vector3(BattleFieldDirection.z, BattleFieldDirection.y, -BattleFieldDirection.x);
 	_gridGround.AxisZ = BattleFieldDirection;
 	_gridGround.Position = _position;

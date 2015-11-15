@@ -1221,8 +1221,8 @@
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>archon</name>
-		<id>archon</id>
+		<name>Hantо</name>
+		<id>hantо</id>
 		<price>325</price>
 		<RequireUpgrade>1</RequireUpgrade>
 		<BattleUpgradeClass>пехота</BattleUpgradeClass>

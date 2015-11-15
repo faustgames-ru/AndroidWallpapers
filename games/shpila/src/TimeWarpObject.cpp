@@ -8,7 +8,7 @@ BaseGameObject* TimeWarpObject::constructor()
 {
 	return new TimeWarpObject();
 }
-void TimeWarpObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void TimeWarpObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	float scale = COMMON_SCALE;
 	BaseGameObject::init(manager, gameData, node, player, transform);

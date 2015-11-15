@@ -7,18 +7,16 @@ BaseGameObject* AlbiriaWarrior::constructor()
 
 AlbiriaWarrior::AlbiriaWarrior()
 : BaseWarrior()
-, _altitude(0.0f)
 , _fireListener(*this)
 , _rechangeListener(*this)
 {
 }
 
-void AlbiriaWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void AlbiriaWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	float scale = ALBIRIA_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
-	_altitude = 3.75f;
 
 	if (_unitAnimation.size() > 0)
 	{
@@ -28,20 +26,9 @@ void AlbiriaWarrior::init(GameObjectManager& manager, const ActorData* gameData,
 	}
 }
 
-const float ZERO_ALTITUDE = -3.0f;
-
 void AlbiriaWarrior::update(float time)
 {
 	BaseWarrior::update(time);
-	if (_dead)
-	{
-		_altitude = (_altitude > ZERO_ALTITUDE) ? _altitude - 0.05f * time : ZERO_ALTITUDE;
-	}
-	if (_altitude > ZERO_ALTITUDE)
-	{
-		OpenSteer::Vec3 pos = _movementController.position();
-		_node->setTranslation(Vector3(pos.x, pos.y + _altitude, pos.z));
-	}
 	/*Node* holder = _node->findNode("Bip001 Xtra02");
 	Node* bullet = _node->findNode("bullet");
 	Matrix mRes;
@@ -49,12 +36,6 @@ void AlbiriaWarrior::update(float time)
 	Matrix::createScale(3, 3, 3, &mScale);
 	Matrix::multiply(holder->getWorldMatrix(), mScale, &mRes);
 	bullet->set(mRes);
-	if (_dead)
-	{
-		_altitude = (_altitude > 0.0f) ? _altitude - 0.002f * time : 0.0f;
-	}
-	OpenSteer::Vec3 pos = _movementController.position(); 
-	_node->setTranslation(Vector3(pos.x, pos.y + _altitude, pos.z));
 	if (!_dead)
 	{
 		Quaternion rot;
@@ -65,10 +46,7 @@ void AlbiriaWarrior::update(float time)
 
 void AlbiriaWarrior::disappearing(float time)
 {
-	if (_altitude <= ZERO_ALTITUDE)
-	{
-		BaseWarrior::disappearing(time);
-	}		
+	BaseWarrior::disappearing(time);	
 }
 
 void AlbiriaWarrior::fire()

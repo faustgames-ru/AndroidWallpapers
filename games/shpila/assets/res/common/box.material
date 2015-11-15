@@ -1,5 +1,33 @@
 #include res/common/common.material
 
+material mtStaticmesh : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @MapTexure
+            }
+        }
+    }
+}
+
+material mtStaticbackground : texturedUnlit
+{
+	technique
+    {
+        pass
+        {
+            sampler u_diffuseTexture
+            {
+                path = @MapTexureBackground
+            }
+        }
+    }
+}
+
 material mtGround : texturedUnlit
 {
 	technique

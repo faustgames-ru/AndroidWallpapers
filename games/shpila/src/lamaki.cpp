@@ -12,7 +12,7 @@ BaseGameObject* LamakiWarrior::constructor()
 	return new LamakiWarrior();
 }
 
-void LamakiWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void LamakiWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	float scale = LAMAKI_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);

@@ -96,9 +96,9 @@ void Shpila::initialize()
 		_hud.bind("Player1_New_Wuka", Control::Listener::CLICK, CreateUnit);
 		_hud.bind("Player1_New_Jeats", Control::Listener::CLICK, CreateUnit);
 		_hud.bind("Player1_New_Lamaki", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player1_New_Dark", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Cheida", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Barar", Control::Listener::CLICK, CreateUnit);
-		_hud.bind("Player1_New_Archon", Control::Listener::CLICK, CreateUnit); 
+		_hud.bind("Player1_New_Hanto", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Observer", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Immortal", Control::Listener::CLICK, CreateUnit); 
 		_hud.bind("Player1_New_Colossus", Control::Listener::CLICK, CreateUnit); 
@@ -157,9 +157,6 @@ void Shpila::initialize()
 		// Load scene.
 		_scene = Scene::load("res/common/box.scene");
 
-		// Update the aspect ratio for our scene's camera to match the current device resolution.
-		_scene->getActiveCamera()->setAspectRatio(getAspectRatio());
-
 		//start prepare cameras
 		_fpCamera.initialize(0.01f, 1000.0f);
 		_scene->addNode(_fpCamera.getRootNode());
@@ -202,6 +199,8 @@ void Shpila::initialize()
 		_scene->setActiveCamera(_fpCamera.getCamera());
 		_activeCamera = &_fpCamera;
 		_activePlayerCamera = &_CameraPlayer[0];
+		// Update the aspect ratio for our scene's camera to match the current device resolution.
+		_scene->getActiveCamera()->setAspectRatio(getAspectRatio());
 		//finish prepare cameras
 
 		_scene->setAmbientColor(0.25f, 0.25f, 0.25f);
@@ -257,9 +256,9 @@ void Shpila::loadCharacters()
 	_manager.addUnit("res/common/lamaki.scene", "lamaki", LamakiWarrior::constructor);
 	_manager.addUnit("res/common/jeats.scene", "jeats", JeatsWarrior::constructor);
 	_manager.addUnit("res/common/qbi.scene", "qbi", QbiWarrior::constructor);
-	_manager.addUnit("res/common/dark.scene", "dark", DarkWarrior::constructor);
+	_manager.addUnit("res/common/cheida.scene", "cheida", CheidaWarrior::constructor);
 	_manager.addUnit("res/common/barar.scene", "barar", BararWarrior::constructor);
-	_manager.addUnit("res/common/archon.scene", "archon", ArchonWarrior::constructor);
+	_manager.addUnit("res/common/hanto.scene", "hanto", HantîWarrior::constructor);
 	_manager.addUnit("res/common/observer.scene", "observer", ObserverWarrior::constructor);
 	_manager.addUnit("res/common/immortal.scene", "immortal", ImmortalWarrior::constructor);
 	_manager.addUnit("res/common/colossus.scene", "colossus", ColossusWarrior::constructor);

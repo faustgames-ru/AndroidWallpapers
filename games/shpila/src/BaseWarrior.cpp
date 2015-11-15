@@ -29,7 +29,7 @@ void BaseWarrior::makeIllusion()
 	_illusionTimer.start(JEATS_ILLUSION_LIFE_TIME, 0.0f);
 }
 
-void BaseWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void BaseWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseActor::init(manager, gameData, node, player, transform);
 	updateAnimationState();
@@ -94,7 +94,7 @@ void BaseWarrior::update(float time)
 
 	if (_illusionTimer.enabled() && _illusionTimer.action(time))
 	{
-		_deadAltitude = -3.0f;
+		_deadAltitude = -(AIR_UNITS_ALTITUDE + 1.0f);
 		_illusionTimer.enable(false);
 	}
 }
@@ -110,12 +110,12 @@ void BaseWarrior::updateMovementSpeed(float time)
 
 bool BaseWarrior::deleted()
 {
-	return _deadAltitude <= -3.0f;
+	return _deadAltitude <= -(AIR_UNITS_ALTITUDE + 1.0f);
 }
 
 void BaseWarrior::disappearing(float time)
 {
-	_deadAltitude -= time * 0.001f;
+	_deadAltitude -= time * 0.005f;
 	_node->setTranslation(_node->getTranslation() + Vector3(0.0, -time * 0.001f, 0.0f));
 }
 

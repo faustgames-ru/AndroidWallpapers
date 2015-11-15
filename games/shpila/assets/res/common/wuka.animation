@@ -1,6 +1,6 @@
 animation animations
 {
-    frameCount = 90
+    frameCount = 107
 	clip attack
     {
         begin = 0
@@ -17,6 +17,7 @@ animation animations
 	
 	clip run
     {
+		speed = 1
         begin = 30
         end = 46
         repeatCount = INDEFINITE

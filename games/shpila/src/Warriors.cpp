@@ -2,15 +2,15 @@
 
 
 
-BaseGameObject* DarkWarrior::constructor()
+BaseGameObject* CheidaWarrior::constructor()
 {
-	return new DarkWarrior();
+	return new CheidaWarrior();
 }
-DarkWarrior::DarkWarrior()
+CheidaWarrior::CheidaWarrior()
 : BaseWarrior()
 {}
 
-void DarkWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void CheidaWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	float scale = COMMON_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
@@ -19,15 +19,15 @@ void DarkWarrior::init(GameObjectManager& manager, const ActorData* gameData, No
 
 ///////////////////////////////////////////////////////////////////////////////////////////
 
-BaseGameObject* ArchonWarrior::constructor()
+BaseGameObject* HantîWarrior::constructor()
 {
-	return new ArchonWarrior();
+	return new HantîWarrior();
 }
-ArchonWarrior::ArchonWarrior()
+HantîWarrior::HantîWarrior()
 : BaseWarrior()
 {
 }
-void ArchonWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void HantîWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	float scale = COMMON_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
@@ -44,7 +44,7 @@ ObserverWarrior::ObserverWarrior()
 : BaseWarrior()
 {
 }
-void ObserverWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void ObserverWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
@@ -61,7 +61,7 @@ ImmortalWarrior::ImmortalWarrior()
 : BaseWarrior()
 {
 }
-void ImmortalWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void ImmortalWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
@@ -77,7 +77,7 @@ BaseGameObject* ColossusWarrior::constructor()
 ColossusWarrior::ColossusWarrior()
 : BaseWarrior()
 {}
-void ColossusWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void ColossusWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
@@ -93,7 +93,7 @@ BaseGameObject* VoidRayWarrior::constructor()
 VoidRayWarrior::VoidRayWarrior()
 : BaseWarrior()
 {}
-void VoidRayWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void VoidRayWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
@@ -109,7 +109,7 @@ BaseGameObject* CarrierWarrior::constructor()
 CarrierWarrior::CarrierWarrior()
 : BaseWarrior()
 {}
-void CarrierWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void CarrierWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
@@ -125,7 +125,7 @@ BaseGameObject* TempestWarrior::constructor()
 TempestWarrior::TempestWarrior()
 : BaseWarrior()
 {}
-void TempestWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void TempestWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
@@ -143,7 +143,7 @@ MothershipWarrior::MothershipWarrior()
 : BaseWarrior()
 {}
 
-void MothershipWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void MothershipWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;
@@ -159,16 +159,14 @@ BaseGameObject* QbiWarrior::constructor()
 
 QbiWarrior::QbiWarrior()
 : BaseWarrior()
-, _altitude(0.0f)
 {
 }
 
-void QbiWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void QbiWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	float scale = COMMON_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
-	_altitude = AIR_UNITS_ALTITUDE;
 	_abilityTimer.enable(false);
 }
 
@@ -190,12 +188,6 @@ void QbiWarrior::interaction(BaseGameObject* object)
 void QbiWarrior::update(float time)
 {
 	BaseWarrior::update(time);
-	if (_dead)
-	{
-		_altitude = (_altitude > 0.0f) ? _altitude - 0.002f * time : 0.0f;
-	}
-	OpenSteer::Vec3 pos = _movementController.position();
-	_node->setTranslation(Vector3(pos.x, pos.y + _altitude, pos.z));
 
 	if (_abilityTimer.action(time))
 	{

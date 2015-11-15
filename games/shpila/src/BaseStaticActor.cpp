@@ -6,7 +6,7 @@ BaseStaticActor::BaseStaticActor()
 , _fogOfWarTimer()
 {}
 
-void BaseStaticActor::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void BaseStaticActor::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	BaseGameObject::init(manager, gameData, node, player, transform);
 	_damageTimer.start(LocalGameData.GameData->AttackDelayGround, LocalGameData.GameData->AttackDelayGround);
@@ -16,11 +16,7 @@ void BaseStaticActor::update(float time)
 {
 	BaseGameObject::update(time);
 	if (_damageTimer.enabled() && _damageTimer.action(time))
-	{
 		doDamage(Target);
-		if (Target && (Target->LocalGameData.Health <= 0.0f))
-			Target = NULL;
-	}
 }
 
 bool BaseStaticActor::getDetected()

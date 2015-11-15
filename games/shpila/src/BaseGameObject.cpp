@@ -169,6 +169,10 @@ void BaseGameObject::update(float time)
 	{
 		setAura((Aura::Value)i, false);
 	}
+	if (!isAttackToTargetAllowed(Target))
+	{
+		Target = NULL;
+	}
 }
 
 Node* BaseGameObject::node()
@@ -233,7 +237,7 @@ BaseGameObject* BaseGameObject::constructor()
 	return new BaseGameObject();
 }
 
-void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	_manager = &manager;
 	Player = player;

@@ -46,7 +46,7 @@ public:
 	static BaseGameObject* constructor();
 	void makeIllusion();
 
-	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform);
 	virtual bool illusionable();
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);

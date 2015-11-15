@@ -427,16 +427,16 @@ form hud
 			  height = 196
 			  text = Qbi
 			}
-			button Player1_New_Archon
+			button Player1_New_Hanto
 			{
 			  x = 670
-			  textTag = archon
+			  textTag = hanto
 			  consumeInputEvents = true
 			  style = buttonStyle
 			  region = 540, 0, 85, 101
 			  width = 196
 			  height = 196
-			  text = Archon
+			  text = Hanto
 			}
 			button Player1_New_Immortal
 			{
@@ -460,16 +460,16 @@ form hud
 			  height = 196
 			  text = VoidRay
 			}
-			button Player1_New_Dark
+			button Player1_New_Cheida
 			{
 			  x = 1045
-			  textTag = dark
+			  textTag = cheida
 			  consumeInputEvents = true
 			  style = buttonStyle
 			  region = 795, 0, 85, 101
 			  width = 196
 			  height = 196
-			  text = Dark
+			  text = Cheida
 			}		   
 			button Player1_New_Observer
 			{

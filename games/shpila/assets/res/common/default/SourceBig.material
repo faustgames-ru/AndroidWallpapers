@@ -1,6 +1,6 @@
 #include res/common/common.material
 
-material mtSourceBig : texturedTransparent
+material mtStaticmesh : texturedTransparent
 {
     technique
     {
@@ -8,7 +8,7 @@ material mtSourceBig : texturedTransparent
         {			
             sampler u_diffuseTexture
             {
-                path = @3-1
+                path = @SourceBig
             }
         }
     }

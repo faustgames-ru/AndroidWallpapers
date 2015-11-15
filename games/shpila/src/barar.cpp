@@ -5,7 +5,7 @@ BaseGameObject* BararWarrior::constructor()
 	return new BararWarrior();
 }
 
-void BararWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, Matrix transform)
+void BararWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
 {
 	float scale = BARAR_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);
