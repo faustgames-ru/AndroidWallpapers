@@ -41,9 +41,9 @@ public:
 	virtual void restoreDeviceObjects();
 
 	bool initializeNodeMaterials(Node* node);
-
 	bool isActivePlayer(PlayerObject* player);
 	PlayerObject* getActivePlayer();
+	TargetCamera* getActiveCamera();
 protected:
 
     /**
@@ -89,10 +89,6 @@ private:
 	void selectUnit();
 	Keyboard::KeyState getActionState(Actions::Action action);
 	void setKeyState(int key, bool pressed);
-	
-	static const Vector3 ProjectToPlane(Camera* camera, int x, int y, Vector3 normal, Vector3 pointOnPlane);
-	static const Vector3 ProjectToZeroPlane(Camera* camera, int x, int y);
-	static bool ProjectRayIntersectSphere(Camera* camera, int x, int y, Vector3 point, float radiusSquared);
 
 	static const char* format(char* fstr, ...);
 

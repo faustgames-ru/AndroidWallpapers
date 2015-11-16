@@ -1,4 +1,5 @@
 #include "Headers.h"
+#include "main.h"
 
 #define SPRITE_VSH "res/shaders/sprite.vert"
 #define SPRITE_FSH "res/shaders/sprite.frag"
@@ -411,10 +412,12 @@ bool PlayerObject::isExtractorBuilding()
 	return _ExtractorBuildTimer.enabled();
 }
 
-void PlayerObject::mousOver(const Vector3 mousePos)
+void PlayerObject::mousOver(int x, int y)
 {
-	_gridGround.mousOver(mousePos);
-	_gridAir.mousOver(mousePos);
+	Vector3 pos = ProjectToPlane(((Shpila*)Game::getInstance())->getActiveCamera()->getCamera(), x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f));
+	_gridGround.mousOver(pos);
+	pos = ProjectToPlane(((Shpila*)Game::getInstance())->getActiveCamera()->getCamera(), x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, AIR_UNITS_ALTITUDE, 0.0f));
+	_gridAir.mousOver(pos);
 }
 
 void PlayerObject::render()

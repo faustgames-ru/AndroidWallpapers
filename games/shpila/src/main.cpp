@@ -243,6 +243,11 @@ PlayerObject* Shpila::getActivePlayer()
 	return _manager.Players[player];
 }
 
+TargetCamera* Shpila::getActiveCamera()
+{
+	return _activeCamera;
+}
+
 void Shpila::initializeMaterial(Scene* scene, Node* node, Material* material)
 {
 	_manager.initializeMaterial(node, material);
@@ -299,8 +304,7 @@ void Shpila::updatePlayers(float time)
 {
 	for (std::vector<PlayerObject*>::iterator it = _manager.Players.begin(); it != _manager.Players.end(); ++it)
 	{
-		const Vector3 pos = ProjectToZeroPlane(_activeCamera->getCamera(), _mouseX, _mouseY);
-		(*it)->mousOver(pos);
+		(*it)->mousOver(_mouseX, _mouseY);
 		(*it)->update(time);
 	}
 }
@@ -628,35 +632,6 @@ void Shpila::setKeyState(int key, bool pressed)
 		else
 			_keyMap[(Keyboard::Key)key] = Keyboard::KEY_STATE_RELEASE;
 	}
-}
-
-const Vector3 Shpila::ProjectToPlane(Camera* camera, int x, int y, Vector3 normal, Vector3 pointOnPlane)
-{
-	Ray ray;
-	camera->pickRay(Game::getInstance()->getViewport(), x, y, &ray);
-	const float distance = Vector3::dot(pointOnPlane, normal);
-	Plane plane(normal, -distance);
-
-	Vector3 point;
-	float collisionDistance = ray.intersects(plane);
-	if (collisionDistance != Ray::INTERSECTS_NONE)
-	{
-		point.set(ray.getOrigin() + collisionDistance*ray.getDirection());
-		return point;
-	}
-	else
-		return Vector3::zero();
-}
-
-const Vector3 Shpila::ProjectToZeroPlane(Camera* camera, int x, int y)
-{
-	return ProjectToPlane(camera, x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f));
-}
-
-bool Shpila::ProjectRayIntersectSphere(Camera* camera, int x, int y, Vector3 point, float radiusSquared)
-{
-	const Vector3 p = ProjectToPlane(camera, x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f));
-	return p.distanceSquared(point) <= radiusSquared;
 }
 
 const char* Shpila::format(char* fstr, ...)

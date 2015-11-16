@@ -271,6 +271,9 @@
     <ClCompile Include="src\jeats.cpp">
       <Filter>src\GameObjects\Warriors</Filter>
     </ClCompile>
+    <ClCompile Include="src\Utils.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -635,6 +638,9 @@
     </ClInclude>
     <ClInclude Include="src\jeats.h">
       <Filter>src\GameObjects\Warriors</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Utils.h">
+      <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

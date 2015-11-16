@@ -16,8 +16,6 @@ struct GameUnit
 		: _node(NULL), _constructor(NULL)
 	{}
 };
-void createCharacterRotationMatrix(Vector3 forward, Matrix* rotation);
-
 
 class GameObjectManager : public PlugIn
 {

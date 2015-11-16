@@ -27,6 +27,7 @@
 #include "algorithms\Links.h"
 #include "algorithms\Utils.h"
 #include "algorithms\Valuable.h"
+#include "Utils.h"
 #include "UnitManagement\OpenSteer.h"
 #include "UnitManagement\SimpleVehicle.h"
 #include "UnitManagement\Proximity.h"

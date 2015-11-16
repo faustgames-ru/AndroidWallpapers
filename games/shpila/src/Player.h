@@ -129,7 +129,7 @@ public:
 	int getAdditionalResourceIncreasePercent();
 	int getExtractorBuildingTime();
 	bool isExtractorBuilding();
-	void mousOver(const Vector3 mousePos);
+	void mousOver(int x, int y);
 	void render();
 private:
 	CLink<TowerObject> _defenceTower;
