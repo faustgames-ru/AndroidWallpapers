@@ -18,12 +18,9 @@ void AlbiriaWarrior::init(GameObjectManager& manager, const ActorData* gameData,
 	BaseWarrior::init(manager, gameData, node, player, transform);
 	_node->setScale(scale, scale, scale);
 
-	if (_unitAnimation.size() > 0)
-	{
-		AnimationClip* clip = (*_unitAnimation[0]->_clips)[UnitAnimation::Attack];
-		clip->addBeginListener(&_rechangeListener);
-		clip->addListener(&_fireListener, (int)(0.25f * (float)clip->getDuration()));
-	}
+	ActionClips* clips = (ActionClips*)_unitActions.Actions[UnitActions::Attack];
+	clips->addBeginListener(&_rechangeListener);
+	clips->addListener(&_fireListener, (int)(0.25f * (float)clips->getDuration()));
 }
 
 void AlbiriaWarrior::update(float time)

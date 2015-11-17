@@ -282,6 +282,8 @@ void Animation::createClips(Properties* animationProperties, unsigned int frameC
 
         clip->setLoopBlendTime(pClip->getFloat("loopBlendTime")); // returns zero if not specified
 
+		clip->setGroup(pClip->getString("group"));
+
         pClip = animationProperties->getNextNamespace();
     }
 }

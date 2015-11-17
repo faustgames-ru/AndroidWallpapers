@@ -208,12 +208,11 @@ void BaseGameObject::updateMaterials(char* materialsFilename)
 			std::string materialPath = materialsFilename;
 			materialPath.append("#");
 			materialPath.append(mat->getName());
-			Material* material = Material::create(materialPath.c_str());
+			AutoRef<Material> material = Material::create(materialPath.c_str())->Auto();
 			if (material)
 			{
 				int partIndex = model->getMesh()->getPartCount() > 0 ? i : -1;
 				model->setMaterial(material, partIndex);
-				SAFE_RELEASE(material);
 			}
 		}
 	}
@@ -245,7 +244,7 @@ void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData,
 	manager.registerObject(this);
 	if (node)
 	{
-		_node.newRef(node->clone());
+		_node = node->clone()->Auto();
 		_node->setOrientationAxises(Node::PositiveX, Node::PositiveZ, Node::PositiveY);
 		_node->set(transform);
 		manager.registerSceneNode(_node);

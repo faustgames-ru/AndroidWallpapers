@@ -205,22 +205,7 @@ protected:
 	CTemplateList<T> m_Object;
 };
 
-template <class T>
-class AutoRef
-{
-public:
-	operator T*(){ return _object; };
-	T* operator->(){ return _object; };
-	T* operator= (T* other){ if (_object != other) { SAFE_RELEASE(_object); _object = other; other->addRef(); } return _object; };
-	AutoRef(T* other)	{ _object = other; other->addRef(); };
-	AutoRef() : _object(NULL){};
-	~AutoRef(){ SAFE_RELEASE(_object); };
-	void newRef(T* other){ if (_object != other) { SAFE_RELEASE(_object); _object = other; }};
-private:
-	T* _object;
-};
-
-class MethodSubscribingBase : public Ref
+class MethodSubscribingBase : public gameplay::Ref
 {
 	friend class Parameter;
 public:

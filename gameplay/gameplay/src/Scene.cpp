@@ -84,9 +84,12 @@ Scene::~Scene()
     removeAllNodes();
 
     // Remove the scene from global list
-    std::vector<Scene*>::iterator itr = std::find(__sceneList.begin(), __sceneList.end(), this);
-    if (itr != __sceneList.end())
-        __sceneList.erase(itr);
+	if (__sceneList.size() > 0)
+	{
+		std::vector<Scene*>::iterator itr = std::find(__sceneList.begin(), __sceneList.end(), this);
+		if (itr != __sceneList.end())
+			__sceneList.erase(itr);
+	}    
 }
 
 Scene* Scene::create(const char* id)

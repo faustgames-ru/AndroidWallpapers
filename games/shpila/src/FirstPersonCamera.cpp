@@ -1,4 +1,5 @@
 #include "FirstPersonCamera.h"
+#include "algorithms\Links.h"
 
 FirstPersonCamera::FirstPersonCamera()
     : _pitchNode(NULL), _rootNode(NULL)
@@ -22,9 +23,8 @@ void FirstPersonCamera::initialize(float nearPlane, float farPlane, float fov)
 
     float aspectRatio = Game::getInstance()->getAspectRatio();
     assert(aspectRatio > 0.0f);
-    Camera* camera = Camera::createPerspective(fov, aspectRatio, nearPlane, farPlane);
+	AutoRef<Camera> camera = Camera::createPerspective(fov, aspectRatio, nearPlane, farPlane)->Auto();
     _pitchNode->setCamera(camera);
-    SAFE_RELEASE(camera);
 }
 
 Node* FirstPersonCamera::getRootNode()

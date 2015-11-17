@@ -3,6 +3,7 @@ animation animations
     frameCount = 175
 	clip attack
     {
+		group = attack
 		speed = 1
         begin = 35
         end = 70
@@ -11,6 +12,7 @@ animation animations
 	
 	clip death
     {
+		group = death
         begin = 130
         end = 175
         repeatCount = 1
@@ -18,6 +20,7 @@ animation animations
 	
 	clip run
     {
+		group = run
 		speed = 1
         begin = 0
         end = 30
@@ -26,6 +29,7 @@ animation animations
 	
 	clip dead
     {
+		group = dead
         begin = 175
         end = 175
         repeatCount = INDEFINITE

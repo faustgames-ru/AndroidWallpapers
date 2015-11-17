@@ -48,12 +48,15 @@ Form::Form() : Drawable(), _batched(true)
 
 Form::~Form()
 {
-    // Remove this Form from the global list.
-    std::vector<Form*>::iterator it = std::find(__forms.begin(), __forms.end(), this);
-    if (it != __forms.end())
-    {
-        __forms.erase(it);
-    }
+	if (__forms.size() > 0)
+	{
+		// Remove this Form from the global list.
+		std::vector<Form*>::iterator it = std::find(__forms.begin(), __forms.end(), this);
+		if (it != __forms.end())
+		{
+			__forms.erase(it);
+		}
+	}
 }
 
 Form* Form::create(const char* url)

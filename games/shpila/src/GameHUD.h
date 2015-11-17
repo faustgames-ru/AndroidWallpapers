@@ -2,6 +2,7 @@
 #define GAMEHUD_H_
 
 #include "gameplay.h"
+#include "algorithms\Links.h"
 using namespace gameplay;
 
 typedef void(*ControlEventHandler) (Game* game, Control* control);
@@ -31,7 +32,7 @@ public:
 	Form* form();
 
 private:
-	Form* _form;
+	AutoRef<Form> _form;
 	Game* _game;
 	std::vector<ControlBind> _binds;
 };

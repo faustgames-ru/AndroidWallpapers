@@ -28,12 +28,15 @@ Mesh::~Mesh()
 
 	SAFE_DELETE(_meshData);
 
-	for (std::vector<Mesh*>::iterator it = __meshCache.begin(); it != __meshCache.end(); ++it)
+	if (__meshCache.size() > 0)
 	{
-		if (*it == this)
+		for (std::vector<Mesh*>::iterator it = __meshCache.begin(); it != __meshCache.end(); ++it)
 		{
-			__meshCache.erase(it);
-			break;
+			if (*it == this)
+			{
+				__meshCache.erase(it);
+				break;
+			}
 		}
 	}
 }

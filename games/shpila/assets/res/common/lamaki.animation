@@ -4,6 +4,7 @@ animation animations
 	
 	clip attack
     {
+		group = attack
         begin = 0
         end = 25
         repeatCount = INDEFINITE
@@ -11,6 +12,7 @@ animation animations
 	
 	clip death
     {
+		group = death
         begin = 30
         end = 60
         repeatCount = 1
@@ -18,6 +20,7 @@ animation animations
 	
 	clip run
     {
+		group = run
         begin = 65
         end = 85
         repeatCount = INDEFINITE
@@ -25,6 +28,7 @@ animation animations
 	
 	clip dead
     {
+		group = dead
         begin = 60
         end = 60
         repeatCount = INDEFINITE

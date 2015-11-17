@@ -9,7 +9,7 @@ GameObjectManager::GameObjectManager()
 , _objects()
 , _all()
 , _pd(NULL)
-, _store(Scene::create("store"))
+, _store()
 {}
 
 void GameObjectManager::setScene(Scene* scene)
@@ -96,7 +96,7 @@ void GameObjectManager::addUnit(const char* filename, const char* name, GameObje
 {
 	if (filename != NULL)
 	{
-		Scene* scene = Scene::load(filename);
+		AutoRef<Scene> scene = Scene::load(filename)->Auto();
 		Node* root = Node::create("root");
 		root->setTag("dynamic");
 		Node* child = scene->getFirstNode();
@@ -132,8 +132,11 @@ void GameObjectManager::addUnit(const char* filename, const char* name, GameObje
 			}
 			node = node->getNextSibling();
 		}
+		if (!_store)
+		{
+			_store = Scene::create("store")->Auto();
+		}
 		_store->addNode(root);
-		SAFE_RELEASE(scene);
 		_units[name] = GameUnit(root, constructor);
 	}
 	else

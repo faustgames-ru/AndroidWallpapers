@@ -37,6 +37,7 @@ public:
      * Constructor.
      */
 	Shpila();
+	virtual ~Shpila();
 
 	virtual void restoreDeviceObjects();
 

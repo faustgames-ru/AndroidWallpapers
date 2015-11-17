@@ -19,11 +19,8 @@ void LamakiWarrior::init(GameObjectManager& manager, const ActorData* gameData, 
 	_node->setScale(scale * 1.25f, scale, scale * 1.25f);
 	_blinkAbilityColdDownTimer.enable(false);
 
-	if (_unitAnimation.size() > 0)
-	{
-		_attackClip = (*_unitAnimation[0]->_clips)[UnitAnimation::Attack];
-		_attackClip->addListener(&_fireListener, (int)(0.25f * (float)_attackClip->getDuration()));
-	}
+	_attackClip = (ActionClips*)_unitActions.Actions[UnitActions::Attack];
+	_attackClip->addListener(&_fireListener, (int)(0.25f * (float)_attackClip->getDuration()));
 	_damageTimer.enable(false);
 }
 

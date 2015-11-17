@@ -24,7 +24,7 @@ private:
 	void fire();
 	SimpleTimer _blinkAbilityColdDownTimer;
 	FireListener _fireListener;
-	AnimationClip* _attackClip;
+	AutoRef<ActionClips> _attackClip;
 };
 
 #endif

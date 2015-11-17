@@ -64,6 +64,10 @@ Shpila::Shpila()
 {
 }
 
+Shpila::~Shpila()
+{
+}
+
 void Shpila::restoreDeviceObjects()
 {
 	if (!EMPTY)
@@ -155,7 +159,7 @@ void Shpila::initialize()
 		
 
 		// Load scene.
-		_scene = Scene::load("res/common/box.scene");
+		_scene = Scene::load("res/common/box.scene")->Auto();
 
 		//start prepare cameras
 		_fpCamera.initialize(0.01f, 1000.0f);
@@ -319,7 +323,6 @@ void Shpila::updateNetwork()
 void Shpila::finalize()
 {
 	_hud.finalize(this);
-	SAFE_RELEASE(_scene);
     SAFE_RELEASE(_font);
 	freedActorsData();
 }

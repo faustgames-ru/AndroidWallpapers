@@ -19,11 +19,11 @@ void GameHUD::controlEvent(Control* control, EventType evt)
 void GameHUD::initialize(Game* game, Scene* scene)
 {
 	_game = game;
-	_form = Form::create("res/hud.form");
+	_form = Form::create("res/hud.form")->Auto();
 }
 void GameHUD::finalize(Game* game)
 {
-	SAFE_RELEASE(_form);
+
 }
 
 void GameHUD::bind(char* control, Control::Listener::EventType evt, ControlEventHandler handler)

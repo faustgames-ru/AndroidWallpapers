@@ -68,11 +68,14 @@ Texture::~Texture()
     // Remove ourself from the texture cache.
     if (_cached)
     {
-        std::vector<Texture*>::iterator itr = std::find(__textureCache.begin(), __textureCache.end(), this);
-        if (itr != __textureCache.end())
-        {
-            __textureCache.erase(itr);
-        }
+		if (__textureCache.size() > 0)
+		{
+			std::vector<Texture*>::iterator itr = std::find(__textureCache.begin(), __textureCache.end(), this);
+			if (itr != __textureCache.end())
+			{
+				__textureCache.erase(itr);
+			}
+		}
     }
 	if (_PNGimage != NULL)
 	{

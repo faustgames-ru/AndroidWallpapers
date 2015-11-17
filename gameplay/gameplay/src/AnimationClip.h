@@ -140,6 +140,20 @@ public:
      */
     float getRepeatCount() const;
 
+	/**
+	* Sets the AnimationClip's group name.
+	*
+	* @param group The name of group.
+	*/
+	void setGroup(const char* group);
+
+	/**
+	* Gets the AnimationClip's group name.
+	*
+	* @return The name of group that is set on the AnimationClip.
+	*/
+	const char* getGroup() const;
+
     /**
      * Sets the AnimationClip's active duration. Overrides repeat count.
      *
@@ -387,6 +401,7 @@ private:
     AnimationClip* clone(Animation* animation) const;
 
     std::string _id;                                    // AnimationClip ID.
+	std::string _group;                                    // group name.
     Animation* _animation;                              // The Animation this clip is created from.
     unsigned long _startTime;                           // Start time of the clip.
     unsigned long _endTime;                             // End time of the clip.

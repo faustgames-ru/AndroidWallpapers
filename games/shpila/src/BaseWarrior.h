@@ -6,36 +6,42 @@ using namespace gameplay;
 class BaseGameObject;
 class PlayerObject;
 
-class UnitAnimation
+class ActionClips: public Ref
 {
 public:
-	enum Actions
+	AutoRef<AnimationClip> CurrentClip;
+	std::vector<AutoRef<AnimationClip>> Clips;
+
+	ActionClips();
+
+	bool Playing();
+	void Play();
+	void addBeginListener(AnimationClip::Listener* listener);
+	void addListener(AnimationClip::Listener* listener, unsigned long eventTime);
+	unsigned long getDuration();
+};
+
+class UnitActions
+{
+public:
+	enum Action
 	{
 		Run,
 		Attack,
 		Death,
 		Dead
 	};
-	typedef std::map<Actions, AutoRef<AnimationClip>> ActionsMap;
+	typedef std::map<Action, AutoRef<ActionClips>> ActionsMap;
 
 	AutoRef<Animation> _animation;
-	AutoRef<AnimationClip> _clipCurrent;
-	ActionsMap* _clips;
 
-	UnitAnimation()
-	: _clipCurrent()
-	, _clips(new ActionsMap())
+	AutoRef<ActionClips> CurrentAction;
+	ActionsMap Actions;
+
+	UnitActions()
+		: CurrentAction()
+		, Actions()
 	{}
-
-	UnitAnimation(ActionsMap* clips)
-	: _clipCurrent()
-	, _clips(clips)
-	{}
-
-	~UnitAnimation()
-	{
-		SAFE_DELETE(_clips);
-	}
 };
 
 class BaseWarrior : public BaseActor
@@ -59,10 +65,10 @@ protected:
 	bool _dead;
 	float _deadAltitude;
 	SimpleTimer _illusionTimer;
-	std::vector<UnitAnimation*> _unitAnimation;
+	UnitActions _unitActions;
 	void updateMidLineState();
 	void updateAnimationState();
-	void switchToAnimation(UnitAnimation::Actions action, float repeatCount, unsigned long blendingTime);
+	void switchToAction(UnitActions::Action action);
 	void updatePositionFromServer(float time);
 	void updateAttack(float time, BaseGameObject* object);
 	void updateMoveToPoint(float time, Vector3 point);

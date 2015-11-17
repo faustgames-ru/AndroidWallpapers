@@ -4,18 +4,73 @@
 
 const unsigned long DEFAULT_BLENDING_TIME = 150;
 
+ActionClips::ActionClips()
+: CurrentClip()
+, Clips()
+{}
+
+bool ActionClips::Playing()
+{
+	return CurrentClip && (CurrentClip->isPlaying());
+}
+
+void ActionClips::Play()
+{
+	if ((CurrentClip == NULL) || !CurrentClip->isPlaying())
+	{
+		AnimationClip* clip = Clips[rndIndex(0, Clips.size() - 1)];
+		clip->setRepeatCount(1.0f);
+		if ((CurrentClip != NULL) && (CurrentClip != clip))
+			CurrentClip->crossFade(clip, DEFAULT_BLENDING_TIME);
+		else
+			clip->play();
+		CurrentClip = clip;
+	}
+}
+
+void ActionClips::addBeginListener(AnimationClip::Listener* listener)
+{
+	for (std::vector<AutoRef<AnimationClip>>::iterator it = Clips.begin(); it != Clips.end(); it++)
+	{
+		(*it)->addBeginListener(listener);
+	}
+}
+
+void ActionClips::addListener(AnimationClip::Listener* listener, unsigned long eventTime)
+{
+	for (std::vector<AutoRef<AnimationClip>>::iterator it = Clips.begin(); it != Clips.end(); it++)
+	{
+		(*it)->addListener(listener, eventTime);
+	}
+}
+
+unsigned long ActionClips::getDuration()
+{
+	if (Clips.size())
+		return 0;
+
+	int res = 0;
+	for (std::vector<AutoRef<AnimationClip>>::iterator it = Clips.begin(); it != Clips.end(); it++)
+	{
+		res += (*it)->getDuration();
+	}
+	
+	return (unsigned long)(res / Clips.size());
+}
+
+
 BaseWarrior::BaseWarrior()
 : BaseActor()
 , _initialized(false)
 , _dead(false)
 , _deadAltitude(0.0f)
-, _unitAnimation()
+, _unitActions()
 , _illusionTimer()
 {}
 
 BaseWarrior::~BaseWarrior()
 {
-	DeleteVectorPointers(_unitAnimation);
+	
 }
 
 BaseGameObject* BaseWarrior::constructor()
@@ -67,12 +122,9 @@ void BaseWarrior::update(float time)
 
 	if (_dead)
 	{
-		if (_unitAnimation.size() > 0)
+		if (!_unitActions.Actions[UnitActions::Death]->Playing())
 		{
-			if (!(*_unitAnimation[0]->_clips)[UnitAnimation::Death]->isPlaying())
-			{
-				switchToAnimation(UnitAnimation::Dead, AnimationClip::REPEAT_INDEFINITE, 0);
-			}
+			switchToAction(UnitActions::Dead);
 		}
 		disappearing(time);
 		return;
@@ -80,7 +132,7 @@ void BaseWarrior::update(float time)
 
 	if (LocalGameData.Health <= 0.0f)
 	{
-		switchToAnimation(UnitAnimation::Death, 1.0f, DEFAULT_BLENDING_TIME);
+		switchToAction(UnitActions::Death);
 		_dead = true;
 		_manager->unregisterMovementController(&_movementController);
 		return;
@@ -152,7 +204,6 @@ void BaseWarrior::updateAnimationState()
 	//initialization
 	if (!_initialized)
 	{
-		_unitAnimation.clear();
 		Node* node = _node->getFirstChild();
 		while (node)
 		{
@@ -161,12 +212,32 @@ void BaseWarrior::updateAnimationState()
 				anim = node->getAnimation(NULL);
 			if (anim)
 			{
-				UnitAnimation::ActionsMap* am = new UnitAnimation::ActionsMap();
-				(*am)[UnitAnimation::Run] = anim->getClip("run");
-				(*am)[UnitAnimation::Attack] = anim->getClip("attack");
-				(*am)[UnitAnimation::Death] = anim->getClip("death");
-				(*am)[UnitAnimation::Dead] = anim->getClip("dead");
-				_unitAnimation.push_back(new UnitAnimation(am));
+				_unitActions.Actions[UnitActions::Run] = (new ActionClips())->Auto();
+				_unitActions.Actions[UnitActions::Attack] = (new ActionClips())->Auto();
+				_unitActions.Actions[UnitActions::Death] = (new ActionClips())->Auto();
+				_unitActions.Actions[UnitActions::Dead] = (new ActionClips())->Auto();
+				for (int i = 0; i < (int)anim->getClipCount(); i++)
+					if (!strcmp(anim->getClip(i)->getGroup(), "run"))
+						_unitActions.Actions[UnitActions::Run]->Clips.push_back(anim->getClip(i));
+				for (int i = 0; i < (int)anim->getClipCount(); i++)
+					if (!strcmp(anim->getClip(i)->getGroup(), "attack"))
+						_unitActions.Actions[UnitActions::Attack]->Clips.push_back(anim->getClip(i));
+				for (int i = 0; i < (int)anim->getClipCount(); i++)
+					if (!strcmp(anim->getClip(i)->getGroup(), "death"))
+						_unitActions.Actions[UnitActions::Death]->Clips.push_back(anim->getClip(i));
+				for (int i = 0; i < (int)anim->getClipCount(); i++)
+					if (!strcmp(anim->getClip(i)->getGroup(), "dead"))
+						_unitActions.Actions[UnitActions::Dead]->Clips.push_back(anim->getClip(i));
+
+				if (_unitActions.Actions[UnitActions::Run]->Clips.size() == 0)
+					_unitActions.Actions[UnitActions::Run]->Clips.push_back(anim->getClip("run"));
+				if (_unitActions.Actions[UnitActions::Attack]->Clips.size() == 0)
+					_unitActions.Actions[UnitActions::Attack]->Clips.push_back(anim->getClip("attack"));
+				if (_unitActions.Actions[UnitActions::Death]->Clips.size() == 0)
+					_unitActions.Actions[UnitActions::Death]->Clips.push_back(anim->getClip("death"));
+				if (_unitActions.Actions[UnitActions::Dead]->Clips.size() == 0)
+					_unitActions.Actions[UnitActions::Dead]->Clips.push_back(anim->getClip("dead"));
+				//T* operator= (T* other){ if (_object != other) { SAFE_RELEASE(_object); _object = other; other->addRef(); } return _object; };
 			}
 			node = node->getNextSibling();
 		}
@@ -174,22 +245,9 @@ void BaseWarrior::updateAnimationState()
 	}
 }
 
-void BaseWarrior::switchToAnimation(UnitAnimation::Actions action, float repeatCount, unsigned long blendingTime)
+void BaseWarrior::switchToAction(UnitActions::Action action)
 {
-	for (std::vector<UnitAnimation*>::iterator it = _unitAnimation.begin(); it != _unitAnimation.end(); it++)
-	{
-		AnimationClip* clip = (*(*it)->_clips)[action];
-		if (((*it)->_clipCurrent != clip) || ((*it)->_clipCurrent == NULL) || (!(*it)->_clipCurrent->isPlaying()))
-		{
-			//clip->setSpeed(1.0f);
-			clip->setRepeatCount(repeatCount);
-			if ((*it)->_clipCurrent && (blendingTime > 0))
-				(*it)->_clipCurrent->crossFade(clip, blendingTime);
-			else
-				clip->play();
-			(*it)->_clipCurrent = clip;
-		}
-	}
+	_unitActions.Actions[action]->Play();
 }
 
 void BaseWarrior::updatePositionFromServer(float time)
@@ -231,7 +289,7 @@ void BaseWarrior::updateAttack(float time, BaseGameObject* object)
 		float distance = tPos.distanceSquared(position());
 		if (radius < distance)
 		{
-			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
+			switchToAction(UnitActions::Run);
 			_movementController._applyBreakingForces = false;
 			attackEnable(false);
 		}
@@ -241,7 +299,7 @@ void BaseWarrior::updateAttack(float time, BaseGameObject* object)
 			if (LocalGameData.GameData->isAttackToTargetAllowed(*object->LocalGameData.GameData))
 			{
 				attackEnable(true);
-				switchToAnimation(UnitAnimation::Attack, 1, DEFAULT_BLENDING_TIME);
+				switchToAction(UnitActions::Attack);
 			}
 		}
 	}
@@ -252,7 +310,7 @@ void BaseWarrior::updateAttack(float time, BaseGameObject* object)
 		if (Player->BattleFieldDirection.dot(dir) <= 0.0f)
 		{
 			updateMoveToPoint(time, position() + Player->BattleFieldDirection * 10.0f);
-			switchToAnimation(UnitAnimation::Run, AnimationClip::REPEAT_INDEFINITE, DEFAULT_BLENDING_TIME);
+			switchToAction(UnitActions::Run);
 			attackEnable(false);
 			_movementController._applyBreakingForces = false;
 		}

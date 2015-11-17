@@ -12,7 +12,7 @@ namespace gameplay
 extern void splitURL(const std::string& url, std::string* file, std::string* id);
 
 AnimationClip::AnimationClip(const char* id, Animation* animation, unsigned long startTime, unsigned long endTime)
-    : _id(id), _animation(animation), _startTime(startTime), _endTime(endTime), _duration(_endTime - _startTime), 
+	: _id(id), _group(), _animation(animation), _startTime(startTime), _endTime(endTime), _duration(_endTime - _startTime),
       _stateBits(0x00), _repeatCount(1.0f), _loopBlendTime(0), _activeDuration(_duration * _repeatCount), _speed(1.0f), _timeStarted(0), 
       _elapsedTime(0), _crossFadeToClip(NULL), _crossFadeOutElapsed(0), _crossFadeOutDuration(0), _blendWeight(1.0f),
       _beginListeners(NULL), _endListeners(NULL), _listeners(NULL), _listenerItr(NULL)
@@ -121,6 +121,17 @@ void AnimationClip::setRepeatCount(float repeatCount)
 float AnimationClip::getRepeatCount() const
 {
     return _repeatCount;
+}
+
+void AnimationClip::setGroup(const char* group)
+{
+	if (group)
+		_group = group;
+}
+
+const char* AnimationClip::getGroup() const
+{
+	return _group.c_str();
 }
 
 void AnimationClip::setActiveDuration(unsigned long duration)
@@ -673,6 +684,7 @@ AnimationClip* AnimationClip::clone(Animation* animation) const
     newClip->setSpeed(getSpeed());
     newClip->setRepeatCount(getRepeatCount());
     newClip->setBlendWeight(getBlendWeight());
+	newClip->setGroup(getGroup());
     
     size_t size = _values.size();
     newClip->_values.resize(size, NULL);

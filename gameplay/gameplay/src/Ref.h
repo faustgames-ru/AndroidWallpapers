@@ -1,8 +1,36 @@
 #ifndef REF_H_
 #define REF_H_
 
+#include <cstdlib>
+
 namespace gameplay
 {
+
+class Ref;
+
+// Ref cleanup macro
+#define SAFE_RELEASE(x) \
+if (x) \
+{ \
+	(x)->release(); \
+	x = NULL; \
+}
+
+template <class T>
+class AutoRef
+{
+public:
+	operator T*(){ return _object; };
+	T* operator->(){ return _object; };
+	T* operator= (Ref* other){ if (_object != other) { SAFE_RELEASE(_object); _object = (T*)other; other->addRef(); } return _object; };
+	T* operator= (AutoRef& other){ if (_object != other._object) { SAFE_RELEASE(_object); _object = other._object; other._object->addRef(); } return _object; };
+	AutoRef(Ref* other) : _object((T*)other){ other->addRef(); };
+	AutoRef(AutoRef&  other) : _object(other->_object){ other._object->addRef(); };
+	AutoRef() : _object(NULL){};
+	~AutoRef(){ SAFE_RELEASE(_object); };
+private:
+	T* _object;
+};
 
 /**
  * Defines the base class for game objects that require lifecycle management.
@@ -17,6 +45,12 @@ namespace gameplay
 class Ref
 {
 public:
+	//template  <class T>
+	AutoRef<Ref> Auto()
+	{
+		--_refCount;
+		return AutoRef<Ref>(this);
+	}
 
     /**
      * Increments the reference count of this object.

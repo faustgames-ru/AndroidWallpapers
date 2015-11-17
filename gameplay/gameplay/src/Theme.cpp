@@ -44,12 +44,15 @@ Theme::~Theme()
     SAFE_DELETE(_spriteBatch);
     SAFE_RELEASE(_texture);
 
-    // Remove ourself from the theme cache.
-    std::vector<Theme*>::iterator itr = std::find(__themeCache.begin(), __themeCache.end(), this);
-    if (itr != __themeCache.end())
-    {
-        __themeCache.erase(itr);
-    }
+	if (__themeCache.size() > 0)
+	{
+		// Remove ourself from the theme cache.
+		std::vector<Theme*>::iterator itr = std::find(__themeCache.begin(), __themeCache.end(), this);
+		if (itr != __themeCache.end())
+		{
+			__themeCache.erase(itr);
+		}
+	}
 
     SAFE_RELEASE(_emptyImage);
 

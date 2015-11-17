@@ -145,14 +145,6 @@ extern int strcmpnocase(const char* s1, const char* s2);
         x = NULL; \
     }
 
-// Ref cleanup macro
-#define SAFE_RELEASE(x) \
-    if (x) \
-    { \
-        (x)->release(); \
-        x = NULL; \
-    }
-
 // Math
 #define MATH_DEG_TO_RAD(x)          ((x) * 0.0174532925f)
 #define MATH_RAD_TO_DEG(x)          ((x)* 57.29577951f)

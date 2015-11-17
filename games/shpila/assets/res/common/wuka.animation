@@ -1,30 +1,59 @@
 animation animations
 {
-    frameCount = 107
+    frameCount = 185
 	clip attack
     {
+		group = attack
         begin = 0
         end = 25
-        repeatCount = INDEFINITE
+        repeatCount = 1
+    }
+	
+	clip attack2
+    {
+		group = attack
+        begin = 110
+        end = 135
+        repeatCount = 1
     }
 	
 	clip death
     {
+		group = death
         begin = 50
         end = 90
         repeatCount = 1
     }
 	
+	clip death2
+    {
+		group = death
+        begin = 160
+        end = 185
+        repeatCount = 1
+    }
+	
 	clip run
     {
+		group = run
 		speed = 1
         begin = 30
         end = 46
-        repeatCount = INDEFINITE
+        repeatCount = 1
+    }
+	
+	clip run2
+    {
+		group = run
+		speed = 1
+        begin = 140
+        end = 156
+        repeatCount = 1
     }
 	
 	clip dead
     {
+		group = dead
         begin = 90
         end = 90
         repeatCount = INDEFINITE
