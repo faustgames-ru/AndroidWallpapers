@@ -16,7 +16,7 @@ public:
 
 	LamakiWarrior();
 	static BaseGameObject* constructor();
-	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform);
 	virtual void update(float time);
 	virtual void rangeFire();
 	virtual void attackEnable(bool value);

@@ -6,7 +6,7 @@ class TimeWarpObject : public BaseGameObject
 public:
 	TimeWarpObject();
 	static BaseGameObject* constructor();
-	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform);
 	virtual bool interactive();
 	virtual void interaction(BaseGameObject* object);
 	virtual void update(float time);

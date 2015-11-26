@@ -5,7 +5,7 @@ class BaseStaticActor : public BaseGameObject
 {
 public:
 	BaseStaticActor();
-	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform);
 	virtual void update(float time);
 	virtual bool getDetected();
 	virtual void setDetected(bool value);

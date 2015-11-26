@@ -31,7 +31,7 @@ public:
 	void initializeMaterial(Node* node, Material* material);
 	void addUnit(const char* filename, const char* name, GameObjectConstructorProc constructor);
 	void initUnits();
-	BaseGameObject* createObject(const char* name, Matrix transform, PlayerObject* player);
+	BaseGameObject* createObject(const char* name, const Matrix& transform, PlayerObject* player);
 	BaseGameObject* createObject(const char* name, Vector3 position, Vector3 forwardDirection, PlayerObject* player);
 	Node* AttachUnitModel(const char* unitName, BaseGameObject* object, const char* nodeName);
 	void registerMovementController(UnitMovementBase* controller);

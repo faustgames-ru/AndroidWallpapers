@@ -39,10 +39,10 @@ public:
 	Shpila();
 	virtual ~Shpila();
 
-	virtual void restoreDeviceObjects();
+	virtual void restoreDeviceObjects() override;
 
 	bool initializeNodeMaterials(Node* node);
-	bool isActivePlayer(PlayerObject* player);
+	bool isLocalPlayer(PlayerObject* player) const;
 	PlayerObject* getActivePlayer();
 	TargetCamera* getActiveCamera();
 protected:
@@ -50,17 +50,17 @@ protected:
     /**
      * @see Game::initialize
      */
-    void initialize();
+	virtual void initialize() override;
 
     /**
      * @see Game::finalize
      */
-    void finalize();
+	virtual void finalize() override;
 
     /**
      * @see Game::update
      */
-    void update(float elapsedTime);
+	virtual void update(float elapsedTime) override;
 
     /**
      * @see Game::render
@@ -118,6 +118,7 @@ private:
 
     Font* _font;
 	AutoRef<Scene> _scene;
+	AIManager _AIManager;
     MaterialParameter* _materialParameterAlpha;
     bool _physicsDebug;
     bool _wireframe;

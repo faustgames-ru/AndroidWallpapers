@@ -98,7 +98,7 @@ theme sceneSettings
 	imageList HomeSubPagesButtons
     {
         color = #ffffffff
-		regionOffset = 198, 130
+		regionOffset = 158, 277
 
         image units
         {
@@ -114,39 +114,102 @@ theme sceneSettings
 	imageList UpgradesButtons
     {
         color = #ffffffff
-		regionOffset = 302, 0
+		regionOffset = 0, 0
 
         image extractor
         {
-            region = 0, 0, 97, 77
+            region = 0, 0, 100, 77
         }
 		image shield
         {
-            region = 1164, 0, 97, 77
+            region = 500, 0, 100, 77
         }
         image armor_ground
         {
-            region = 1358, 0, 97, 77
+            region = 100, 0, 100, 77
         }
 		image armor_air
         {
-            region = 1552, 0, 97, 77
+            region = 300, 0, 100, 77
         }
 		image weapon_ground
         {
-            region =  1261, 0, 97, 77
+            region =  200, 0, 100, 77
         }
 		image weapon_air
         {
-            region = 1455, 0, 97, 77
+            region = 400, 0, 100, 77
         }
 		image upgrade_wuka
         {
-            region = 970, 0, 97, 77
+            region = 700, 0, 100, 77
         }
 		image upgrade_lamaki
         {
-            region = 873, 0, 97, 77
+            region = 800, 0, 100, 77
+        }
+    }
+	
+	imageList UnitsButtons
+    {
+        color = #ffffffff
+		regionOffset = 648, 77
+
+        image Hish
+        {
+            region = 0, 0, 200, 200
+        }
+        image Yuka
+        {
+            region = 200, 0, 200, 200
+        }
+		image Ohm
+        {
+            region = 400, 0, 200, 200
+        }
+		image Muna
+        {
+            region = 600, 0, 200, 200
+        }
+		image Wuka
+        {
+            region = 800, 0, 200, 200
+        }
+		image Trilla
+        {
+            region = 1000, 0, 200, 200
+        }
+		image Pulpa
+        {
+            region = 1200, 0, 200, 200
+        }
+		image Cheida
+        {
+            region = 0, 200, 200, 200
+        }
+		image Kefur
+        {
+            region = 200, 200, 200, 200
+        }
+		image Osh
+        {
+            region = 400, 200, 200, 200
+        }
+		image Jeats
+        {
+            region = 600, 200, 200, 200
+        }
+		image Qbi
+        {
+            region = 800, 200, 200, 200
+        }
+		image Lamaki
+        {
+            region = 1000, 200, 200, 200
+        }
+		image Hanto
+        {
+            region = 1200, 200, 200, 200
         }
     }
 
@@ -200,7 +263,7 @@ theme sceneSettings
             skin = mainNormal
             imageList = normalImages
 
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
             textColor = #eeeeeeff
             textAlignment = ALIGN_VCENTER_HCENTER
         }
@@ -234,7 +297,7 @@ theme sceneSettings
 
         stateNormal
         {
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
         }
         stateDisabled
         {
@@ -261,6 +324,16 @@ theme sceneSettings
             imageList = UpgradesButtons
         }
     }
+	
+	style UnitsButtonStyle : buttonStyle
+    {
+        stateNormal
+        {
+            imageList = UnitsButtons
+        }
+    }
+	
+	
 
     style noBorder
     {
@@ -272,7 +345,7 @@ theme sceneSettings
         stateNormal
         {
             imageList = normalImages
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
             textColor = #eeeeeeff
             textAlignment = ALIGN_VCENTER_HCENTER
         }
@@ -293,14 +366,14 @@ theme sceneSettings
     {
         stateNormal
         {
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
             fontSize = 20
             textAlignment = ALIGN_VCENTER_LEFT
         }
 
         stateActive
         {
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
             fontSize = 20
             textAlignment = ALIGN_VCENTER_LEFT
         }
@@ -318,14 +391,14 @@ theme sceneSettings
     {
         stateNormal
         {
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
             fontSize = 20
             textAlignment = ALIGN_VCENTER_LEFT
         }
 
         stateActive
         {
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
             fontSize = 20
             textAlignment = ALIGN_VCENTER_LEFT
         }
@@ -336,7 +409,7 @@ theme sceneSettings
         stateNormal
         {
             skin = formEntry
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
             fontSize = 16
             textAlignment = ALIGN_TOP_LEFT
         }
@@ -344,7 +417,7 @@ theme sceneSettings
         stateFocus
         {
             skin = formFocus
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
             fontSize = 16
         }
     }
@@ -361,7 +434,7 @@ theme sceneSettings
         stateNormal
         {
             textColor = #ffffffff
-            font = res/ui/arial.gpb
+            font = res/ui/mainfont.gpb
             textAlignment = ALIGN_TOP_LEFT
         }
 

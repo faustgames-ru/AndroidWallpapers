@@ -9,7 +9,7 @@ BaseGameObject* TowerObject::constructor()
 	return new TowerObject();
 }
 
-void TowerObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
+void TowerObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform)
 {
 	BaseStaticActor::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;

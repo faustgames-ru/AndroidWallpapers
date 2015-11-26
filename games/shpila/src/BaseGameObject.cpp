@@ -236,7 +236,7 @@ BaseGameObject* BaseGameObject::constructor()
 	return new BaseGameObject();
 }
 
-void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
+void BaseGameObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform)
 {
 	_manager = &manager;
 	Player = player;

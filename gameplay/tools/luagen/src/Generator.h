@@ -8,8 +8,7 @@
 #include "Generator.h"
 #include "TypedefBinding.h"
 
-#include <tinyxml2.h>
-using namespace tinyxml2;
+#include <tinyxml.h>
 
 /**
  * Generates script bindings.

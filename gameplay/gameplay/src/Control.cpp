@@ -111,7 +111,7 @@ void Control::initialize(const char* typeName, Theme::Style* style, Properties* 
 		{
 			Vector4 regionVector;
 			const char *imagName = properties->getString("image");
-			Theme::ThemeImage * image = getImage(imagName, Control::State::NORMAL);
+			auto image = getImage(imagName, Control::State::NORMAL);
 			if (image)
 				setSkinRegion(image->getRegion());
 		}

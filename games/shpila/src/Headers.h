@@ -32,6 +32,7 @@
 #include "UnitManagement\SimpleVehicle.h"
 #include "UnitManagement\Proximity.h"
 #include "TimeManager.h"
+#include "AIManager.h"
 #include "TargetCamera.h"
 #include "UnitMovement.h"
 #include "ActorData.h"
@@ -80,7 +81,7 @@
 #define WUKA_CHARGE_TIME 2000.0f
 #define WUKA_CHARGE_COLDDOWN 10000.0f
 #define DEFAULT_MOVEMENT_SPEED 2.25f
-#define WUKA_CHARGE_SPEED_FACTOR 2.5f
+#define WUKA_CHARGE_SPEED_FACTOR 3.7f
 #define WUKA_UPGRADE_PRICE 100
 #define LAMAKI_BLINK_DISTANCE 6.0f
 #define LAMAKI_BLINK_COLDDOWN 10000.0f

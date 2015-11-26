@@ -104,30 +104,30 @@ void WarriorsGrid::mousOver(const Vector3 mousePos)
 	_cell = worldToGrid(mousePos);
 }
 
-bool WarriorsGrid::isPlaceFree(int radius)
+bool WarriorsGrid::isPlaceFree(const Vector3& position, int radius)
 {
 	bool res = true;
 	switch (radius)//!!
 	{
 	case 3:
-		res = res && !getCell(worldToGrid(_mousePos + Vector3::unitX()));
-		res = res && !getCell(worldToGrid(_mousePos + Vector3::unitZ()));
-		res = res && !getCell(worldToGrid(_mousePos + Vector3::unitX() + Vector3::unitZ()));
-		res = res && !getCell(worldToGrid(_mousePos - Vector3::unitX() + Vector3::unitZ()));
-		res = res && !getCell(worldToGrid(_mousePos + Vector3::unitX() - Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(position + Vector3::unitX()));
+		res = res && !getCell(worldToGrid(position + Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(position + Vector3::unitX() + Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(position - Vector3::unitX() + Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(position + Vector3::unitX() - Vector3::unitZ()));
 	case 2:
-		res = res && !getCell(worldToGrid(_mousePos - Vector3::unitX()));
-		res = res && !getCell(worldToGrid(_mousePos - Vector3::unitZ()));
-		res = res && !getCell(worldToGrid(_mousePos - Vector3::unitX() - Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(position - Vector3::unitX()));
+		res = res && !getCell(worldToGrid(position - Vector3::unitZ()));
+		res = res && !getCell(worldToGrid(position - Vector3::unitX() - Vector3::unitZ()));
 	case 1:
-		res = res && !getCell(_cell);
+		res = res && !getCell(worldToGrid(position));
 	}
 	return res;
 }
 
 const Vector3 WarriorsGrid::getPlacePosition(const int radius)
 {
-	Vector3 position = _cornerPos + AxisX * _factor * ((float)(_cell.PosZ % 2) * 0.5f + (float)_cell.PosX) + 0.5f * AxisZ * _factor * (float)_cell.PosZ;
+	Vector3 position = _cornerPos + AxisX * _factor * (static_cast<float>(_cell.PosZ % 2) * 0.5f + static_cast<float>(_cell.PosX)) + 0.5f * AxisZ * _factor * static_cast<float>(_cell.PosZ);
 	if (radius == 2)//!!
 	{
 		position = position - _factor * 0.5f * AxisX;
@@ -135,23 +135,23 @@ const Vector3 WarriorsGrid::getPlacePosition(const int radius)
 	return position;
 }
 
-void WarriorsGrid::markUnitPlace(const int radius)
+void WarriorsGrid::markUnitPlace(const Vector3& position, const int radius)
 {
 	GridCell cell(0, 0);
 	switch (radius)//!!
 	{
 	case 3:
-		setCell(worldToGrid(_mousePos + Vector3::unitX()), true);
-		setCell(worldToGrid(_mousePos + Vector3::unitZ()), true);
-		setCell(worldToGrid(_mousePos + Vector3::unitX() + Vector3::unitZ()), true);
-		setCell(worldToGrid(_mousePos - Vector3::unitX() + Vector3::unitZ()), true);
-		setCell(worldToGrid(_mousePos + Vector3::unitX() - Vector3::unitZ()), true);
+		setCell(worldToGrid(position + Vector3::unitX()), true);
+		setCell(worldToGrid(position + Vector3::unitZ()), true);
+		setCell(worldToGrid(position + Vector3::unitX() + Vector3::unitZ()), true);
+		setCell(worldToGrid(position - Vector3::unitX() + Vector3::unitZ()), true);
+		setCell(worldToGrid(position + Vector3::unitX() - Vector3::unitZ()), true);
 	case 2:
-		setCell(worldToGrid(_mousePos - Vector3::unitX()), true);
-		setCell(worldToGrid(_mousePos - Vector3::unitZ()), true);
-		setCell(worldToGrid(_mousePos - Vector3::unitX() - Vector3::unitZ()), true);
+		setCell(worldToGrid(position - Vector3::unitX()), true);
+		setCell(worldToGrid(position - Vector3::unitZ()), true);
+		setCell(worldToGrid(position - Vector3::unitX() - Vector3::unitZ()), true);
 	case 1:
-		setCell(_cell, true);
+		setCell(worldToGrid(position), true);
 	}
 	
 }
@@ -200,7 +200,12 @@ void WarriorsGrid::render(const Matrix matrix, int radius)
 	}
 }
 
-const GridCell WarriorsGrid::worldToGrid(const Vector3 point)
+Vector3& WarriorsGrid::mousePos() const
+{
+	return _mousePos;
+}
+
+GridCell WarriorsGrid::worldToGrid(const Vector3& point) const
 {
 	GridCell res(0, 0);
 	Vector3 dir = point - _cornerPos;
@@ -257,6 +262,7 @@ PlayerObject::PlayerObject(GameObjectManager& manager, int id, Vector3 position,
 , BattleFieldMidPoint()
 , UnitsOverMidLineCount(0)
 , MainResource(0)
+, OnCreateWarriorHandler(NULL)
 , _upgradesData(*this)
 , _defenceTower()
 , _defenceBase()
@@ -318,7 +324,7 @@ void PlayerObject::setCreateWariorName(const char* name)
 	_CurrentCharacterName = name;
 }
 
-const std::string PlayerObject::getCreateWariorName()
+std::string PlayerObject::getCreateWariorName() const
 {
 	return _CurrentCharacterName;
 }
@@ -327,21 +333,25 @@ bool PlayerObject::CreateWarrior(bool continuous, const Valuable<Vector3> positi
 {
 	if (_CurrentCharacterName.empty())
 		return false;
-	
-	bool res = false;
-	const ActorData& ad = getActorData(_CurrentCharacterName.c_str());
+
+	auto res = false;
+	const auto& ad = getActorData(_CurrentCharacterName.c_str());
 	if (ad.Price < MainResource)
 	{
-		WarriorsGrid &_grid = ad.MovementGround ? _gridGround : _gridAir;
-		res = _grid.isPlaceFree(ad.CellsRadius());
+		auto& _grid = ad.MovementGround ? _gridGround : _gridAir;
+		res = _grid.isPlaceFree(position.defined() ? position : _grid.mousePos(), ad.CellsRadius()) || position.defined();
 		if (res)
 		{
 			const Vector3 warriorPosition = position.defined() ? position : _grid.getPlacePosition(ad.CellsRadius());
-			_grid.markUnitPlace(ad.CellsRadius());
-			BaseWarrior* warrior = (BaseWarrior*)Manager.createObject(_CurrentCharacterName.c_str(), warriorPosition, BattleFieldDirection, this);
+			_grid.markUnitPlace(position.defined() ? position : _grid.mousePos(), ad.CellsRadius());
+			auto warrior = static_cast<BaseWarrior*>(Manager.createObject(_CurrentCharacterName.c_str(), warriorPosition, BattleFieldDirection, this));
 			warrior->Holder = true;
 			_warriorsSpawnedCount++;
 			MainResource -= ad.Price;
+
+			if (OnCreateWarriorHandler)
+				OnCreateWarriorHandler(_CurrentCharacterName.c_str(), warriorPosition);
+
 			if (!continuous)
 			{
 				_CurrentCharacterName = "";
@@ -385,7 +395,7 @@ UpgradesData* PlayerObject::upgrades()
 
 BaseStaticActor* PlayerObject::getDefence()
 {
-	return _defenceTower->LocalGameData.Health > 0.0 ? (BaseStaticActor*)_defenceTower : (BaseStaticActor*)_defenceBase;
+	return _defenceTower->LocalGameData.Health > 0.0 ? static_cast<BaseStaticActor*>(_defenceTower) : static_cast<BaseStaticActor*>(_defenceBase);
 }
 
 Vector3 PlayerObject::getPosition()
@@ -404,7 +414,7 @@ int PlayerObject::getAdditionalResourceIncreasePercent()
 
 int PlayerObject::getExtractorBuildingTime()
 {
-	return (int)(EXTRACTOR_BUILD_TIME - _ExtractorBuildTimer.getTime()) / 1000;
+	return int((EXTRACTOR_BUILD_TIME - _ExtractorBuildTimer.getTime()) / 1000);
 }
 
 bool PlayerObject::isExtractorBuilding()
@@ -414,9 +424,9 @@ bool PlayerObject::isExtractorBuilding()
 
 void PlayerObject::mousOver(int x, int y)
 {
-	Vector3 pos = ProjectToPlane(((Shpila*)Game::getInstance())->getActiveCamera()->getCamera(), x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f));
+	Vector3 pos = ProjectToPlane(static_cast<Shpila*>(Game::getInstance())->getActiveCamera()->getCamera(), x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, 0.0f, 0.0f));
 	_gridGround.mousOver(pos);
-	pos = ProjectToPlane(((Shpila*)Game::getInstance())->getActiveCamera()->getCamera(), x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, AIR_UNITS_ALTITUDE, 0.0f));
+	pos = ProjectToPlane(static_cast<Shpila*>(Game::getInstance())->getActiveCamera()->getCamera(), x, y, Vector3(0.0f, 1.0f, 0.0f), Vector3(0.0f, AIR_UNITS_ALTITUDE, 0.0f));
 	_gridAir.mousOver(pos);
 }
 

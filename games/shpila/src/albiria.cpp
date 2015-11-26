@@ -12,7 +12,7 @@ AlbiriaWarrior::AlbiriaWarrior()
 {
 }
 
-void AlbiriaWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
+void AlbiriaWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform)
 {
 	float scale = ALBIRIA_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);

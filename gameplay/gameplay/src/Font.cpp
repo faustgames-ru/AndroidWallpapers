@@ -27,11 +27,14 @@ Font::Font() :
 Font::~Font()
 {
     // Remove this Font from the font cache.
-    std::vector<Font*>::iterator itr = std::find(__fontCache.begin(), __fontCache.end(), this);
-    if (itr != __fontCache.end())
-    {
-        __fontCache.erase(itr);
-    }
+	if (!__fontCache.empty())
+	{
+		std::vector<Font*>::iterator itr = std::find(__fontCache.begin(), __fontCache.end(), this);
+		if (itr != __fontCache.end())
+		{
+			__fontCache.erase(itr);
+		}
+	}
 
     SAFE_DELETE(_batch);
     SAFE_DELETE_ARRAY(_glyphs);

@@ -245,7 +245,7 @@ form hud
 		height = 297
         autoHeight = false
         scrollBarsAutoHide = false
-        consumeInputEvents = false		
+        consumeInputEvents = false
 		
 		container HomeSubPagesButtons
 		{
@@ -293,7 +293,7 @@ form hud
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
 				image = extractor
-				width = 97
+				width = 100
 				height = 77
 				text = Extractor
 			}
@@ -303,7 +303,7 @@ form hud
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
 				image = shield
-				width = 97
+				width = 100
 				height = 77
 				text = Shield
 			}
@@ -313,7 +313,7 @@ form hud
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
 				image = armor_ground
-				width = 97
+				width = 100
 				height = 77
 				text = Armor Ground
 			}
@@ -323,7 +323,7 @@ form hud
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
 				image = armor_air
-				width = 97
+				width = 100
 				height = 77
 				text = Armor Air
 			}
@@ -333,7 +333,7 @@ form hud
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
 				image = weapon_ground
-				width = 97
+				width = 100
 				height = 77
 				text = Weapon Ground
 			}
@@ -343,7 +343,7 @@ form hud
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
 				image = weapon_air
-				width = 97
+				width = 100
 				height = 77
 				text = Weapon Air
 			}
@@ -353,7 +353,7 @@ form hud
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
 				image = upgrade_wuka
-				width = 97
+				width = 100
 				height = 77
 				text = Upgrade Wuka
 			}
@@ -363,7 +363,7 @@ form hud
 				consumeInputEvents = true
 				style = UpgradesButtonsButtonStyle
 				image = upgrade_lamaki
-				width = 97
+				width = 100
 				height = 77
 				text = Upgrade Lamaki
 			}
@@ -374,7 +374,7 @@ form hud
 			textTag = units_p1
 			alignment = ALIGN_TOP_LEFT
 			autoWidth = true
-			height = 196
+			height = 200
 			layout = LAYOUT_ABSOLUTE
 			consumeInputEvents = false
 			y = 115
@@ -384,11 +384,11 @@ form hud
 				x = 170
 				textTag = wuka
 				consumeInputEvents = true
-				style = buttonStyle
+				style = UnitsButtonStyle
 				eventPadding = 25, 0, 25, 0
-				region = 1852, 331, 196, 196
-				width = 196
-				height = 196
+				image = Wuka
+				width = 200
+				height = 200
 				text = Wuka
 			}
 			button Player1_New_Lamaki
@@ -396,11 +396,11 @@ form hud
 				x = 295
 				textTag = lamaki
 				consumeInputEvents = true
-				style = buttonStyle
+				style = UnitsButtonStyle
 				eventPadding = 35, 0, 25, 0
-				region = 1446, 331, 196, 196
-				width = 196
-				height = 196
+				image = Lamaki
+				width = 200
+				height = 200
 				text = Lamaki
 			}
 			button Player1_New_Jeats
@@ -408,11 +408,11 @@ form hud
 				x = 420
 				textTag = jeats
 				consumeInputEvents = true
-				style = buttonStyle
+				style = UnitsButtonStyle
 				eventPadding = 25, 0, 25, 0
-				region = 1068, 331, 196, 196
-				width = 196
-				height = 196
+				image = Jeats
+				width = 200
+				height = 200
 				text = jeats
 			}
 			button Player1_New_Qbi
@@ -420,11 +420,11 @@ form hud
 			  x = 545
 			  textTag = qbi
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  eventPadding = 25, 0, 25, 0
-			  region = 1264, 331, 196, 196
-			  width = 196
-			  height = 196
+			  image = Qbi
+			  width = 200
+			  height = 200
 			  text = Qbi
 			}
 			button Player1_New_Hanto
@@ -432,10 +432,10 @@ form hud
 			  x = 670
 			  textTag = hanto
 			  consumeInputEvents = true
-			  style = buttonStyle
-			  region = 540, 0, 85, 101
-			  width = 196
-			  height = 196
+			  style = UnitsButtonStyle
+			  image = Hanto
+			  width = 200
+			  height = 200
 			  text = Hanto
 			}
 			button Player1_New_Immortal
@@ -443,10 +443,10 @@ form hud
 			  x = 795
 			  textTag = immortal
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  region = 625, 0, 85, 101
-			  width = 196
-			  height = 196
+			  width = 200
+			  height = 200
 			  text = Immortal
 			}
 			button Player1_New_VoidRay
@@ -454,10 +454,10 @@ form hud
 			  x = 920
 			  textTag = voidray
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  region = 710, 0, 85, 101
-			  width = 196
-			  height = 196
+			  width = 200
+			  height = 200
 			  text = VoidRay
 			}
 			button Player1_New_Cheida
@@ -465,10 +465,10 @@ form hud
 			  x = 1045
 			  textTag = cheida
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  region = 795, 0, 85, 101
-			  width = 196
-			  height = 196
+			  width = 200
+			  height = 200
 			  text = Cheida
 			}		   
 			button Player1_New_Observer
@@ -476,10 +476,10 @@ form hud
 			  x = 1170
 			  textTag = observer
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  region = 880, 0, 85, 101
-			  width = 196
-			  height = 196
+			  width = 200
+			  height = 200
 			  text = Observer
 			}
 			button Player1_New_Albiria
@@ -487,10 +487,10 @@ form hud
 			  x = 1295
 			  textTag = albiria
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  region = 965, 0, 85, 101
-			  width = 196
-			  height = 196
+			  width = 200
+			  height = 200
 			  text = Albiria
 			}
 			button Player1_New_Barar
@@ -498,10 +498,10 @@ form hud
 			  x = 1420
 			  textTag = barar
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  region = 1050, 0, 85, 101
-			  width = 196
-			  height = 196
+			  width = 200
+			  height = 200
 			  text = Barar
 			}
 			button Player1_New_Carrier
@@ -509,10 +509,10 @@ form hud
 			  x = 1545
 			  textTag = carrier
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  region = 1135, 0, 85, 101
-			  width = 196
-			  height = 196
+			  width = 200
+			  height = 200
 			  text = Carrier
 			}
 			button Player1_New_Colossus
@@ -520,10 +520,10 @@ form hud
 			  x = 1670
 			  textTag = colossus
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  region = 1220, 0, 85, 101
-			  width = 196
-			  height = 196
+			  width = 200
+			  height = 200
 			  text = Colossus
 			}
 			button Player1_New_Tempest
@@ -531,10 +531,10 @@ form hud
 			  x = 1795
 			  textTag = tempest
 			  consumeInputEvents = true
-			  style = buttonStyle
+			  style = UnitsButtonStyle
 			  region = 1390, 0, 85, 101
-			  width = 196
-			  height = 196
+			  width = 200
+			  height = 200
 			  text = Tempest
 			}
 			
@@ -544,7 +544,7 @@ form hud
 				textTag = BaseLevel
 				consumeInputEvents = true
 				style = buttonStyle
-				region = 0, 0, 74, 84
+				region = 73, 84, 74, 84
 				width = 75
 				height = 101
 				text = Upgrade1

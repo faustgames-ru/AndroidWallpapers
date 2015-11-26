@@ -274,6 +274,9 @@
     <ClCompile Include="src\Utils.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\AIManager.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\main.h">
@@ -641,6 +644,9 @@
     </ClInclude>
     <ClInclude Include="src\Utils.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AIManager.h">
+      <Filter>src\GameObjects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

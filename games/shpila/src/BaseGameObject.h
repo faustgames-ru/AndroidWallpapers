@@ -47,7 +47,7 @@ public:
 	void setTransparency(float transparency);
 
 	static BaseGameObject* constructor();
-	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform);
 	virtual int ActorType();
 	virtual const Vector3 position();
 	virtual const Vector3 massCenterPosition();

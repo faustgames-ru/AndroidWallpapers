@@ -5,7 +5,7 @@ BaseGameObject* WukaWarrior::constructor()
 	return new WukaWarrior();
 }
 
-void WukaWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
+void WukaWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform)
 {
 	float scale = WUKA_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);

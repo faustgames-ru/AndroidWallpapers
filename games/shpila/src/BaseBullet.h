@@ -11,7 +11,7 @@ public:
 	BaseBullet();
 	~BaseBullet();
 	static BaseGameObject* constructor();
-	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform);
 	virtual bool interactive() { return false; }
 	virtual void update(float time);
 	virtual void doDamage(BaseGameObject* target);

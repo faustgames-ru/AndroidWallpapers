@@ -151,11 +151,20 @@ void Shpila::initialize()
 			
 		char buff[100];
 		sprintf(buff, "FoV-%0.0f", FoV);
-		((Label*)_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
+		static_cast<Label*>(_hud.form()->getControl("CameraFoVTitle"))->setText(buff);
 		_hud.bind("CameraFree", Control::Listener::CLICK, SetCameraFree);
 		_hud.bind("CameraLocked", Control::Listener::CLICK, SetCameraLocked);		
 
 		_hud.form()->getControl("GameOver")->setVisible(false);
+#ifndef _DEBUG
+		_hud.form()->getControl("SwitchToPlayer1")->setVisible(false);
+		_hud.form()->getControl("SwitchToPlayer2")->setVisible(false);
+		_hud.form()->getControl("ShowTune")->setVisible(false);
+		_hud.form()->getControl("Connect")->setVisible(false);
+		_hud.form()->getControl("Pause")->setVisible(false);
+#endif
+
+		
 		
 
 		// Load scene.
@@ -225,6 +234,12 @@ void Shpila::initialize()
 		_scene->visit(this, &Shpila::initializeNodeMaterials);
 
 		OpenSteer::OpenSteerManager::initialize();
+
+		AIManager::luaRegister();
+		getScriptController()->loadScript("res/lua/AI.lua");
+		getScriptController()->executeFunction<void>("setAIManager", "<AIManager>", &_AIManager);
+		_AIManager.setPlayer(_manager.Players[0]);
+		_AIManager.setAIPlayer(_manager.Players[1]);
 	}
 	else
 	{
@@ -237,7 +252,7 @@ bool Shpila::initializeNodeMaterials(Node* node)
     return _manager.initializeNodeMaterials(node);
 }
 
-bool Shpila::isActivePlayer(PlayerObject* player)
+bool Shpila::isLocalPlayer(PlayerObject* player) const
 {
 	return (_netPlayerID == UNASSIGNED_PLAYER_INDEX) || (_netPlayerID == player->ID);
 }
@@ -311,6 +326,7 @@ void Shpila::updatePlayers(float time)
 		(*it)->mousOver(_mouseX, _mouseY);
 		(*it)->update(time);
 	}
+	_AIManager.update(time);
 }
 
 void Shpila::updateNetwork()

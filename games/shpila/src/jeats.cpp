@@ -12,7 +12,7 @@ BaseGameObject* JeatsWarrior::constructor()
 {
 	return new JeatsWarrior();
 }
-void JeatsWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
+void JeatsWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform)
 {
 	float scale = JEATS_SCALE;
 	BaseWarrior::init(manager, gameData, node, player, transform);

@@ -150,7 +150,7 @@ void GameObjectManager::initUnits()
 	_store->visit(this, &GameObjectManager::initializeNodeMaterials);
 }
 
-BaseGameObject* GameObjectManager::createObject(const char* name, Matrix transform, PlayerObject* player)
+BaseGameObject* GameObjectManager::createObject(const char* name, const Matrix& transform, PlayerObject* player)
 {
 	GP_ASSERT(_scene);
 
@@ -158,9 +158,7 @@ BaseGameObject* GameObjectManager::createObject(const char* name, Matrix transfo
 	BaseGameObject* object = unit._constructor(); 
 	object->TypeName = name;
 	object->init(*this, &getActorData(name), unit._node, player, transform);
-	std::vector<PlayerObject*>::iterator pl = std::find_if(Players.begin(), Players.end(), [&](PlayerObject* p){ return p->ID == player->ID; });
-	if (pl != Players.end())
-		object->ID = (*pl)->getNewObjectID();
+	object->ID = player->getNewObjectID();
 	return object;
 }
 

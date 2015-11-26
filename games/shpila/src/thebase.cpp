@@ -10,7 +10,7 @@ BaseGameObject* TheBaseObject::constructor()
 	return new TheBaseObject();
 }
 
-void TheBaseObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
+void TheBaseObject::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform)
 {
 	BaseStaticActor::init(manager, gameData, node, player, transform);
 	float scale = COMMON_SCALE;

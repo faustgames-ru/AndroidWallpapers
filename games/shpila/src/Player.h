@@ -81,12 +81,13 @@ public:
 
 	void init();
 	void mousOver(const Vector3 mousePos);
-	bool isPlaceFree(int radius);
+	bool isPlaceFree(const Vector3& position, int radius);
 	const Vector3 getPlacePosition(const int radius);
-	void markUnitPlace(const int radius);
+	void markUnitPlace(const Vector3& position, const int radius);
 	void render(const Matrix matrix, int radius);
+	Vector3& mousePos() const;
 private:
-	const GridCell worldToGrid(const Vector3 point);
+	GridCell worldToGrid(const Vector3& point) const;
 	bool getCell(GridCell cell);
 	void setCell(GridCell cell, bool value);
 	void drawCell(Vector3 position, CellState state, bool air);
@@ -97,11 +98,13 @@ private:
 	Vector3 _cornerPos;
 	bool _mouseInGrid;
 	GridCell _cell;
-	Vector3 _mousePos;
+	mutable Vector3 _mousePos;
 };
 
+typedef bool(*OnCreateWarrior) (const char* name, const Vector3& position);
+
 //players union
-class PlayerObject
+class PlayerObject : public CLinkObject
 {
 public:
 	GameObjectManager& Manager;
@@ -113,11 +116,12 @@ public:
 	Vector3 BattleFieldMidPoint;
 	int UnitsOverMidLineCount;
 	int MainResource;
+	OnCreateWarrior OnCreateWarriorHandler;
 
 	PlayerObject(GameObjectManager& manager, int id, Vector3 position, Vector3 battleFieldDirection);
 	void update(float time);
 	void setCreateWariorName(const char* name);
-	const std::string getCreateWariorName();
+	std::string getCreateWariorName() const;
 	bool CreateWarrior(bool continuous, const Valuable<Vector3> position = Valuable<Vector3>::Undefined);
 	void CancelCreateWarrior();
 	void addExtractor();

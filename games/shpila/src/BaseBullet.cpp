@@ -13,7 +13,7 @@ BaseGameObject* BaseBullet::constructor()
 	return new BaseBullet();
 }
 
-void BaseBullet::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
+void BaseBullet::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform)
 {
 	float scale = COMMON_SCALE;
 	BaseGameObject::init(manager, gameData, node, player, transform);

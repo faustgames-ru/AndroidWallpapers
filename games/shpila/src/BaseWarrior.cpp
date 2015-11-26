@@ -84,7 +84,7 @@ void BaseWarrior::makeIllusion()
 	_illusionTimer.start(JEATS_ILLUSION_LIFE_TIME, 0.0f);
 }
 
-void BaseWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform)
+void BaseWarrior::init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform)
 {
 	BaseActor::init(manager, gameData, node, player, transform);
 	updateAnimationState();
@@ -113,7 +113,7 @@ void BaseWarrior::update(float time)
 	if (Holder)
 	{
 		bool resp = ((Shpila*)Game::getInstance())->Respawn;
-		if (((Shpila*)Game::getInstance())->isActivePlayer(Player) && resp)
+		if (((Shpila*)Game::getInstance())->isLocalPlayer(Player) && resp)
 		{
 			Player->Manager.createObject(TypeName.c_str(), position() + 15.0f * Player->BattleFieldDirection, Player->BattleFieldDirection, Player);
 		}
@@ -324,6 +324,12 @@ void BaseWarrior::updateMoveToPoint(float time, Vector3 point)
 	OpenSteer::Vec3 forward = _movementController.forward();
 	Matrix rot;
 	createCharacterRotationMatrix(Vector3(forward.x, forward.y, forward.z), &rot);
+#ifdef _DEBUG
+	/*if (Vector3(forward.x, forward.y, forward.z).dot(Player->BattleFieldDirection) < -0.5)
+	{
+ 		Sleep(1);
+	}*/
+#endif
 	_node->setRotation(rot);
 	OpenSteer::Vec3 pos = _movementController.position();
 	_node->setTranslation(Vector3(pos.x, pos.y, pos.z));

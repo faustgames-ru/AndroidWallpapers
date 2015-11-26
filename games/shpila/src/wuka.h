@@ -7,7 +7,7 @@ class WukaWarrior : public BaseWarrior
 {
 public:
 	static BaseGameObject* constructor();
-	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix transform);
+	virtual void init(GameObjectManager& manager, const ActorData* gameData, Node* node, PlayerObject* player, const Matrix & transform);
 	virtual void updateMovementSpeed(float time);
 	virtual void doDamage(BaseGameObject* object);
 private:

@@ -1099,8 +1099,8 @@
 		<GeometryRadius>1</GeometryRadius>
 	</unit>
 	<unit>
-		<name>dark_templar</name>
-		<id>dark</id>
+		<name>Cheida</name>
+		<id>cheida</id>
 		<price>175</price>
 		<RequireUpgrade>1</RequireUpgrade>
 		<BattleUpgradeClass>пехота</BattleUpgradeClass>
@@ -1221,8 +1221,8 @@
 		<GeometryRadius>0.5</GeometryRadius>
 	</unit>
 	<unit>
-		<name>Hantо</name>
-		<id>hantо</id>
+		<name>Hanto</name>
+		<id>hanto</id>
 		<price>325</price>
 		<RequireUpgrade>1</RequireUpgrade>
 		<BattleUpgradeClass>пехота</BattleUpgradeClass>
